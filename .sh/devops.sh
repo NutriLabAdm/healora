@@ -34,9 +34,11 @@ show_menu() {
     echo "  3) Deploy"
     echo "  4) Status check"
     echo "  5) Git pull"
-    echo "  6) Exit"
+    echo "  6) Git commit"
+    echo "  7) Git push"
+    echo "  8) Exit"
     echo ""
-    read -p "Select option [1-6]: " choice
+    read -p "Select option [1-8]: " choice
 }
 
 config_nginx() {
@@ -149,6 +151,21 @@ EOF
     log_info "Git pull complete"
 }
 
+git_commit() {
+    log_info "Git commit"
+    cd "$PROJECT_ROOT"
+    git add .
+    git commit -m "update"
+    log_info "Commit complete"
+}
+
+git_push() {
+    log_info "Git push to origin master"
+    cd "$PROJECT_ROOT"
+    git push origin master
+    log_info "Push complete"
+}
+
 show_menu
 case $choice in
     1) config_nginx ;;
@@ -156,6 +173,8 @@ case $choice in
     3) deploy ;;
     4) check_status ;;
     5) git_pull ;;
-    6) exit 0 ;;
+    6) git_commit ;;
+    7) git_push ;;
+    8) exit 0 ;;
     *) log_error "Invalid option" ;;
 esac
