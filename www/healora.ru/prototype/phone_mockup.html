@@ -6,12 +6,27 @@
     <title>Healora - Прототип интервенций</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; display: flex; justify-content: center; align-items: flex-start; gap: 30px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; display: flex; justify-content: flex-start; align-items: flex-start; gap: 30px; }
         
         .layout { display: flex; gap: 30px; align-items: flex-start; }
         
+        /* Left Panel - Data Sources */
+        .sources-panel { width: 200px; background: #fff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; flex-shrink: 0; }
+        .sources-panel h3 { font-size: 16px; color: #37474f; margin-bottom: 15px; font-weight: 700; }
+        .source-item { display: flex; align-items: center; gap: 10px; padding: 12px; background: #f5f5f5; border-radius: 12px; margin-bottom: 8px; cursor: grab; transition: all 0.3s; border: 2px solid transparent; }
+        .source-item:hover { background: #eceff1; border-color: #b0bec5; transform: scale(1.05); }
+        .source-item:active { cursor: grabbing; transform: scale(0.95); }
+        .source-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .source-item .label { font-size: 12px; color: #37474f; font-weight: 500; }
+        .source-item.dragging { opacity: 0.5; }
+        
+        .drop-zone { margin-top: 15px; padding: 20px; border: 2px dashed #b0bec5; border-radius: 12px; text-align: center; font-size: 12px; color: #78909c; transition: all 0.3s; }
+        .drop-zone.active { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; }
+        .drop-zone h4 { font-size: 14px; margin-bottom: 8px; color: #607d8b; }
+        
         /* Phone */
-        .phone { width: 390px; height: 844px; background: #fff; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; position: relative; border: 12px solid #1a1a1a; flex-shrink: 0; }
+        .phone-container { flex-shrink: 0; }
+        .phone { width: 390px; height: 844px; background: #fff; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; position: relative; border: 12px solid #1a1a1a; }
         
         .phone-header { background: linear-gradient(135deg, #78909c, #607d8b); padding: 15px 20px; color: #fff; position: sticky; top: 0; z-index: 10; cursor: pointer; }
         .phone-header .score { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
@@ -65,8 +80,8 @@
         .screen { display: none; height: 100%; }
         .screen.active { display: block; }
         
-        /* Close Button (outside phone) */
-        .close-btn { position: fixed; top: 20px; left: 20px; background: #fff; border: none; padding: 10px; border-radius: 50%; cursor: pointer; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; }
+        /* Close Button */
+        .close-btn { position: fixed; top: 20px; left: 20px; background: #fff; border: none; padding: 8px; border-radius: 50%; cursor: pointer; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; }
         .close-btn:hover { background: #f5f5f5; }
         .close-btn svg { width: 20px; height: 20px; }
         
@@ -77,7 +92,7 @@
         .intervention-btn:active { background: #607d8b; color: #fff; }
         
         /* Info Panel (Right Side) */
-        .info-panel { width: 360px; background: #fff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; max-height: 844px; overflow-y: auto; }
+        .info-panel { width: 360px; background: #fff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; max-height: 844px; overflow-y: auto; flex-shrink: 0; }
         .info-panel h3 { font-size: 18px; color: #37474f; margin-bottom: 15px; font-weight: 700; }
         .info-section { margin-bottom: 20px; }
         .info-section h4 { font-size: 14px; color: #607d8b; margin-bottom: 10px; font-weight: 600; }
@@ -86,9 +101,6 @@
         .info-log { max-height: 300px; overflow-y: auto; }
         .log-entry { padding: 8px; border-left: 3px solid #607d8b; margin-bottom: 5px; font-size: 11px; color: #37474f; padding-left: 10px; }
         .log-entry .time { color: #78909c; font-size: 10px; }
-        
-        /* SVG Icons (same as before) */
-        /* ... (keep SVG definitions) ... */
     </style>
 </head>
 <body>
@@ -99,248 +111,177 @@
     </button>
     
     <div class="layout">
-        <!-- Phone -->
-        <div class="phone">
-            <!-- SVG Icons Definition -->
-            <svg style="display: none;">
-                <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </symbol>
-                <symbol id="icon-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </symbol>
-                <symbol id="icon-profile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                </symbol>
-                <symbol id="icon-path" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                </symbol>
-                <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
-                </symbol>
-                <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="20 6 9 17 4 12"/>
-                </symbol>
-                <symbol id="icon-food" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
-                </symbol>
-                <symbol id="icon-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                </symbol>
-                <symbol id="icon-science" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 3h6l-2 10H11z"/><path d="M12 13v7"/><path d="M8 21h8"/>
-                </symbol>
-                <symbol id="icon-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/><polyline points="16 2 16 6 20 6"/>
-                </symbol>
-            </svg>
+        <!-- Left Panel - Data Sources -->
+        <div class="sources-panel">
+            <h3>📊 Источники данных</h3>
             
-            <!-- Chat Screen (Messages) -->
-            <div class="screen active" id="chat-screen">
-                <div class="phone-header" onclick="showCategories()">
-                    <div class="score">
-                        <svg viewBox="0 0 24 24" width="28" height="28" fill="#ffd54f" stroke="none">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                        </svg>
-                        <span id="total-stars">840</span> звёзд
-                    </div>
-                    <div class="progress">📊 68% плана | 🔥 5 дней подряд</div>
-                    <div class="streak">Уровень: Functional Application (41-60)</div>
-                </div>
-                
-                <!-- Filter Badges -->
-                <div class="filter-bar">
-                    <span class="filter-badge active" onclick="filterMessages('all', this)">Все</span>
-                    <span class="filter-badge" onclick="filterMessages('nutrition', this)">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg> Питание
-                    </span>
-                    <span class="filter-badge" onclick="filterMessages('activity', this)">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10h-4l-2-4h-2l-2 4H2v10z"/></svg> Активность
-                    </span>
-                    <span class="filter-badge" onclick="filterMessages('knowledge', this)">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/></svg> Знания
-                    </span>
-                </div>
-                
-                <!-- Scrollable Messages -->
-                <div class="chat" id="chat-container">
-                    <!-- Messages will be populated by JS -->
-                </div>
-                
-                <!-- Intervention Buttons -->
-                <div class="intervention-bar">
-                    <button class="intervention-btn" onclick="addIntervention('food')">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg> Что поесть
-                    </button>
-                    <button class="intervention-btn" onclick="addIntervention('read')">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Что почитать
-                    </button>
-                    <button class="intervention-btn" onclick="addIntervention('science')">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6l-2 10H11z"/><path d="M12 13v7"/><path d="M8 21h8"/></svg> Научи
-                    </button>
-                    <button class="intervention-btn" onclick="addIntervention('news')">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/><polyline points="16 2 16 6 20 6"/></svg> Новости по менеджменту веса
-                    </button>
-                </div>
-                
-                <!-- Bottom Navigation -->
-                <div class="bottom-nav">
-                    <button class="nav-item active" onclick="switchScreen('chat-screen', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                        </svg>
-                        <span>Сообщения</span>
-                    </button>
-                    <button class="nav-item" onclick="switchScreen('path-screen', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                        </svg>
-                        <span>Путь</span>
-                    </button>
-                    <button class="nav-item" onclick="switchScreen('goals-screen', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
-                        </svg>
-                        <span>Цели</span>
-                    </button>
-                    <button class="nav-item" onclick="switchScreen('profile-screen', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                        </svg>
-                        <span>Профиль</span>
-                    </button>
-                </div>
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'wearable')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="label">Wearable<br>(HRV, сон)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'voice')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                </svg>
+                <span class="label">Voice<br>(голосовой ввод)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'medical')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M16 4h2a2 2 0 0 1 0 4h-1"/><path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+                <span class="label">Medical<br>(анализы, тесты)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'food')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+                <span class="label">Food Photos<br>(фото еды)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'genetics')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span class="label">Genetics<br>(генетика)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'mental')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span class="label">Mental<br>(медитации)</span>
+            </div>
+            
+            <!-- Drop Zone -->
+            <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="removeHighlight(event)">
+                <h4>Digital Twin</h4>
+                <div>Перетащите источник сюда</div>
+                <div id="sources-added" style="margin-top: 10px; font-size: 11px; color: #4caf50;"></div>
             </div>
         </div>
         
-        <!-- Path Screen -->
-        <div class="screen" id="path-screen">
-            <div class="phone-header" style="cursor: default;">
-                <div class="score">
-                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2">
+        <!-- Phone -->
+        <div class="phone-container">
+            <div class="phone">
+                <!-- SVG Icons Definition -->
+                <svg style="display: none;">
+                    <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </symbol>
+                    <symbol id="icon-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </symbol>
+                    <symbol id="icon-profile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </symbol>
+                    <symbol id="icon-path" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                    </svg> Путь
-                </div>
-            </div>
-            <div style="padding: 20px; background: #eceff1; height: calc(844px - 120px); overflow-y: auto;">
-                <div style="background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 15px;">
-                    <div style="font-size: 16px; font-weight: 600; color: #37474f; margin-bottom: 15px;">Longevity Path</div>
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                        <div style="width: 40px; height: 40px; background: #cfd8dc; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#607d8b" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-size: 14px; font-weight: 600; color: #37474f;">Шаг 1: Базовые привычки</div>
-                            <div style="font-size: 12px; color: #4caf50;">✓ Выполнено</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                        <div style="width: 40px; height: 40px; background: #cfd8dc; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#607d8b" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-size: 14px; font-weight: 600; color: #37474f;">Шаг 2: Активность</div>
-                            <div style="font-size: 12px; color: #4caf50;">✓ Выполнено</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 40px; height: 40px; background: #ffd54f; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-                            </svg>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-size: 14px; font-weight: 600; color: #37474f;">Шаг 3: Питание</div>
-                            <div style="font-size: 12px; color: #ffd54f;">В процессе</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Goals Screen -->
-        <div class="screen" id="goals-screen">
-            <div class="phone-header" style="cursor: default;">
-                <div class="score">
-                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2">
+                    </symbol>
+                    <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
-                    </svg> Цели
-                </div>
-            </div>
-            <div style="padding: 20px; background: #eceff1; height: calc(844px - 120px); overflow-y: auto;">
-                <div style="background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 15px;">
-                    <div style="font-size: 16px; font-weight: 600; color: #37474f; margin-bottom: 15px;">Мои цели</div>
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="font-size: 14px; color: #37474f;">Похудение</span>
-                            <span style="font-size: 12px; color: #78909c;">-3.2 кг / -5 кг</span>
-                        </div>
-                        <div style="height: 8px; background: #cfd8dc; border-radius: 4px; overflow: hidden;">
-                            <div style="height: 100%; width: 65%; background: #607d8b;"></div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="font-size: 14px; color: #37474f;">Активность</span>
-                            <span style="font-size: 12px; color: #78909c;">8,432 / 10,000 шагов</span>
-                        </div>
-                        <div style="height: 8px; background: #cfd8dc; border-radius: 4px; overflow: hidden;">
-                            <div style="height: 100%; width: 80%; background: #607d8b;"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="font-size: 14px; color: #37474f;">Сон</span>
-                            <span style="font-size: 12px; color: #78909c;">7.5 / 8 часов</span>
-                        </div>
-                        <div style="height: 8px; background: #cfd8dc; border-radius: 4px; overflow: hidden;">
-                            <div style="height: 100%; width: 90%; background: #607d8b;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Profile Screen -->
-        <div class="screen" id="profile-screen">
-            <div class="phone-header" style="cursor: default;">
-                <div class="score">
-                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="8" r="4"/>
-                    </svg> Профиль
-                </div>
-            </div>
-            <div style="padding: 20px; background: #eceff1; height: calc(844px - 120px); overflow-y: auto;">
-                <div style="background: #fff; border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 15px;">
-                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #cfd8dc; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
-                        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#607d8b" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="8" r="4"/>
-                        </svg>
-                    </div>
-                    <div style="font-size: 20px; font-weight: 700; color: #37474f; margin-bottom: 5px;">Пользователь</div>
-                    <div style="font-size: 14px; color: #78909c;">Уровень: Functional Application</div>
-                </div>
-                <div style="background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 15px;">
-                    <div style="font-size: 16px; font-weight: 600; color: #37474f; margin-bottom: 15px;">Статистика</div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                        <span style="font-size: 14px; color: #78909c;">Всего звёзд</span>
-                        <span style="font-size: 14px; color: #ffd54f; font-weight: 600;">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="#ffd54f" stroke="none">
+                    </symbol>
+                    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </symbol>
+                    <symbol id="icon-food" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                    </symbol>
+                    <symbol id="icon-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    </symbol>
+                    <symbol id="icon-science" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 3h6l-2 10H11z"/><path d="M12 13v7"/><path d="M8 21h8"/>
+                    </symbol>
+                    <symbol id="icon-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/><polyline points="16 2 16 6 20 6"/>
+                    </symbol>
+                </svg>
+                
+                <!-- Chat Screen (Messages) -->
+                <div class="screen active" id="chat-screen">
+                    <div class="phone-header" onclick="showCategories()">
+                        <div class="score">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="#ffd54f" stroke="none">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                            </svg> 840
+                            </svg>
+                            <span id="total-stars">840</span> звёзд
+                        </div>
+                        <div class="progress">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> 68% плана | 
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="#ffd54f" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5 дней подряд
+                        </div>
+                        <div class="streak">Уровень: Functional Application (41-60)</div>
+                    </div>
+                    
+                    <!-- Filter Badges -->
+                    <div class="filter-bar">
+                        <span class="filter-badge active" onclick="filterMessages('all', this)">Все</span>
+                        <span class="filter-badge" onclick="filterMessages('nutrition', this)">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/></svg> Питание
+                        </span>
+                        <span class="filter-badge" onclick="filterMessages('activity', this)">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10h-4l-2-4h-2l-2 4H2v10z"/></svg> Активность
+                        </span>
+                        <span class="filter-badge" onclick="filterMessages('knowledge', this)">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/></svg> Знания
                         </span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                        <span style="font-size: 14px; color: #78909c;">Дней подряд</span>
-                        <span style="font-size: 14px; color: #37474f; font-weight: 600;">🔥 5</span>
+                    
+                    <!-- Scrollable Messages -->
+                    <div class="chat" id="chat-container">
+                        <!-- Messages will be populated by JS -->
                     </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span style="font-size: 14px; color: #78909c;">План выполнен</span>
-                        <span style="font-size: 14px; color: #37474f; font-weight: 600;">68%</span>
+                    
+                    <!-- Intervention Buttons -->
+                    <div class="intervention-bar">
+                        <button class="intervention-btn" onclick="addIntervention('food')">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/></svg> Что поесть
+                        </button>
+                        <button class="intervention-btn" onclick="addIntervention('read')">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Что почитать
+                        </button>
+                        <button class="intervention-btn" onclick="addIntervention('science')">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6l-2 10H11z"/><path d="M12 13v7"/><path d="M8 21h8"/></svg> Научи
+                        </button>
+                        <button class="intervention-btn" onclick="addIntervention('news')">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/><polyline points="16 2 16 6 20 6"/></svg> Новости по менеджменту веса
+                        </button>
+                    </div>
+                    
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <button class="nav-item active" onclick="switchScreen('chat-screen', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <span>Сообщения</span>
+                        </button>
+                        <button class="nav-item" onclick="switchScreen('path-screen', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                            <span>Путь</span>
+                        </button>
+                        <button class="nav-item" onclick="switchScreen('goals-screen', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                            </svg>
+                            <span>Цели</span>
+                        </button>
+                        <button class="nav-item" onclick="switchScreen('profile-screen', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <span>Профиль</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -405,25 +346,26 @@
             { time: '10:15', action: 'Выполнено: Выпить стакан воды (+10 ⭐)' },
             { time: '10:12', action: 'Загружен прототип' }
         ];
+        let addedSources = [];
         
         // Messages data
         const messages = [
-            { type: 'ai', text: 'Привет! Сегодня отличный день для прогресса 🔥 Давай выполним задачи и закроем неделю!', category: 'general' },
+            { type: 'ai', text: 'Привет! Сегодня отличный день для прогресса <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#607d8b" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg> Давай выполним задачи и закроем неделю!', category: 'general' },
             { type: 'ai', text: 'Задача 1/5: Выпей стакан воды до завтрака', task: 'Выпить стакан воды', points: 10, category: 'nutrition' },
             { type: 'ai', text: 'Задача 2/5: 15 минут зарядки', task: '15 мин зарядки', points: 20, category: 'activity' },
             { type: 'ai', text: 'Задача 3/5: Запиши 1 эмоцию дня', task: 'Записать эмоцию', points: 15, category: 'recovery' },
-            { type: 'ai', text: '💡 Совет: Попробуй заменить сахар на мед в чае. Это снизит гликемический индекс!', category: 'nutrition' },
+            { type: 'ai', text: 'Совет: Попробуй заменить сахар на мед в чае. Это снизит гликемический индекс!', category: 'nutrition' },
             { type: 'user', text: 'Отличная идея! Буду пробовать.', category: 'general' },
             { type: 'ai', text: 'Задача 4/5: Пройди 1000 шагов', task: '1000 шагов', points: 15, category: 'activity' },
-            { type: 'ai', text: '📚 Рекомендуемая статья: "Влияние микробиома на вес" (PubMed ID: 12345)', category: 'knowledge' },
+            { type: 'ai', text: 'Рекомендуемая статья: "Влияние микробиома на вес" (PubMed ID: 12345)', category: 'knowledge' },
             { type: 'ai', text: 'Задача 5/5: 7-8 часов сна', task: '7-8 часов сна', points: 20, category: 'recovery' },
-            { type: 'ai', text: '🔥 Серия дней: 5 подряд! Так держать!', category: 'general' },
+            { type: 'ai', text: 'Серия дней: 5 подряд! Так держать!', category: 'general' },
             { type: 'ai', text: 'На следующей неделе повысим нагрузку. Готов к новым вызовам?', category: 'general' },
             { type: 'user', text: 'Да, готов! 💪', category: 'general' },
-            { type: 'ai', text: '🎯 Твой прогресс: 68% плана выполнено. Осталось совсем немного!', category: 'general' },
+            { type: 'ai', text: 'Твой прогресс: 68% плана выполнено. Осталось совсем немного!', category: 'general' },
             { type: 'ai', text: 'Новое исследование: Интервальное голодание улучшает чувствительность к инсулину.', category: 'knowledge' },
             { type: 'ai', text: 'Напоминание: Пора проверить вес и замерить талию.', category: 'health' },
-            { type: 'ai', text: '🏆 Достижение разблокировано: "5 дней подряд"!', category: 'general' }
+            { type: 'ai', text: 'Достижение разблокировано: "5 дней подряд"!', category: 'general' }
         ];
         
         function initChat() {
@@ -570,6 +512,52 @@
             if (confirm('Закрыть приложение?')) {
                 document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#78909c;font-size:18px;">Приложение закрыто</div>';
             }
+        }
+        
+        // Drag & Drop functions
+        function dragStart(event, sourceType) {
+            event.dataTransfer.setData('text/plain', sourceType);
+            event.target.classList.add('dragging');
+        }
+        
+        function allowDrop(event) {
+            event.preventDefault();
+            document.getElementById('drop-zone').classList.add('active');
+        }
+        
+        function drop(event) {
+            event.preventDefault();
+            const sourceType = event.dataTransfer.getData('text/plain');
+            document.getElementById('drop-zone').classList.remove('active');
+            
+            if (!addedSources.includes(sourceType)) {
+                addedSources.push(sourceType);
+                const names = {
+                    wearable: 'Wearables (HRV, сон)',
+                    voice: 'Voice (голосовой ввод)',
+                    medical: 'Medical (анализы)',
+                    food: 'Food Photos (фото еды)',
+                    genetics: 'Genetics (генетика)',
+                    mental: 'Mental (медитации)'
+                };
+                
+                const div = document.createElement('div');
+                div.style.cssText = 'padding: 5px; background: #e8f5e9; margin: 3px; border-radius: 4px;';
+                div.textContent = `✓ ${names[sourceType]}`;
+                document.getElementById('sources-added').appendChild(div);
+                
+                // Log action
+                const now = new Date();
+                const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+                actionLog.unshift({ time: timeStr, action: `Добавлен источник: ${names[sourceType]}` });
+                updateLog();
+            }
+            
+            document.querySelectorAll('.source-item').forEach(item => item.classList.remove('dragging'));
+        }
+        
+        function removeHighlight(event) {
+            document.getElementById('drop-zone').classList.remove('active');
         }
         
         function showCategories() {

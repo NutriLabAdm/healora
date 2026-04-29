@@ -162,7 +162,20 @@ git_commit() {
 git_push() {
     log_info "Git push to origin master"
     cd "$PROJECT_ROOT"
-    git push origin master
+    
+    # Check if remote URL contains token
+    current_url=$(git remote get-url origin)
+    if [[ "$current_url" == *"@github.com"* ]]; then
+        log_info "Using SSH: $current_url"
+        git push origin master
+    else
+        # HTTPS with token
+        read -p "Enter GitHub token (or press Enter to use current URL): " token
+        if [ -n "$token" ]; then
+            git remote set-url origin https://${token}@github.com/NutriLabAdm/healora.git
+        fi
+        git push origin master
+    fi
     log_info "Push complete"
 }
 
