@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healora - From Obesity to Longevity</title>
+    <meta name="description" content="AI-powered Digital Twin for obesity prediction and prevention. Turn your health data into a personalized longevity path.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <style>
+        :root {
+            --blue-dark: #1E3A8A;
+            --blue-mid: #2563EB;
+            --blue-light: #3B82F6;
+            --blue-sky: #60A5FA;
+            --blue-pale: #93C5FD;
+            --gray-light: #F3F4F6;
+            --gray-warm: #9CA3AF;
+            --dark: #1E3A8A;
+            --light: #F3F4F6;
+            --primary: #3B82F6;
+            --primary-dark: #1E40AF;
+            --accent: #2563EB;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; line-height: 1.6; color: var(--dark); background: var(--light); }
+        h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+header { padding: 20px 0; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: fixed; width: 100%; top: 0; z-index: 100; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary); font-family: 'Sora', sans-serif; }
+        .logo span { color: var(--primary-dark); }
+        nav a { margin-left: 30px; color: var(--dark); text-decoration: none; font-weight: 500; opacity: 0.7; }
+        nav a:hover { color: var(--primary); opacity: 1; }
+        
+        .hero { padding: 120px 0 70px; background: linear-gradient(180deg, var(--gray-light) 0%, #fff 100%); text-align: center; }
+        .hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 16px; color: var(--dark); }
+        .hero .subtitle { font-size: 18px; color: var(--gray-warm); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .btn { display: inline-block; padding: 12px 28px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 15px; transition: all 0.3s; }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59,130,246,0.3); }
+        
+        .problem { padding: 60px 0; background: #fff; }
+        .problem h2 { text-align: center; font-size: 28px; margin-bottom: 30px; color: var(--dark); }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .stat { text-align: center; padding: 20px; background: var(--gray-light); border-radius: 12px; border: 1px solid var(--blue-pale); }
+        .stat .number { font-size: 36px; font-weight: 800; color: var(--primary); }
+        .stat .label { font-size: 14px; color: var(--gray-warm); margin-top: 8px; }
+        
+        .solution { padding: 60px 0; background: var(--gray-light); }
+        .solution h2 { text-align: center; font-size: 28px; margin-bottom: 30px; color: var(--dark); }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .feature { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
+        
+        .habits { padding: 60px 0; background: #fff; }
+        .habits h2 { text-align: center; font-size: 28px; margin-bottom: 16px; color: var(--dark); }
+        .habits-intro { text-align: center; max-width: 600px; margin: 0 auto 30px; }
+        .habits-intro p { font-size: 15px; color: #666; line-height: 1.6; }
+.habits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .habit { padding: 14px 12px; background: var(--light); border-radius: 8px; text-align: center; border-left: 3px solid var(--violet); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .habit:nth-child(2) { border-left-color: var(--lilac); }
+        .habit:nth-child(3) { border-left-color: var(--pistachio); }
+        .habit:nth-child(4) { border-left-color: var(--physalis); }
+        .habit:nth-child(5) { border-left-color: var(--violet); }
+        .habit:nth-child(6) { border-left-color: var(--lilac); }
+        .habit:nth-child(7) { border-left-color: var(--pistachio); }
+        .habit:nth-child(8) { border-left-color: var(--physalis); }
+        .habit .icon { font-size: 10px; font-weight: 600; color: var(--violet); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .habit h4 { font-size: 12px; color: var(--dark); margin-bottom: 4px; font-weight: 600; }
+        .habit .time { font-size: 10px; color: var(--gray-warm); font-weight: 500; }
+        .habit .metric { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(184,169,201,0.3); font-size: 10px; color: var(--gray-warm); }
+        .habit .metric span { display: block; font-size: 14px; font-weight: 700; color: var(--physalis); margin-top: 2px; }
+        
+        .pricing { padding: 60px 0; background: linear-gradient(180deg, #f8f6fa 0%, var(--light) 100%); }
+        .pricing h2 { text-align: center; font-size: 28px; margin-bottom: 30px; color: var(--dark); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
+        .price-card { background: #fff; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .price-card.featured { border: 2px solid var(--violet); transform: scale(1.03); }
+        .price-card .price { font-size: 28px; font-weight: 800; color: var(--dark); }
+        
+        .cta { padding: 70px 0; background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); text-align: center; color: #fff; }
+        .cta h2 { font-size: 28px; margin-bottom: 16px; }
+        .cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; }
+        
+        footer { padding: 30px 0; background: var(--dark); color: #fff; text-align: center; }
+        footer p { opacity: 0.7; font-size: 13px; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26,26,46,0.9); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-content { background: #fff; max-width: 800px; width: 100%; max-height: 90vh; border-radius: 16px; overflow: auto; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; color: #666; }
+        .modal-body { padding: 40px; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 28px; }
+            .hero .subtitle { font-size: 15px; }
+            .stats { grid-template-columns: 1fr 1fr; }
+            .habits-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .problem h2, .solution h2, .habits h2, .pricing h2, .cta h2 { font-size: 22px; }
+            .chart-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .chart-card { padding: 12px; }
+            .chart-card canvas { height: 100px !important; }
+        }
+        
+        .chart-gallery { padding: 60px 0; background: var(--light); }
+        .chart-gallery h2 { text-align: center; font-size: 28px; margin-bottom: 30px; color: var(--dark); }
+        .chart-gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .chart-card { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .chart-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+        .chart-card h4 { font-size: 12px; color: var(--dark); margin-bottom: 10px; font-weight: 600; }
+        .chart-card > div { width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; }
+        .chart-card > div svg { overflow: visible; }
+        .chart-card .chart-desc { font-size: 10px; color: var(--gray-warm); margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Healora<span>.ai</span></div>
+            <nav>
+                <a href="#problem">Problem</a>
+                <a href="#solution">Solution</a>
+                <a href="#habits">Habits</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>From Obesity to Longevity</h1>
+            <p class="subtitle">AI-powered Digital Twin transforms your health data into a personalized path to 5-10+ additional healthy years</p>
+            <a href="#cta" class="btn">Start Your Journey</a>
+            <a href="prototype/phone_mockup.html" class="btn" style="background:var(--blue-light);margin-left:12px;">📱 Посмотреть прототип</a>
+        </div>
+    </section>
+    
+    <section class="problem" id="problem">
+        <div class="container">
+            <h2>The Obesity Crisis</h2>
+            <div class="stats">
+                <div class="stat">
+                    <div class="number">50%</div>
+                    <div class="label">overweight in Russia<br>(doubled since 1990)</div>
+                </div>
+                <div class="stat">
+                    <div class="number">43%</div>
+                    <div class="label">of adults worldwide<br>are overweight</div>
+                </div>
+                <div class="stat">
+                    <div class="number">70-80%</div>
+                    <div class="label">regain weight<br>within 1-2 years</div>
+                </div>
+                <div class="stat">
+                    <div class="number">58%</div>
+                    <div class="label">diabetes risk reduction<br>with 5-7% weight loss</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="solution" id="solution">
+        <div class="container">
+            <h2>Your Digital Twin</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Multi-Source Data</h3>
+                    <p>Blood tests, genetics, wearables, diet logs, sleep & mental health — all unified into one model</p>
+                </div>
+                <div class="feature">
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Machine learning analyzes 6+ data sources to create your personalized health twin</p>
+                </div>
+                <div class="feature">
+                    <h3>Longevity Path</h3>
+                    <p>Daily micro-quests and recommendations adapted to your unique biology</p>
+                </div>
+                <div class="feature">
+                    <h3>Proven Results</h3>
+                    <p>71% logging adherence vs 38% control — clinically validated approach</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="habits" id="habits">
+        <div class="container">
+            <h2>8 Habits. 5-10+ Years</h2>
+            <div class="habits-intro">
+                <p>Our Digital Twin identifies which habits matter most for YOUR biology. Data-driven micro-quests tailored to your unique profile.</p>
+            </div>
+            <div class="habits-grid">
+                <div class="habit" onclick="openModal('h1')">
+                    <div class="icon">Habit 1</div>
+                    <h4>Late-night eating</h4>
+                    <div class="time">2-4 weeks to form</div>
+                    <div class="metric">Avg impact<span>-3.2 kg/yr</span></div>
+                </div>
+                <div class="habit" onclick="openModal('h2')">
+                    <div class="icon">Habit 2</div>
+                    <h4>Meal logging</h4>
+                    <div class="time">1 week to form</div>
+                    <div class="metric">Adherence<span>71%</span></div>
+                </div>
+                <div class="habit" onclick="openModal('h3')">
+                    <div class="icon">Habit 3</div>
+                    <h4>Daily steps</h4>
+                    <div class="time">1 week to form</div>
+                    <div class="metric">+2000 steps/day</div>
+                </div>
+                <div class="habit" onclick="openModal('h4')">
+                    <div class="icon">Habit 4</div>
+                    <h4>Sleep duration</h4>
+                    <div class="time">4 weeks to form</div>
+                    <div class="metric">+1 hr/night</div>
+                </div>
+                <div class="habit" onclick="openModal('h5')">
+                    <div class="icon">Habit 5</div>
+                    <h4>HRV / stress</h4>
+                    <div class="time">4 weeks to form</div>
+                    <div class="metric">HRV increase<span>+15%</span></div>
+                </div>
+                <div class="habit" onclick="openModal('h6')">
+                    <div class="icon">Habit 6</div>
+                    <h4>Diet optimization</h4>
+                    <div class="time">8 weeks to form</div>
+                    <div class="metric">Weight loss<span>-5-8 kg</span></div>
+                </div>
+                <div class="habit" onclick="openModal('h7')">
+                    <div class="icon">Habit 7</div>
+                    <h4>Medication</h4>
+                    <div class="time">4 weeks to form</div>
+                    <div class="metric">Adherence<span>90%+</span></div>
+                </div>
+                <div class="habit" onclick="openModal('h8')">
+                    <div class="icon">Habit 8</div>
+                    <h4>Emotional eating</h4>
+                    <div class="time">4 weeks to form</div>
+                    <div class="metric">Reduction<span>-30%</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="chart-gallery" id="charts">
+        <div class="container">
+            <h2>Your Health in Numbers</h2>
+            <div class="chart-gallery-grid">
+                <div class="chart-card" onclick="openModal('chart-dial')">
+                    <h4>Life Expectancy Dial</h4>
+                    <div id="chart-dial"></div>
+                    <div class="chart-desc">+5-10 years projected</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-weight')">
+                    <h4>Weight Projection</h4>
+                    <div id="chart-weight"></div>
+                    <div class="chart-desc">12-month trajectory</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-habits')">
+                    <h4>Habit Impact</h4>
+                    <div id="chart-habits"></div>
+                    <div class="chart-desc">kg & % changes</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-biomarker')">
+                    <h4>Biomarker Radar</h4>
+                    <div id="chart-biomarker"></div>
+                    <div class="chart-desc">HRV, sleep, glucose...</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-ring')">
+                    <h4>Adherence Ring</h4>
+                    <div id="chart-ring"></div>
+                    <div class="chart-desc">71% vs 38% baseline</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-timeline')">
+                    <h4>Weight Timeline</h4>
+                    <div id="chart-timeline"></div>
+                    <div class="chart-desc">Before / After</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-risk')">
+                    <h4>Risk Reduction</h4>
+                    <div id="chart-risk"></div>
+                    <div class="chart-desc">Diabetes / Hypertension</div>
+                </div>
+                <div class="chart-card" onclick="openModal('chart-network')">
+                    <h4>Digital Twin</h4>
+                    <div id="chart-network"></div>
+                    <div class="chart-desc">Biomarker network</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Simple Pricing</h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price">Free</div>
+                    <div class="period">forever</div>
+                    <ul>
+                        <li>Basic health assessment</li>
+                        <li>Habit tracking</li>
+                        <li>Community support</li>
+                    </ul>
+                    <a href="#cta" class="btn">Get Started</a>
+                </div>
+                <div class="price-card featured">
+                    <div class="price">$14.99</div>
+                    <div class="period">per month</div>
+                    <ul>
+                        <li>Full Digital Twin</li>
+                        <li>Personalized Longevity Path</li>
+                        <li>Advanced analytics</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#cta" class="btn">Go Premium</a>
+                </div>
+                <div class="price-card">
+                    <div class="price">$119.99</div>
+                    <div class="period">per year</div>
+                    <ul>
+                        <li>All Premium features</li>
+                        <li>2 months free</li>
+                        <li>Genetic add-on included</li>
+                    </ul>
+                    <a href="#cta" class="btn">Best Value</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>Ready to Transform Your Health?</h2>
+            <p>Join thousands on their journey to longevity</p>
+            <a href="mailto:hello@healora.ai" class="btn">Get Started</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2026 Healora. From Obesity to Longevity through Digital Twin.</p>
+        </div>
+    </footer>
+<div id="modal-h1" class="modal" onclick="closeModal('h1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h1')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Late-night eating</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">Studies show eating within 3 hours of sleep increases obesity risk by 40%. Our Digital Twin tracks your dinner timing and provides personalized cut-off recommendations based on your sleep schedule.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Avg annual impact</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">-3.2 kg</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-h2" class="modal" onclick="closeModal('h2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h2')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Meal logging</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">Digital Twin users log meals in just 30 seconds/day. Research shows meal logging doubles weight loss success. Our AI 自动 extracts nutrition from photos.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Adherence rate</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">71%</div>
+                    <div style="font-size:13px;color:var(--gray-warm);margin-top:5px;">vs 38% in control groups</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-h3" class="modal" onclick="closeModal('h3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h3')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Daily steps</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">Start with your baseline. Digital Twin adjusts +500 steps every 3 days until you hit your personalized target. Even 2,000 extra steps/day burns ~100kcal.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Weekly burn</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">+7000 steps</div>
+                    <div style="font-size:13px;color:var(--gray-warm);margin-top:5px;">~700kcal/week</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-h4" class="modal" onclick="closeModal('h4')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h4')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Sleep duration</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">Sleep &lt;6 hours increases obesity risk by 55%. Digital Twin optimizes your sleep window based on circadian rhythm and morning cortisol patterns.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Target</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">+1 hr</div>
+                    <div style="font-size:13px;color:var(--gray-warm);margin-top:5px;">per night</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-h5" class="modal" onclick="closeModal('h5')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h5')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">HRV / stress management</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">HRV (Heart Rate Variability) is your autonomic health score. Digital Twin tracks HRV from your wearable and suggests micro-recoveries when needed.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Avg improvement</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">+15%</div>
+                    <div style="font-size:13px;color:var(--gray-warm);margin-top:5px;">after 4 weeks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-h6" class="modal" onclick="closeModal('h6')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h6')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Diet optimization</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">No one-size-fits-all diet. Digital Twin analyzes your genetics, microbiome, and metabolic markers to find YOUR optimal macro ratio.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Expected result</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">-5-8 kg</div>
+                    <div style="font-size:13px;color:var(--gray-warm);margin-top:5px;">in 8 weeks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-h7" class="modal" onclick="closeModal('h7')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('h7')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Medication compliance</h3>
+                <p style="font-size:18px;line-height:1.8;color:#555;">Consistency matters. Digital Twin sends smart reminders timed to your daily routine, not just preset schedules.</p>
+                <div style="margin-top:30px;padding:20px;background:var(--light);border-radius:12px;">
+                    <div style="font-size:14px;color:var(--gray-warm);">Target adherence</div>
+                    <div style="font-size:32px;font-weight:700;color:var(--physalis);">90%+</div>
+                    <div style="font-size:13px;color:var(--gray-warm);margin-top:5px;">consistently</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            console.log('openModal:', id);
+            document.getElementById('modal-' + id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            document.getElementById('modal-' + id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+                document.body.style.overflow = '';
+            }
+        });
+
+        const c = { v: '#3B82F6', p: '#60A5FA', ph: '#1E40AF', l: '#93C5FD', d: '#1E3A8A' };
+        const w = 140, h = 100;
+        
+        // 1. Life Expectancy Dial (Arc)
+        (function() {
+            const svg = d3.select('#chart-dial').append('svg').attr('width', w).attr('height', h);
+            const g = svg.append('g').attr('transform', `translate(${w/2}, ${h/2})`);
+            const arc = d3.arc().innerRadius(30).outerRadius(45).startAngle(0).endAngle(Math.PI * 2 * 0.7);
+            g.append('path').attr('d', arc).attr('fill', '#e5e7eb');
+            const arcActive = d3.arc().innerRadius(30).outerRadius(45).startAngle(0).endAngle(0).cornerRadius(3);
+            g.append('path').attr('d', arcActive).attr('fill', c.v).transition().duration(1500).attrTween('d', function() {
+                const i = d3.interpolate(0, Math.PI * 2 * 0.7);
+                return t => arcActive.endAngle(i(t))();
+            });
+            g.append('text').attr('text-anchor', 'middle').attr('dy', '0.35em').attr('font-size', '18px').attr('font-weight', '700').attr('fill', c.d).text('+7');
+            g.append('text').attr('text-anchor', 'middle').attr('dy', '1.5em').attr('font-size', '8px').attr('fill', 'var(--gray-warm)').text('years');
+        })();
+
+        // 2. Weight Projection (Area)
+        (function() {
+            const data = [{m:0,v:85},{m:1,v:83},{m:2,v:81},{m:3,v:79.5},{m:4,v:78},{m:5,v:77},{m:6,v:76},{m:7,v:75},{m:8,v:74.5},{m:9,v:74},{m:10,v:73.5},{m:11,v:73}];
+            const svg = d3.select('#chart-weight').append('svg').attr('width', w).attr('height', h);
+            const x = d3.scaleLinear().domain([0,11]).range([10,w-10]);
+            const y = d3.scaleLinear().domain([70,88]).range([h-10,10]);
+            const area = d3.area().x(d => x(d.m)).y0(h-10).y1(d => y(d.v)).curve(d3.curveMonotoneX);
+            const line = d3.line().x(d => x(d.m)).y(d => y(d.v)).curve(d3.curveMonotoneX);
+            svg.append('path').datum(data).attr('fill', 'rgba(59,130,246,0.1)').attr('d', area);
+            const path = svg.append('path').datum(data).attr('fill', 'none').attr('stroke', c.v).attr('stroke-width', 2).attr('d', line);
+            const len = path.node().getTotalLength();
+            path.attr('stroke-dasharray', len).attr('stroke-dashoffset', len).transition().duration(2000).attr('stroke-dashoffset', 0);
+        })();
+
+        // 3. Habit Impact (Horizontal Bars)
+        (function() {
+            const data = [{l:'Eat',v:-3.2,c:c.v},{l:'Steps',v:2,c:c.p},{l:'Sleep',v:1,c:c.l},{l:'HRV',v:15,c:c.ph},{l:'Diet',v:-6,c:c.v}];
+            const svg = d3.select('#chart-habits').append('svg').attr('width', w).attr('height', h);
+            const y = d3.scaleBand().domain(data.map(d => d.l)).range([5,h-5]).padding(0.3);
+            const x = d3.scaleLinear().domain([-10,20]).range([10,w-10]);
+            data.forEach(d => {
+                const barW = Math.abs(x(d.v) - x(0));
+                svg.append('rect').attr('x', d.v < 0 ? x(0) - barW : x(0)).attr('y', y(d.l)).attr('width', 0).attr('height', y.bandwidth()).attr('fill', d.c).attr('rx', 2).transition().duration(1200).attr('width', barW);
+            });
+        })();
+
+        // 4. Biomarker Radar
+        (function() {
+            const data = ['HRV', 'Sleep', 'Glucose', 'Inflammation', 'BP', 'Weight'];
+            const values = [75, 80, 65, 70, 60, 55];
+            const svg = d3.select('#chart-biomarker').append('svg').attr('width', w).attr('height', h);
+            const g = svg.append('g').attr('transform', `translate(${w/2},${h/2})`);
+            const r = 35, angle = Math.PI * 2 / 6;
+            [0.5,1].forEach(p => g.append('circle').attr('r', p*r).attr('fill', 'none').attr('stroke', '#eee'));
+            data.forEach((d, i) => {
+                const a = i * angle - Math.PI/2, len = (values[i] / 100) * r;
+                g.append('path').attr('d', `M0,0L${Math.cos(a)*len},${Math.sin(a)*len}`).attr('stroke', c.v).attr('stroke-width', 2.5).attr('fill', 'none').attr('stroke-dasharray', len).attr('stroke-dashoffset', len).transition().duration(1000).delay(i*150).attr('stroke-dashoffset', 0);
+                g.append('circle').attr('cx', Math.cos(a)*len).attr('cy', Math.sin(a)*len).attr('r', 4).attr('fill', c.v);
+            });
+        })();
+
+        // 5. Adherence Ring
+        (function() {
+            const svg = d3.select('#chart-ring').append('svg').attr('width', w).attr('height', h);
+            const g = svg.append('g').attr('transform', `translate(${w/2},${h/2})`);
+            const arc = d3.arc().innerRadius(25).outerRadius(40).cornerRadius(20).startAngle(-Math.PI/2).endAngle(-Math.PI/2);
+            g.append('path').attr('d', arc.endAngle(Math.PI*1.5)).attr('fill', '#e5e7eb');
+            g.append('path').attr('d', arc.endAngle(-Math.PI/2)).attr('fill', c.p).transition().duration(1500).attrTween('d', function() {
+                const i = d3.interpolate(-Math.PI/2, Math.PI*2*0.71 - Math.PI/2);
+                return t => arc.endAngle(i(t))();
+            });
+            g.append('text').attr('text-anchor', 'middle').attr('dy', '0.35em').attr('font-size', '16px').attr('font-weight', '700').attr('fill', c.d).text('71%');
+        })();
+
+        // 6. Weight Timeline (Area)
+        (function() {
+            const before = [{m:0,v:90},{m:1,v:88},{m:2,v:86},{m:3,v:84},{m:4,v:82},{m:5,v:80}];
+            const after = [{m:0,v:85},{m:1,v:82},{m:2,v:79},{m:3,v:76},{m:4,v:74},{m:5,v:72}];
+            const svg = d3.select('#chart-timeline').append('svg').attr('width', w).attr('height', h);
+            const x = d3.scaleLinear().domain([0,5]).range([8,w-8]);
+            const y = d3.scaleLinear().domain([65,95]).range([h-8,8]);
+            [before, after].forEach((d, idx) => {
+                const area = d3.area().x((p,i) => x(i)).y0(h-8).y1(p => y(p.v)).curve(d3.curveMonotoneX);
+                const line = d3.line().x((p,i) => x(i)).y(p => y(p.v)).curve(d3.curveMonotoneX);
+                svg.append('path').datum(d).attr('fill', idx ? 'rgba(59,130,246,0.15)' : 'rgba(156,163,175,0.1)').attr('d', area);
+                svg.append('path').datum(d).attr('fill', 'none').attr('stroke', idx ? c.v : '#9ca3af').attr('stroke-width', 2).attr('d', line);
+            });
+        })();
+
+        // 7. Risk Reduction (Bars)
+        (function() {
+            const data = [{l:'Diabetes',b:35,a:12},{l:'Hypertension',b:40,a:18}];
+            const svg = d3.select('#chart-risk').append('svg').attr('width', w).attr('height', h);
+            const x = d3.scaleBand().domain(data.map(d => d.l)).range([5,w-5]).padding(0.4);
+            const y = d3.scaleLinear().domain([0,50]).range([h-5,5]);
+            data.forEach((d, i) => {
+                const dx = x(d.l), bw = x.bandwidth()/2;
+                // Before bar (gray)
+                svg.append('rect').attr('x', dx).attr('y', y(d.b)).attr('width', bw).attr('height', h-y(d.b)-5).attr('fill', '#9ca3af').attr('rx', 3);
+                // After bar - animate from bottom
+                const targetY = Math.min(y(d.b), y(d.a));
+                const targetH = Math.abs(y(d.b) - y(d.a));
+                svg.append('rect').attr('x', dx+bw).attr('y', h-5).attr('width', bw).attr('height', 0).attr('fill', c.p).attr('rx', 3)
+                    .transition().duration(1000).delay(i*200).attr('y', targetY).attr('height', targetH);
+            });
+        })();
+
+        // 8. Digital Twin Network
+        (function() {
+            const svg = d3.select('#chart-network').append('svg').attr('width', w).attr('height', h);
+            const nodes = [{x:40,y:35,r:14,l:'HRV',v:75,c:c.v},{x:100,y:30,r:12,l:'Sleep',v:80,c:c.p},{x:30,y:70,r:12,l:'Glucose',v:65,c:c.l},{x:90,y:80,r:14,l:'Weight',v:55,c:c.ph},{x:70,y:55,r:10,l:'BP',v:60,c:c.v},{x:55,y:25,r:10,l:'Stress',v:72,c:c.l}];
+            const links = [[0,1],[0,2],[0,3],[1,3],[2,3],[4,0],[5,0]];
+            links.forEach(([a,b]) => svg.append('line').attr('x1', nodes[a].x).attr('y1', nodes[a].y).attr('x2', nodes[b].x).attr('y2', nodes[b].y).attr('stroke', 'rgba(59,130,246,0.2)').attr('stroke-width', 1.5));
+            nodes.forEach(n => {
+                svg.append('circle').attr('cx', n.x).attr('cy', n.y).attr('r', 0).attr('fill', n.c).transition().duration(500).attr('r', n.r);
+                svg.append('text').attr('x', n.x).attr('y', n.y).attr('text-anchor', 'middle').attr('dy', '0.35em').attr('font-size', '7px').attr('fill', '#fff').attr('font-weight', '600').text(n.l);
+            });
+        })();
+    </script>
+
+    <div id="modal-chart-dial" class="modal" onclick="closeModal('chart-dial')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-dial')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Life Expectancy Dial</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">Based on clinical data from 10,000+ users, proper habit adoption projects 5-10 additional healthy years.</p>
+                <div id="modal-dial-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-weight" class="modal" onclick="closeModal('chart-weight')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-weight')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Weight Loss Projection</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">Projected weight trajectory over 12 months with Digital Twin optimization.</p>
+                <div id="modal-weight-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-habits" class="modal" onclick="closeModal('chart-habits')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-habits')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Habit Impact Analysis</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">Impact of each habit on health metrics.</p>
+                <div id="modal-habits-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-biomarker" class="modal" onclick="closeModal('chart-biomarker')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-biomarker')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Biomarker Radar</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">Your biomarker profile normalized to optimal ranges.</p>
+                <div id="modal-biomarker-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-ring" class="modal" onclick="closeModal('chart-ring')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-ring')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Adherence Ring</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">71% adherence vs 38% baseline in control groups.</p>
+                <div id="modal-ring-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-timeline" class="modal" onclick="closeModal('chart-timeline')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-timeline')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Weight Timeline</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">Before/After comparison showing realistic 6-month transformation.</p>
+                <div id="modal-timeline-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-risk" class="modal" onclick="closeModal('chart-risk')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-risk')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Risk Reduction</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">Risk reduction for major conditions with proper habit adoption.</p>
+                <div id="modal-risk-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-chart-network" class="modal" onclick="closeModal('chart-network')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal('chart-network')">&times;</span>
+            <div class="modal-body">
+                <h3 style="color:var(--violet);margin-bottom:20px;">Digital Twin Network</h3>
+                <p style="font-size:16px;line-height:1.7;color:#555;">How your biomarkers interconnect and influence recommendations.</p>
+                <div id="modal-network-chart" style="height:320px;display:flex;align-items:center;justify-content:center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal charts (larger D3)
+        (function() {
+            const mw = 350, mh = 280, c = { v: '#3B82F6', p: '#60A5FA', ph: '#1E40AF', l: '#93C5FD', d: '#1E3A8A' };
+            
+            // Dial
+            (function() {
+                const svg = d3.select('#modal-dial-chart').append('svg').attr('width', mw).attr('height', mh);
+                const g = svg.append('g').attr('transform', `translate(${mw/2}, ${mh/2})`);
+                const arc = d3.arc().innerRadius(70).outerRadius(110).startAngle(0);
+                g.append('path').attr('d', arc.endAngle(Math.PI*2)).attr('fill', '#e5e7eb');
+                g.append('path').attr('d', arc.endAngle(0)).attr('fill', c.v).transition().duration(1500).attrTween('d', function() {
+                    return t => arc.endAngle(t * Math.PI * 2 * 0.7)();
+                });
+                g.append('text').attr('text-anchor', 'middle').attr('dy', '-0.2em').attr('font-size', '42px').attr('font-weight', '700').attr('fill', c.d).text('+7');
+                g.append('text').attr('text-anchor', 'middle').attr('dy', '1.5em').attr('font-size', '14px').attr('fill', 'var(--gray-warm)').text('years gained');
+            })();
+
+            // Weight
+            (function() {
+                const data = [{m:0,v:85},{m:1,v:83},{m:2,v:81},{m:3,v:79.5},{m:4,v:78},{m:5,v:77},{m:6,v:76},{m:7,v:75},{m:8,v:74.5},{m:9,v:74},{m:10,v:73.5},{m:11,v:73}];
+                const svg = d3.select('#modal-weight-chart').append('svg').attr('width', mw).attr('height', mh);
+                const x = d3.scaleLinear().domain([0,11]).range([40,mw-40]);
+                const y = d3.scaleLinear().domain([70,90]).range([mh-40,40]);
+                const area = d3.area().x(d => x(d.m)).y0(mh-40).y1(d => y(d.v)).curve(d3.curveMonotoneX);
+                const line = d3.line().x(d => x(d.m)).y(d => y(d.v)).curve(d3.curveMonotoneX);
+                svg.append('path').datum(data).attr('fill', 'rgba(59,130,246,0.12)').attr('d', area);
+                svg.append('path').datum(data).attr('fill', 'none').attr('stroke', c.v).attr('stroke-width', 3).attr('d', line);
+            })();
+
+            // Habits
+            (function() {
+                const data = [{l:'Late-night eating',v:-3.2,c:c.v},{l:'Daily steps',v:2,c:c.p},{l:'Sleep',v:1,c:c.l},{l:'HRV',v:15,c:c.ph},{l:'Diet',v:-6.5,c:c.v},{l:'Medication',v:90,c:c.p},{l:'Emotional',v:-30,c:c.l}];
+                const svg = d3.select('#modal-habits-chart').append('svg').attr('width', mw).attr('height', mh);
+                const x = d3.scaleBand().domain(data.map(d => d.l)).range([40,mw-40]).padding(0.35);
+                const y = d3.scaleLinear().domain([-40,100]).range([mh-40,40]);
+                data.forEach((d, i) => {
+                    const barHeight = Math.abs(y(d.v) - y(0));
+                    const barY = d.v < 0 ? y(0) - barHeight : y(0);
+                    svg.append('rect').attr('x', x(d.l)).attr('y', mh-40).attr('width', x.bandwidth()).attr('height', 0).attr('fill', d.c).attr('rx', 4)
+                        .transition().duration(800).delay(i*100).attr('y', barY).attr('height', barHeight);
+                });
+                svg.append('line').attr('x1', 40).attr('x2', mw-40).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', '#ccc');
+            })();
+
+            // Radar
+            (function() {
+                const labels = ['HRV','Sleep','Glucose','Inflam.','BP','Weight','Mental','Energy'];
+                const values = [75,80,65,70,60,55,72,68];
+                const svg = d3.select('#modal-biomarker-chart').append('svg').attr('width', mw).attr('height', mh);
+                const g = svg.append('g').attr('transform', `translate(${mw/2},${mh/2})`);
+                const r = 100, angle = Math.PI * 2 / 8;
+                [0.25,0.5,0.75,1].forEach(p => g.append('circle').attr('r', p*r).attr('fill', 'none').attr('stroke', '#eee').attr('stroke-dasharray', '4,4'));
+                const pts = labels.map((d,i) => { const a = i*angle-Math.PI/2; return [Math.cos(a)*(values[i]/100)*r, Math.sin(a)*(values[i]/100)*r]; });
+                g.append('polygon').attr('points', pts.map(p => p.join(',')).join(' ')).attr('fill', 'rgba(59,130,246,0.15)').attr('stroke', c.v).attr('stroke-width', 2);
+                labels.forEach((d,i) => { const a = i*angle-Math.PI/2, len = (values[i]/100)*r; g.append('circle').attr('cx', Math.cos(a)*len).attr('cy', Math.sin(a)*len).attr('r', 5).attr('fill', c.v); });
+            })();
+
+            // Ring
+            (function() {
+                const svg = d3.select('#modal-ring-chart').append('svg').attr('width', mw).attr('height', mh);
+                const g = svg.append('g').attr('transform', `translate(${mw/2},${mh/2})`);
+                const arc = d3.arc().innerRadius(80).outerRadius(120).cornerRadius(40).startAngle(-Math.PI/2);
+                g.append('path').attr('d', arc.endAngle(Math.PI*1.5)).attr('fill', '#e5e7eb');
+                g.append('path').attr('d', arc.endAngle(-Math.PI/2)).attr('fill', c.p).transition().duration(1500).attrTween('d', function() {
+                    return t => arc.endAngle(-Math.PI/2 + t * Math.PI*2*0.71)();
+                });
+                g.append('text').attr('text-anchor', 'middle').attr('dy', '-0.2em').attr('font-size', '48px').attr('font-weight', '700').attr('fill', c.d).text('71%');
+                g.append('text').attr('text-anchor', 'middle').attr('dy', '1.8em').attr('font-size', '14px').attr('fill', 'var(--gray-warm)').text('adherence');
+            })();
+
+            // Timeline
+            (function() {
+                const before = [{m:0,v:90},{m:1,v:88},{m:2,v:86},{m:3,v:84},{m:4,v:82},{m:5,v:80}];
+                const after = [{m:0,v:85},{m:1,v:82},{m:2,v:79},{m:3,v:76},{m:4,v:74},{m:5,v:72}];
+                const svg = d3.select('#modal-timeline-chart').append('svg').attr('width', mw).attr('height', mh);
+                const x = d3.scaleLinear().domain([0,5]).range([50,mw-50]);
+                const y = d3.scaleLinear().domain([65,95]).range([mh-40,40]);
+                [before, after].forEach((d, idx) => {
+                    const area = d3.area().x((p,i) => x(i)).y0(mh-40).y1(p => y(p.v)).curve(d3.curveMonotoneX);
+                    const line = d3.line().x((p,i) => x(i)).y(p => y(p.v)).curve(d3.curveMonotoneX);
+                    svg.append('path').datum(d).attr('fill', idx ? 'rgba(59,130,246,0.15)' : 'rgba(156,163,175,0.12)').attr('d', area);
+                    svg.append('path').datum(d).attr('fill', 'none').attr('stroke', idx ? c.v : '#9ca3af').attr('stroke-width', 3).attr('d', line);
+                });
+            })();
+
+            // Risk - fixed
+            (function() {
+                const data = [{l:'Diabetes',b:35,a:12},{l:'Hypertension',b:40,a:18}];
+                const svg = d3.select('#modal-risk-chart').append('svg').attr('width', mw).attr('height', mh);
+                const x = d3.scaleBand().domain(data.map(d => d.l)).range([60,mw-60]).padding(0.4);
+                const y = d3.scaleLinear().domain([0,50]).range([mh-40,40]);
+                data.forEach((d, i) => {
+                    const dx = x(d.l), bw = x.bandwidth()/2;
+                    // Before bar
+                    svg.append('rect').attr('x', dx).attr('y', y(d.b)).attr('width', bw).attr('height', mh-y(d.b)-40).attr('fill', '#9ca3af').attr('rx', 4);
+                    // After bar - animate from 0 height going up
+                    const barHeight = Math.abs(y(d.b) - y(d.a));
+                    const targetY = Math.min(y(d.b), y(d.a));
+                    svg.append('rect').attr('x', dx+bw).attr('y', mh-40).attr('width', bw).attr('height', 0).attr('fill', c.p).attr('rx', 4)
+                        .transition().duration(1000).delay(i*150)
+                        .attr('y', targetY).attr('height', barHeight);
+                });
+            })();
+
+            // Network
+            (function() {
+                const svg = d3.select('#modal-network-chart').append('svg').attr('width', mw).attr('height', mh);
+                const nodes = [{x:175,y:60,r:45,l:'HRV',v:75,c:c.v},{x:280,y:100,r:35,l:'Sleep',v:80,c:c.p},{x:80,y:130,r:38,l:'Glucose',v:65,c:c.l},{x:220,y:200,r:40,l:'Weight',v:55,c:c.ph},{x:120,y:220,r:30,l:'BP',v:60,c:c.v},{x:150,y:80,r:28,l:'Stress',v:72,c:c.l}];
+                const links = [[0,1],[0,2],[0,3],[1,3],[2,3],[4,0],[5,0]];
+                links.forEach(([a,b]) => svg.append('line').attr('x1', nodes[a].x).attr('y1', nodes[a].y).attr('x2', nodes[b].x).attr('y2', nodes[b].y).attr('stroke', 'rgba(59,130,246,0.15)').attr('stroke-width', 2));
+                nodes.forEach(n => {
+                    svg.append('circle').attr('cx', n.x).attr('cy', n.y).attr('r', 0).attr('fill', n.c).transition().duration(500).attr('r', n.r);
+                    svg.append('text').attr('x', n.x).attr('y', n.y).attr('text-anchor', 'middle').attr('dy', '0.35em').attr('font-size', '11px').attr('fill', '#fff').attr('font-weight', '600').text(n.l);
+                });
+            })();
+        })();
+    </script>
+</body>
+</html>

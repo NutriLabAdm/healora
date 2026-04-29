@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Нутричат — Прототип интервенций</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+h1 { font-size: 24px; margin-bottom: 8px; background: linear-gradient(90deg, #4CAF50, #2196F3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { color: #888; margin-bottom: 30px; font-size: 14px; }
+.phone-container { position: relative; width: 340px; height: 680px; background: #1a1a2e; border-radius: 40px; border: 8px solid #2a2a3e; box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05); overflow: hidden; }
+.phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 24px; background: #2a2a3e; border-radius: 0 0 16px 16px; z-index: 10; }
+.phone-screen { width: 100%; height: 100%; overflow: hidden; position: relative; background: #f5f5f5; }
+.screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 50px 16px 80px; overflow-y: auto; display: none; color: #333; }
+.screen.active { display: block; }
+.screen-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.screen-header h2 { font-size: 18px; color: #1a1a2e; }
+.back-btn { width: 32px; height: 32px; border-radius: 50%; background: #e0e0e0; border: none; font-size: 18px; cursor: pointer; }
+.status-bar { position: fixed; top: 0; left: 0; right: 0; height: 44px; background: linear-gradient(135deg, #4CAF50, #2196F3); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #fff; z-index: 5; }
+.points { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 12px; font-size: 11px; }
+.bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #fff; border-top: 1px solid #e0e0e0; display: flex; justify-content: space-around; align-items: center; padding-bottom: 8px; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: #999; cursor: pointer; border: none; background: none; }
+.nav-item.active { color: #4CAF50; }
+.nav-icon { font-size: 20px; }
+.chat-bubble { background: #fff; border-radius: 16px; padding: 12px 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); max-width: 85%; }
+.chat-bubble.ai { border-left: 3px solid #4CAF50; }
+.chat-bubble.user { margin-left: auto; background: #4CAF50; color: #fff; border-left: none; }
+.task-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 12px; }
+.task-card.done { opacity: 0.6; text-decoration: line-through; }
+.task-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #4CAF50; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.task-check.checked { background: #4CAF50; color: #fff; font-size: 12px; }
+.task-info { flex: 1; }
+.task-title { font-size: 14px; font-weight: 500; }
+.task-points { font-size: 11px; color: #4CAF50; font-weight: 600; }
+.streak-bar { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.streak-days { display: flex; gap: 8px; margin-top: 12px; }
+.streak-day { width: 36px; height: 36px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.streak-day.active { background: #4CAF50; color: #fff; }
+.goal-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.goal-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.goal-icon { font-size: 24px; }
+.goal-title { font-size: 15px; font-weight: 600; }
+.goal-progress { height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; }
+.goal-progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #2196F3); border-radius: 3px; transition: width 0.3s; }
+.camera-view { width: 100%; height: 200px; background: linear-gradient(135deg, #333, #555); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 48px; margin-bottom: 16px; }
+.food-result { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.food-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.food-label { font-size: 13px; color: #666; }
+.food-value { font-size: 13px; font-weight: 600; }
+.achievement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.achievement-badge { background: #fff; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.achievement-badge.locked { opacity: 0.4; }
+.badge-icon { font-size: 32px; margin-bottom: 8px; }
+.badge-name { font-size: 12px; font-weight: 600; }
+.intervention-tag { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-bottom: 8px; }
+.tag-reminder { background: #FFF3E0; color: #E65100; }
+.tag-goal { background: #E8F5E9; color: #2E7D32; }
+.tag-recognition { background: #E3F2FD; color: #1565C0; }
+.btn { padding: 10px 20px; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; font-size: 13px; }
+.btn-primary { background: linear-gradient(135deg, #4CAF50, #2196F3); color: #fff; }
+.btn-outline { background: transparent; border: 2px solid #4CAF50; color: #4CAF50; }
+.mood-indicator { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.mood-happy { background: #4CAF50; }
+.mood-sad { background: #FF9800; }
+.mood-focus { background: #2196F3; }
+.screen-selector { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+.screen-btn { padding: 8px 16px; border-radius: 20px; border: 2px solid #4CAF50; background: transparent; color: #4CAF50; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+.screen-btn:hover, .screen-btn.active { background: #4CAF50; color: #fff; }
+</style>
+</head>
+<body>
+<h1>🥗 Нутричат — Прототип интервенций</h1>
+<p class="subtitle">5 главных экранов: распознавание • напоминания • цели</p>
+<div class="phone-container">
+  <div class="phone-notch"></div>
+  <div class="phone-screen">
+    <div class="status-bar">NutriChat <span class="points">⭐ 840</span></div>
+    <!-- Экран 1: Чат-интервенции -->
+    <div class="screen active" id="screen1">
+      <div class="screen-header"><h2>💬 AI-Коуч</h2><span class="mood-indicator mood-happy"></span></div>
+      <div class="intervention-tag tag-reminder">Напоминание</div>
+      <div class="chat-bubble ai">
+        <b>🔥 Доброе утро!</b><br>Твоя серия: 5 дней подряд! Сегодня план:
+      </div>
+      <div class="task-card" onclick="toggleTask(this)">
+        <div class="task-check">✓</div>
+        <div class="task-info">
+          <div class="task-title">Выпить 500мл воды до завтрака</div>
+          <div class="task-points">+5 очков</div>
+        </div>
+      </div>
+      <div class="task-card" onclick="toggleTask(this)">
+        <div class="task-check"></div>
+        <div class="task-info">
+          <div class="task-title">Добавить белок к завтраку</div>
+          <div class="task-points">+15 очков</div>
+        </div>
+      </div>
+      <div class="task-card" onclick="toggleTask(this)">
+        <div class="task-check"></div>
+        <div class="task-info">
+          <div class="task-title">15 мин зарядки</div>
+          <div class="task-points">+20 очков</div>
+        </div>
+      </div>
+      <div class="chat-bubble ai" style="margin-top:12px">
+        <b>🎯 Текущая цель:</b> Снижение веса 2кг/мес<br>Прогресс: 1.2кг из 2кг
+      </div>
+      <div class="chat-bubble user">Ок, сделаю!</div>
+    </div>
+    <!-- Экран 2: Распознавание еды -->
+    <div class="screen" id="screen2">
+      <div class="screen-header"><h2>📷 Распознавание</h2></div>
+      <div class="intervention-tag tag-recognition">Распознавание</div>
+      <div class="camera-view">📸</div>
+      <div style="text-align:center;margin-bottom:12px">
+        <button class="btn btn-primary">Сделать фото</button>
+        <button class="btn btn-outline">Загрузить</button>
+      </div>
+      <div class="food-result">
+        <div style="font-weight:600;margin-bottom:12px">Распознано: Овсянка с ягодами</div>
+        <div class="food-item"><span class="food-label">Калории</span><span class="food-value">320 ккал</span></div>
+        <div class="food-item"><span class="food-label">Белки</span><span class="food-value">12г</span></div>
+        <div class="food-item"><span class="food-label">Жиры</span><span class="food-value">8г</span></div>
+        <div class="food-item"><span class="food-label">Углеводы</span><span class="food-value">52г</span></div>
+        <div class="food-item"><span class="food-label">Клетчатка</span><span class="food-value">6г</span></div>
+        <div style="margin-top:12px;text-align:center">
+          <button class="btn btn-primary">Добавить в дневник +10</button>
+        </div>
+      </div>
+    </div>
+    <!-- Экран 3: Напоминания -->
+    <div class="screen" id="screen3">
+      <div class="screen-header"><h2>🔔 Напоминания</h2></div>
+      <div class="intervention-tag tag-reminder">Напоминание</div>
+      <div class="streak-bar">
+        <div style="font-weight:600">🔥 Серия: 5 дней</div>
+        <div class="streak-days">
+          <div class="streak-day active">Пн</div>
+          <div class="streak-day active">Вт</div>
+          <div class="streak-day active">Ср</div>
+          <div class="streak-day active">Чт</div>
+          <div class="streak-day active">Пт</div>
+          <div class="streak-day">Сб</div>
+          <div class="streak-day">Вс</div>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="task-check checked">✓</div>
+        <div class="task-info"><div class="task-title">Завтрак: записан</div><div class="task-points">+15 ✅</div></div>
+      </div>
+      <div class="task-card">
+        <div class="task-check"></div>
+        <div class="task-info"><div class="task-title">Обед: напоминание в 13:00</div><div class="task-points">+15</div></div>
+      </div>
+      <div class="task-card">
+        <div class="task-check"></div>
+        <div class="task-info"><div class="task-title">Ужин: план готов</div><div class="task-points">+15</div></div>
+      </div>
+      <div class="task-card">
+        <div class="task-check"></div>
+        <div class="task-info"><div class="task-title">Вода: 1.5/2л</div><div class="task-points">+10</div></div>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn btn-outline">⚙️ Настроить время</button>
+      </div>
+    </div>
+    <!-- Экран 4: Цели -->
+    <div class="screen" id="screen4">
+      <div class="screen-header"><h2>🎯 Мои цели</h2></div>
+      <div class="intervention-tag tag-goal">Цели</div>
+      <div class="goal-card">
+        <div class="goal-header"><span class="goal-icon">⚖️</span><span class="goal-title">Снижение веса</span></div>
+        <div style="font-size:13px;color:#666;margin-bottom:8px">Текущий: 72кг → Цель: 70кг</div>
+        <div class="goal-progress"><div class="goal-progress-fill" style="width:60%"></div></div>
+        <div style="font-size:11px;color:#4CAF50;margin-top:4px">1.2кг сброшено (60%)</div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-header"><span class="goal-icon">🥗</span><span class="goal-title">Белок 100г/день</span></div>
+        <div style="font-size:13px;color:#666;margin-bottom:8px">Среднее: 85г/день</div>
+        <div class="goal-progress"><div class="goal-progress-fill" style="width:85%"></div></div>
+        <div style="font-size:11px;color:#4CAF50;margin-top:4px">85% выполнения</div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-header"><span class="goal-icon">💧</span><span class="goal-title">Вода 2л/день</span></div>
+        <div style="font-size:13px;color:#666;margin-bottom:8px">Среднее: 1.8л/день</div>
+        <div class="goal-progress"><div class="goal-progress-fill" style="width:90%"></div></div>
+        <div style="font-size:11px;color:#4CAF50;margin-top:4px">90% выполнения</div>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn btn-primary">+ Новая цель</button>
+      </div>
+    </div>
+    <!-- Экран 5: Достижения -->
+    <div class="screen" id="screen5">
+      <div class="screen-header"><h2>🏆 Достижения</h2></div>
+      <div class="intervention-tag tag-goal">Прогресс</div>
+      <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+        <div style="font-size:28px;font-weight:700;color:#4CAF50">840 / 1200</div>
+        <div style="font-size:12px;color:#666">Всего очков</div>
+        <div class="goal-progress" style="margin-top:8px"><div class="goal-progress-fill" style="width:70%"></div></div>
+      </div>
+      <div class="achievement-grid">
+        <div class="achievement-badge"><div class="badge-icon">🌱</div><div class="badge-name">Первый шаг</div></div>
+        <div class="achievement-badge"><div class="badge-icon">🔥</div><div class="badge-name">На огне (7 дней)</div></div>
+        <div class="achievement-badge"><div class="badge-icon">⚖️</div><div class="badge-name">Минус 2кг</div></div>
+        <div class="achievement-badge locked"><div class="badge-icon">🏃</div><div class="badge-name">Марафонец</div></div>
+        <div class="achievement-badge locked"><div class="badge-icon">🥗</div><div class="badge-name">Шеф-повар</div></div>
+        <div class="achievement-badge locked"><div class="badge-icon">💎</div><div class="badge-name">Мастер</div></div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <button class="nav-item active" onclick="showScreen('screen1')"><span class="nav-icon">💬</span>Чат</button>
+      <button class="nav-item" onclick="showScreen('screen2')"><span class="nav-icon">📷</span>Скан</button>
+      <button class="nav-item" onclick="showScreen('screen3')"><span class="nav-icon">🔔</span>Напоминания</button>
+      <button class="nav-item" onclick="showScreen('screen4')"><span class="nav-icon">🎯</span>Цели</button>
+      <button class="nav-item" onclick="showScreen('screen5')"><span class="nav-icon">🏆</span>Профиль</button>
+    </div>
+  </div>
+</div>
+<div class="screen-selector">
+  <button class="screen-btn active" onclick="showScreen('screen1')">1. AI-Коуч</button>
+  <button class="screen-btn" onclick="showScreen('screen2')">2. Распознавание</button>
+  <button class="screen-btn" onclick="showScreen('screen3')">3. Напоминания</button>
+  <button class="screen-btn" onclick="showScreen('screen4')">4. Цели</button>
+  <button class="screen-btn" onclick="showScreen('screen5')">5. Достижения</button>
+</div>
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.screen-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = {'screen1':0,'screen2':1,'screen3':2,'screen4':3,'screen5':4}[id];
+  document.querySelectorAll('.nav-item')[idx].classList.add('active');
+  document.querySelectorAll('.screen-btn')[idx].classList.add('active');
+}
+function toggleTask(el) {
+  const check = el.querySelector('.task-check');
+  if (check.classList.contains('checked')) {
+    check.classList.remove('checked'); check.textContent = '';
+    el.classList.remove('done');
+  } else {
+    check.classList.add('checked'); check.textContent = '✓';
+    el.classList.add('done');
+  }
+}
+</script>
+</body>
+</html>
