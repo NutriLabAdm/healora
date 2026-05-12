@@ -124,6 +124,7 @@ const UserAvatarPanel = ({ selectedProfile, onSelectProfile, onEditProfile, isEd
                 <div className="status-dot" style={{
                   background: getStatusColor(profile.digital_twin_scores?.risk_level)
                 }}></div>
+                <div className="profile-id">{profile.profile_id}</div>
               </div>
 
               <div className="profile-info">
@@ -138,7 +139,6 @@ const UserAvatarPanel = ({ selectedProfile, onSelectProfile, onEditProfile, isEd
                     </button>
                   )}
                 </div>
-                <div className="profile-id">{profile.profile_id}</div>
                 <div className="profile-params">
                   <span className={`param ${getBMIStatus(profile.anthropometrics?.bmi)}`}>
                     BMI {profile.anthropometrics?.bmi}
