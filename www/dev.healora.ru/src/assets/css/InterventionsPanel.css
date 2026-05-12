@@ -363,7 +363,7 @@
 .backlog-modal {
   background: white;
   border-radius: 10px;
-  width: 380px;
+  width: 580px;
   max-height: 80vh;
   overflow-y: auto;
   box-shadow: 0 8px 30px rgba(0,0,0,0.2);
