@@ -228,5 +228,76 @@
     "comment": null,
     "updated_at": "2026-05-12T09:58:38.045Z",
     "created_at": "2026-05-12T09:58:38.045Z"
+  },
+  "P005_0": {
+    "profile_id": "P005",
+    "day": 0,
+    "meals": [
+      {
+        "type": "breakfast",
+        "photo": "/images/food/15. сибас.jpg",
+        "description": "Сибас запечённый с овощами",
+        "time": "08:00",
+        "duration": 20,
+        "calories": 380,
+        "protein": 34,
+        "fat": 22,
+        "carbs": 10,
+        "ndi": 9.2,
+        "recommendations": "Подавать с киноа или бурым рисом для углеводов; Чередовать с другими видами рыбы (лосось, треска); Использовать минимальное количество соли"
+      },
+      {
+        "type": "lunch",
+        "photo": null,
+        "description": "",
+        "time": "13:00",
+        "duration": 30,
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "ndi": null,
+        "recommendations": null
+      },
+      {
+        "type": "dinner",
+        "photo": "/images/food/13. гарвардская тарелка.jpg",
+        "description": "Гарвардская тарелка",
+        "time": "19:00",
+        "duration": 30,
+        "calories": 480,
+        "protein": 35,
+        "fat": 18,
+        "carbs": 35,
+        "ndi": 9.5,
+        "recommendations": "Добавить ягоды для антиоксидантов; Чередовать киноа с чечевицей; Экспериментировать с разными видами зелени"
+      },
+      {
+        "type": "snack",
+        "photo": null,
+        "description": "",
+        "time": "16:00",
+        "duration": 10,
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "ndi": null,
+        "recommendations": null
+      }
+    ],
+    "water_ml": 0,
+    "mood": {
+      "energy": "",
+      "mood": "",
+      "sleep": "",
+      "stress": "",
+      "digestion": ""
+    },
+    "voice_note": null,
+    "audio": null,
+    "comment": null,
+    "updated_at": "2026-05-12T11:12:26.561Z",
+    "created_at": "2026-05-12T11:12:26.561Z"
   }
 }
