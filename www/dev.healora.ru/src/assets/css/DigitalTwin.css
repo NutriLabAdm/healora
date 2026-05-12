@@ -1902,6 +1902,8 @@
   cursor: pointer; transition: all 0.2s;
 }
 .chat-start-btn:hover { background: #00e676; transform: scale(1.05); }
+.chat-start-btn.stop { background: #d32f2f; }
+.chat-start-btn.stop:hover { background: #f44336; }
 
 .chat-sim-badge {
   font-size: 10px; color: rgba(255,255,255,0.8);

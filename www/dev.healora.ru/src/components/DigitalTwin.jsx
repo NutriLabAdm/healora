@@ -2038,7 +2038,15 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       </button>
                     )}
                     {isSimulating && (
-                      <span className="chat-sim-badge">Симуляция...</span>
+                      <>
+                        <span className="chat-sim-badge">Симуляция...</span>
+                        <button className="chat-start-btn stop" onClick={stopSimulation}>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                            <rect x="6" y="6" width="12" height="12"/>
+                          </svg>
+                          Стоп
+                        </button>
+                      </>
                     )}
                     <button className="chat-close-btn" onClick={() => setShowChat(false)}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
@@ -2060,10 +2068,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       sleep: '#2196f3', physical: '#4caf50', mental: '#9c27b0',
                       food: '#ff9800', medical: '#f44336', supplement: '#795548',
                     };
-                    const minDay = Math.max(0, simulationDay - 3);
-                    const filtered = chatMessages.filter(msg => msg.day >= minDay && msg.day <= simulationDay);
                     const grouped = {};
-                    filtered.forEach(msg => {
+                    chatMessages.forEach(msg => {
                       if (!grouped[msg.day]) grouped[msg.day] = [];
                       grouped[msg.day].push(msg);
                     });
