@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import '../assets/css/InterventionsPanel.css';
+import supplementsCatalog from '../assets/data/supplements_catalog.json';
 
 const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, onRemoveFromCart }) => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [tab, setTab] = useState('interventions');
   const [expandedProtocol, setExpandedProtocol] = useState(null);
   const [showBacklog, setShowBacklog] = useState(false);
+  const [selectedSupplement, setSelectedSupplement] = useState(null);
 
   const categories = [
     { key: 'all', label: 'Все', color: '#6b21c8' },
@@ -72,9 +74,11 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
     { id: 'LONGEVITY', name: 'Долголетие', category: 'nutritional', goal: 'Комплексная программа для активного долголетия', interventions: ['04_1','04_6','02_1','02_2','03_6','05_1','05_2','07_1'], red_flags: [{metric:'Показатель Healora Score',threshold:'<60',action:'Комплексная коррекция образа жизни'},{metric:'Биологический возраст',threshold:'>хронологического на 5+ лет',action:'Интенсификация протокола'}], recommendations:['Ограничение калорий (CR)','ВИИТ + силовые','Противовоспалительная диета','D3 5000 МЕ/день','Омега-3 2-3 г/день','Чекап раз в год'] },
   ];
 
-  const filteredInterventions = activeCategory === 'all'
-    ? interventions
-    : interventions.filter(i => i.category === activeCategory);
+  const filteredInterventions = activeCategory === 'supplement'
+    ? supplementsCatalog
+    : activeCategory === 'all'
+      ? [...interventions, ...supplementsCatalog]
+      : interventions.filter(i => i.category === activeCategory);
 
   const getImpactColor = (impact) => {
     if (impact >= 9) return '#d50000';
@@ -134,26 +138,40 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
             <div className="table-header">
               <span className="col-code">Код</span>
               <span className="col-name">Название</span>
+              {activeCategory === 'supplement' && <span className="col-class">Тип</span>}
               <span className="col-impact">I</span>
               <span className="col-evidence">E</span>
               <span className="col-regularity">Период</span>
-              <span className="col-status">Статус</span>
+              {activeCategory !== 'supplement' && <span className="col-status">Статус</span>}
             </div>
             {filteredInterventions.map(intervention => (
               <div
                 key={intervention.code}
-                className={`table-row ${isInCart(intervention.code) ? 'in-cart' : ''}`}
-                draggable
+                className={`table-row ${isInCart(intervention.code) ? 'in-cart' : ''} ${intervention.classification ? 'sup-row' : ''}`}
+                draggable={!intervention.classification}
                 onDragStart={(e) => {
-                  e.dataTransfer.setData('application/json', JSON.stringify(intervention));
-                  if (onDragStart) onDragStart(intervention);
+                  if (!intervention.classification) {
+                    e.dataTransfer.setData('application/json', JSON.stringify(intervention));
+                    if (onDragStart) onDragStart(intervention);
+                  }
                 }}
-                onClick={() => toggleCart(intervention)}
-                style={{ cursor: 'grab', borderLeftColor: getCategoryColor(intervention.category) }}
-                title="Клик: добавить/убрать из корзины, перетащите на таймлайн"
+                onClick={() => {
+                  if (intervention.classification) {
+                    setSelectedSupplement(intervention);
+                  } else {
+                    toggleCart(intervention);
+                  }
+                }}
+                style={{ cursor: intervention.classification ? 'pointer' : 'grab', borderLeftColor: getCategoryColor(intervention.category || 'supplement') }}
+                title={intervention.classification ? 'Клик: подробная информация' : "Клик: добавить/убрать из корзины, перетащите на таймлайн"}
               >
                  <span className="col-code">{intervention.code}</span>
                  <span className="col-name">{intervention.name}</span>
+                 {activeCategory === 'supplement' && (
+                   <span className={`col-class ${intervention.classification === 'медицинский' ? 'class-med' : 'class-nutr'}`}>
+                     {intervention.classification}
+                   </span>
+                 )}
                  <span className="col-impact" style={{ color: getImpactColor(intervention.impact) }}>
                   {intervention.impact}
                  </span>
@@ -163,9 +181,11 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                  <span className="col-regularity">
                   {intervention.regularity === 'daily' ? 'Ежедн.' : intervention.regularity === 'weekly' ? 'Еженед.' : intervention.regularity === 'yearly' ? 'Ежегодно' : intervention.regularity}
                  </span>
-                 <span className="col-status">
-                  {isInCart(intervention.code) ? '✕' : '+'}
-                 </span>
+                 {activeCategory !== 'supplement' && (
+                   <span className="col-status">
+                    {isInCart(intervention.code) ? '✕' : '+'}
+                   </span>
+                 )}
               </div>
             ))}
           </div>
@@ -223,6 +243,50 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               </div>
             );
           })}
+        </div>
+      )}
+
+      {selectedSupplement && (
+        <div className="supplement-popup-overlay" onClick={() => setSelectedSupplement(null)}>
+          <div className="supplement-popup" onClick={e => e.stopPropagation()}>
+            <div className="supplement-popup-header" style={{ borderLeftColor: selectedSupplement.classification === 'медицинский' ? '#d32f2f' : '#795548' }}>
+              <span className="supplement-popup-code">{selectedSupplement.code}</span>
+              <h3>{selectedSupplement.name}</h3>
+              <button className="supplement-popup-close" onClick={() => setSelectedSupplement(null)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+            <div className="supplement-popup-body">
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Описание</span>
+                <span className="supplement-popup-value">{selectedSupplement.description || 'Нет данных'}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Тип</span>
+                <span className={`supplement-popup-value ${selectedSupplement.classification === 'медицинский' ? 'class-med' : 'class-nutr'}`}>
+                  {selectedSupplement.classification === 'медицинский' ? '🏥 Медицинский' : '🌿 Нутрицевтический'}
+                </span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Воздействие</span>
+                <span className="supplement-popup-value" style={{ color: getImpactColor(selectedSupplement.impact) }}>{selectedSupplement.impact}/10</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Доказательность</span>
+                <span className="supplement-popup-value" style={{ color: getEvidenceBadge(selectedSupplement.evidence) }}>{selectedSupplement.evidence}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Периодичность</span>
+                <span className="supplement-popup-value">Ежедневно</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Источник</span>
+                <span className="supplement-popup-value">{selectedSupplement.file || '—'}</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

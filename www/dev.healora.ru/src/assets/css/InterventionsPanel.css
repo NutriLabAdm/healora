@@ -435,3 +435,129 @@
 .backlog-list.planned li::before {
   background: #bbb;
 }
+
+.col-class {
+  font-size: 8px;
+  font-weight: 600;
+  width: 54px;
+  text-align: center;
+  flex-shrink: 0;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.class-med {
+  color: #c62828;
+  background: #ffebee;
+}
+
+.class-nutr {
+  color: #2e7d32;
+  background: #e8f5e9;
+}
+
+.sup-row {
+  cursor: pointer;
+}
+
+.sup-row:hover {
+  background: #f5f5f5;
+}
+
+.supplement-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.supplement-popup {
+  background: white;
+  border-radius: 12px;
+  width: 480px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  animation: popupIn 0.2s ease;
+}
+
+.supplement-popup-header {
+  padding: 15px 20px;
+  border-left: 4px solid #795548;
+  background: #f5f5f5;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.supplement-popup-code {
+  font-family: monospace;
+  font-size: 12px;
+  color: #757575;
+  background: #e0e0e0;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.supplement-popup-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+.supplement-popup-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #757575;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.supplement-popup-close:hover {
+  background: #e0e0e0;
+  color: #1a1a1a;
+}
+
+.supplement-popup-body {
+  padding: 20px;
+}
+
+.supplement-popup-row {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.supplement-popup-row:last-child {
+  border-bottom: none;
+}
+
+.supplement-popup-label {
+  font-size: 11px;
+  color: #757575;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.supplement-popup-value {
+  font-size: 13px;
+  color: #1a1a1a;
+  flex: 1;
+  line-height: 1.4;
+}
+
+@keyframes popupIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
