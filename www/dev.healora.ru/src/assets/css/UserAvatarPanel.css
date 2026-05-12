@@ -112,6 +112,11 @@
   font-size: 8px;
   color: #757575;
   margin-bottom: 2px;
+  display: none;
+}
+
+.profile-card:hover .profile-id {
+  display: block;
 }
 
 .profile-params {
