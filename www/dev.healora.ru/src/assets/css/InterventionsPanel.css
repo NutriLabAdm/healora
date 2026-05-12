@@ -179,14 +179,17 @@
 .protocols-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  max-height: 85vw;
+  overflow-y: auto;
+  padding: 10px;
 }
 
 .protocol-card {
   background: #fafafa;
   border: 1px solid #e8e8e8;
   border-radius: 8px;
-  padding: 12px;
+  padding: 3px 12px 0px;
   transition: all 0.2s;
 }
 
@@ -268,4 +271,70 @@
   border-left: 2px solid #757575;
   border-radius: 3px;
   color: #555;
+}
+
+.protocol-card {
+  cursor: pointer;
+  user-select: none;
+}
+
+.protocol-chevron {
+  margin-left: auto;
+  font-size: 9px;
+  color: #999;
+  transition: transform 0.2s;
+}
+
+.protocol-card-body {
+  padding-top: 8px;
+}
+
+.protocol-card.expanded {
+  background: #fff;
+  border-color: #bbb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.protocol-section {
+  margin-top: 8px;
+}
+
+.protocol-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.protocol-flag-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  padding: 3px 6px;
+  background: #fff8f0;
+  border-radius: 3px;
+  margin-bottom: 2px;
+}
+
+.protocol-card.protocol-danger .protocol-flag-item {
+  background: #fff0f0;
+}
+
+.protocol-flag-metric {
+  font-weight: 500;
+  color: #c62828;
+}
+
+.protocol-flag-threshold {
+  color: #e65100;
+  font-family: monospace;
+  font-size: 8px;
+}
+
+.protocol-rec-item {
+  font-size: 9px;
+  padding: 2px 6px;
+  color: #2e7d32;
+  line-height: 1.4;
 }

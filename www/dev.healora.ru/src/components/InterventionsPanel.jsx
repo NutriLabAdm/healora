@@ -4,6 +4,7 @@ import '../assets/css/InterventionsPanel.css';
 const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, onRemoveFromCart }) => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [tab, setTab] = useState('interventions');
+  const [expandedProtocol, setExpandedProtocol] = useState(null);
 
   const categories = [
     { key: 'all', label: 'Все', color: '#6b21c8' },
@@ -51,23 +52,23 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
   ];
 
   const protocols = [
-    { id: 'GLYCEMIC_CONTROL', name: 'Гликемический контроль', category: 'nutritional', goal: 'Контроль уровня глюкозы и гликированного гемоглобина', interventions: ['04_1','04_2','04_3','04_6','02_3','03_5'] },
-    { id: 'CIRCADIAN_EATING', name: 'Циркадное питание', category: 'nutritional', goal: 'Синхронизация питания с циркадными ритмами', interventions: ['04_4','04_5','01_1','03_5'] },
-    { id: 'SLEEP_HYGIENE', name: 'Гигиена сна', category: 'nutritional', goal: 'Улучшение качества и продолжительности сна', interventions: ['01_1','01_2','01_3','03_1','03_7'] },
-    { id: 'HYDRATION', name: 'Гидратация', category: 'nutritional', goal: 'Оптимизация водного баланса', interventions: ['03_9','03_10','04_7'] },
-    { id: 'NUTRITIONAL_BASELINE', name: 'Базовые добавки', category: 'nutritional', goal: 'Коррекция нутритивного статуса', interventions: ['05_1','05_2','05_3','05_4','07_1'] },
-    { id: 'METABOLIC_CARDIO_RISKS', name: 'Метаболические риски', category: 'medical', goal: 'Снижение метаболических и сердечно-сосудистых рисков', interventions: ['02_1','02_2','04_1','07_1','07_2'] },
-    { id: 'CARDIOVASCULAR_HEALTH', name: 'Сердечно-сосудистое здоровье', category: 'medical', goal: 'Улучшение кардиоваскулярных показателей', interventions: ['02_1','02_3','02_6','08_1','04_6','05_2','07_1'] },
-    { id: 'INFLAMMATORY_SYSTEMIC', name: 'Противовоспалительный', category: 'medical', goal: 'Снижение системного воспаления', interventions: ['05_6','04_6','05_2','03_6','02_3','05_5'] },
-    { id: 'RAPID_WEIGHT_LOSS', name: 'Быстрое снижение веса', category: 'medical', goal: 'Интенсивное снижение веса под контролем', interventions: ['04_1','04_2','02_1','02_2','07_1'] },
-    { id: 'OZEMPIC_JUMPERS', name: 'Протокол GLP-1 агонистов (Оземпик)', category: 'medical', goal: 'Сопровождение терапии GLP-1 агонистами с сохранением мышечной массы', interventions: ['OZ_01','OZ_02','OZ_03','OZ_04','OZ_05','OZ_06','OZ_10'] },
-    { id: 'COGNITIVE_HEALTH', name: 'Когнитивное здоровье', category: 'mental', goal: 'Улучшение когнитивных функций и профилактика нейродегенерации', interventions: ['05_7','03_1','03_6','05_2','02_2'] },
-    { id: 'PAIN_MANAGEMENT', name: 'Управление болью', category: 'mental', goal: 'Снижение хронической боли', interventions: ['03_2','03_6','05_3','03_1'] },
-    { id: 'DEPRESSION', name: 'Поддержка при депрессии', category: 'mental', goal: 'Улучшение настроения и эмоционального фона', interventions: ['02_3','03_1','03_6','05_5','03_7','05_2','05_3'] },
-    { id: 'RECOVERY_REGENERATION', name: 'Восстановление и регенерация', category: 'physical', goal: 'Ускорение восстановления после нагрузок', interventions: ['05_1','05_2','05_3','03_6','03_7','01_1','02_6'] },
-    { id: 'EATING_DISORDERS', name: 'Расстройства пищевого поведения', category: 'mental', goal: 'Нормализация пищевого поведения', interventions: ['04_4','04_5','03_1','03_6','03_7'] },
-    { id: 'HORMONAL_ENDOCRINE', name: 'Гормональный/эндокринный', category: 'medical', goal: 'Балансировка гормонального фона', interventions: ['07_1','04_6','05_1','05_3','05_2','02_2','03_6'] },
-    { id: 'LONGEVITY', name: 'Долголетие', category: 'nutritional', goal: 'Комплексная программа для активного долголетия', interventions: ['04_1','04_6','02_1','02_2','03_6','05_1','05_2','07_1'] },
+    { id: 'GLYCEMIC_CONTROL', name: 'Гликемический контроль', category: 'nutritional', goal: 'Контроль уровня глюкозы и гликированного гемоглобина', interventions: ['04_1','04_2','04_3','04_6','02_3','03_5'], red_flags: [{metric:'Глюкоза натощак',threshold:'>7.0 ммоль/л',action:'Консультация эндокринолога'},{metric:'HbA1c',threshold:'>7%',action:'Интенсификация терапии'}], recommendations:['Ограничить простые углеводы','Увеличить клетчатку','Контроль порций','Регулярный мониторинг глюкозы'] },
+    { id: 'CIRCADIAN_EATING', name: 'Циркадное питание', category: 'nutritional', goal: 'Синхронизация питания с циркадными ритмами', interventions: ['04_4','04_5','01_1','03_5'], red_flags: [{metric:'Время последнего приема',threshold:'после 20:00',action:'Перенести ужин на 18:00-19:00'},{metric:'Пропуск завтрака',threshold:'>3 раза в неделю',action:'Установить регулярный завтрак'}], recommendations:['Ужин за 3-4 часа до сна','Завтрак в течение 1 часа после пробуждения','Пищевое окно 8-10 часов'] },
+    { id: 'SLEEP_HYGIENE', name: 'Гигиена сна', category: 'nutritional', goal: 'Улучшение качества и продолжительности сна', interventions: ['01_1','01_2','01_3','03_1','03_7'], red_flags: [{metric:'Длительность сна',threshold:'<6 часов',action:'Сдвиг отхода ко сну на 15 мин раньше'},{metric:'Вариабельность пробуждения',threshold:'>2 часа',action:'Установить постоянное время пробуждения'}], recommendations:['Ложиться и вставать в одно время','Без экранов за 60 мин до сна','Прохлада 18-20°C','Ритуал расслабления 30 мин'] },
+    { id: 'HYDRATION', name: 'Гидратация', category: 'nutritional', goal: 'Оптимизация водного баланса', interventions: ['03_9','03_10','04_7'], red_flags: [{metric:'Цвет мочи',threshold:'Темный',action:'Увеличить потребление воды'},{metric:'Суточное потребление',threshold:'<1.5 л',action:'Пить 2-3 л воды в день'}], recommendations:['2-3 л воды в день','Снизить кофеин до 1-2 чашек','Электролиты при нагрузках'] },
+    { id: 'NUTRITIONAL_BASELINE', name: 'Базовые добавки', category: 'nutritional', goal: 'Коррекция нутритивного статуса', interventions: ['05_1','05_2','05_3','05_4','07_1'], red_flags: [{metric:'Уровень 25(OH)D',threshold:'<30 нг/мл',action:'Коррекция дозы D3'},{metric:'Омега-3 индекс',threshold:'<4%',action:'Увеличить дозу Омега-3'}], recommendations:['D3: 2000-5000 МЕ/день','Омега-3: 2-3 г/день','Магний: 300-400 мг/день','В-комплекс: 1 капсула/день'] },
+    { id: 'METABOLIC_CARDIO_RISKS', name: 'Метаболические риски', category: 'medical', goal: 'Снижение метаболических и сердечно-сосудистых рисков', interventions: ['02_1','02_2','04_1','07_1','07_2'], red_flags: [{metric:'АД',threshold:'>140/90',action:'Консультация кардиолога'},{metric:'Холестерин ЛПНП',threshold:'>3.0 ммоль/л',action:'Диета + статины'}], recommendations:['ВИИТ 2-3 раза в неделю','Силовые 2 раза в неделю','Дефицит калорий 300-500 ккал','Чекап раз в 6 мес'] },
+    { id: 'CARDIOVASCULAR_HEALTH', name: 'Сердечно-сосудистое здоровье', category: 'medical', goal: 'Улучшение кардиоваскулярных показателей', interventions: ['02_1','02_3','02_6','08_1','04_6','05_2','07_1'], red_flags: [{metric:'ЧСС покоя',threshold:'>100 уд/мин',action:'Консультация кардиолога'},{metric:'Вариабельность ЧСС',threshold:'<20 мс',action:'Снизить стресс, улучшить сон'}], recommendations:['Зона 2: 150 мин/нед','ВИИТ: 1 раз/нед','Омега-3: 2-3 г/день','Ежедневный мониторинг ЧСС'] },
+    { id: 'INFLAMMATORY_SYSTEMIC', name: 'Противовоспалительный', category: 'medical', goal: 'Снижение системного воспаления', interventions: ['05_6','04_6','05_2','03_6','02_3','05_5'], red_flags: [{metric:'СРБ',threshold:'>3 мг/л',action:'Усилить противовоспалительную диету'},{metric:'ФНО-α',threshold:'>2.8 пг/мл',action:'Добавить куркумин/Омега-3'}], recommendations:['Противовоспалительная диета','Исключить трансжиры и сахар','Омега-3 3 г/день','Адаптогены: ашваганда/родиола'] },
+    { id: 'RAPID_WEIGHT_LOSS', name: 'Быстрое снижение веса', category: 'medical', goal: 'Интенсивное снижение веса под контролем', interventions: ['04_1','04_2','02_1','02_2','07_1'], red_flags: [{metric:'Темп снижения',threshold:'>2 кг/нед',action:'Увеличить калорийность'},{metric:'Мышечная масса',threshold:'Потеря >1 кг/мес',action:'Увеличить белок + силовые'}], recommendations:['Дефицит 500-800 ккал/день','Белок 1.6-2 г/кг','ВИИТ 3 раза/нед','Силовые 2 раза/нед','Чекап каждые 2 нед'] },
+    { id: 'OZEMPIC_JUMPERS', name: 'Протокол GLP-1 агонистов (Оземпик)', category: 'medical', goal: 'Сопровождение терапии GLP-1 агонистами с сохранением мышечной массы', interventions: ['OZ_01','OZ_02','OZ_03','OZ_04','OZ_05','OZ_06','OZ_10'], red_flags: [{metric:'Потеря мышечной массы',threshold:'>1.5 кг/мес',action:'Белок 2.2 г/кг + силовые'},{metric:'Тошнота/рвота',threshold:'>3 дней',action:'Консультация врача'}], recommendations:['Белок 1.6-2.2 г/кг','Силовые 3-4 раза/нед','Гидратация 2.5-3 л/день','Электролиты ежедневно','Дробное питание 5-6 раз/день'] },
+    { id: 'COGNITIVE_HEALTH', name: 'Когнитивное здоровье', category: 'mental', goal: 'Улучшение когнитивных функций и профилактика нейродегенерации', interventions: ['05_7','03_1','03_6','05_2','02_2'], red_flags: [{metric:'Ухудшение памяти',threshold:'Прогрессирующее',action:'Невролог + когнитивное тестирование'},{metric:'Концентрация',threshold:'Снижение >3 мес',action:'Проверить дефициты B12, D, ферритин'}], recommendations:['Медитация 10-15 мин/день','Омега-3 2-3 г/день','Силовые тренировки','Ноотропы курсами','Цифровой детокс вечером'] },
+    { id: 'PAIN_MANAGEMENT', name: 'Управление болью', category: 'mental', goal: 'Снижение хронической боли', interventions: ['03_2','03_6','05_3','03_1'], red_flags: [{metric:'Интенсивность боли',threshold:'7/10 >3 дней',action:'Консультация невролога'},{metric:'Качество сна',threshold:'<5 часов',action:'Усилить протокол гигиены сна'}], recommendations:['Дыхательные практики 5-10 мин','Магний 300-400 мг/день','Медитация сканирования тела','Управление стрессом'] },
+    { id: 'DEPRESSION', name: 'Поддержка при депрессии', category: 'mental', goal: 'Улучшение настроения и эмоционального фона', interventions: ['02_3','03_1','03_6','05_5','03_7','05_2','05_3'], red_flags: [{metric:'Суицидальные мысли',threshold:'Любые',action:'Немедленно к психиатру'},{metric:'Апатия',threshold:'>2 нед',action:'Психотерапия + антидепрессанты'}], recommendations:['Аэробные нагрузки 30 мин/день','Медитация 2 раза/день','Цифровой детокс','Омега-3 3 г/день','Витамин D 5000 МЕ/день'] },
+    { id: 'RECOVERY_REGENERATION', name: 'Восстановление и регенерация', category: 'physical', goal: 'Ускорение восстановления после нагрузок', interventions: ['05_1','05_2','05_3','03_6','03_7','01_1','02_6'], red_flags: [{metric:'Креатинкиназа',threshold:'>500 Ед/л',action:'Снизить нагрузку на 50%'},{metric:'Субъективное восстановление',threshold:'<2/10',action:'Доп. день отдыха'}], recommendations:['Сон 8-9 часов','Магний 400 мг/день','D3 5000 МЕ/день','Зона 2 восстановление','Контрастный душ'] },
+    { id: 'EATING_DISORDERS', name: 'Расстройства пищевого поведения', category: 'mental', goal: 'Нормализация пищевого поведения', interventions: ['04_4','04_5','03_1','03_6','03_7'], red_flags: [{metric:'Пропуск приемов пищи',threshold:'>1 раза/день',action:'Психотерапия + регулярное питание'},{metric:'Переедание',threshold:'>2 раз/нед',action:'Дневник питания + психолог'}], recommendations:['3+1 приемов пищи в день','Осознанное питание','Медитация перед едой','Исключить диеты','Цифровой детокс'] },
+    { id: 'HORMONAL_ENDOCRINE', name: 'Гормональный/эндокринный', category: 'medical', goal: 'Балансировка гормонального фона', interventions: ['07_1','04_6','05_1','05_3','05_2','02_2','03_6'], red_flags: [{metric:'ТТГ',threshold:'>4.0 мМЕ/л',action:'Эндокринолог'},{metric:'Тестостерон (муж)',threshold:'<12 нмоль/л',action:'Андролог'}], recommendations:['Чекап гормонов раз в 6 мес','Силовые 3 раза/нед','D3 5000 МЕ/день','Магний 400 мг/день','Омега-3 2 г/день'] },
+    { id: 'LONGEVITY', name: 'Долголетие', category: 'nutritional', goal: 'Комплексная программа для активного долголетия', interventions: ['04_1','04_6','02_1','02_2','03_6','05_1','05_2','07_1'], red_flags: [{metric:'Показатель Healora Score',threshold:'<60',action:'Комплексная коррекция образа жизни'},{metric:'Биологический возраст',threshold:'>хронологического на 5+ лет',action:'Интенсификация протокола'}], recommendations:['Ограничение калорий (CR)','ВИИТ + силовые','Противовоспалительная диета','D3 5000 МЕ/день','Омега-3 2-3 г/день','Чекап раз в год'] },
   ];
 
   const filteredInterventions = activeCategory === 'all'
@@ -171,27 +172,55 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
 
       {tab === 'protocols' && (
         <div className="protocols-list">
-          {protocols.map(p => (
-            <div key={p.id} className={`protocol-card ${p.id === 'OZEMPIC_JUMPERS' ? 'protocol-danger' : ''}`}>
-              <div className="protocol-card-header">
-                <span className="protocol-card-name">{p.name}</span>
-                <span className={`protocol-card-cat ${p.category}`}>{p.category === 'nutritional' ? 'Питание' : p.category === 'medical' ? 'Медицина' : p.category === 'mental' ? 'Ментальный' : 'Физический'}</span>
+          {protocols.map(p => {
+            const isExpanded = expandedProtocol === p.id;
+            const toggle = () => setExpandedProtocol(isExpanded ? null : p.id);
+            return (
+              <div key={p.id} className={`protocol-card ${p.id === 'OZEMPIC_JUMPERS' ? 'protocol-danger' : ''} ${isExpanded ? 'expanded' : ''}`} onClick={toggle}>
+                <div className="protocol-card-header">
+                  <span className="protocol-card-name">{p.name}</span>
+                  <span className={`protocol-card-cat ${p.category}`}>{p.category === 'nutritional' ? 'Питание' : p.category === 'medical' ? 'Медицина' : p.category === 'mental' ? 'Ментальный' : 'Физический'}</span>
+                  <span className="protocol-chevron">{isExpanded ? '▲' : '▼'}</span>
+                </div>
+                {isExpanded && (
+                  <div className="protocol-card-body">
+                    <p className="protocol-card-goal">{p.goal}</p>
+                    <div className="protocol-card-interventions">
+                      {p.interventions.map(code => {
+                        const interv = interventions.find(i => i.code === code);
+                        return interv ? (
+                          <span key={code} className="protocol-interv-badge" style={{ borderLeftColor: getCategoryColor(interv.category) }}>
+                            {interv.name}
+                          </span>
+                        ) : (
+                          <span key={code} className="protocol-interv-badge" style={{ borderLeftColor: '#d50000' }}>{code}</span>
+                        );
+                      })}
+                    </div>
+                    {p.red_flags && p.red_flags.length > 0 && (
+                      <div className="protocol-section">
+                        <div className="protocol-section-title">🚩 Красные флаги</div>
+                        {p.red_flags.map((rf, i) => (
+                          <div key={i} className="protocol-flag-item" title={rf.action}>
+                            <span className="protocol-flag-metric">{rf.metric}</span>
+                            <span className="protocol-flag-threshold">{rf.threshold}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {p.recommendations && p.recommendations.length > 0 && (
+                      <div className="protocol-section">
+                        <div className="protocol-section-title">✓ Рекомендации</div>
+                        {p.recommendations.map((r, i) => (
+                          <div key={i} className="protocol-rec-item">{r}</div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-              <p className="protocol-card-goal">{p.goal}</p>
-              <div className="protocol-card-interventions">
-                {p.interventions.map(code => {
-                  const interv = interventions.find(i => i.code === code);
-                  return interv ? (
-                    <span key={code} className="protocol-interv-badge" style={{ borderLeftColor: getCategoryColor(interv.category) }}>
-                      {interv.name}
-                    </span>
-                  ) : (
-                    <span key={code} className="protocol-interv-badge" style={{ borderLeftColor: '#d50000' }}>{code}</span>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
