@@ -1,0 +1,28 @@
+{
+  "profile_id": "P015",
+  "source_photo": "16_Anastasia_37_street.png",
+  "name": "Anastasia",
+  "age": 37,
+  "sex": "female",
+  "visual_description": "Женщина на улице, длинное пальто, шарф, волосы на ветру",
+  "scene_context": "Городская улица, осенний или весенний день",
+  "mood_expression": "задумчивая, мечтательная",
+  "inferred_lifestyle": {
+    "typical_day": "Прогулки по городу, работа, возможно творческая деятельность",
+    "occupation_type": "Офисный сотрудник или творческая профессия",
+    "activity_level": "light",
+    "social_context": "работа",
+    "diet_hints": "Разнообразное питание, не всегда регулярное",
+    "sleep_quality_hints": "Среднее качество сна",
+    "stress_hints": "Средний уровень стресса, прогулки помогают расслабиться"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["пальто", "развевающиеся волосы"],
+    "suggested_biomarkers_attention": ["витамин D", "щитовидная железа"],
+    "risk_factors_visible": ["возможен дефицит витамина D"]
+  },
+  "narrative_summary": "Анастасия — 37-летняя женщина, которая любит пешие прогулки по городу. Она ведёт умеренно активный образ жизни и ценит время наедине с собой. Основные задачи — поддержание иммунитета и восполнение дефицита витамина D."
+}

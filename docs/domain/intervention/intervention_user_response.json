@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "description": "Варианты реакций пользователя на интервенции для чат-симулятора",
+    "version": 1.0,
+    "notes": "Каждая реакция появляется через 1-2 сек после сообщения бота. Вероятность выбора рассчитывается как weight / sum(weights)."
+  },
+  "universal": [
+    { "text": "✅ Готово!", "weight": 25, "mood": "positive", "meaning": "Пользователь выполнил интервенцию и подтверждает" },
+    { "text": "📤 Отправил!", "weight": 15, "mood": "positive", "meaning": "Пользователь отправил данные/фото/показатели" },
+    { "text": "⏳ В следующий раз", "weight": 10, "mood": "neutral", "meaning": "Пользователь откладывает выполнение" },
+    { "text": "👍 Сделано", "weight": 20, "mood": "positive", "meaning": "Пользователь выполнил интервенцию (короткий ответ)" },
+    { "text": "📝 Записал", "weight": 10, "mood": "positive", "meaning": "Пользователь внёс данные в дневник/трекер" },
+    { "text": "✅ Выполнено", "weight": 15, "mood": "positive", "meaning": "Пользователь завершил задачу" },
+    { "text": "📊 Готово, данные отправил", "weight": 5, "mood": "positive", "meaning": "Пользователь отправил развёрнутые данные" }
+  ],
+  "by_category": {
+    "sleep": [
+      { "text": "🛌 Уже в постели, выключаю свет", "weight": 20, "mood": "positive" },
+      { "text": "📱 Отправил дневник сна", "weight": 15, "mood": "positive" },
+      { "text": "😴 Лег спать пораньше", "weight": 18, "mood": "positive" },
+      { "text": "⏳ Ещё работаю, лягу позже", "weight": 12, "mood": "neutral" },
+      { "text": "🌙 Завтра встану в 6:00", "weight": 10, "mood": "neutral" },
+      { "text": "📝 Записал время засыпания", "weight": 10, "mood": "positive" },
+      { "text": "🎯 Выполнено, качество сна 7/10", "weight": 8, "mood": "positive" },
+      { "text": "🔄 Сбил режим в выходные", "weight": 7, "mood": "negative" }
+    ],
+    "physical": [
+      { "text": "💪 Сделал зарядку 15 мин", "weight": 20, "mood": "positive" },
+      { "text": "🚶‍♂️ Прошёл 10 000 шагов", "weight": 18, "mood": "positive" },
+      { "text": "🏃‍♂️ Пробежка выполнена", "weight": 15, "mood": "positive" },
+      { "text": "📤 Отправил данные с трекера", "weight": 12, "mood": "positive" },
+      { "text": "⏳ Пойду вечером после работы", "weight": 10, "mood": "neutral" },
+      { "text": "🙃 Сегодня лень, завтра точно", "weight": 8, "mood": "negative" },
+      { "text": "🚴‍♂️ Тренировка 30 мин, ОК", "weight": 12, "mood": "positive" },
+      { "text": "📊 Шаги: 8450, цель 10000", "weight": 5, "mood": "neutral" }
+    ],
+    "mental": [
+      { "text": "🧘 Помедитировал 10 мин", "weight": 22, "mood": "positive" },
+      { "text": "🧠 Сделал дыхательную практику", "weight": 18, "mood": "positive" },
+      { "text": "📝 Записал мысли в дневник", "weight": 15, "mood": "positive" },
+      { "text": "📤 Отправил чек-ин настроения", "weight": 12, "mood": "positive" },
+      { "text": "🎯 Стало спокойнее, уровень 7/10", "weight": 10, "mood": "positive" },
+      { "text": "⏳ Сделаю перед сном", "weight": 10, "mood": "neutral" },
+      { "text": "😤 Тяжёлый день, не до практик", "weight": 8, "mood": "negative" },
+      { "text": "🧘‍♀️ Йога 20 мин, отлично", "weight": 5, "mood": "positive" }
+    ],
+    "food": [
+      { "text": "🍎 Записал приём пищи", "weight": 20, "mood": "positive" },
+      { "text": "📸 Отправил фото обеда", "weight": 15, "mood": "positive" },
+      { "text": "🥗 Съел салат вместо пиццы", "weight": 18, "mood": "positive" },
+      { "text": "💧 Выпил 2л воды за день", "weight": 12, "mood": "positive" },
+      { "text": "📝 Подсчитал КБЖУ: 1850 ккал", "weight": 10, "mood": "positive" },
+      { "text": "⏳ Позже внесу в дневник", "weight": 10, "mood": "neutral" },
+      { "text": "🙈 Сорвался на пиццу сегодня", "weight": 8, "mood": "negative" },
+      { "text": "📊 NDI за день: 42", "weight": 7, "mood": "neutral" }
+    ],
+    "medical": [
+      { "text": "💊 Принял препарат", "weight": 22, "mood": "positive" },
+      { "text": "📤 Отправил показания давления", "weight": 15, "mood": "positive" },
+      { "text": "🏥 Записался на приём", "weight": 12, "mood": "positive" },
+      { "text": "📊 Измерил: 125/80, пульс 72", "weight": 13, "mood": "positive" },
+      { "text": "💊 Выпил витамины с завтраком", "weight": 13, "mood": "positive" },
+      { "text": "🩸 Сдал анализы по плану", "weight": 10, "mood": "positive" },
+      { "text": "⏳ Забуду — напомни позже", "weight": 8, "mood": "neutral" },
+      { "text": "📋 Выполнил все назначения", "weight": 7, "mood": "positive" }
+    ],
+    "supplement": [
+      { "text": "💊 Принял с завтраком", "weight": 25, "mood": "positive" },
+      { "text": "📤 Отправил фото упаковки", "weight": 15, "mood": "positive" },
+      { "text": "✅ Выпил всё по схеме", "weight": 20, "mood": "positive" },
+      { "text": "⏳ Закончились — закажу сегодня", "weight": 12, "mood": "neutral" },
+      { "text": "📝 Записал приём в трекер", "weight": 13, "mood": "positive" },
+      { "text": "🔄 Сменил бренд по рекомендации", "weight": 8, "mood": "positive" },
+      { "text": "🤔 Забыл, приму сейчас", "weight": 7, "mood": "neutral" }
+    ]
+  }
+}

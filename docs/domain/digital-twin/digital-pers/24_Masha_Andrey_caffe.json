@@ -1,0 +1,28 @@
+{
+  "profile_id": "P026",
+  "source_photo": "24_Masha_Andrey_caffe.png",
+  "name": "Маша и Андрей",
+  "age": 30,
+  "sex": "female",
+  "visual_description": "Пара за столиком в кафе, улыбаются, перед ними чашки",
+  "scene_context": "В уютном кафе, свидание или дружеская встреча",
+  "mood_expression": "счастливые, расслабленные",
+  "inferred_lifestyle": {
+    "typical_day": "Работа, встречи в кафе, социальная активность, совместный досуг",
+    "occupation_type": "Офисные сотрудники или специалисты",
+    "activity_level": "light",
+    "social_context": "друзья",
+    "diet_hints": "Питаются вне дома, любят кафе",
+    "sleep_quality_hints": "Режим сдвинут, возможен недосып",
+    "stress_hints": "Низкий стресс в компании друг друга"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["двое", "кафе", "чашки"],
+    "suggested_biomarkers_attention": ["социальное здоровье", "уровень стресса"],
+    "risk_factors_visible": ["возможен избыток кофеина"]
+  },
+  "narrative_summary": "Маша и Андрей — пара людей, которые наслаждаются общением в кафе. Они ведут активную социальную жизнь. В фокусе — поддержание здоровых отношений и баланса между работой и отдыхом."
+}

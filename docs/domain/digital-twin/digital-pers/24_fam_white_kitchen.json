@@ -1,0 +1,28 @@
+{
+  "profile_id": "P027",
+  "source_photo": "24_fam_white_kitchen.png",
+  "name": "Семья",
+  "age": 35,
+  "sex": "female",
+  "visual_description": "Семья на белой кухне: родители с детьми, светлая современная кухня",
+  "scene_context": "Дома на кухне, семейный завтрак или приготовление еды",
+  "mood_expression": "радостные, сплочённые",
+  "inferred_lifestyle": {
+    "typical_day": "Семейные завтраки, работа, школа, совместные вечера",
+    "occupation_type": "Работающие родители",
+    "activity_level": "light",
+    "social_context": "семья",
+    "diet_hints": "Домашняя еда для всей семьи",
+    "sleep_quality_hints": "Режим подчинён графику детей",
+    "stress_hints": "Средний уровень стресса, баланс работы и семьи"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["белая кухня", "семья с детьми"],
+    "suggested_biomarkers_attention": ["общее здоровье семьи", "питание детей"],
+    "risk_factors_visible": ["нагрузка на родителей"]
+  },
+  "narrative_summary": "Семья на белой кухне — типичная современная семья с детьми. Они ценят домашний уют и совместные приёмы пищи. Ключевая цель — поддержание здоровья всех членов семьи и гармоничный баланс между работой и домом."
+}

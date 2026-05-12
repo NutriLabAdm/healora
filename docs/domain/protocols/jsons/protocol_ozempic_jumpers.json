@@ -1,0 +1,120 @@
+{
+  "id": "OZEMPIC_JUMPERS",
+  "name": "Ozempic Jumpers Protocol",
+  "name_ru": "Протокол сопровождения приема GLP-1 агонистов (Оземпик)",
+  "category": "medical",
+  "goal": "Manage GLP-1 agonist therapy (semaglutide/tirzepatide) for weight loss with muscle preservation, side effect mitigation, and rebound prevention",
+  "goal_ru": "Сопровождение терапии GLP-1 агонистами (семаглутид/тирзепатид) для снижения веса с сохранением мышечной массы, управлением побочными эффектами и предотвращением отката",
+  "type": "medical_protocol",
+  "red_flags": [
+    { "metric": "Muscle loss rate", "threshold": ">1.5 kg muscle per month", "action": "Increase protein to 2.2g/kg + strength training intensity" },
+    { "metric": "Severe nausea/vomiting", "threshold": ">3 days unable to keep food down", "action": "Consult prescribing physician —可能需要 dose adjustment" },
+    { "metric": "Acute abdominal pain", "threshold": "Severe, right upper quadrant", "action": "Emergency: rule out pancreatitis or cholecystitis" },
+    { "metric": "Heart rate", "threshold": "Resting HR >100 bpm on GLP-1", "action": "Consult cardiologist, review medication" },
+    { "metric": "Dehydration signs", "threshold": "Dark urine, dizziness, <1L fluid intake", "action": "Immediate hydration protocol, electrolyte supplementation" },
+    { "metric": "Rapid weight loss", "threshold": ">2 kg/week for 2+ weeks", "action": "Increase caloric intake, preserve lean mass" },
+    { "metric": "Gallbladder symptoms", "threshold": "Pain after fatty meals", "action": "Ultrasound, consult gastroenterologist" },
+    { "metric": "Weight regain after stop", "threshold": ">50% of lost weight within 3 months", "action": "Activate rebound prevention protocol immediately" }
+  ],
+  "interventions": [
+    { "id": "OZ_01", "name": "Protein Target: 1.6-2.2g/kg", "name_ru": "Цель по белку: 1.6-2.2 г/кг", "regularity": "daily", "data_collection": "Food log / protein tracking app" },
+    { "id": "OZ_02", "name": "Strength Training: 3-4x/week", "name_ru": "Силовые тренировки: 3-4 раза/нед", "regularity": "weekly", "data_collection": "Workout log, sets/reps" },
+    { "id": "OZ_03", "name": "Weekly Muscle Mass Tracking", "name_ru": "Еженедельный трекинг мышечной массы", "regularity": "weekly", "data_collection": "DEXA/BIA scan or smart scale" },
+    { "id": "OZ_04", "name": "Hydration Protocol: 2.5-3L/day", "name_ru": "Протокол гидратации: 2.5-3 л/день", "regularity": "daily", "data_collection": "Water intake log" },
+    { "id": "OZ_05", "name": "Electrolyte Supplementation", "name_ru": "Прием электролитов", "regularity": "daily", "data_collection": "Supplement log" },
+    { "id": "OZ_06", "name": "GI Side Effect Log", "name_ru": "Дневник ЖКТ побочных эффектов", "regularity": "daily", "data_collection": "Symptom diary (app)" },
+    { "id": "OZ_07", "name": "Small Frequent Meals", "name_ru": "Маленькие частые приемы пищи", "regularity": "daily", "data_collection": "Meal frequency log" },
+    { "id": "OZ_08", "name": "Micronutrient Blood Work (quarterly)", "name_ru": "Анализ микронутриентов (ежеквартально)", "regularity": "quarterly", "data_collection": "Lab results" },
+    { "id": "OZ_09", "name": "Rebound Prevention Plan", "name_ru": "План предотвращения отката", "regularity": "ongoing", "data_collection": "Compliance checklist" },
+    { "id": "OZ_10", "name": "Dosing Schedule Compliance", "name_ru": "Соблюдение графика дозирования", "regularity": "weekly", "data_collection": "Injection log" },
+    { "id": "OZ_11", "name": "Weekly Body Composition Scan", "name_ru": "Еженедельное сканирование композиции тела", "regularity": "weekly", "data_collection": "Smart scale / BIA" },
+    { "id": "OZ_12", "name": "Caloric Floor: Min 1400 kcal/day", "name_ru": "Минимальный калораж: 1400 ккал/день", "regularity": "daily", "data_collection": "Calorie tracking app" }
+  ],
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Initiation (Weeks 1-4)",
+      "name_ru": "Инициация (1-4 недели)",
+      "description": "Dose escalation, side effect adaptation, establish baseline metrics",
+      "description_ru": "Эскалация дозы, адаптация к побочным эффектам, установка базовых метрик",
+      "actions": [
+        "Start protein at 1.6g/kg body weight minimum",
+        "Begin strength training (3x/week, full body)",
+        "Log daily: nausea, appetite, energy, bowel movements",
+        "Weigh daily, body composition weekly",
+        "Set caloric floor (never <1400 kcal/day for women, <1800 for men)",
+        "Hydrate 2.5-3L/day with electrolytes"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Active Weight Loss (Weeks 5-24)",
+      "name_ru": "Активное снижение веса (5-24 недели)",
+      "description": "Sustained weight loss with muscle preservation focus",
+      "description_ru": "Устойчивое снижение веса с фокусом на сохранение мышц",
+      "actions": [
+        "Increase protein to 2.0-2.2g/kg lean mass target",
+        "Strength training 4x/week (progressive overload)",
+        "Track fat mass vs lean mass ratio weekly",
+        "If muscle loss >1% per month → increase calories + protein",
+        "Blood work every 3 months: iron, B12, folate, vitamin D, zinc",
+        "GI management: ginger tea, small frequent meals (6-8x/day)"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Tapering & Habit Integration (Weeks 25-36)",
+      "name_ru": "Снижение дозы и интеграция привычек (25-36 недели)",
+      "description": "Gradual dose reduction while reinforcing lifestyle habits",
+      "description_ru": "Постепенное снижение дозы с закреплением привычек образа жизни",
+      "actions": [
+        "Gradually reduce dose over 8-12 weeks (never stop abruptly)",
+        "Increase caloric intake to maintenance level (~200-300 kcal/day more)",
+        "Emphasize habit autonomy: the user MUST maintain eating habits without medication",
+        "Continue strength training 3-4x/week",
+        "Weekly check-ins with coach/dietitian",
+        "Monitor for emotional eating triggers returning"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Maintenance / Rebound Prevention (Weeks 37+)",
+      "name_ru": "Поддержание / предотвращение отката (37+ недели)",
+      "description": "Long-term weight maintenance after GLP-1 discontinuation",
+      "description_ru": "Долгосрочное поддержание веса после отмены GLP-1",
+      "actions": [
+        "Continue tracking: weight (daily), body comp (weekly)",
+        "Maintain protein at 1.6g/kg minimum lifelong",
+        "Strength training 2-3x/week minimum",
+        "If weight regain >2 kg in a month → activate emergency intervention",
+        "Monthly check-ins for 6 months post-medication",
+        "Rebound risk: >80% of users regain weight within 1 year without habit change"
+      ]
+    }
+  ],
+  "recommendations": [
+    "NEVER skip strength training — muscle loss is the #1 hidden risk of GLP-1 weight loss",
+    "Protein target 1.6-2.2g/kg — use shakes if food intake is too low",
+    "Small frequent meals (6-8x/day) to manage nausea and maintain nutrient intake",
+    "Hydrate aggressively — GLP-1s reduce thirst sensation",
+    "Track body composition, not just weight — fat loss ≠ healthy loss",
+    "Plan for medication tapering from day 1 — habit change is the real treatment",
+    "Gallstone prevention: avoid very low fat diets, include healthy fats daily",
+    "Bowel management: fiber 25-30g/day + magnesium + hydration to prevent constipation",
+    "Do NOT start GLP-1 without concurrent strength training prescription",
+    "Consider creatine (5g/day) for additional muscle preservation support"
+  ],
+  "contraindications": [
+    "Personal or family history of medullary thyroid carcinoma",
+    "History of pancreatitis",
+    "Severe gastroparesis",
+    "Pregnancy or breastfeeding",
+    "BMI <27 without type 2 diabetes (off-label use varies by country)"
+  ],
+  "references": [
+    "WHOOP Behavior Framework — GLP-1 companion protocol design",
+    "DPP Trial — 5-7% weight loss → 58% diabetes risk reduction",
+    "American Gastroenterological Association — GLP-1 management guidelines",
+    "Wilding et al. (2021) — Once-Weekly Semaglutide in Adults with Overweight or Obesity (NEJM)"
+  ]
+}

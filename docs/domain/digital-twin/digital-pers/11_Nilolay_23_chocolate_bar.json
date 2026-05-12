@@ -1,0 +1,28 @@
+{
+  "profile_id": "P011",
+  "source_photo": "11_Nilolay_23_chocolate_bar.png",
+  "name": "Николай",
+  "age": 23,
+  "sex": "male",
+  "visual_description": "Молодой человек с шоколадным батончиком, современная одежда, улыбается",
+  "scene_context": "На улице или в кафе, перекус на ходу",
+  "mood_expression": "беззаботный, довольный",
+  "inferred_lifestyle": {
+    "typical_day": "Учёба или работа, активный социальный образ жизни, перекусы на бегу",
+    "occupation_type": "Студент или молодой специалист",
+    "activity_level": "light",
+    "social_context": "друзья",
+    "diet_hints": "Любит сладкое, нерегулярное питание",
+    "sleep_quality_hints": "Нестабильный режим, ночная активность",
+    "stress_hints": "Низкий уровень стресса"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["молодой, спортивный вид"],
+    "suggested_biomarkers_attention": ["уровень сахара", "инсулин"],
+    "risk_factors_visible": ["склонность к сладким перекусам"]
+  },
+  "narrative_summary": "Николай — 23-летний молодой человек с активной социальной жизнью. Он часто перекусывает на ходу шоколадом и сладостями. В приоритете — формирование здоровых пищевых привычек и профилактика метаболических нарушений."
+}

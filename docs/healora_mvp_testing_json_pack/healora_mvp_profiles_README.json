@@ -1,0 +1,59 @@
+{
+  "readme_title": "Healora MVP Synthetic Profile Test Pack",
+  "purpose": "README for 10 synthetic Digital Twin profiles used to test Healora MVP recommendations.",
+  "important_note": "All profiles are synthetic and for MVP testing only. The output should not be medical diagnosis.",
+  "mvp_logic": {
+    "input": "A Digital Twin profile with demographics, body measurements, vitals, labs, lifestyle, genetics, medical history, health risk score, health literacy score, stars, progress and goals.",
+    "processing": "Interpret risk signals, match suitable interventions, adapt recommendation language using health literacy, and generate daily micro-tasks.",
+    "output": "Russian daily plan with 5 tasks, categories, stars, reasons, tracked outcomes, safety notes, and progress update."
+  },
+  "score_definitions": {
+    "health_risk_score_0_100": {
+      "low": "0-33",
+      "moderate": "34-66",
+      "high": "67-100",
+      "meaning": "Prototype cardiometabolic/autonomic risk priority score, not diagnosis."
+    },
+    "health_literacy_score_0_100": {
+      "0_20": "Emerging Awareness",
+      "21_40": "Foundational Knowledge",
+      "41_60": "Functional Application",
+      "61_80": "Critical Engagement",
+      "81_100": "Transformative Leadership",
+      "meaning": "Controls explanation depth, task difficulty, terminology and content type."
+    },
+    "stars": {
+      "simple_task": 10,
+      "moderate_task": 15,
+      "high_priority_task": 20,
+      "advanced_protocol_task": 25
+    },
+    "longevity_journey_phase": {
+      "phase_1": "Awareness, 0-14 days",
+      "phase_2": "Stabilization, 15-30 days",
+      "phase_3": "Optimization, 31-60 days",
+      "phase_4": "Longevity, 61-90 days"
+    }
+  },
+  "field_definitions": {
+    "demographics": "age, sex, background.",
+    "anthropometrics": "height, weight, BMI, waist circumference.",
+    "vitals": "blood pressure, resting heart rate, HRV, SpO2.",
+    "prototype_experiment": "sit-to-stand/step-test data: peak HR, recovery HR, HRR60, HRR120, repetitions.",
+    "labs": "glucose, HbA1c, cholesterol, HDL, LDL, triglycerides, CRP, vitamin D, ferritin, TSH.",
+    "lifestyle": "smoking, alcohol, activity, steps, sleep, stress, diet, water, screen time, work schedule.",
+    "genetics": "APOE, MTHFR, lactase, BRCA, Factor V Leiden, FTO if available.",
+    "medical_history": "disease status, medications, allergies, family history.",
+    "digital_twin_scores": "health risk, literacy score, stars, progress, streak and journey phase.",
+    "expected_mvp_behavior": "Main recommendation focus and writing style.",
+    "avoid_or_safety_notes": "Things the MVP should avoid or phrase safely."
+  },
+  "recommendation_categories": {
+    "nutrition": "Питание",
+    "activity": "Активность",
+    "recovery": "Восстановление",
+    "knowledge": "Знания",
+    "specialists": "Специалисты"
+  },
+  "universal_testing_prompt": "Read this Digital Twin JSON profile and generate today's Healora plan in Russian. Use biomarkers, lifestyle, goals, health risk score, and health literacy level. Return 5 micro-tasks with category, stars, short reason, tracked outcome, and safety note if needed. Adapt the language difficulty to the health literacy level. Do not provide medical diagnosis. If medical follow-up is appropriate, phrase it as a recommendation to consult a specialist."
+}

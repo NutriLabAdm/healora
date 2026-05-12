@@ -1,0 +1,25 @@
+{
+  "id": "INFLAMMATORY_SYSTEMIC",
+  "name": "Inflammatory and Systemic Conditions",
+  "name_ru": "Воспалительные и системные состояния",
+  "category": "medical",
+  "goal": "Identify and manage systemic inflammation",
+  "goal_ru": "Выявление и управление системным воспалением",
+  "type": "red_flag",
+  "red_flags": [
+    { "metric": "CRP (C-Reactive Protein)", "threshold": ">3 mg/L", "action": "Consult rheumatologist" },
+    { "metric": "Fibrinogen", "threshold": ">4 g/L", "action": "Consult rheumatologist" },
+    { "metric": "ESR", "threshold": ">20 mm/hr", "action": "Consult rheumatologist" }
+  ],
+  "interventions": [
+    { "id": "05_6", "name": "Anti-inflammatory Diet", "name_ru": "Противовоспалительная диета" },
+    { "id": "02_4", "name": "Flexibility Training", "name_ru": "Гибкость и растяжка" },
+    { "id": "03_2", "name": "Breathing Exercises", "name_ru": "Дыхательные упражнения" }
+  ],
+  "recommendations": [
+    "Follow anti-inflammatory diet (Mediterranean pattern)",
+    "Reduce omega-6 / increase omega-3 intake",
+    "Incorporate turmeric, ginger, green tea",
+    "Regular moderate exercise (avoid overtraining)"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "SLEEP_HYGIENE",
+  "name": "Sleep Hygiene",
+  "name_ru": "Гигиена сна",
+  "category": "nutrition",
+  "goal": "Improve sleep quality and duration",
+  "goal_ru": "Улучшение качества и продолжительности сна",
+  "interventions": [
+    { "id": "01_1", "name": "Sleep: Bedtime", "name_ru": "Сон: время отхода ко сну" },
+    { "id": "01_2", "name": "Sleep: Duration", "name_ru": "Сон: продолжительность" },
+    { "id": "01_3", "name": "Sleep: Quality", "name_ru": "Сон: качество" },
+    { "id": "03_1", "name": "Meditation", "name_ru": "Медитация" },
+    { "id": "03_7", "name": "Digital Detox", "name_ru": "Цифровой детокс" }
+  ],
+  "red_flags": [
+    { "metric": "Sleep duration", "threshold": "<6 hours consistently", "action": "Adjust bedtime earlier by 15 min increments" },
+    { "metric": "Wake time variability", "threshold": ">2 hours variation", "action": "Set consistent wake time" },
+    { "metric": "Sleep latency", "threshold": ">30 min", "action": "Review pre-sleep routine" }
+  ],
+  "recommendations": [
+    "Go to bed and wake at same time every day",
+    "No screens 60 min before bed",
+    "Keep bedroom cool (18-20°C) and dark",
+    "Establish 30-min wind-down routine"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "profile_id": "P021",
+  "source_photo": "21_Yulia_35_coffie_white_blouse.png",
+  "name": "Yulia",
+  "age": 35,
+  "sex": "female",
+  "visual_description": "Женщина с чашкой кофе в белой блузке, элегантный вид, аккуратная прическа",
+  "scene_context": "В кафе или офисе, перерыв на кофе",
+  "mood_expression": "спокойная, уверенная",
+  "inferred_lifestyle": {
+    "typical_day": "Работа, кофе-брейки, деловые встречи, поддержание имиджа",
+    "occupation_type": "Офисный работник, возможно руководитель среднего звена",
+    "activity_level": "sedentary",
+    "social_context": "работа",
+    "diet_hints": "Кофе регулярно, питание по расписанию",
+    "sleep_quality_hints": "Среднее качество сна",
+    "stress_hints": "Средний уровень стресса"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["белая блузка", "чашка кофе"],
+    "suggested_biomarkers_attention": ["стресс", "надпочечники"],
+    "risk_factors_visible": ["избыток кофеина", "сидячая работа"]
+  },
+  "narrative_summary": "Юлия — 35-летняя деловая женщина, следящая за стилем и имиджем. Она предпочитает классический офисный стиль и кофе в перерывах. В приоритете — управление стрессом и снижение потребления кофеина."
+}

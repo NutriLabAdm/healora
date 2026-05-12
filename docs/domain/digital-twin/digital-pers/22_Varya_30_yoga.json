@@ -1,0 +1,28 @@
+{
+  "profile_id": "P022",
+  "source_photo": "22_Varya_30_yoga.png",
+  "name": "Varya",
+  "age": 30,
+  "sex": "female",
+  "visual_description": "Женщина в позе йоги на коврике, спортивная одежда, стройная фигура",
+  "scene_context": "В студии йоги или дома на коврике",
+  "mood_expression": "умиротворённая, сосредоточенная",
+  "inferred_lifestyle": {
+    "typical_day": "Утренняя или вечерняя практика йоги, работа, здоровое питание",
+    "occupation_type": "Офисный сотрудник или преподаватель йоги",
+    "activity_level": "moderate",
+    "social_context": "одиночество",
+    "diet_hints": "Осознанное питание, возможно вегетарианство",
+    "sleep_quality_hints": "Хорошее качество сна благодаря практике",
+    "stress_hints": "Низкий стресс благодаря медитации"
+  },
+  "health_observations": {
+    "body_type": "athletic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["коврик для йоги", "гибкая поза"],
+    "suggested_biomarkers_attention": ["суставы", "уровень кортизола"],
+    "risk_factors_visible": ["возможны растяжения при неправильной технике"]
+  },
+  "narrative_summary": "Варя — 30-летняя женщина, регулярно практикующая йогу. Она ценит баланс тела и духа, следит за осанкой и здоровьем. Ключевая задача — поддержание гибкости и профилактика стресса."
+}

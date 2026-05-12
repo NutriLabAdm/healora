@@ -1,0 +1,21 @@
+{
+  "id": "COGNITIVE_HEALTH",
+  "name": "Cognitive Health",
+  "name_ru": "Когнитивное здоровье",
+  "category": "additional",
+  "goal": "Maintain and improve cognitive function",
+  "goal_ru": "Поддержание и улучшение когнитивных функций",
+  "interventions": [
+    { "id": "03_1", "name": "Meditation", "name_ru": "Медитация" },
+    { "id": "05_7", "name": "Nootropics", "name_ru": "Ноотропы" },
+    { "id": "02_3", "name": "Aerobic Training", "name_ru": "Аэробные тренировки" },
+    { "id": "01_2", "name": "Sleep: Duration", "name_ru": "Сон: продолжительность" }
+  ],
+  "recommendations": [
+    "Daily meditation (10+ min) for executive function",
+    "Aerobic exercise increases BDNF for neuroplasticity",
+    "Sleep 7-9 hours for memory consolidation",
+    "Consider nootropics only after consulting specialist",
+    "Incorporate cognitive challenges (learning, puzzles)"
+  ]
+}

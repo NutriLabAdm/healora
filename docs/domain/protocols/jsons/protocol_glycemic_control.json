@@ -1,0 +1,27 @@
+{
+  "id": "GLYCEMIC_CONTROL",
+  "name": "Glycemic Control",
+  "name_ru": "Гликемический контроль",
+  "category": "nutrition",
+  "goal": "Stabilize blood glucose levels",
+  "goal_ru": "Стабилизация уровня глюкозы в крови",
+  "interventions": [
+    { "id": "04_1", "name": "Calorie Limit", "name_ru": "Ограничение калорий" },
+    { "id": "04_2", "name": "Carb Control", "name_ru": "Контроль углеводов" },
+    { "id": "04_3", "name": "Sugar Reduction", "name_ru": "Снижение сахара" },
+    { "id": "04_6", "name": "Fiber Rich Diet", "name_ru": "Богатая клетчаткой диета" },
+    { "id": "02_3", "name": "Aerobic Training", "name_ru": "Аэробные тренировки" },
+    { "id": "03_5", "name": "Sleep", "name_ru": "Сон" }
+  ],
+  "red_flags": [
+    { "metric": "Fasting Glucose", "threshold": ">126 mg/dL", "action": "Consult endocrinologist" },
+    { "metric": "HbA1c", "threshold": ">6.5%", "action": "Consult endocrinologist" },
+    { "metric": "Postprandial Glucose", "threshold": ">180 mg/dL", "action": "Review carb intake" }
+  ],
+  "recommendations": [
+    "Spread carbohydrates evenly across meals",
+    "Combine carbs with protein and fiber",
+    "Eat vegetables before carbohydrates in meals",
+    "Walk 10-15 min after meals"
+  ]
+}

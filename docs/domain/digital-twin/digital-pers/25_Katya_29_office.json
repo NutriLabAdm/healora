@@ -1,0 +1,28 @@
+{
+  "profile_id": "P028",
+  "source_photo": "25_Katya_29_office.png",
+  "name": "Katya",
+  "age": 29,
+  "sex": "female",
+  "visual_description": "Молодая женщина в офисной одежде, за рабочим столом, ноутбук",
+  "scene_context": "В современном офисе, рабочий процесс",
+  "mood_expression": "сосредоточенная, деловая",
+  "inferred_lifestyle": {
+    "typical_day": "Офисная работа, встречи, планирование, обед с коллегами",
+    "occupation_type": "Специалист или менеджер в офисе",
+    "activity_level": "sedentary",
+    "social_context": "работа",
+    "diet_hints": "Офисные обеды, возможны перекусы",
+    "sleep_quality_hints": "Среднее качество сна",
+    "stress_hints": "Умеренный стресс на работе"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["ноутбук", "офисная одежда"],
+    "suggested_biomarkers_attention": ["осанка", "зрение", "шея"],
+    "risk_factors_visible": ["сидячая работа", "экранная нагрузка"]
+  },
+  "narrative_summary": "Катя — 29-летняя офисная сотрудница, которая большую часть дня проводит за ноутбуком. Она строит карьеру и много работает. Основные цели — профилактика офисного синдрома, забота о спине и глазах."
+}

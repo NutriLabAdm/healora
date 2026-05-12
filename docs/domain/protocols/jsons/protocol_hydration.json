@@ -1,0 +1,23 @@
+{
+  "id": "HYDRATION",
+  "name": "Hydration",
+  "name_ru": "Гидратация",
+  "category": "nutrition",
+  "goal": "Maintain optimal water balance",
+  "goal_ru": "Оптимальный водный баланс",
+  "interventions": [
+    { "id": "03_9", "name": "Water", "name_ru": "Водный режим" },
+    { "id": "03_10", "name": "Electrolyte Balance", "name_ru": "Баланс электролитов" },
+    { "id": "04_7", "name": "Reduce Caffeine", "name_ru": "Снижение кофеина" }
+  ],
+  "red_flags": [
+    { "metric": "Urine color", "threshold": "Dark yellow consistently", "action": "Increase water intake" },
+    { "metric": "Water intake", "threshold": "<1L per day", "action": "Set hourly water reminders" }
+  ],
+  "recommendations": [
+    "Drink 2-3L water daily (adjust for activity)",
+    "Start morning with 500ml water",
+    "Use electrolyte supplements during/after exercise",
+    "Limit caffeine to before 2 PM"
+  ]
+}

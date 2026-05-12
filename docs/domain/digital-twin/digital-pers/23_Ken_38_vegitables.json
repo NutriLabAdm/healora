@@ -1,0 +1,28 @@
+{
+  "profile_id": "P024",
+  "source_photo": "23_Ken_38_vegitables.png",
+  "name": "Ken",
+  "age": 38,
+  "sex": "male",
+  "visual_description": "Мужчина с овощами в руках, повседневная одежда, уверенный вид",
+  "scene_context": "На рынке или в магазине, выбирает свежие овощи",
+  "mood_expression": "спокойный, сосредоточенный",
+  "inferred_lifestyle": {
+    "typical_day": "Работа, затем рынок или магазин, приготовление здоровой пищи",
+    "occupation_type": "Офисный работник или специалист",
+    "activity_level": "light",
+    "social_context": "семья",
+    "diet_hints": "Осознанное потребление овощей, здоровое питание",
+    "sleep_quality_hints": "Регулярный режим",
+    "stress_hints": "Умеренный уровень стресса"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["овощи в руках"],
+    "suggested_biomarkers_attention": ["пищеварение", "клетчатка"],
+    "risk_factors_visible": ["недостаток белка в рационе"]
+  },
+  "narrative_summary": "Кен — 38-летний мужчина, который следит за своим рационом и предпочитает свежие овощи. Он ведёт размеренный образ жизни, совмещая работу с заботой о здоровье. В фокусе — сбалансированное питание и профилактика авитаминоза."
+}

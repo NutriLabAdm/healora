@@ -1,0 +1,25 @@
+{
+  "id": "LONGEVITY",
+  "name": "Longevity",
+  "name_ru": "Долголетие",
+  "category": "additional",
+  "goal": "Extend healthspan through evidence-based interventions",
+  "goal_ru": "Увеличение продолжительности активной жизни через научно-обоснованные интервенции",
+  "interventions": [
+    { "id": "04_1", "name": "Calorie Limit", "name_ru": "Ограничение калорий" },
+    { "id": "04_4", "name": "Time-Restricted Eating", "name_ru": "Ограничение по времени" },
+    { "id": "02_1", "name": "HIIT Training", "name_ru": "ВИИТ тренировки" },
+    { "id": "05_2", "name": "Omega-3", "name_ru": "Омега-3" },
+    { "id": "05_3", "name": "Magnesium", "name_ru": "Магний" },
+    { "id": "07_1", "name": "Regular Checkup", "name_ru": "Регулярный чекап" },
+    { "id": "08_1", "name": "HRV Monitoring", "name_ru": "Мониторинг ВСР" }
+  ],
+  "recommendations": [
+    "Calorie restriction or time-restricted eating (16:8)",
+    "Regular Zone 2 + HIIT training combination",
+    "Sleep 7-9 hours, prioritize consistency",
+    "Track HRV as primary longevity biomarker",
+    "Regular blood work to catch issues early",
+    "Minimize chronic stress through meditation"
+  ]
+}

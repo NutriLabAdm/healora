@@ -1,0 +1,28 @@
+{
+  "profile_id": "P017",
+  "source_photo": "17_Stepan_72_terier_2.png",
+  "name": "Stepan",
+  "age": 72,
+  "sex": "male",
+  "visual_description": "Пожилой мужчина с терьером, сидит на лавочке, поглаживает собаку",
+  "scene_context": "Парк, отдых после прогулки с собакой",
+  "mood_expression": "умиротворённый, ласковый",
+  "inferred_lifestyle": {
+    "typical_day": "Прогулки с собакой, отдых на свежем воздухе, неспешные дела",
+    "occupation_type": "Пенсионер",
+    "activity_level": "sedentary",
+    "social_context": "одиночество",
+    "diet_hints": "Домашняя кухня, возможно диетические ограничения",
+    "sleep_quality_hints": "Стабильный режим, чуткий сон",
+    "stress_hints": "Низкий стресс"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["кепка", "терьер рядом"],
+    "suggested_biomarkers_attention": ["суставы", ["артериальное давление"]],
+    "risk_factors_visible": ["возраст"]
+  },
+  "narrative_summary": "Степан — 72-летний пенсионер, который много времени проводит с собачкой на прогулках. Он наслаждается пенсией и общением с питомцем. В приоритете — профилактика возрастной саркопении и сохранение подвижности."
+}

@@ -1,0 +1,72 @@
+/* Animations */
+
+/* Slide in animation for messages */
+@keyframes slideIn { 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* Pop up animation for points */
+@keyframes popUp { 
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); } 
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } 
+    100% { opacity: 0; transform: translate(-50%, -120%) scale(1); } 
+}
+
+/* Pulse animation for personalized badge */
+@keyframes pulse-badge { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0.7; } 
+}
+
+/* Spin animation for processing indicator */
+@keyframes spin { 
+    to { transform: rotate(360deg); } 
+}
+
+/* Processing indicator */
+.processing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--primary-bg-light);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.processing-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--primary-border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Personalized badge */
+.personalized-badge { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 4px; 
+    padding: 2px 8px; 
+    background: var(--primary-bg); 
+    color: var(--primary); 
+    border-radius: 10px; 
+    font-size: 10px; 
+    font-weight: 600;
+    animation: pulse-badge 2s infinite;
+}
+
+/* Message animation class */
+.message { 
+    animation: slideIn 0.3s ease; 
+}
+
+/* Points popup */
+.points-popup { 
+    animation: popUp 1s ease forwards; 
+}

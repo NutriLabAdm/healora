@@ -1,0 +1,70 @@
+        <!-- Sources Panel (Left Side) -->
+        <div class="sources-panel">
+            <h3>Источники данных</h3>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'wearable')" onclick="showSample('wearable')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 1-4-4H8a4 4 0 0 1-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="label">Wearables<br>(HRV, сон)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'voice')" onclick="showSample('voice')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 1-14 0v-2"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                </svg>
+                <span class="label">Voice<br>(голосовой ввод)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'medical')" onclick="showSample('medical')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M16 4h2a2 2 0 0 1 0 4h-1"/>
+                    <path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/>
+                    <line x1="6" y1="1" x2="6" y2="4"/>
+                    <line x1="10" y1="1" x2="10" y2="4"/>
+                    <line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+                <span class="label">Medical<br>(анализы, тесты)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'food')" onclick="showSample('food')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                    <path d="M2 8h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/>
+                    <line x1="6" y1="1" x2="6" y2="4"/>
+                    <line x1="10" y1="1" x2="10" y2="4"/>
+                    <line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+                <span class="label">Food Photos<br>(фото еды)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'genetics')" onclick="showSample('genetics')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span class="label">Genetics<br>(генетика)</span>
+            </div>
+            
+            <div class="source-item" draggable="true" ondragstart="dragStart(event, 'mental')" onclick="showSample('mental')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#607d8b" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="16"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span class="label">Mental<br>(медитации)</span>
+            </div>
+            
+            <!-- Drop Zone -->
+            <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="removeHighlight(event)">
+                <h4>Digital Twin</h4>
+                <div>Перетащите источник сюда</div>
+                <div id="sources-added" style="margin-top: 10px; font-size: 11px; color: #4caf50;"></div>
+            </div>
+            
+            <!-- Sample Data Display -->
+            <div id="sample-data"></div>
+        </div>

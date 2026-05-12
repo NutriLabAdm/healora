@@ -1,0 +1,28 @@
+{
+  "profile_id": "P002",
+  "source_photo": "02_Stepan_14_on_bench.png",
+  "name": "Stepan",
+  "age": 14,
+  "sex": "male",
+  "visual_description": "Подросток, сидит на скамейке в парке, рюкзак рядом, спортивная одежда",
+  "scene_context": "В городском парке на скамейке, вероятно после школы",
+  "mood_expression": "задумчивый, спокойный",
+  "inferred_lifestyle": {
+    "typical_day": "Школьные занятия, затем прогулка или спорт на улице",
+    "occupation_type": "Ученик средней школы",
+    "activity_level": "active",
+    "social_context": "друзья",
+    "diet_hints": "Типичный рацион подростка, возможен избыток снеков",
+    "sleep_quality_hints": "Сон может быть нерегулярным из-за экранного времени",
+    "stress_hints": "Умеренный стресс в связи с учебой"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["носит рюкзак", "спортивная обувь"],
+    "suggested_biomarkers_attention": ["осанка", "зрение"],
+    "risk_factors_visible": ["длительное сидение", "использование гаджетов"]
+  },
+  "narrative_summary": "Степан — 14-летний школьник, активный, но проводящий много времени за учебой. Увлекается спортом, но нуждается в контроле осанки и режима сна. Его здоровье в переходном возрасте требует внимания к опорно-двигательному аппарату."
+}

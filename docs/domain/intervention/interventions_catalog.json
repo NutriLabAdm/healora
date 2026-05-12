@@ -1,0 +1,1198 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-05-07",
+    "total_interventions": 30,
+    "description": "Каталог интервенций для Цифрового Двойника - структурированный для парсинга"
+  },
+  "categories": {
+    "sleep": {
+      "name": "Сон",
+      "color": "#2196f3",
+      "description": "Интервенции для улучшения качества и продолжительности сна"
+    },
+    "physical": {
+      "name": "Физический",
+      "color": "#4caf50",
+      "description": "Физическая активность и тренировки"
+    },
+    "mental": {
+      "name": "Ментальный",
+      "color": "#9c27b0",
+      "description": "Психологическое здоровье и управление стрессом"
+    },
+    "food": {
+      "name": "Питание",
+      "color": "#ff9800",
+      "description": "Питание и диетология"
+    },
+    "medical": {
+      "name": "Медицинский",
+      "color": "#f44336",
+      "description": "Медицинские обследования и направления"
+    },
+    "supplement": {
+      "name": "Добавки",
+      "color": "#795548",
+      "description": "БАДы и нутрицевтики"
+    }
+  },
+  "interventions": {
+    "01_1": {
+      "code": "01_1",
+      "name": "Сон: время отхода",
+      "category": "sleep",
+      "impact": 9,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Фиксированное время отхода ко сну",
+      "full_description": "Установка фиксированного времени отхода ко сну (22:00-23:00) для стабилизации циркадных ритмов. Помогает синхронизировать биологические часы, улучшает качество сна и дневную бодрость. Рекомендуется ложиться спать в одно и то же время, включая выходные.",
+      "benefits": [
+        "Стабилизация циркадных ритмов",
+        "Улучшение качества сна",
+        "Снижение времени засыпания",
+        "Улучшение дневной бодрости"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "sleep",
+        "systolic_bp",
+        "diastolic_bp"
+      ],
+      "color": "#2196f3",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "sleep",
+        "systolic_bp",
+        "diastolic_bp"
+      ],
+      "probability": 0.9
+    },
+    "01_2": {
+      "code": "01_2",
+      "name": "Сон: продолжительность",
+      "category": "sleep",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Рекомендовано 7-9 часов сна",
+      "full_description": "Обеспечение продолжительности сна 7-9 часов для взрослых. Недостаток сна (<7 часов) связан с повышенным риском сердечно-сосудистых заболеваний, диабета и ожирения. Избыток (>9 часов) также может указывать на проблемы со здоровьем.",
+      "benefits": [
+        "Снижение риска сердечно-сосудистых заболеваний",
+        "Улучшение когнитивных функций",
+        "Поддержка иммунной системы",
+        "Регуляция гормонов"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "7-9 часов",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "sleep"
+      ],
+      "color": "#2196f3",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "sleep"
+      ],
+      "probability": 0.9
+    },
+    "01_3": {
+      "code": "01_3",
+      "name": "Сон: качество",
+      "category": "sleep",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Улучшение качества сна через гигиену сна",
+      "full_description": "Комплекс мер по улучшению гигиены сна: прохладная темная комната (18-20°C), отсутствие экранов за час до сна, использование маски для сна, белый шум. Качественный сон важен для консолидации памяти и восстановления организма.",
+      "benefits": [
+        "Глубокий сон",
+        "Снижение ночных пробуждений",
+        "Улучшение фаз сна",
+        "Утренняя бодрость"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "sleep"
+      ],
+      "color": "#2196f3",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "sleep"
+      ],
+      "probability": 0.9
+    },
+    "02_1": {
+      "code": "02_1",
+      "name": "Тренировки: ВИИТ",
+      "category": "physical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Высокоинтенсивный интервальный тренинг",
+      "full_description": "ВИИТ (HIIT) - тренировки с чередованием высокоинтенсивных упражнений (80-95% от максимального пульса) и периодов отдыха. 20-30 минут таких тренировок дают те же преимущества, что и 45-60 минут умеренных тренировок. Эффективно для сжигания жира и улучшения VO2 max.",
+      "benefits": [
+        "Сжигание висцерального жира",
+        "Улучшение кардиоваскулярного здоровья",
+        "Повышение VO2 max",
+        "Экономия времени"
+      ],
+      "implementation": {
+        "frequency": "2-3 раза в неделю",
+        "duration": "20-30 минут",
+        "effort_level": "Высокий"
+      },
+      "affects": [
+        "resting_hr",
+        "systolic_bp",
+        "diastolic_bp",
+        "cholesterol",
+        "weight"
+      ],
+      "color": "#4caf50",
+      "regularity": "weekly",
+      "delivery_type": "chatbot",
+      "report_effort": "detailed",
+      "sources": "-",
+      "biomarkers": [
+        "resting_hr",
+        "systolic_bp",
+        "diastolic_bp",
+        "cholesterol",
+        "weight"
+      ],
+      "probability": 0.9
+    },
+    "02_2": {
+      "code": "02_2",
+      "name": "Тренировки: силовые",
+      "category": "physical",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Регулярные силовые тренировки",
+      "full_description": "Силовые тренировки с отягощением для наращивания и поддержания мышечной массы. Рекомендуется 2-3 раза в неделю, прорабатывая все основные группы мышц. Мышечная масса важна для метаболизма, плотности костей и функционального здоровья.",
+      "benefits": [
+        "Увеличение мышечной массы",
+        "Повышение метаболизма",
+        "Укрепление костей",
+        "Улучшение инсулиновой чувствительности"
+      ],
+      "implementation": {
+        "frequency": "2-3 раза в неделю",
+        "duration": "45-60 минут",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "muscle_mass"
+      ],
+      "color": "#4caf50",
+      "regularity": "weekly",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "weight",
+        "muscle_mass"
+      ],
+      "probability": 0.9
+    },
+    "02_3": {
+      "code": "02_3",
+      "name": "Тренировки: аэробные",
+      "category": "physical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Бег, плавание, велосипед",
+      "full_description": "Аэробные тренировки (кардио) - бег, плавание, езда на велосипеде, быстрая ходьба. Улучшают работу сердечно-сосудистой системы, повышают выносливость. Рекомендуется 150 минут умеренной или 75 минут высокоинтенсивной активности в неделю.",
+      "benefits": [
+        "Улучшение работы сердца",
+        "Снижение АД",
+        "Контроль веса",
+        "Улучшение настроения"
+      ],
+      "implementation": {
+        "frequency": "3-5 раз в неделю",
+        "duration": "30-60 минут",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "resting_hr",
+        "systolic_bp",
+        "diastolic_bp",
+        "glucose"
+      ],
+      "color": "#4caf50",
+      "regularity": "weekly",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "resting_hr",
+        "systolic_bp",
+        "diastolic_bp",
+        "glucose"
+      ],
+      "probability": 0.9
+    },
+    "02_4": {
+      "code": "02_4",
+      "name": "Тренировки: гибкость",
+      "category": "physical",
+      "impact": 7.5,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Растяжка и йога",
+      "full_description": "Упражнения на гибкость, растяжка и йога для улучшения подвижности суставов и предотвращения травм. Рекомендуется включать в каждую тренировку и выполнять отдельные сессии йоги 1-2 раза в неделю.",
+      "benefits": [
+        "Улучшение подвижности",
+        "Предотвращение травм",
+        "Снижение мышечного напряжения",
+        "Улучшение осанки"
+      ],
+      "implementation": {
+        "frequency": "2-3 раза в неделю",
+        "duration": "20-40 минут",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "flexibility"
+      ],
+      "color": "#4caf50",
+      "regularity": "weekly",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "flexibility"
+      ],
+      "probability": 0.75
+    },
+    "02_6": {
+      "code": "02_6",
+      "name": "Тренировки: зона 2",
+      "category": "physical",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Тренировки в зоне 2 для выносливости",
+      "full_description": "Тренировки в зоне 2 (60-70% от максимального пульса) - длительные умеренные нагрузки. Оптимально для развития митохондриальной эффективности и базовой выносливости. Можно выполнять длительную ходьбу, легкий бег, езду на велосипеде.",
+      "benefits": [
+        "Развитие митохондрий",
+        "Улучшение базовой выносливости",
+        "Сжигание жира как топлива",
+        "Быстрое восстановление"
+      ],
+      "implementation": {
+        "frequency": "3-4 раза в неделю",
+        "duration": "45-90 минут",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "endurance",
+        "resting_hr"
+      ],
+      "color": "#4caf50",
+      "regularity": "weekly",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "endurance",
+        "resting_hr"
+      ],
+      "probability": 0.9
+    },
+    "03_1": {
+      "code": "03_1",
+      "name": "Медитация",
+      "category": "mental",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Медитация и осознанность",
+      "full_description": "Практика медитации и осознанности (mindfulness) для снижения стресса и улучшения ментального здоровья. Может включать дыхательные практики, сканирование тела, наблюдение за мыслями. Даже 10 минут в день дают заметный эффект.",
+      "benefits": [
+        "Снижение уровня кортизола",
+        "Улучшение концентрации",
+        "Снижение тревожности",
+        "Улучшение эмоционального состояния"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "10-20 минут",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "stress",
+        "hrv",
+        "sleep"
+      ],
+      "color": "#9c27b0",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress",
+        "hrv",
+        "sleep"
+      ],
+      "probability": 0.9
+    },
+    "03_2": {
+      "code": "03_2",
+      "name": "Дыхательные упражнения",
+      "category": "mental",
+      "impact": 7,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Глубокое дыхание",
+      "full_description": "Техники глубокого дыхания (диафрагмальное дыхание, дыхание 4-7-8, квадратное дыхание) для активации парасимпатической нервной системы. Помогает быстро снизить ЧСС и уровень стресса.",
+      "benefits": [
+        "Снижение ЧСС",
+        "Активация парасимпатики",
+        "Снижение давления",
+        "Быстрое успокоение"
+      ],
+      "implementation": {
+        "frequency": "По требности",
+        "duration": "3-10 минут",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "stress",
+        "resting_hr"
+      ],
+      "color": "#9c27b0",
+      "regularity": "on-demand",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress",
+        "resting_hr"
+      ],
+      "probability": 0.75
+    },
+    "03_5": {
+      "code": "03_5",
+      "name": "Сон",
+      "category": "sleep",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Гигиена сна и режим",
+      "full_description": "Комплексная гигиена сна: регулярный режим, подготовка ко сну, идеальная среда для сна. Включает отказ от кофеина после 14:00, комфортную температуру спальни, отсутствие шума и света.",
+      "benefits": [
+        "Быстрое засыпание",
+        "Глубокий сон",
+        "Утренняя бодрость",
+        "Снижение дневной сонливости"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "sleep"
+      ],
+      "color": "#2196f3",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "sleep"
+      ],
+      "probability": 0.9
+    },
+    "03_6": {
+      "code": "03_6",
+      "name": "Управление стрессом",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Техники управления стрессом",
+      "full_description": "Комплекс техник для управления хроническим стрессом: планирование, приоритизация задач, физическая активность, социальная поддержка, хобби. Хронический стресс ведет к воспалению, гормональным сбоям и снижению иммунитета.",
+      "benefits": [
+        "Снижение уровня кортизола",
+        "Улучшение гормонального фона",
+        "Снижение воспаления",
+        "Улучшение качества жизни"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Разное",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "stress",
+        "cortisol"
+      ],
+      "color": "#9c27b0",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "stress",
+        "cortisol"
+      ],
+      "probability": 0.9
+    },
+    "03_7": {
+      "code": "03_7",
+      "name": "Цифровой детокс",
+      "category": "mental",
+      "impact": 7.5,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Отказ от экранов перед сном",
+      "full_description": "Ограничение использования гаджетов за 1-2 часа до сна. Синий свет экранов (особенно в спектре 450-495 нм) подавляет выработку мелатонина, гормона сна. Цифровой детокс улучшает качество сна и снижает нагрузку на мозг.",
+      "benefits": [
+        "Улучшение выработки мелатонина",
+        "Снижение нагрузки на глаза",
+        "Улучшение качества сна",
+        "Снижение ментальной усталости"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "1-2 часа до сна",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "sleep",
+        "eye_strain"
+      ],
+      "color": "#9c27b0",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "sleep",
+        "eye_strain"
+      ],
+      "probability": 0.75
+    },
+    "03_9": {
+      "code": "03_9",
+      "name": "Водный режим",
+      "category": "food",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Оптимальный водный баланс",
+      "full_description": "Обеспечение адекватного потребления воды: 2.5-3.5 литра в день для мужчин, 2-3 литра для женщин. Водный баланс критичен для терморегуляции, транспорта питательных веществ, работы суставов и выведения токсинов.",
+      "benefits": [
+        "Улучшение работы почек",
+        "Оптимизация метаболизма",
+        "Улучшение состояния кожи",
+        "Поддержка когнитивных функций"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "В течение дня",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "hydration",
+        "kidney_function"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "hydration",
+        "kidney_function"
+      ],
+      "probability": 0.9
+    },
+    "03_10": {
+      "code": "03_10",
+      "name": "Баланс электролитов",
+      "category": "food",
+      "impact": 7,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Поддержание баланса электролитов",
+      "full_description": "Поддержание оптимального уровня электролитов: натрий, калий, магний, кальций. Особенно важно при интенсивных тренировках, в жаркую погоду и при ограничении калорий. Дисбаланс может вызвать судороги, аритмию, слабость.",
+      "benefits": [
+        "Предотвращение судорог",
+        "Нормальная работа сердца",
+        "Поддержка мышечных сокращений",
+        "Баланс жидкости в клетках"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "electrolytes",
+        "muscle_function"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "electrolytes",
+        "muscle_function"
+      ],
+      "probability": 0.75
+    },
+    "04_1": {
+      "code": "04_1",
+      "name": "Ограничение калорий",
+      "category": "food",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Умеренное ограничение калорий",
+      "full_description": "Умеренное ограничение калорий (на 10-20% ниже нормы) для долголетия и снижения веса. Калорическая рестрикция увеличивает продолжительность жизни у млекопитающих и снижает риск метаболических заболеваний у людей.",
+      "benefits": [
+        "Снижение веса",
+        "Улучшение чувствительности к инсулину",
+        "Снижение воспаления",
+        "Увеличение продолжительности жизни"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "glucose",
+        "cholesterol",
+        "weight"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "glucose",
+        "cholesterol",
+        "weight"
+      ],
+      "probability": 0.9
+    },
+    "04_2": {
+      "code": "04_2",
+      "name": "Контроль углеводов",
+      "category": "food",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Контроль потребления углеводов",
+      "full_description": "Ограничение простых углеводов (сахар, белая мука) и предпочтение сложных углеводов с низким гликемическим индексом. Помогает стабилизировать уровень глюкозы в крови и предотвратить инсулиновые пики.",
+      "benefits": [
+        "Стабилизация глюкозы",
+        "Снижение инсулинорезистентности",
+        "Контроль аппетита",
+        "Снижение риска диабета 2 типа"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "glucose",
+        "insulin"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "glucose",
+        "insulin"
+      ],
+      "probability": 0.9
+    },
+    "04_3": {
+      "code": "04_3",
+      "name": "Снижение сахара",
+      "category": "food",
+      "impact": 7.5,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Снижение потребления сахара",
+      "full_description": "Ограничение добавленного сахара до менее 25г в день. Избыток сахара связан с ожирением, диабетом 2 типа, сердечно-сосудистыми заболеваниями и неалкогольной жировой болезнью печени.",
+      "benefits": [
+        "Снижение риска диабета",
+        "Улучшение здоровья зубов",
+        "Снижение воспаления",
+        "Контроль веса"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "glucose",
+        "liver"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "glucose",
+        "liver"
+      ],
+      "probability": 0.9
+    },
+    "04_4": {
+      "code": "04_4",
+      "name": "Ограничение по времени",
+      "category": "food",
+      "impact": 8,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Питание в ограниченное время (16:8)",
+      "full_description": "Прерывистое голодание (интервальное) - окно питания 8 часов, голодание 16 часов (16:8) или другие варианты (18:6, 20:4). Помогает улучшить метаболическое здоровье, снизить инсулинорезистентность и ускорить аутофагию.",
+      "benefits": [
+        "Улучшение чувствительности к инсулину",
+        "Активация аутофагии",
+        "Снижение воспаления",
+        "Снижение веса"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "16:8 или 18:6",
+        "effort_level": "Высокий"
+      },
+      "affects": [
+        "glucose",
+        "insulin",
+        "autophagy"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "detailed",
+      "sources": "-",
+      "biomarkers": [
+        "glucose",
+        "insulin",
+        "autophagy"
+      ],
+      "probability": 0.75
+    },
+    "04_5": {
+      "code": "04_5",
+      "name": "Ранние приемы пищи",
+      "category": "food",
+      "impact": 7.5,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Ранние приемы пищи для циркадного питания",
+      "full_description": "Прием пищи в ранние часы дня (до 18:00-19:00) для синхронизации с циркадными ритмами. Поздние приемы пищи нарушают метаболизм глюкозы и липидов, ухудшают качество сна.",
+      "benefits": [
+        "Улучшение метаболизма глюкозы",
+        "Синхронизация с биоритмами",
+        "Лучшее качество сна",
+        "Снижение риска метаболических нарушений"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "glucose",
+        "circadian_rhythm"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "glucose",
+        "circadian_rhythm"
+      ],
+      "probability": 0.75
+    },
+    "04_6": {
+      "code": "04_6",
+      "name": "Богатая клетчаткой диета",
+      "category": "food",
+      "impact": 7,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Диета с высоким содержанием клетчатки",
+      "full_description": "Потребление 25-35г клетчатки в день из цельных злаков, овощей, фруктов, бобовых. Клетчатка улучшает здоровье кишечника, снижает холестерин, замедляет усвоение глюкозы и способствует сытости.",
+      "benefits": [
+        "Здоровье микробиома",
+        "Снижение холестерина",
+        "Улучшение пищеварения",
+        "Контроль веса"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "cholesterol",
+        "glucose",
+        "gut_health"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "cholesterol",
+        "glucose",
+        "gut_health"
+      ],
+      "probability": 0.9
+    },
+    "04_7": {
+      "code": "04_7",
+      "name": "Снижение кофеина",
+      "category": "food",
+      "impact": 6.5,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Снижение потребления кофеина",
+      "full_description": "Ограничение кофеина (кофе, энергетики) до 400мг в день (2-3 чашки кофе). Избыток кофеина может вызвать тревожность, нарушения сна, тахикардию. Отказ от кофеина за 6-8 часов до сна.",
+      "benefits": [
+        "Улучшение качества сна",
+        "Снижение тревожности",
+        "Нормализация ЧСС",
+        "Снижение зависимости"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "sleep",
+        "anxiety",
+        "resting_hr"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "sleep",
+        "anxiety",
+        "resting_hr"
+      ],
+      "probability": 0.75
+    },
+    "05_1": {
+      "code": "05_1",
+      "name": "Витамин D3",
+      "category": "supplement",
+      "impact": 8,
+      "evidence": "A",
+      "type": "supplement",
+      "short_description": "Прием витамина D3",
+      "full_description": "Прием витамина D3 (холекальциферол) для поддержки здоровья костей, иммунной системы и настроения. Рекомендуемая доза 1000-4000 МЕ/день, при дефиците - до 5000-10000 МЕ под контролем врача.",
+      "benefits": [
+        "Здоровье костей",
+        "Поддержка иммунитета",
+        "Улучшение настроения",
+        "Снижение воспаления"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "vitamin_d",
+        "bone_health",
+        "immunity"
+      ],
+      "color": "#795548",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "vitamin_d",
+        "bone_health",
+        "immunity"
+      ],
+      "probability": 0.9
+    },
+    "05_2": {
+      "code": "05_2",
+      "name": "Омега-3",
+      "category": "supplement",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "supplement",
+      "short_description": "Прием Омега-3 жирных кислот",
+      "full_description": "Прием Омега-3 (ЭПК и ДГК) из рыбьего жира или водорослей. Доза 1-2г ЭПК+ДГК в день. Омега-3 критичны для здоровья сердца, мозга, снижения воспаления и здоровья глаз.",
+      "benefits": [
+        "Здоровье сердца",
+        "Когнитивные функции",
+        "Снижение воспаления",
+        "Здоровье глаз"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "cholesterol",
+        "triglycerides",
+        "inflammation"
+      ],
+      "color": "#795548",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "cholesterol",
+        "triglycerides",
+        "inflammation"
+      ],
+      "probability": 0.9
+    },
+    "05_3": {
+      "code": "05_3",
+      "name": "Магний",
+      "category": "supplement",
+      "impact": 7.5,
+      "evidence": "A",
+      "type": "supplement",
+      "short_description": "Прием магния",
+      "full_description": "Прием магния (глицинат, цитрат, малат) в дозе 300-500мг элементарного магния в день. Магний важен для мышечного расслабления, сна, энергетического метаболизма и нервной системы.",
+      "benefits": [
+        "Улучшение сна",
+        "Расслабление мышц",
+        "Снижение стресса",
+        "Поддержка энергии"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно (лучше вечером)",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "stress",
+        "sleep",
+        "muscle_tension"
+      ],
+      "color": "#795548",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress",
+        "sleep",
+        "muscle_tension"
+      ],
+      "probability": 0.9
+    },
+    "05_4": {
+      "code": "05_4",
+      "name": "В-комплекс",
+      "category": "supplement",
+      "impact": 7,
+      "evidence": "B",
+      "type": "supplement",
+      "short_description": "Комплекс витаминов группы B",
+      "full_description": "Прием комплекса витаминов B (B1, B2, B3, B5, B6, B7, B9, B12) для поддержки энергетического метаболизма, нервной системы и образования крови. Особенно важно при вегетарианстве и высоких нагрузках.",
+      "benefits": [
+        "Энергетический метаболизм",
+        "Здоровье нервной системы",
+        "Образование крови",
+        "Здоровье кожи и волос"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "energy",
+        "nervous_system",
+        "blood_formation"
+      ],
+      "color": "#795548",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "energy",
+        "nervous_system",
+        "blood_formation"
+      ],
+      "probability": 0.75
+    },
+    "05_5": {
+      "code": "05_5",
+      "name": "Адаптогены",
+      "category": "supplement",
+      "impact": 7.5,
+      "evidence": "B",
+      "type": "supplement",
+      "short_description": "Прием адаптогенов",
+      "full_description": "Прием адаптогенов (ашваганда, родиола розовая, элеутерококк, лимонник) для повышения устойчивости к стрессу. Адаптогены помогают организму адаптироваться к физическим и ментальным нагрузкам, снижают кортизол.",
+      "benefits": [
+        "Снижение кортизола",
+        "Повышение стрессоустойчивости",
+        "Улучшение энергии",
+        "Поддержка когнитивных функций"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно (курсами)",
+        "duration": "1-3 месяца",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "stress",
+        "cortisol",
+        "energy"
+      ],
+      "color": "#795548",
+      "regularity": "daily",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress",
+        "cortisol",
+        "energy"
+      ],
+      "probability": 0.75
+    },
+    "05_6": {
+      "code": "05_6",
+      "name": "Противовоспалительная диета",
+      "category": "food",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Диета для снижения воспаления",
+      "full_description": "Диета с высоким содержанием антиоксидантов, Омега-3, специй (куркумин, гингерол) и низким содержанием провоспалительных продуктов (сахар, трансжиры, избыток омега-6). Полезна при хронических воспалительных состояниях.",
+      "benefits": [
+        "Снижение системного воспаления",
+        "Улучшение маркеров воспаления (СРБ)",
+        "Снижение риска хронических заболеваний",
+        "Улучшение здоровья суставов"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "inflammation",
+        "crp",
+        "joint_health"
+      ],
+      "color": "#ff9800",
+      "regularity": "daily",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "inflammation",
+        "crp",
+        "joint_health"
+      ],
+      "probability": 0.9
+    },
+    "05_7": {
+      "code": "05_7",
+      "name": "Ноотропы",
+      "category": "supplement",
+      "impact": 7,
+      "evidence": "B",
+      "type": "supplement",
+      "short_description": "Прием ноотропов для когнитивных функций",
+      "full_description": "Прием ноотропов (L-теанин, бакопа монье, гинкго билоба, креатин) для улучшения памяти, концентрации и когнитивной выносливости. Эффективность варьируется, требуется консультация врача.",
+      "benefits": [
+        "Улучшение памяти",
+        "Повышение концентрации",
+        "Когнитивная выносливость",
+        "Нейропротекция"
+      ],
+      "implementation": {
+        "frequency": "Курсами (по назначению)",
+        "duration": "1-3 месяца",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "cognition",
+        "memory",
+        "focus"
+      ],
+      "color": "#795548",
+      "regularity": "on-demand",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "cognition",
+        "memory",
+        "focus"
+      ],
+      "probability": 0.75
+    },
+    "07_1": {
+      "code": "07_1",
+      "name": "Регулярный чекап",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Ежегодные медицинские осмотры",
+      "full_description": "Ежегодные медицинские обследования: ОАК, биохимия (глюкоза, холестерин, печеночные пробы), гормоны (ТТГ, Т3, Т4, витамин D), ЭКГ, флюорография. Раннее выявление отклонений спасает жизнь.",
+      "benefits": [
+        "Раннее выявление заболеваний",
+        "Профилактика осложнений",
+        "Мониторинг динамики здоровья",
+        "Коррекция терапии"
+      ],
+      "implementation": {
+        "frequency": "1 раз в год",
+        "duration": "1 день",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "vitamin_d",
+        "ferritin",
+        "tsh",
+        "early_detection"
+      ],
+      "color": "#f44336",
+      "regularity": "yearly",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "vitamin_d",
+        "ferritin",
+        "tsh",
+        "early_detection"
+      ],
+      "probability": 0.9
+    },
+    "07_2": {
+      "code": "07_2",
+      "name": "Направление к кардиологу",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "При подозрении на сердечно-сосудистые риски",
+      "full_description": "Направление к кардиологу при наличии красных флагов: АД >140/90, холестерин >240 мг/дл, глюкоза >126 мг/дл, семейный анамнез ранних сердечно-сосудистых заболеваний. Кардиолог может назначить ЭхоКГ, Холтер, стресс-тест.",
+      "benefits": [
+        "Профессиональная диагностика",
+        "Предотвращение инфарктов/инсультов",
+        "Назначение таргетной терапии",
+        "Снижение сердечно-сосудистого риска"
+      ],
+      "implementation": {
+        "frequency": "По показаниям",
+        "duration": "1 визит + обследования",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "cardiac_health",
+        "blood_pressure",
+        "cholesterol"
+      ],
+      "color": "#f44336",
+      "regularity": "on-demand",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "cardiac_health",
+        "blood_pressure",
+        "cholesterol"
+      ],
+      "probability": 0.9
+    },
+    "08_1": {
+      "code": "08_1",
+      "name": "Мониторинг ЧСС",
+      "category": "physical",
+      "impact": 8.5,
+      "evidence": "B",
+      "type": "device",
+      "short_description": "Отслеживание вариабельности сердечного ритма",
+      "full_description": "Использование устройств (Apple Watch, Oura Ring, Garmin) для мониторинга ЧСС (частоты сердечных сокращений) и HRV (вариабельности сердечного ритма). HRV - маркер восстановления и адаптации организма, снижение HRV указывает на перетренированность.",
+      "benefits": [
+        "Мониторинг восстановления",
+        "Оптимизация тренировок",
+        "Выявление перетренированности",
+        "Предотвращение выгорания"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно (ночной мониторинг)",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "hrv",
+        "resting_hr",
+        "recovery"
+      ],
+      "color": "#4caf50",
+      "regularity": "daily",
+      "delivery_type": "voice_report",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "hrv",
+        "resting_hr",
+        "recovery"
+      ],
+      "probability": 0.75
+    }
+  }
+}

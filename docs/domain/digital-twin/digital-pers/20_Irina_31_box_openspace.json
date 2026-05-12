@@ -1,0 +1,28 @@
+{
+  "profile_id": "P020",
+  "source_photo": "20_Irina_31_box_openspace.png",
+  "name": "Irina",
+  "age": 31,
+  "sex": "female",
+  "visual_description": "Женщина с коробкой в руках в офисном опенспейсе, деловой стиль",
+  "scene_context": "В современном офисе открытого типа, передвигается с коробкой",
+  "mood_expression": "деловая, сосредоточенная",
+  "inferred_lifestyle": {
+    "typical_day": "Офисная работа, совещания, командное взаимодействие",
+    "occupation_type": "Офисный сотрудник, менеджер или координатор",
+    "activity_level": "light",
+    "social_context": "работа",
+    "diet_hints": "Офисные перекусы, обеды в столовой или доставка",
+    "sleep_quality_hints": "Достаточный сон, но возможен недосып в будни",
+    "stress_hints": "Средний уровень стресса"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["коробка в руках", "деловая одежда"],
+    "suggested_biomarkers_attention": ["зрение", "осанка"],
+    "risk_factors_visible": ["офисная работа", "длительное сидение"]
+  },
+  "narrative_summary": "Ирина — 31-летняя офисная сотрудница, работающая в опенспейсе. Она активно взаимодействует с коллегами и занимается организационными задачами. Основные цели — профилактика офисного синдрома и забота о зрении."
+}

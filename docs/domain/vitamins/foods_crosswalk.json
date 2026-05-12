@@ -1,0 +1,392 @@
+[
+  {
+    "food_id": "FOOD_001",
+    "name_ru": "Печень говяжья",
+    "name_en": "Beef liver",
+    "category": "meat_organ",
+    "portion_100g": {
+      "vitamin_A_retinol": 6500, "unit_A": "mcg RAE",
+      "vitamin_B1": 0.3, "unit_B1": "mg",
+      "vitamin_B2": 2.5, "unit_B2": "mg",
+      "vitamin_B3": 15.0, "unit_B3": "mg",
+      "vitamin_B5": 6.0, "unit_B5": "mg",
+      "vitamin_B6": 0.8, "unit_B6": "mg",
+      "vitamin_B9_folate": 300, "unit_B9": "mcg",
+      "vitamin_B12": 60.0, "unit_B12": "mcg",
+      "vitamin_C": 31, "unit_C": "mg",
+      "vitamin_D3": 50, "unit_D": "IU",
+      "vitamin_E": 0.5, "unit_E": "mg",
+      "vitamin_K2_MK4": 350, "unit_K": "mcg",
+      "iron_Fe": 9.0, "unit_Fe": "mg",
+      "calcium_Ca": 11, "unit_Ca": "mg",
+      "magnesium_Mg": 18, "unit_Mg": "mg",
+      "zinc_Zn": 4.0, "unit_Zn": "mg",
+      "iodine_I": 35, "unit_I": "mcg",
+      "selenium_Se": 35, "unit_Se": "mcg",
+      "copper_Cu": 6.0, "unit_Cu": "mg",
+      "phosphorus_P": 476, "unit_P": "mg",
+      "potassium_K": 380, "unit_K": "mg",
+      "sodium_Na": 75, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_002",
+    "name_ru": "Морковь (сырая)",
+    "name_en": "Carrot (raw)",
+    "category": "vegetable_root",
+    "portion_100g": {
+      "vitamin_A_beta_caro": 835, "unit_A": "mcg RAE*",
+      "vitamin_B1": 0.07, "unit_B1": "mg",
+      "vitamin_B2": 0.06, "unit_B2": "mg",
+      "vitamin_B3": 0.7, "unit_B3": "mg",
+      "vitamin_B5": 0.3, "unit_B5": "mg",
+      "vitamin_B6": 0.14, "unit_B6": "mg",
+      "vitamin_B9_folate": 19, "unit_B9": "mcg",
+      "vitamin_C": 6, "unit_C": "mg",
+      "vitamin_K1": 13, "unit_K": "mcg",
+      "iron_Fe": 0.3, "unit_Fe": "mg",
+      "calcium_Ca": 33, "unit_Ca": "mg",
+      "magnesium_Mg": 12, "unit_Mg": "mg",
+      "zinc_Zn": 0.2, "unit_Zn": "mg",
+      "potassium_K": 320, "unit_K": "mg",
+      "sodium_Na": 69, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_003",
+    "name_ru": "Шпинат (варёный)",
+    "name_en": "Spinach (boiled)",
+    "category": "vegetable_leafy",
+    "portion_100g": {
+      "vitamin_A_beta_caro": 573, "unit_A": "mcg RAE*",
+      "vitamin_B2": 0.2, "unit_B2": "mg",
+      "vitamin_B9_folate": 194, "unit_B9": "mcg",
+      "vitamin_C": 10, "unit_C": "mg",
+      "vitamin_K1": 494, "unit_K": "mcg",
+      "vitamin_E": 2.1, "unit_E": "mg",
+      "iron_Fe": 3.6, "unit_Fe": "mg",
+      "calcium_Ca": 136, "unit_Ca": "mg",
+      "magnesium_Mg": 87, "unit_Mg": "mg",
+      "zinc_Zn": 0.7, "unit_Zn": "mg",
+      "potassium_K": 466, "unit_K": "mg",
+      "sodium_Na": 79, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_004",
+    "name_ru": "Лосось (дикий)",
+    "name_en": "Salmon (wild)",
+    "category": "fish_fatty",
+    "portion_100g": {
+      "vitamin_B1": 0.2, "unit_B1": "mg",
+      "vitamin_B2": 0.1, "unit_B2": "mg",
+      "vitamin_B3": 8.0, "unit_B3": "mg",
+      "vitamin_B5": 1.5, "unit_B5": "mg",
+      "vitamin_B6": 0.8, "unit_B6": "mg",
+      "vitamin_B12": 3.0, "unit_B12": "mcg",
+      "vitamin_D3": 600, "unit_D": "IU",
+      "vitamin_E": 3.0, "unit_E": "mg",
+      "iron_Fe": 0.3, "unit_Fe": "mg",
+      "calcium_Ca": 12, "unit_Ca": "mg",
+      "magnesium_Mg": 26, "unit_Mg": "mg",
+      "zinc_Zn": 0.6, "unit_Zn": "mg",
+      "iodine_I": 30, "unit_I": "mcg",
+      "selenium_Se": 35, "unit_Se": "mcg",
+      "phosphorus_P": 200, "unit_P": "mg",
+      "potassium_K": 628, "unit_K": "mg",
+      "sodium_Na": 75, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_005",
+    "name_ru": "Яйца (1 шт, 50г)",
+    "name_en": "Egg (1 large)",
+    "category": "egg",
+    "portion_100g": {
+      "vitamin_A_retinol": 80, "unit_A": "mcg RAE",
+      "vitamin_B2": 0.25, "unit_B2": "mg",
+      "vitamin_B5": 2.5, "unit_B5": "mg",
+      "vitamin_B7_biotin": 50, "unit_B7": "mcg",
+      "vitamin_B9_folate": 25, "unit_B9": "mcg",
+      "vitamin_B12": 0.5, "unit_B12": "mcg",
+      "vitamin_D3": 40, "unit_D": "IU",
+      "vitamin_E": 0.5, "unit_E": "mg",
+      "vitamin_K2_MK4": 30, "unit_K": "mcg",
+      "iron_Fe": 1.2, "unit_Fe": "mg",
+      "calcium_Ca": 50, "unit_Ca": "mg",
+      "magnesium_Mg": 10, "unit_Mg": "mg",
+      "zinc_Zn": 0.5, "unit_Zn": "mg",
+      "iodine_I": 20, "unit_I": "mcg",
+      "selenium_Se": 15, "unit_Se": "mcg",
+      "phosphorus_P": 100, "unit_P": "mg",
+      "potassium_K": 63, "unit_K": "mg",
+      "sodium_Na": 70, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_006",
+    "name_ru": "Киви (1 шт, 70г)",
+    "name_en": "Kiwi (1 fruit)",
+    "category": "fruit",
+    "portion_100g": {
+      "vitamin_C": 92, "unit_C": "mg",
+      "vitamin_E": 1.5, "unit_E": "mg",
+      "vitamin_K1": 40, "unit_K": "mcg",
+      "iron_Fe": 0.3, "unit_Fe": "mg",
+      "calcium_Ca": 34, "unit_Ca": "mg",
+      "magnesium_Mg": 17, "unit_Mg": "mg",
+      "potassium_K": 312, "unit_K": "mg",
+      "sodium_Na": 5, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_007",
+    "name_ru": "Гречка (варёная, 1 стакан)",
+    "name_en": "Buckwheat (cooked)",
+    "category": "grain",
+    "portion_100g": {
+      "vitamin_B1": 0.4, "unit_B1": "mg",
+      "vitamin_B2": 0.1, "unit_B2": "mg",
+      "vitamin_B3": 3.0, "unit_B3": "mg",
+      "vitamin_B5": 0.5, "unit_B5": "mg",
+      "vitamin_B6": 0.2, "unit_B6": "mg",
+      "vitamin_B9_folate": 20, "unit_B9": "mcg",
+      "iron_Fe": 1.3, "unit_Fe": "mg",
+      "calcium_Ca": 18, "unit_Ca": "mg",
+      "magnesium_Mg": 86, "unit_Mg": "mg",
+      "zinc_Zn": 1.0, "unit_Zn": "mg",
+      "phosphorus_P": 150, "unit_P": "mg",
+      "potassium_K": 160, "unit_K": "mg",
+      "sodium_Na": 5, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_008",
+    "name_ru": "Чечевица (варёная, 1/2 стакана)",
+    "name_en": "Lentils (cooked)",
+    "category": "legume",
+    "portion_100g": {
+      "vitamin_B1": 0.2, "unit_B1": "mg",
+      "vitamin_B9_folate": 180, "unit_B9": "mcg",
+      "iron_Fe": 3.3, "unit_Fe": "mg",
+      "calcium_Ca": 19, "unit_Ca": "mg",
+      "magnesium_Mg": 36, "unit_Mg": "mg",
+      "zinc_Zn": 1.5, "unit_Zn": "mg",
+      "potassium_K": 369, "unit_K": "mg",
+      "phosphorus_P": 175, "unit_P": "mg",
+      "selenium_Se": 2, "unit_Se": "mcg",
+      "sodium_Na": 5, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_009",
+    "name_ru": "Миндаль (1 горсть, 28г)",
+    "name_en": "Almonds",
+    "category": "nut",
+    "portion_100g": {
+      "vitamin_B2": 0.6, "unit_B2": "mg",
+      "vitamin_B5": 0.3, "unit_B5": "mg",
+      "vitamin_E": 25.0, "unit_E": "mg",
+      "calcium_Ca": 260, "unit_Ca": "mg",
+      "magnesium_Mg": 270, "unit_Mg": "mg",
+      "zinc_Zn": 3.0, "unit_Zn": "mg",
+      "copper_Cu": 1.0, "unit_Cu": "mg",
+      "potassium_K": 733, "unit_K": "mg",
+      "phosphorus_P": 480, "unit_P": "mg",
+      "selenium_Se": 4, "unit_Se": "mcg",
+      "sodium_Na": 1, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_010",
+    "name_ru": "Сардины (консервы, с костями)",
+    "name_en": "Sardines (canned, with bones)",
+    "category": "fish_small",
+    "portion_100g": {
+      "vitamin_B3": 5.0, "unit_B3": "mg",
+      "vitamin_B12": 8.0, "unit_B12": "mcg",
+      "vitamin_D3": 270, "unit_D": "IU",
+      "calcium_Ca": 380, "unit_Ca": "mg",
+      "iron_Fe": 2.9, "unit_Fe": "mg",
+      "magnesium_Mg": 39, "unit_Mg": "mg",
+      "zinc_Zn": 1.3, "unit_Zn": "mg",
+      "selenium_Se": 52, "unit_Se": "mcg",
+      "phosphorus_P": 490, "unit_P": "mg",
+      "potassium_K": 397, "unit_K": "mg",
+      "sodium_Na": 414, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_011",
+    "name_ru": "Брокколи (варёная)",
+    "name_en": "Broccoli (boiled)",
+    "category": "vegetable_cruciferous",
+    "portion_100g": {
+      "vitamin_A_beta_caro": 31, "unit_A": "mcg RAE*",
+      "vitamin_B5": 0.5, "unit_B5": "mg",
+      "vitamin_B9_folate": 63, "unit_B9": "mcg",
+      "vitamin_C": 65, "unit_C": "mg",
+      "vitamin_K1": 141, "unit_K": "mcg",
+      "vitamin_E": 1.5, "unit_E": "mg",
+      "iron_Fe": 0.7, "unit_Fe": "mg",
+      "calcium_Ca": 40, "unit_Ca": "mg",
+      "magnesium_Mg": 21, "unit_Mg": "mg",
+      "potassium_K": 293, "unit_K": "mg",
+      "chromium_Cr": 11, "unit_Cr": "mcg",
+      "sodium_Na": 41, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_012",
+    "name_ru": "Авокадо (1 шт, 150г)",
+    "name_en": "Avocado (1 fruit)",
+    "category": "fruit_fatty",
+    "portion_100g": {
+      "vitamin_B5": 1.4, "unit_B5": "mg",
+      "vitamin_B6": 0.3, "unit_B6": "mg",
+      "vitamin_E": 2.1, "unit_E": "mg",
+      "vitamin_K1": 21, "unit_K": "mcg",
+      "calcium_Ca": 12, "unit_Ca": "mg",
+      "magnesium_Mg": 29, "unit_Mg": "mg",
+      "potassium_K": 485, "unit_K": "mg",
+      "sodium_Na": 7, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_013",
+    "name_ru": "Тыквенные семечки (1 горсть, 28г)",
+    "name_en": "Pumpkin seeds",
+    "category": "seed",
+    "portion_100g": {
+      "vitamin_B2": 0.15, "unit_B2": "mg",
+      "vitamin_K1": 7, "unit_K": "mcg",
+      "magnesium_Mg": 535, "unit_Mg": "mg",
+      "zinc_Zn": 7.0, "unit_Zn": "mg",
+      "iron_Fe": 8.8, "unit_Fe": "mg",
+      "copper_Cu": 1.3, "unit_Cu": "mg",
+      "phosphorus_P": 1200, "unit_P": "mg",
+      "potassium_K": 809, "unit_K": "mg",
+      "selenium_Se": 5, "unit_Se": "mcg",
+      "sodium_Na": 18, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_014",
+    "name_ru": "Натто (ферментированные соевые бобы)",
+    "name_en": "Natto (fermented soybeans)",
+    "category": "fermented_soy",
+    "portion_100g": {
+      "vitamin_K2_MK7": 850, "unit_K": "mcg",
+      "vitamin_B2": 0.3, "unit_B2": "mg",
+      "vitamin_B7_biotin": 7, "unit_B7": "mcg",
+      "iron_Fe": 2.7, "unit_Fe": "mg",
+      "calcium_Ca": 90, "unit_Ca": "mg",
+      "magnesium_Mg": 64, "unit_Mg": "mg",
+      "potassium_K": 729, "unit_K": "mg",
+      "phosphorus_P": 170, "unit_P": "mg",
+      "sodium_Na": 5, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_015",
+    "name_ru": "Картофель (запечённый, с кожурой)",
+    "name_en": "Baked potato (with skin)",
+    "category": "vegetable_tuber",
+    "portion_100g": {
+      "vitamin_B6": 0.3, "unit_B6": "mg",
+      "vitamin_C": 10, "unit_C": "mg",
+      "potassium_K": 535, "unit_K": "mg",
+      "magnesium_Mg": 25, "unit_Mg": "mg",
+      "iron_Fe": 0.8, "unit_Fe": "mg",
+      "calcium_Ca": 10, "unit_Ca": "mg",
+      "phosphorus_P": 65, "unit_P": "mg",
+      "sodium_Na": 10, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_016",
+    "name_ru": "Йогурт (натуральный, 1 стакан)",
+    "name_en": "Plain yogurt",
+    "category": "dairy_fermented",
+    "portion_100g": {
+      "vitamin_B2": 0.2, "unit_B2": "mg",
+      "vitamin_B5": 0.8, "unit_B5": "mg",
+      "vitamin_B12": 0.4, "unit_B12": "mcg",
+      "calcium_Ca": 180, "unit_Ca": "mg",
+      "phosphorus_P": 144, "unit_P": "mg",
+      "potassium_K": 141, "unit_K": "mg",
+      "magnesium_Mg": 17, "unit_Mg": "mg",
+      "zinc_Zn": 0.9, "unit_Zn": "mg",
+      "iodine_I": 20, "unit_I": "mcg",
+      "sodium_Na": 70, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_017",
+    "name_ru": "Тунец (консервы)",
+    "name_en": "Tuna (canned)",
+    "category": "fish_fatty",
+    "portion_100g": {
+      "vitamin_B3": 8.0, "unit_B3": "mg",
+      "vitamin_B6": 0.6, "unit_B6": "mg",
+      "vitamin_B12": 2.5, "unit_B12": "mcg",
+      "vitamin_D3": 230, "unit_D": "IU",
+      "iron_Fe": 1.3, "unit_Fe": "mg",
+      "magnesium_Mg": 50, "unit_Mg": "mg",
+      "zinc_Zn": 0.6, "unit_Zn": "mg",
+      "selenium_Se": 80, "unit_Se": "mcg",
+      "potassium_K": 237, "unit_K": "mg",
+      "sodium_Na": 400, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_018",
+    "name_ru": "Кале (сырая, 1 стакан)",
+    "name_en": "Kale (raw)",
+    "category": "vegetable_leafy",
+    "portion_100g": {
+      "vitamin_A_beta_caro": 500, "unit_A": "mcg RAE*",
+      "vitamin_C": 120, "unit_C": "mg",
+      "vitamin_K1": 817, "unit_K": "mcg",
+      "calcium_Ca": 150, "unit_Ca": "mg",
+      "iron_Fe": 1.5, "unit_Fe": "mg",
+      "magnesium_Mg": 33, "unit_Mg": "mg",
+      "potassium_K": 491, "unit_K": "mg",
+      "sodium_Na": 53, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_019",
+    "name_ru": "Говядина (нежирная, 100г)",
+    "name_en": "Beef (lean)",
+    "category": "meat_red",
+    "portion_100g": {
+      "vitamin_B3": 5.0, "unit_B3": "mg",
+      "vitamin_B6": 0.4, "unit_B6": "mg",
+      "vitamin_B12": 2.5, "unit_B12": "mcg",
+      "iron_Fe": 2.5, "unit_Fe": "mg",
+      "zinc_Zn": 4.0, "unit_Zn": "mg",
+      "selenium_Se": 18, "unit_Se": "mcg",
+      "phosphorus_P": 200, "unit_P": "mg",
+      "potassium_K": 318, "unit_K": "mg",
+      "sodium_Na": 70, "unit_Na": "mg"
+    }
+  },
+  {
+    "food_id": "FOOD_020",
+    "name_ru": "Сыр твёрдый (1 ломтик, 28г)",
+    "name_en": "Hard cheese",
+    "category": "dairy_cheese",
+    "portion_100g": {
+      "vitamin_A_retinol": 300, "unit_A": "mcg RAE",
+      "vitamin_B2": 0.4, "unit_B2": "mg",
+      "vitamin_B12": 1.0, "unit_B12": "mcg",
+      "calcium_Ca": 700, "unit_Ca": "mg",
+      "phosphorus_P": 500, "unit_P": "mg",
+      "zinc_Zn": 3.0, "unit_Zn": "mg",
+      "selenium_Se": 12, "unit_Se": "mcg",
+      "potassium_K": 98, "unit_K": "mg",
+      "sodium_Na": 700, "unit_Na": "mg"
+    }
+  }
+]

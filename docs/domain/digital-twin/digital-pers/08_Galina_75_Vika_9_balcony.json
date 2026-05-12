@@ -1,0 +1,28 @@
+{
+  "profile_id": "P008",
+  "source_photo": "08_Galina_75_Vika_9_balcony.png",
+  "name": "Galina",
+  "age": 75,
+  "sex": "female",
+  "visual_description": "Пожилая женщина с девочкой на балконе, обе улыбаются, комнатные цветы вокруг",
+  "scene_context": "На балконе среди цветов, бабушка с внучкой проводят время",
+  "mood_expression": "счастливая, умиротворённая",
+  "inferred_lifestyle": {
+    "typical_day": "Уход за домашними растениями, общение с внучкой, неспешные домашние дела",
+    "occupation_type": "Пенсионерка",
+    "activity_level": "sedentary",
+    "social_context": "семья",
+    "diet_hints": "Домашняя еда, возможно ограничения по здоровью",
+    "sleep_quality_hints": "Ранний подъём, дневной отдых",
+    "stress_hints": "Низкий стресс благодаря близким"
+  },
+  "health_observations": {
+    "body_type": "thin",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["седые волосы", "домашняя одежда"],
+    "suggested_biomarkers_attention": ["давление", "кальций", "витамин D"],
+    "risk_factors_visible": ["возраст", "хрупкость костей"]
+  },
+  "narrative_summary": "Галина — 75-летняя пенсионерка, наслаждающаяся общением с внучкой Викой. Она заботится о домашних растениях и проводит дни дома. Ключевая задача — профилактика остеопороза и поддержание когнитивного здоровья."
+}

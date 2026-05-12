@@ -1,0 +1,28 @@
+{
+  "profile_id": "P010",
+  "source_photo": "10_Alex_48_soup.png",
+  "name": "Alex",
+  "age": 48,
+  "sex": "male",
+  "visual_description": "Мужчина с тарелкой супа, короткая стрижка, деловой стиль одежды",
+  "scene_context": "За обеденным столом, обед в рабочее время или дома",
+  "mood_expression": "спокойный, довольный",
+  "inferred_lifestyle": {
+    "typical_day": "Рабочий день, обеденный перерыв, домашние вечера",
+    "occupation_type": "Офисный работник, специалист или менеджер",
+    "activity_level": "sedentary",
+    "social_context": "работа",
+    "diet_hints": "Предпочитает домашнюю еду, супы, регулярное питание",
+    "sleep_quality_hints": "Стабильный режим, но возможен недосып",
+    "stress_hints": "Средний уровень стресса"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["короткая стрижка", "деловой стиль"],
+    "suggested_biomarkers_attention": ["холестерин", "сахар в крови"],
+    "risk_factors_visible": ["сидячая работа", "возраст"]
+  },
+  "narrative_summary": "Алекс — 48-летний офисный работник, ценящий домашнюю еду, особенно супы. Он ведёт стабильный, но малоподвижный образ жизни. Основные цели — профилактика сердечно-сосудистых заболеваний и поддержание активности."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "DEPRESSION",
+  "name": "Depression",
+  "name_ru": "Депрессия",
+  "category": "medical",
+  "goal": "Identify signs of depression and provide support",
+  "goal_ru": "Выявление признаков депрессии и поддержка",
+  "type": "red_flag",
+  "red_flags": [
+    { "metric": "PHQ-9 Score", "threshold": ">10", "action": "Consult psychiatrist" },
+    { "metric": "Anhedonia", "threshold": "Persistent loss of interest", "action": "Consult psychiatrist" },
+    { "metric": "Suicidal thoughts", "threshold": "Any", "action": "EMERGENCY: Call suicide hotline (8-800-200-01-11)" },
+    { "metric": "Sleep disruption", "threshold": ">2 weeks", "action": "Consult psychiatrist" }
+  ],
+  "interventions": [
+    { "id": "03_1", "name": "Meditation", "name_ru": "Медитация" },
+    { "id": "02_3", "name": "Aerobic Training", "name_ru": "Аэробные тренировки" },
+    { "id": "03_6", "name": "Stress Management", "name_ru": "Управление стрессом" }
+  ],
+  "recommendations": [
+    "DO NOT use shame-based motivation (you're not trying hard enough)",
+    "Encourage professional mental health support",
+    "Low-intensity aerobic exercise (walking) is beneficial",
+    "Focus on daily wins, no matter how small",
+    "Remove pressure: simplify to 1-2 daily actions"
+  ]
+}

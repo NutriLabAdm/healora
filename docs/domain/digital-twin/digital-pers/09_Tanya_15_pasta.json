@@ -1,0 +1,28 @@
+{
+  "profile_id": "P009",
+  "source_photo": "09_Tanya_15_pasta.png",
+  "name": "Tanya",
+  "age": 15,
+  "sex": "female",
+  "visual_description": "Девушка-подросток с тарелкой пасты, длинные волосы, повседневная одежда",
+  "scene_context": "На кухне или в столовой, собирается обедать",
+  "mood_expression": "довольная, задумчивая",
+  "inferred_lifestyle": {
+    "typical_day": "Школа, дополнительные занятия, домашние дела",
+    "occupation_type": "Ученица старшей школы",
+    "activity_level": "light",
+    "social_context": "друзья",
+    "diet_hints": "Любит пасту и углеводную пищу, возможен дисбаланс",
+    "sleep_quality_hints": "Недостаток сна из-за учёбы",
+    "stress_hints": "Средний стресс из-за экзаменов"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["длинные волосы"],
+    "suggested_biomarkers_attention": ["железо", "витамины группы B"],
+    "risk_factors_visible": ["склонность к углеводному рациону"]
+  },
+  "narrative_summary": "Таня — 15-летняя старшеклассница, сочетающая учёбу с домашними делами. Она предпочитает пасту и сытную еду. В приоритете — сбалансированное питание и профилактика анемии в подростковый период."
+}

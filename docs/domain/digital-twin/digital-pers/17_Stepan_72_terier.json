@@ -1,0 +1,28 @@
+{
+  "profile_id": "P016",
+  "source_photo": "17_Stepan_72_terier.png",
+  "name": "Stepan",
+  "age": 72,
+  "sex": "male",
+  "visual_description": "Пожилой мужчина с терьером на поводке, одет по-походному, кепка",
+  "scene_context": "В парке или сквере, выгуливает собаку",
+  "mood_expression": "бодрый, довольный",
+  "inferred_lifestyle": {
+    "typical_day": "Утренние прогулки с собакой, домашние дела, чтение, сад",
+    "occupation_type": "Пенсионер",
+    "activity_level": "light",
+    "social_context": "одиночество",
+    "diet_hints": "Домашнее питание, возможно соблюдает диету",
+    "sleep_quality_hints": "Ранний подъём, хороший режим",
+    "stress_hints": "Низкий уровень стресса"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["кепка", "собака на поводке"],
+    "suggested_biomarkers_attention": ["суставы", "артериальное давление", "холестерин"],
+    "risk_factors_visible": ["возраст", "снижение подвижности"]
+  },
+  "narrative_summary": "Степан — 72-летний пенсионер, ежедневно выгуливающий своего терьера. Прогулки поддерживают его в тонусе. Ключевая задача — сохранение подвижности суставов и контроль возрастных заболеваний."
+}

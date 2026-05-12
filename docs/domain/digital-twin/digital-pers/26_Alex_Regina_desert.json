@@ -1,0 +1,28 @@
+{
+  "profile_id": "P029",
+  "source_photo": "26_Alex_Regina_desert.png",
+  "name": "Алекс и Регина",
+  "age": 30,
+  "sex": "female",
+  "visual_description": "Пара с десертом, улыбаются, делят сладость",
+  "scene_context": "В кафе или ресторане, десерт после ужина",
+  "mood_expression": "счастливые, влюблённые",
+  "inferred_lifestyle": {
+    "typical_day": "Работа, встречи, свидания, походы в рестораны",
+    "occupation_type": "Молодые специалисты",
+    "activity_level": "light",
+    "social_context": "друзья",
+    "diet_hints": "Любят сладкое, питание с акцентом на гастрономические удовольствия",
+    "sleep_quality_hints": "Режим может быть нерегулярным",
+    "stress_hints": "Низкий стресс"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["десерт", "пара", "кафе"],
+    "suggested_biomarkers_attention": ["уровень сахара", "контроль веса"],
+    "risk_factors_visible": ["избыток сахара", "редкая физическая активность"]
+  },
+  "narrative_summary": "Алекс и Регина — пара, которая любит проводить время в кафе за десертами. Они наслаждаются жизнью и обществом друг друга. В фокусе — умеренность в сладком и добавление физической активности в совместный досуг."
+}

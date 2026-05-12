@@ -1,0 +1,28 @@
+{
+  "profile_id": "P019",
+  "source_photo": "19_Stas_35_dog_bike.png",
+  "name": "Stas",
+  "age": 35,
+  "sex": "male",
+  "visual_description": "Мужчина с собакой рядом с велосипедом, спортивная одежда, солнечные очки",
+  "scene_context": "Парк или загородная велодорожка",
+  "mood_expression": "энергичный, счастливый",
+  "inferred_lifestyle": {
+    "typical_day": "Велопрогулки с собакой, активный отдых на выходных",
+    "occupation_type": "Специалист с гибким графиком или на удалёнке",
+    "activity_level": "active",
+    "social_context": "друзья",
+    "diet_hints": "Питание с учётом физических нагрузок",
+    "sleep_quality_hints": "Хороший сон благодаря активности",
+    "stress_hints": "Низкий стресс благодаря спорту"
+  },
+  "health_observations": {
+    "body_type": "athletic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["велосипед", "собака", "спортивная одежда"],
+    "suggested_biomarkers_attention": ["ЧСС", "суставы ног"],
+    "risk_factors_visible": ["возможны травмы коленей"]
+  },
+  "narrative_summary": "Стас — 35-летний активный мужчина, который регулярно катается на велосипеде с собакой. Он ведёт здоровый образ жизни и получает удовольствие от движения. В фокусе — профилактика суставных травм и поддержание формы."
+}

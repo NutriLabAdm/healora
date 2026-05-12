@@ -1,0 +1,25 @@
+{
+  "id": "HORMONAL_ENDOCRINE",
+  "name": "Hormonal and Endocrine Disorders",
+  "name_ru": "Гормональные и эндокринные нарушения",
+  "category": "medical",
+  "goal": "Detect and support hormonal health",
+  "goal_ru": "Выявление и поддержка гормонального здоровья",
+  "type": "red_flag",
+  "red_flags": [
+    { "metric": "TSH", "threshold": "<0.4 or >4.0 mIU/L", "action": "Consult endocrinologist" },
+    { "metric": "T3/T4", "threshold": "Outside reference range", "action": "Consult endocrinologist" },
+    { "metric": "Cortisol (AM)", "threshold": ">25 μg/dL", "action": "Stress management + consult" }
+  ],
+  "interventions": [
+    { "id": "05_5", "name": "Adaptogens", "name_ru": "Адаптогены" },
+    { "id": "03_1", "name": "Meditation", "name_ru": "Медитация" },
+    { "id": "03_6", "name": "Stress Management", "name_ru": "Управление стрессом" }
+  ],
+  "recommendations": [
+    "Get comprehensive thyroid panel (TSH, T3, T4, antibodies)",
+    "Manage stress with daily meditation practice",
+    "Consider adaptogens (ashwagandha, rhodiola) after consult",
+    "Monitor HRV as indicator of autonomic balance"
+  ]
+}

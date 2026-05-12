@@ -1,0 +1,25 @@
+{
+  "id": "EATING_DISORDERS",
+  "name": "Eating Disorders",
+  "name_ru": "Расстройства пищевого поведения",
+  "category": "medical",
+  "goal": "Identify signs of eating disorders",
+  "goal_ru": "Выявление признаков расстройств пищевого поведения",
+  "type": "red_flag",
+  "red_flags": [
+    { "metric": "BMI", "threshold": "<17.5", "action": "Consult psychiatrist, dietitian" },
+    { "metric": "Binge eating episodes", "threshold": "Recurring", "action": "Consult psychiatrist" },
+    { "metric": "Fasting/purging behavior", "threshold": "Any episodes", "action": "Immediate psychiatric consultation" },
+    { "metric": "Weight fluctuation", "threshold": ">10% within 3 months", "action": "Consult specialist" }
+  ],
+  "interventions": [
+    { "id": "03_4", "name": "Mindful Eating", "name_ru": "Осознанное питание" },
+    { "id": "03_1", "name": "Meditation", "name_ru": "Медитация" }
+  ],
+  "recommendations": [
+    "DO NOT recommend calorie restriction in underweight users",
+    "Focus on nutritional adequacy rather than weight",
+    "Encourage professional mental health support",
+    "Remove weight goals from dashboard temporarily"
+  ]
+}

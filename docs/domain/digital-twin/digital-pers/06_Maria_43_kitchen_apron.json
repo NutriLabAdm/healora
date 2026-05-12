@@ -1,0 +1,28 @@
+{
+  "profile_id": "P006",
+  "source_photo": "06_Maria_43_kitchen_apron.png",
+  "name": "Maria",
+  "age": 43,
+  "sex": "female",
+  "visual_description": "Женщина в фартуке на кухне, тёмные волосы, улыбается, держит кухонную утварь",
+  "scene_context": "На кухне, процесс приготовления еды",
+  "mood_expression": "довольная, уютная",
+  "inferred_lifestyle": {
+    "typical_day": "Хозяйственные дела, приготовление пищи, забота о семье",
+    "occupation_type": "Домохозяйка или удалённый работник",
+    "activity_level": "light",
+    "social_context": "семья",
+    "diet_hints": "Готовит домашнюю еду, контролирует качество продуктов",
+    "sleep_quality_hints": "Режим стабильный, утром встаёт рано",
+    "stress_hints": "Умеренный стресс из-за бытовых обязанностей"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "good",
+    "visible_skin_tone": "светлый",
+    "notable_features": ["фартук", "кухонная утварь в руках"],
+    "suggested_biomarkers_attention": ["уровень сахара", "витамин D"],
+    "risk_factors_visible": ["длительное стояние у плиты"]
+  },
+  "narrative_summary": "Мария — 43-летняя женщина, которая заботится о семье и любит готовить. Она проводит много времени на кухне и следит за качеством домашней еды. Важные цели — поддержание активности и профилактика варикоза."
+}

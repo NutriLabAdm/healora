@@ -1,0 +1,492 @@
+[
+  {
+    "id": "vit_a",
+    "name_ru": "Витамин A",
+    "name_en": "Vitamin A",
+    "symbol": "A",
+    "alt_names": ["Ретинол", "бета-каротин", "Retinol", "Beta-carotene"],
+    "category": "vitamin",
+    "type": "fat_soluble",
+    "rda_rf": {
+      "male": {"value": 900, "unit": "mcg RAE", "group": "adult_male_19plus"},
+      "female": {"value": 700, "unit": "mcg RAE", "group": "adult_female_19plus"},
+      "pregnancy": {"value": 800, "unit": "mcg RAE", "group": "pregnancy"},
+      "lactation": {"value": 1100, "unit": "mcg RAE", "group": "lactation"}
+    },
+    "rda_usa": {
+      "male_14plus": {"value": 900, "unit": "mcg RAE"},
+      "female_14plus": {"value": 700, "unit": "mcg RAE"},
+      "pregnancy_14_18": {"value": 750, "unit": "mcg RAE"},
+      "pregnancy_19plus": {"value": 770, "unit": "mcg RAE"},
+      "lactation_14_18": {"value": 1200, "unit": "mcg RAE"},
+      "lactation_19plus": {"value": 1300, "unit": "mcg RAE"}
+    },
+    "ul": {"value": 3000, "unit": "mcg RAE", "group": "adults_19plus"},
+    "functions": [
+      "Зрение (синтез родопсина, ночное зрение)",
+      "Иммунный ответ (активация Т-клеток)",
+      "Репродуктивная функция",
+      "Рост и дифференцировка клеток",
+      "Здоровье кожи и слизистых",
+      "Антиоксидантная защита (каротиноиды)"
+    ],
+    "deficiency_symptoms": [
+      "Куриная слепота (никталопия)",
+      "Сухость роговицы (ксерофтальмия)",
+      "Сухость кожи, гиперкератоз",
+      "Снижение иммунитета (частые инфекции)",
+      "Задержка роста у детей"
+    ],
+    "excess_symptoms": [
+      "Острые: тошнота, головная боль, головокружение",
+      "Хронические: гиперостозы, гепатотоксичность",
+      "Тератогенность при беременности (>3000 мкг)",
+      "Оранжевый оттенок кожи (при избытке каротина — безопасно)"
+    ],
+    "top_foods": [
+      {"name_ru": "Печень говяжья", "name_en": "Beef liver", "amount_per_100g": 6500, "unit": "mcg RAE", "percent_rda": 722, "type": "retinol"},
+      {"name_ru": "Морковь (сырая)", "name_en": "Carrot (raw)", "amount_per_100g": 835, "unit": "mcg RAE*", "percent_rda": 93, "type": "beta-carotene"},
+      {"name_ru": "Батат (запечённый)", "name_en": "Sweet potato (baked)", "amount_per_100g": 961, "unit": "mcg RAE*", "percent_rda": 107, "type": "beta-carotene"},
+      {"name_ru": "Шпинат (варёный)", "name_en": "Spinach (boiled)", "amount_per_100g": 573, "unit": "mcg RAE*", "percent_rda": 64, "type": "beta-carotene"},
+      {"name_ru": "Кале (сырой)", "name_en": "Kale (raw)", "amount_per_100g": 500, "unit": "mcg RAE*", "percent_rda": 56, "type": "beta-carotene"},
+      {"name_ru": "Дыня", "name_en": "Cantaloupe", "amount_per_100g": 169, "unit": "mcg RAE*", "percent_rda": 19, "type": "beta-carotene"},
+      {"name_ru": "Яйца (1 шт)", "name_en": "Egg (1 large)", "amount_per_100g": 80, "unit": "mcg RAE", "percent_rda": 9, "type": "retinol"},
+      {"name_ru": "Молоко (цельное, 1 ст)", "name_en": "Whole milk (1 cup)", "amount_per_100g": 46, "unit": "mcg RAE", "percent_rda": 5, "type": "retinol"}
+    ],
+    "bioavailability": {
+      "retinol_animal": {"absorption": "70-90%", "notes": "Отличное усвоение с жирами"},
+      "beta_carotene_food": {"absorption": "30-50%", "conversion": "12 мкг = 1 мкг RAE"},
+      "beta_carotene_supplement": {"absorption": "50-60%", "conversion": "2 мкг = 1 мкг RAE"},
+      "enhancers": ["Жиры (минимум 3-5г в том же приёме)", "Тепловая обработка", "Цинк"],
+      "inhibitors": ["Алкоголь", "Курение", "Низкое потребление жиров"]
+    },
+    "interactions": {
+      "synergists": [
+        {"nutrient": "Vitamin D", "effect": "Совместное влияние на иммунитет и кости"},
+        {"nutrient": "Zinc", "effect": "Кофактор ферментов преобразования ретинола"},
+        {"nutrient": "Vitamin E", "effect": "Защищает ретинол от окисления"}
+      ],
+      "antagonists": [
+        {"nutrient": "Высокие дозы витамина A (синтетического)", "effect": "Снижает плотность костей"},
+        {"nutrient": "Варфарин", "effect": "Высокие дозы вит. А повышают риск кровотечений"}
+      ]
+    },
+    "risk_groups": [
+      "Дети в развивающихся странах",
+      "Беременные и кормящие",
+      "Люди с нарушением всасывания жиров (целиакия, муковисцидоз)",
+      "Веганы и вегетарианцы (низкое потребление ретинола)",
+      "Курящие"
+    ],
+    "sources": ["NIH ODS", "Роспотребнадзор МР 2.3.1.0253-21", "USDA FoodData Central", "Викторов А.П. и др., 2008"],
+    "nutrition_tip_ru": "🥕 Съел морковку? Добавь ложку масла! Витамин А — жирорастворимый. Чтобы организм усвоил каротин из салата, заправь его растительным маслом или съешь рядом орешек. Без жира пользы будет в 5–10 раз меньше!",
+    "file_md": "vit_a.md"
+  },
+  {
+    "id": "vit_d",
+    "name_ru": "Витамин D",
+    "name_en": "Vitamin D",
+    "symbol": "D",
+    "alt_names": ["Кальциферол", "Холекальциферол", "Эргокальциферол", "D3", "D2", "Cholecalciferol", "Ergocalciferol"],
+    "category": "vitamin",
+    "type": "fat_soluble",
+    "rda_rf": {
+      "adults_18_50": {"value": 15, "unit": "mcg (600-1000 ME)", "group": "adults"},
+      "adults_50plus": {"value": 20, "unit": "mcg (800-1000 ME)", "group": "elderly"},
+      "pregnancy": {"value": 20, "unit": "mcg (800-1000 ME)", "group": "pregnancy"},
+      "lactation": {"value": 20, "unit": "mcg (800-1000 ME)", "group": "lactation"}
+    },
+    "rda_usa": {
+      "1_70_years": {"value": 15, "unit": "mcg (600 ME)"},
+      "71plus_years": {"value": 20, "unit": "mcg (800 ME)"},
+      "pregnancy_all": {"value": 15, "unit": "mcg (600 ME)"},
+      "lactation_all": {"value": 15, "unit": "mcg (600 ME)"}
+    },
+    "ul": {"value": 100, "unit": "mcg (4000 ME)", "group": "adults_9_70"},
+    "blood_levels": {
+      "deficiency": "< 20 ng/mL (< 50 nmol/L)",
+      "insufficiency": "20-30 ng/mL (50-75 nmol/L)",
+      "optimal": "30-100 ng/mL (75-250 nmol/L)",
+      "excess": "> 100 ng/mL (> 250 nmol/L)"
+    },
+    "functions": [
+      "Регуляция кальций-фосфорного обмена",
+      "Здоровье костей и зубов (профилактика рахита, остеопороза)",
+      "Иммуномодуляция (снижение риска инфекций)",
+      "Снижение риска аутоиммунных заболеваний",
+      "Регуляция артериального давления",
+      "Защита от депрессии и сезонного аффективного расстройства"
+    ],
+    "deficiency_symptoms": [
+      "Рахит у детей (деформация костей)",
+      "Остеомаляция у взрослых (мягкость костей)",
+      "Мышечная слабость и боли",
+      "Частые инфекции (грипп, ОРВИ)",
+      "Депрессия, перепады настроения",
+      "Выпадение волос (алопеция)"
+    ],
+    "excess_symptoms": [
+      "Гиперкальциемия (избыток кальция в крови)",
+      "Тошнота, рвота, потеря аппетита",
+      "Полиурия (частое мочеиспускание)",
+      "Кальцификация сосудов и тканей",
+      "Почечная недостаточность (при хроническом избытке >10,000 ME/сут)"
+    ],
+    "top_foods": [
+      {"name_ru": "Рыбий жир (1 ст. л.)", "name_en": "Cod liver oil (1 tbsp)", "amount_per_100g": 25000, "unit": "ME", "percent_rda": 4167, "type": "D3"},
+      {"name_ru": "Лосось (дикий)", "name_en": "Salmon (wild)", "amount_per_100g": 600, "unit": "ME", "percent_rda": 100, "type": "D3"},
+      {"name_ru": "Скумбрия", "name_en": "Mackerel", "amount_per_100g": 360, "unit": "ME", "percent_rda": 60, "type": "D3"},
+      {"name_ru": "Сардины (консервы)", "name_en": "Sardines (canned)", "amount_per_100g": 270, "unit": "ME", "percent_rda": 45, "type": "D3"},
+      {"name_ru": "Тунец (консервы)", "name_en": "Tuna (canned)", "amount_per_100g": 230, "unit": "ME", "percent_rda": 38, "type": "D3"},
+      {"name_ru": "Яичный желток (1 шт)", "name_en": "Egg yolk (1 large)", "amount_per_100g": 40, "unit": "ME", "percent_rda": 7, "type": "D3/D2"},
+      {"name_ru": "Грибы (шиитаке, на солнце)", "name_en": "Mushrooms (UV-exposed)", "amount_per_100g": 1600, "unit": "ME", "percent_rda": 267, "type": "D2"},
+      {"name_ru": "Обогащённое молоко", "name_en": "Fortified milk", "amount_per_100g": 100, "unit": "ME", "percent_rda": 17, "type": "D2/D3"}
+    ],
+    "sun_synthesis": {
+      "10_15_min_sun_exposure": "10000-25000 ME",
+      "winter_rf": "Синтез отсутствует (октябрь-март, >42° с.ш.)",
+      "spf_30": "Блокирует синтез на 95-98%"
+    },
+    "bioavailability": {
+      "food_D3": {"absorption": "50-70%", "notes": "С жирами в приёме"},
+      "supplement_D3": {"absorption": "50-80%", "notes": "Лучше с самой жирной едой дня"},
+      "supplement_D2": {"absorption": "30-50% less than D3"},
+      "enhancers": ["Жиры (минимум 5г в приёме)", "Магний", "Витамин K2"],
+      "inhibitors": ["Ожирение (депонирование в жировой ткани)", "Заболевания печени/почек", "Глюкокортикоиды"]
+    },
+    "interactions": {
+      "synergists": [
+        {"nutrient": "Calcium", "effect": "Необходим для всасывания Ca в кишечнике"},
+        {"nutrient": "Vitamin K2", "effect": "Предотвращает кальцификацию артерий"},
+        {"nutrient": "Magnesium", "effect": "Кофактор активации вит. D в печени и почках"}
+      ],
+      "antagonists": [
+        {"nutrient": "Глюкокортикоиды", "effect": "Снижают всасывание, ускоряют распад активной формы"},
+        {"nutrient": "Орлистат, холестирамин", "effect": "Снижают всасывание жирорастворимых витаминов"}
+      ]
+    },
+    "risk_groups": [
+      "Жители северных широт (РФ, Скандинавия) — 80-90% имеют дефицит",
+      "Люди с тёмной кожей (меланин блокирует синтез)",
+      "Пожилые (снижена выработка в коже в 4 раза)",
+      "Люди, работающие в помещении",
+      "Использующие SPF постоянно",
+      "Люди с ожирением (ИМТ >30)",
+      "Беременные и кормящие"
+    ],
+    "sources": ["NIH ODS", "Endocrine Society Guidelines 2024", "РАЭ 2016", "МР 2.3.1.0253-21"],
+    "nutrition_tip_ru": "☀️ Зимой в РФ добавки неизбежны! С октября по март в Москве, Питере и севернее синтез витамина D в коже равен нулю. Принимай 1000–2000 МЕ D3 ежедневно с жирной едой. Проверь уровень 25(OH)D — норма 30–50 нг/мл.",
+    "file_md": "vit_d.md"
+  },
+  {
+    "id": "vit_c",
+    "name_ru": "Витамин C",
+    "name_en": "Vitamin C",
+    "symbol": "C",
+    "alt_names": ["Аскорбиновая кислота", "Ascorbic acid", "L-ascorbic acid"],
+    "category": "vitamin",
+    "type": "water_soluble",
+    "rda_rf": {
+      "male": {"value": 90, "unit": "mg", "group": "adult_male"},
+      "female": {"value": 75, "unit": "mg", "group": "adult_female"},
+      "pregnancy": {"value": 100, "unit": "mg", "group": "pregnancy"},
+      "lactation": {"value": 120, "unit": "mg", "group": "lactation"},
+      "smokers_add": {"value": 35, "unit": "mg", "group": "smokers"}
+    },
+    "rda_usa": {
+      "male_19plus": {"value": 90, "unit": "mg"},
+      "female_19plus": {"value": 75, "unit": "mg"},
+      "pregnancy_19plus": {"value": 85, "unit": "mg"},
+      "lactation_19plus": {"value": 120, "unit": "mg"},
+      "smokers_add": {"value": 35, "unit": "mg"}
+    },
+    "ul": {"value": 2000, "unit": "mg", "group": "adults"},
+    "functions": [
+      "Синтез коллагена (кофактор пролил- и лизилгидроксилазы)",
+      "Иммунитет (стимуляция фагоцитоза, выработка интерферона)",
+      "Усвоение железа (восстановление Fe3+ → Fe2+)",
+      "Антиоксидант (нейтрализация свободных радикалов)",
+      "Синтез нейромедиаторов (норадреналин, серотонин)",
+      "Синтез L-карнитина"
+    ],
+    "deficiency_symptoms": [
+      "Цинга (кровоточивость дёсен, выпадение зубов)",
+      "Сухая, шелушащаяся кожа",
+      "Снижение иммунитета (частые простуды)",
+      "Анемия (из-за плохого усвоения железа)",
+      "Утомляемость, депрессия"
+    ],
+    "excess_symptoms": [
+      "Диарея, тошнота, спазмы желудка (при >1000 мг/сут)",
+      "Увеличение риска камней в почках (оксалатные камни)",
+      "У беременных: >2000 мг/сут — риск зависимости плода"
+    ],
+    "top_foods": [
+      {"name_ru": "Шиповник (сушёный)", "name_en": "Rose hips (dried)", "amount_per_100g": 1250, "unit": "mg", "percent_rda": 1390, "type": "natural"},
+      {"name_ru": "Перец сладкий (красный)", "name_en": "Red bell pepper", "amount_per_100g": 250, "unit": "mg", "percent_rda": 278, "type": "natural"},
+      {"name_ru": "Чёрная смородина", "name_en": "Black currant", "amount_per_100g": 200, "unit": "mg", "percent_rda": 222, "type": "natural"},
+      {"name_ru": "Облепиха", "name_en": "Sea buckthorn", "amount_per_100g": 200, "unit": "mg", "percent_rda": 222, "type": "natural"},
+      {"name_ru": "Киви (1 шт, 70г)", "name_en": "Kiwi (1 fruit)", "amount_per_100g": 92, "unit": "mg", "percent_rda": 71, "type": "natural"},
+      {"name_ru": "Брокколи (варёная)", "name_en": "Broccoli (boiled)", "amount_per_100g": 65, "unit": "mg", "percent_rda": 72, "type": "natural"},
+      {"name_ru": "Цитрусовые (апельсин)", "name_en": "Orange", "amount_per_100g": 50, "unit": "mg", "percent_rda": 55, "type": "natural"},
+      {"name_ru": "Петрушка (зелень)", "name_en": "Parsley", "amount_per_100g": 130, "unit": "mg", "percent_rda": 144, "type": "natural"}
+    ],
+    "bioavailability": {
+      "food": {"absorption": "70-90%", "notes": "При дозах до 180 мг/сут"},
+      "high_dose": {"absorption": "~50%", "notes": "При дозах >1000 мг кишечник насыщается"},
+      "enhancers": ["Железо (негемовое) — повышает усвоение в 3-6 раз", "Биофлавоноиды (рутин, гесперидин)"],
+      "inhibitors": ["Термическая обработка (теряется 30-70%)", "Длительное хранение (теряется 15-55%)", "Курение (окислительный стресс)"]
+    },
+    "interactions": {
+      "synergists": [
+        {"nutrient": "Iron", "effect": "Снижает Fe3+ до Fe2+, повышает всасывание в 4-6 раз"},
+        {"nutrient": "Vitamin E", "effect": "Регенерирует окисленный вит. Е (цикл антиоксидантной защиты)"}
+      ],
+      "antagonists": [
+        {"nutrient": "Аспирин, НПВС", "effect": "Повышают выведение вит. С с мочой"},
+        {"nutrient": "Оральные контрацептивы", "effect": "Снижают уровень вит. С в плазме"}
+      ]
+    },
+    "risk_groups": [
+      "Курящие (окислительный стресс повышает потребность на 35 мг/сут)",
+      "Пожилые (низкое потребление свежих овощей/фруктов)",
+      "Люди с мальабсорбцией (целиакия, болезнь Крона)",
+      "Гемодиализ (выводит вит. С из крови)",
+      "Веганы и вегетарианцы (при недостатке разнообразия растительной пищи)"
+    ],
+    "sources": ["NIH ODS", "Роспотребнадзор", "USDA FoodData Central", "Cochrane Review 2013", "МР 2.3.1.2432-08"],
+    "nutrition_tip_ru": "🍊 Съел бобовые или шпинат? Запей их стаканом апельсинового сока! Витамин С повышает усвоение растительного железа в 4–6 раз. Для веганов это критично — без вит. С растительное железо почти не усваивается!",
+    "file_md": "vit_c.md"
+  },
+  {
+    "id": "vit_b12",
+    "name_ru": "Витамин B12",
+    "name_en": "Vitamin B12",
+    "symbol": "B12",
+    "alt_names": ["Кобаламин", "Цианокобаламин", "Метилкобаламин", "Cobalamin", "Cyanocobalamin"],
+    "category": "vitamin",
+    "type": "water_soluble_stored",
+    "rda_rf": {
+      "adults": {"value": 2.4, "unit": "mcg", "group": "adults_19plus"}
+    },
+    "rda_usa": {
+      "14plus": {"value": 2.4, "unit": "mcg"},
+      "pregnancy_14_18": {"value": 2.6, "unit": "mcg"},
+      "pregnancy_19plus": {"value": 2.6, "unit": "mcg"},
+      "lactation_14_18": {"value": 2.8, "unit": "mcg"},
+      "lactation_19plus": {"value": 2.8, "unit": "mcg"}
+    },
+    "ul": {"value": null, "unit": "mcg", "notes": "Не установлен (низкая токсичность)"},
+    "functions": [
+      "Синтез ДНК (кофактор метионинсинтазы)",
+      "Кроветворение (созревание эритроцитов)",
+      "Нервная система (миелинизация нервных волокон)",
+      "Энергетический обмен (метаболизм жирных кислот)",
+      "Снижение уровня гомоцистеина"
+    ],
+    "deficiency_symptoms": [
+      "Мегалобластная анемия (слабость, одышка, бледность)",
+      "Неврологические (онемение конечностей, нарушение походки, потеря памяти)",
+      "Глоссит (воспаление языка, ярко-красный, гладкий язык)",
+      "Желудочно-кишечные (диарея, потеря аппетита)",
+      "У детей: задержка развития"
+    ],
+    "excess_symptoms": [
+      "Витамин B12 нетоксичен даже в высоких дозах",
+      "Акне (редко, при >1000 мкг/сут)",
+      "Редко: гиперкалиемия (при резком восстановлении эритропоэза)"
+    ],
+    "top_foods": [
+      {"name_ru": "Печень говяжья", "name_en": "Beef liver", "amount_per_100g": 60, "unit": "mcg", "percent_rda": 2500, "type": "animal"},
+      {"name_ru": "Устрицы (3 шт)", "name_en": "Oysters (3 oz)", "amount_per_100g": 15, "unit": "mcg", "percent_rda": 625, "type": "animal"},
+      {"name_ru": "Сардины (консервы)", "name_en": "Sardines (canned)", "amount_per_100g": 8, "unit": "mcg", "percent_rda": 333, "type": "animal"},
+      {"name_ru": "Лосось", "name_en": "Salmon", "amount_per_100g": 3, "unit": "mcg", "percent_rda": 125, "type": "animal"},
+      {"name_ru": "Тунец", "name_en": "Tuna", "amount_per_100g": 2.5, "unit": "mcg", "percent_rda": 104, "type": "animal"},
+      {"name_ru": "Яйца (1 шт, желток)", "name_en": "Egg (yolk)", "amount_per_100g": 0.5, "unit": "mcg", "percent_rda": 21, "type": "animal"},
+      {"name_ru": "Молоко (1 стакан)", "name_en": "Milk (1 cup)", "amount_per_100g": 1.2, "unit": "mcg", "percent_rda": 50, "type": "animal"},
+      {"name_ru": "Обогащённые хлопья", "name_en": "Fortified cereal", "amount_per_100g": 1, "unit": "mcg", "percent_rda": 42, "type": "fortified"}
+    ],
+    "bioavailability": {
+      "food": {"absorption": "40-50%", "notes": "Связывание с внутренним фактором Касла"},
+      "supplement": {"absorption": "50-70%", "notes": "Цианокобаламин лучше усваивается"},
+      "enhancers": ["Желудочная кислота + пепсин", "Внутренний фактор (фактор Касла)", "Кальций"],
+      "inhibitors": ["Атрофический гастрит, Helicobacter pylori", "Метформин (снижает на 30-40%)", "ИПП (омепразол)"]
+    },
+    "interactions": {
+      "synergists": [
+        {"nutrient": "Folate (B9)", "effect": "Вместе участвуют в метиониновом цикле"},
+        {"nutrient": "Vitamin B6", "effect": "Трио B6+B9+B12 снижает гомоцистеин"}
+      ],
+      "antagonists": [
+        {"nutrient": "Метформин", "effect": "Снижает всасывание B12 на 30-40%"},
+        {"nutrient": "Алкоголь", "effect": "Нарушает депонирование в печени"}
+      ]
+    },
+    "risk_groups": [
+      "Веганы и строгие вегетарианцы (без добавок) — дефицит через 2-5 лет",
+      "Пожилые (>60 лет) — атрофический гастрит",
+      "Пациенты, принимающие метформин",
+      "Пациенты после бариатрической хирургии",
+      "Люди с болезнью Крона, целиакией",
+      "Беременные веганы"
+    ],
+    "sources": ["NIH ODS", "MedlinePlus", "Harvard T.H. Chan School of Public Health", "Stabler SP, NEJM 2013"],
+    "nutrition_tip_ru": "🥩 Веганам и вегетарианцам — обязателен приём B12! Растительной пищи недостаточно. Принимайте 50–100 мкг цианокобаламина ежедневно или 1000 мкг раз в неделю. Без B12 через 3–5 лет начнётся необратимое повреждение нервов!",
+    "file_md": "vit_b12.md"
+  },
+  {
+    "id": "iron",
+    "name_ru": "Железо",
+    "name_en": "Iron",
+    "symbol": "Fe",
+    "category": "mineral",
+    "type": "microelement",
+    "rda_rf": {
+      "male_14_60": {"value": 10, "unit": "mg", "group": "adult_male"},
+      "female_14_50": {"value": 18, "unit": "mg", "group": "adult_female"},
+      "female_50plus": {"value": 10, "unit": "mg", "group": "postmenopausal"},
+      "pregnancy": {"value": 18, "unit": "mg", "group": "pregnancy_rf"},
+      "pregnancy_usa": {"value": 27, "unit": "mg", "group": "pregnancy_usa"}
+    },
+    "rda_usa": {
+      "male_19plus": {"value": 8, "unit": "mg"},
+      "female_19_50": {"value": 18, "unit": "mg"},
+      "female_51plus": {"value": 8, "unit": "mg"},
+      "pregnancy_all": {"value": 27, "unit": "mg"},
+      "lactation_all": {"value": 9, "unit": "mg"}
+    },
+    "ul": {"value": 45, "unit": "mg", "group": "adults_usa", "rf_value": 40},
+    "functions": [
+      "Гемоглобин (перенос кислорода от лёгких к тканям)",
+      "Миоглобин (запас кислорода в мышцах)",
+      "ДНК-синтез (кофактор рибонуклеотидредуктазы)",
+      "Энергетический обмен (цитохромы)",
+      "Иммунитет (пролиферация лимфоцитов)"
+    ],
+    "deficiency_symptoms": [
+      "Железодефицитная анемия (слабость, бледность, одышка)",
+      "Сидеропения (ломкость ногтей, выпадение волос, трещины в уголках рта)",
+      "Пикацизм (тяга к мелу, глине, льду)",
+      "Синдром беспокойных ног",
+      "Снижение когнитивных функций"
+    ],
+    "excess_symptoms": [
+      "Острое отравление (дети): рвота, диарея, шок",
+      "Хроническое: гемохроматоз (отложение железа в органах)",
+      "Риск диабета, цирроза, инфаркта"
+    ],
+    "top_foods": [
+      {"name_ru": "Печень говяжья", "name_en": "Beef liver", "amount_per_100g": 9, "unit": "mg", "percent_rda": 50, "type": "heme"},
+      {"name_ru": "Устрицы (3 шт)", "name_en": "Oysters (3 oz)", "amount_per_100g": 8, "unit": "mg", "percent_rda": 44, "type": "heme"},
+      {"name_ru": "Белая фасоль (варёная)", "name_en": "White beans (boiled)", "amount_per_100g": 3.7, "unit": "mg", "percent_rda": 21, "type": "non-heme"},
+      {"name_ru": "Шпинат (варёный)", "name_en": "Spinach (boiled)", "amount_per_100g": 3.6, "unit": "mg", "percent_rda": 20, "type": "non-heme"},
+      {"name_ru": "Тёмный шоколад (70%+)", "name_en": "Dark chocolate", "amount_per_100g": 11, "unit": "mg", "percent_rda": 61, "type": "non-heme"},
+      {"name_ru": "Чечевица (варёная)", "name_en": "Lentils (boiled)", "amount_per_100g": 3.3, "unit": "mg", "percent_rda": 18, "type": "non-heme"},
+      {"name_ru": "Говядина (нежирная)", "name_en": "Beef (lean)", "amount_per_100g": 2.5, "unit": "mg", "percent_rda": 14, "type": "heme"},
+      {"name_ru": "Киноа (варёная)", "name_en": "Quinoa (cooked)", "amount_per_100g": 1.5, "unit": "mg", "percent_rda": 8, "type": "non-heme"}
+    ],
+    "bioavailability": {
+      "heme_iron": {"absorption": "15-35%", "notes": "Не зависит от другой еды"},
+      "non_heme_iron": {"absorption": "2-20%", "notes": "Сильно зависит от сопутствующих факторов"},
+      "mixed_diet": {"absorption": "14-18%", "notes": "Средняя биодоступность"},
+      "enhancers": ["Витамин C (повышает усвоение в 4-6 раз)", "Мясо, рыба, птица (мясной фактор)", "Ферментированные продукты"],
+      "inhibitors": ["Фитиновая кислота (фитаты) в цельных злаках", "Полифенолы (таннины) в чае, кофе", "Кальций (>300 мг)", "Оксалаты"]
+    },
+    "interactions": {
+      "synergists": [
+        {"nutrient": "Vitamin C", "effect": "Критически важен для усвоения негемового железа"},
+        {"nutrient": "Copper", "effect": "Кофактор феррооксидазы"}
+      ],
+      "antagonists": [
+        {"nutrient": "Calcium", "effect": "Конкурирует за всасывание в кишечнике"},
+        {"nutrient": "Тетрациклин, хинолоны", "effect": "Антибиотики связывают железо"}
+      ]
+    },
+    "risk_groups": [
+      "Женщины детородного возраста (менструальные потери)",
+      "Беременные (потребность возрастает до 27 мг/сут)",
+      "Веганы и вегетарианцы (негемовое железо + фитаты)",
+      "Дети и подростки (периоды активного роста)",
+      "Доноры крови",
+      "Люди с болезнями ЖКТ"
+    ],
+    "sources": ["NIH ODS", "WHO", "USDA FoodData Central", "Национальные академии США", "МР 2.3.1.2432-08"],
+    "nutrition_tip_ru": "🥩 Веганам и вегетарианцам критически важен витамин C с каждым приёмом бобовых! Ешьте чечевицу/фасоль с лимоном, болгарским перцем или запивайте апельсиновым соком. А чай и кофе пейте ТОЛЬКО через 1–2 часа после еды — таннины заблокируют усвоение железа на 70%!",
+    "file_md": "iron.md"
+  },
+  {
+    "id": "calcium",
+    "name_ru": "Кальций",
+    "name_en": "Calcium",
+    "symbol": "Ca",
+    "category": "mineral",
+    "type": "macroelements",
+    "rda_rf": {
+      "19_50_years": {"value": 1000, "unit": "mg"},
+      "50plus_years": {"value": 1200, "unit": "mg"}
+    },
+    "rda_usa": {
+      "19_50_years": {"value": 1000, "unit": "mg"},
+      "51_70_years": {"value": 1000, "unit": "mg", "notes": "Мужчины и женщины"},
+      "70plus_years": {"value": 1200, "unit": "mg"}
+    },
+    "ul": {"value": 2500, "unit": "mg", "group": "19-50 years", "70plus": 2000},
+    "functions": [
+      "Скелет (минерализация костей и зубов)",
+      "Мышечное сокращение",
+      "Нервная передача",
+      "Свёртывание крови (фактор IV)",
+      "Регуляция ферментов (АТФ-азы)"
+    ],
+    "deficiency_symptoms": [
+      "Остеопения → Остеопороз (хрупкость костей, переломы)",
+      "Тетания (судороги, онемение пальцев)",
+      "Рахит у детей",
+      "Пародонтоз, кариес"
+    ],
+    "excess_symptoms": [
+      "Гиперкальциемия (тошнота, рвота, запор, аритмия)",
+      "Камни в почках (кальциевые оксалатные)",
+      "Кальцификация тканей (артерий, клапанов сердца)"
+    ],
+    "top_foods": [
+      {"name_ru": "Обогащённое молоко", "name_en": "Fortified milk", "amount_per_100g": 300, "unit": "mg", "percent_rda": 30, "type": "dairy"},
+      {"name_ru": "Сардины (с костями)", "name_en": "Sardines (with bones)", "amount_per_100g": 380, "unit": "mg", "percent_rda": 38, "type": "fish"},
+      {"name_ru": "Йогурт (натуральный)", "name_en": "Yogurt (plain)", "amount_per_100g": 180, "unit": "mg", "percent_rda": 18, "type": "dairy"},
+      {"name_ru": "Тофу (кальцинированный)", "name_en": "Tofu (calcium-set)", "amount_per_100g": 350, "unit": "mg", "percent_rda": 35, "type": "soy"},
+      {"name_ru": "Листовая зелень (кале)", "name_en": "Kale", "amount_per_100g": 150, "unit": "mg", "percent_rda": 15, "type": "plant"},
+      {"name_ru": "Миндаль", "name_en": "Almonds", "amount_per_100g": 260, "unit": "mg", "percent_rda": 26, "type": "nuts"},
+      {"name_ru": "Чиа-семена", "name_en": "Chia seeds", "amount_per_100g": 630, "unit": "mg", "percent_rda": 63, "type": "seeds"},
+      {"name_ru": "Сыр (твёрдый)", "name_en": "Hard cheese", "amount_per_100g": 700, "unit": "mg", "percent_rda": 70, "type": "dairy"}
+    ],
+    "bioavailability": {
+      "dairy": {"absorption": "30-35%", "notes": "Лактоза улучшает всасывание"},
+      "plant_sources": {"absorption": "5-20%", "notes": "Фитаты и оксалаты снижают усвоение"},
+      "optimal_single_dose": {"value": 500, "unit": "mg", "notes": "При большей дозе % усвоения падает"},
+      "enhancers": ["Витамин D (повышает в 2-4 раза)", "Витамин K2", "Лактоза, казеин", "Кислая среда (лимонный сок)"],
+      "inhibitors": ["Оксалаты (шпинат, свёкла)", "Фитаты (цельные злаки, бобовые)", "Избыток натрия (соль)", "Кофеин (>3 чашек/сут)"]
+    },
+    "interactions": {
+      "synergists": [
+        {"nutrient": "Vitamin D", "effect": "Необходим для абсорбции Ca в кишечнике"},
+        {"nutrient": "Vitamin K2", "effect": "Предотвращает кальцификацию артерий"},
+        {"nutrient": "Magnesium", "effect": "Оптимальный баланс Ca:Mg = 2:1"}
+      ],
+      "antagonists": [
+        {"nutrient": "Iron", "effect": "Конкурируют за всасывание"},
+        {"nutrient": "Zinc (высокие дозы >50 мг)", "effect": "Снижают усвоение Ca"}
+      ]
+    },
+    "risk_groups": [
+      "Женщины в менопаузе (падение эстрогенов)",
+      "Подростки (12–18 лет) — пиковое костное накопление",
+      "Веганы (без молочных продуктов)",
+      "Люди с лактозной непереносимостью",
+      "Пожилые (снижение синтеза вит. D, атрофический гастрит)",
+      "Пациенты на глюкокортикоидах"
+    ],
+    "sources": ["NIH ODS", "Национальные академии США (2011)", "WHO", "МР 2.3.1.2432-08", "BMJ 2015"],
+    "nutrition_tip_ru": "🥛 Молоко — не единственный источник! Если ты веган или не переносишь лактозу, ешь миндаль, кунжут (тахини), чиа и обогащённые растительные молоки. И не забудь про витамин D3 (1000 МЕ) и K2 — без них кальций пойдёт в сосуды, а не в кости!",
+    "file_md": "calcium.md"
+  }
+]
