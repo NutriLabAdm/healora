@@ -2060,40 +2060,28 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       sleep: '#2196f3', physical: '#4caf50', mental: '#9c27b0',
                       food: '#ff9800', medical: '#f44336', supplement: '#795548',
                     };
-                    let lastDay = -1;
-                    return chatMessages.map((msg) => {
-                      const showDate = msg.day !== lastDay;
-                      lastDay = msg.day;
-                      const color = categoryColors[msg.category] || '#6b21c8';
-                      return (
-                        <React.Fragment key={msg.id}>
-                          {showDate && <div className="chat-date-divider"><span>День {msg.day}</span></div>}
-                          <div className="chat-message bot">
-                            <div className="chat-avatar" style={{ backgroundColor: color }}>
-                              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" width="14" height="14">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                              </svg>
-                            </div>
-                            <div className="chat-bubble bot-bubble" style={{ borderLeftColor: color }}>
-                              <div className="chat-bubble-header">
-                                <span className="chat-interv-code">{msg.code}</span>
-                                <span className="chat-interv-time">{msg.time}</span>
-                              </div>
-                              <div className="chat-interv-name">{msg.name}</div>
-                              <div className="chat-interv-detail">
-                                {msg.state === 'Активировано' ? '✅ Активировано' : '⏭ Пропущено'}
-                              </div>
-                              {msg.response && (
-                                <div className="chat-reaction">
-                                  <span className="chat-reaction-arrow">↩</span>
-                                  <span className="chat-reaction-text">{msg.response}</span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </React.Fragment>
-                      );
+                    const grouped = {};
+                    chatMessages.forEach(msg => {
+                      if (!grouped[msg.day]) grouped[msg.day] = [];
+                      grouped[msg.day].push(msg);
                     });
+                    return Object.entries(grouped).map(([day, msgs]) => (
+                      <React.Fragment key={day}>
+                        <div className="chat-date-divider"><span>День {day}</span></div>
+                        <div className="chat-interventions-row">
+                          {msgs.map(msg => {
+                            const color = categoryColors[msg.category] || '#6b21c8';
+                            const activated = msg.state === 'Активировано';
+                            return (
+                              <div key={msg.id} className={`chat-interv-badge ${activated ? 'activated' : 'skipped'}`} style={{ backgroundColor: color }} title={`${msg.code} ${msg.time}`}>
+                                <span className="chat-interv-badge-name">{msg.name}</span>
+                                <span className="chat-interv-badge-state">{activated ? '✓' : '✗'}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </React.Fragment>
+                    ));
                   })()}
                   {isSimulating && (
                     <div className="chat-typing">
