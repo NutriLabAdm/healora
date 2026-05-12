@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import '../assets/css/InterventionsPanel.css';
 import catalogData from '../assets/data/interventions_catalog.json';
 import supplementsCatalog from '../assets/data/supplements_catalog.json';
+import dietsCatalog from '../assets/data/diets_catalog.json';
 
 const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, onRemoveFromCart }) => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [supplementGroup, setSupplementGroup] = useState('all');
+  const [foodGroup, setFoodGroup] = useState('all');
   const [tab, setTab] = useState('interventions');
   const [expandedProtocol, setExpandedProtocol] = useState(null);
   const [showBacklog, setShowBacklog] = useState(false);
@@ -26,6 +28,12 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
     { key: 'vitamins', label: 'Витамины', color: '#2196f3' },
     { key: 'vitamin_like', label: 'Витаминоподобные', color: '#9c27b0' },
     { key: 'minerals', label: 'Минералы', color: '#4caf50' },
+  ];
+
+  const foodGroups = [
+    { key: 'all', label: 'Все', color: '#6b21c8' },
+    { key: 'diet', label: 'Диеты', color: '#e65100' },
+    { key: 'habit', label: 'Пищевые привычки', color: '#f9a825' },
   ];
 
   const interventions = [];
@@ -67,11 +75,17 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
     ? supplementsCatalog
     : supplementsCatalog.filter(s => s.group === supplementGroup);
 
+  const filteredDiets = foodGroup === 'all'
+    ? dietsCatalog
+    : dietsCatalog.filter(d => d.foodGroup === foodGroup);
+
   const filteredInterventions = activeCategory === 'supplement'
     ? filteredSupplements
-    : activeCategory === 'all'
-      ? [...interventions, ...supplementsCatalog]
-      : interventions.filter(i => i.category === activeCategory);
+    : activeCategory === 'food'
+      ? filteredDiets
+      : activeCategory === 'all'
+        ? [...interventions, ...supplementsCatalog]
+        : interventions.filter(i => i.category === activeCategory);
 
   const getImpactColor = (impact) => {
     if (impact >= 9) return '#d50000';
@@ -142,6 +156,21 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
             </div>
           )}
 
+          {activeCategory === 'food' && (
+            <div className="supplement-subgroups">
+              {foodGroups.map(g => (
+                <button
+                  key={g.key}
+                  className={`cat-btn sm ${foodGroup === g.key ? 'active' : ''}`}
+                  onClick={() => setFoodGroup(g.key)}
+                  style={foodGroup === g.key ? { background: g.color, color: 'white' } : {}}
+                >
+                  {g.label}
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="interventions-table">
             <div className="table-header">
               <span className="col-code">Код</span>
@@ -150,28 +179,30 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               <span className="col-impact">I</span>
               <span className="col-evidence">E</span>
               <span className="col-regularity">Период</span>
-              {activeCategory !== 'supplement' && <span className="col-status">Статус</span>}
+              {activeCategory !== 'supplement' && activeCategory !== 'food' && <span className="col-status">Статус</span>}
             </div>
-            {filteredInterventions.map(intervention => (
+            {filteredInterventions.map(intervention => {
+              const isSubItem = intervention.classification || intervention.foodGroup;
+              return (
               <div
                 key={intervention.code}
-                className={`table-row ${isInCart(intervention.code) ? 'in-cart' : ''} ${intervention.classification ? 'sup-row' : ''}`}
-                draggable={!intervention.classification}
+                className={`table-row ${isInCart(intervention.code) ? 'in-cart' : ''} ${isSubItem ? 'sup-row' : ''}`}
+                draggable={!isSubItem}
                 onDragStart={(e) => {
-                  if (!intervention.classification) {
+                  if (!isSubItem) {
                     e.dataTransfer.setData('application/json', JSON.stringify(intervention));
                     if (onDragStart) onDragStart(intervention);
                   }
                 }}
                 onClick={() => {
-                  if (intervention.classification) {
+                  if (isSubItem) {
                     setSelectedSupplement(intervention);
                   } else {
                     toggleCart(intervention);
                   }
                 }}
-                style={{ cursor: intervention.classification ? 'pointer' : 'grab', borderLeftColor: getCategoryColor(intervention.category || 'supplement') }}
-                title={intervention.classification ? 'Клик: подробная информация' : "Клик: добавить/убрать из корзины, перетащите на таймлайн"}
+                style={{ cursor: isSubItem ? 'pointer' : 'grab', borderLeftColor: getCategoryColor(intervention.category || 'supplement') }}
+                title={isSubItem ? 'Клик: подробная информация' : "Клик: добавить/убрать из корзины, перетащите на таймлайн"}
               >
                  <span className="col-code">{intervention.code}</span>
                  <span className="col-name">{intervention.name}</span>
@@ -189,13 +220,14 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                  <span className="col-regularity">
                   {intervention.regularity === 'daily' ? 'Ежедн.' : intervention.regularity === 'weekly' ? 'Еженед.' : intervention.regularity === 'yearly' ? 'Ежегодно' : intervention.regularity}
                  </span>
-                 {activeCategory !== 'supplement' && (
+                 {activeCategory !== 'supplement' && activeCategory !== 'food' && (
                    <span className="col-status">
                     {isInCart(intervention.code) ? '✕' : '+'}
                    </span>
                  )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </>
       )}
