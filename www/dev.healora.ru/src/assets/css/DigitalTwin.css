@@ -1761,9 +1761,14 @@
 }
 
 .chat-modal {
-  width: 420px; max-height: 600px; background: #fff;
-  border-radius: 16px; display: flex; flex-direction: column;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2); overflow: hidden;
+  width: 420px;
+  height: 650px;
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  overflow: hidden;
 }
 
 .chat-modal-header {
@@ -1870,8 +1875,12 @@
   flex-shrink: 0;
 }
 
+.chat-interv-badge.activated {
+  opacity: 1;
+}
+
 .chat-interv-badge.skipped {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .chat-interv-badge-name {
