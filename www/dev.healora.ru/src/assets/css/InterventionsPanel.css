@@ -338,3 +338,100 @@
   color: #2e7d32;
   line-height: 1.4;
 }
+
+.version-link {
+  font-size: 9px;
+  color: #999;
+  cursor: pointer;
+  text-decoration: underline dotted;
+  white-space: nowrap;
+}
+.version-link:hover {
+  color: #311b92;
+}
+
+.backlog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backlog-modal {
+  background: white;
+  border-radius: 10px;
+  width: 380px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.backlog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.backlog-close {
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+  line-height: 1;
+}
+.backlog-close:hover {
+  color: #333;
+}
+
+.backlog-body {
+  padding: 14px 18px;
+}
+
+.backlog-section {
+  margin-bottom: 14px;
+}
+
+.backlog-section:last-child {
+  margin-bottom: 0;
+}
+
+.backlog-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #311b92;
+  margin-bottom: 6px;
+}
+
+.backlog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.backlog-list li {
+  font-size: 10px;
+  padding: 3px 0 3px 16px;
+  position: relative;
+  color: #333;
+}
+
+.backlog-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2e7d32;
+}
+
+.backlog-list.planned li::before {
+  background: #bbb;
+}

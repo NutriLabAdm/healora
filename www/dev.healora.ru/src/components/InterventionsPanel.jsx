@@ -5,6 +5,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
   const [activeCategory, setActiveCategory] = useState('all');
   const [tab, setTab] = useState('interventions');
   const [expandedProtocol, setExpandedProtocol] = useState(null);
+  const [showBacklog, setShowBacklog] = useState(false);
 
   const categories = [
     { key: 'all', label: 'Все', color: '#6b21c8' },
@@ -111,6 +112,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
           <button className={`panel-tab ${tab === 'protocols' ? 'active' : ''}`} onClick={() => setTab('protocols')}>Протоколы</button>
         </div>
         <span className="count">{cartItems ? cartItems.length : 0} в корзине</span>
+        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.7</span>
       </div>
 
       {tab === 'interventions' && (
@@ -221,6 +223,61 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               </div>
             );
           })}
+        </div>
+      )}
+
+      {showBacklog && (
+        <div className="backlog-overlay" onClick={() => setShowBacklog(false)}>
+          <div className="backlog-modal" onClick={e => e.stopPropagation()}>
+            <div className="backlog-header">
+              <span>Healora — Backlog</span>
+              <span className="backlog-close" onClick={() => setShowBacklog(false)}>×</span>
+            </div>
+            <div className="backlog-body">
+              <div className="backlog-section">
+                <div className="backlog-section-title">✓ Реализовано</div>
+                <ul className="backlog-list">
+                  <li><b>Digital Twin</b> с D3.js графиками: Life Expectancy Dial, Weight Projection, Habit Impact, Biomarker Radar, Adherence Ring, Weight Timeline, Risk Reduction, Network Graph — 24ч</li>
+                  <li><b>Каталог интервенций</b> (32 шт) с категориями, evidence-level, impact score — 6ч</li>
+                  <li><b>Drag & drop</b> на таймлайн с корзиной — 8ч</li>
+                  <li><b>Дневник питания</b> с загрузкой/отображением фото, KBZU, NDI — 12ч</li>
+                  <li><b>API хранения дневника</b> (JSON, POST/GET) — 4ч</li>
+                  <li><b>Протоколы</b> (17 шт) с red flags, рекомендациями, expand/collapse — 10ч</li>
+                  <li><b>Корзина интервенций</b> (+/- из каталога) — 3ч</li>
+                  <li><b>Healora Score</b> — алгоритм и визуализация — 6ч</li>
+                  <li><b>Адаптивная вёрстка</b> 400px панели + табы Интервенции/Протоколы — 5ч</li>
+                  <li><b>Профили пользователей</b> (TEST_001–TEST_003) — 3ч</li>
+                  <li><b>Дашборд</b> с выборкой профиля — 4ч</li>
+                  <li><b>Food-каталог</b> (17 блюд с фото, нутриентами, NDI) — 5ч</li>
+                  <li><b>Proxy API</b> через Vite (dev) + nginx (prod) — 2ч</li>
+                  <li><b>SSL + CI/CD</b> devops.sh, deploy-dev.sh — 4ч</li>
+                  <li><b>Дизайн-система</b>: шрифты Sora/DM Sans, цветовая схема — 6ч</li>
+                  <li><b>Модальное окно беклога</b> с версией — 1ч</li>
+                  <li><b>Диаграмма Gantt</b> для таймлайна интервенций — 8ч</li>
+                  <li><b>Интеграция с GLP-1 протоколом</b> (Ozempic Jumpers) с красной маркировкой — 3ч</li>
+                  <li><b>Сохранение состояния</b> дневника при переключении дней — 4ч</li>
+                  <li><b>Валидация API</b> (profile_id, day обязательны) — 1ч</li>
+                  <li><b>Структура проекта</b>: www/dev.healora.ru + api/ + docs/ — 3ч</li>
+                  <li><b>Документация протоколов</b> (17 JSON-файлов с метриками) — 8ч</li>
+                  <li><b>Разметка веб-страницы</b> healora.ru (landing) — 6ч</li>
+                </ul>
+              </div>
+              <div className="backlog-section">
+                <div className="backlog-section-title">○ В плане</div>
+                <ul className="backlog-list planned">
+                  <li>AI-рекомендации на основе NDI</li>
+                  <li>Интеграция с носимыми устройствами</li>
+                  <li>Чат-интерфейс</li>
+                  <li>Модуль тренировок с прогрессом</li>
+                  <li>Социальные функции (группы)</li>
+                  <li>Маркетплейс добавок</li>
+                  <li>ML-модель для предсказаний</li>
+                  <li>Мобильное приложение (PWA)</li>
+                  <li>Многоязычность (EN/DE)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
