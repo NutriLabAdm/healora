@@ -85,6 +85,20 @@
   color: white;
 }
 
+.cat-btn.sm {
+  font-size: 10px;
+  padding: 3px 8px;
+}
+
+.supplement-subgroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
 /* Interventions Table */
 .interventions-table {
   display: flex;
