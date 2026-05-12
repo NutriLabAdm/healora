@@ -2073,7 +2073,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       if (!grouped[msg.day]) grouped[msg.day] = [];
                       grouped[msg.day].push(msg);
                     });
-                    return Object.entries(grouped).map(([day, msgs]) => (
+                    return Object.entries(grouped).sort((a, b) => a[0] - b[0]).map(([day, msgs]) => (
                       <React.Fragment key={day}>
                         <div className="chat-date-divider"><span>День {day}</span></div>
                         <div className="chat-interventions-row">
@@ -2098,6 +2098,14 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <span className="typing-dot"></span>
                     </div>
                   )}
+                </div>
+                <div className="chat-input-bar">
+                  <input type="text" className="chat-input" placeholder="Напишите сообщение..." disabled />
+                  <button className="chat-send-btn" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                      <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
