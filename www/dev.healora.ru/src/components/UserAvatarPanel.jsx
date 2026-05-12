@@ -124,12 +124,12 @@ const UserAvatarPanel = ({ selectedProfile, onSelectProfile, onEditProfile, isEd
                 <div className="status-dot" style={{
                   background: getStatusColor(profile.digital_twin_scores?.risk_level)
                 }}></div>
-                <div className="profile-id">{profile.profile_id}</div>
               </div>
 
               <div className="profile-info">
                 <div className="profile-name">
                   {profile.name || (profile.demographics?.sex === 'female' ? 'Female' : 'Male')} {profile.demographics?.age}y
+                  <span className="profile-id">({profile.profile_id})</span>
                   {isEditMode && (
                     <button className="edit-btn" onClick={(e) => { e.stopPropagation(); setEditingProfile(profile); setShowPhotoSelector(true); }}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="10" height="10">

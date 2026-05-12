@@ -108,17 +108,16 @@
   margin-bottom: 1px;
 }
 
-.avatar .profile-id {
-  font-size: 7px;
-  color: #999;
-  text-align: center;
-  margin-top: 2px;
+.profile-name .profile-id {
   display: none;
-  white-space: nowrap;
+  font-size: 9px;
+  font-weight: 400;
+  color: #999;
+  margin-left: 4px;
 }
 
-.profile-card:hover .avatar .profile-id {
-  display: block;
+.profile-card:hover .profile-name .profile-id {
+  display: inline;
 }
 
 .profile-params {
