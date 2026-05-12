@@ -1,14 +1,14 @@
 /* InterventionsPanel.css - Styles for InterventionsPanel component (Table Layout, 250px) */
 
 .interventions-panel {
-  padding: 15px;
+  padding: 5px;
   background: #ffffff;
   height: 100%;
   overflow-y: auto;
   color: #1a1a1a;
-  width: 400px;
-  min-width: 400px;
-  max-width: 400px;
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
 }
 
 .panel-header {
