@@ -179,7 +179,6 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               <span className="col-impact">I</span>
               <span className="col-evidence">E</span>
               <span className="col-regularity">Период</span>
-              {activeCategory !== 'supplement' && activeCategory !== 'food' && <span className="col-status">Статус</span>}
             </div>
             {filteredInterventions.map(intervention => {
               const isSubItem = intervention.classification || intervention.foodGroup;
@@ -220,11 +219,6 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                  <span className="col-regularity">
                   {intervention.regularity === 'daily' ? 'Ежедн.' : intervention.regularity === 'weekly' ? 'Еженед.' : intervention.regularity === 'yearly' ? 'Ежегодно' : intervention.regularity}
                  </span>
-                 {activeCategory !== 'supplement' && activeCategory !== 'food' && (
-                   <span className="col-status">
-                    {isInCart(intervention.code) ? '✕' : '+'}
-                   </span>
-                 )}
               </div>
               );
             })}
