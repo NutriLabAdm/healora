@@ -1859,8 +1859,8 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  height: 30px;
-  padding: 0 8px;
+  height: 20px;
+  padding: 0 4px;
   border-radius: 4px;
   color: #fff;
   font-size: 9px;

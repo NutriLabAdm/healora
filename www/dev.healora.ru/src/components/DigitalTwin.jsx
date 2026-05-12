@@ -2060,8 +2060,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       sleep: '#2196f3', physical: '#4caf50', mental: '#9c27b0',
                       food: '#ff9800', medical: '#f44336', supplement: '#795548',
                     };
+                    const minDay = Math.max(0, simulationDay - 3);
+                    const filtered = chatMessages.filter(msg => msg.day >= minDay && msg.day <= simulationDay);
                     const grouped = {};
-                    chatMessages.forEach(msg => {
+                    filtered.forEach(msg => {
                       if (!grouped[msg.day]) grouped[msg.day] = [];
                       grouped[msg.day].push(msg);
                     });
