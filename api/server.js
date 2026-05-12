@@ -290,6 +290,83 @@ app.post('/api/generate-quiz', async (req, res) => {
     }
 });
 
+// ── Diary Storage (JSON file) ──────────────────────────────────────────
+const DIARY_PATH = path.join(__dirname, 'data', 'diary.json');
+
+function loadDiary() {
+    try {
+        const dir = path.dirname(DIARY_PATH);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        if (!fs.existsSync(DIARY_PATH)) fs.writeFileSync(DIARY_PATH, '{}', 'utf8');
+        return JSON.parse(fs.readFileSync(DIARY_PATH, 'utf8'));
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveDiary(data) {
+    const dir = path.dirname(DIARY_PATH);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(DIARY_PATH, JSON.stringify(data, null, 2), 'utf8');
+}
+
+// POST /api/diary – upsert a diary entry
+app.post('/api/diary', (req, res) => {
+    try {
+        const { profile_id, day, meals, water_ml, mood, voice_note, audio, comment } = req.body;
+
+        if (!profile_id || day === undefined || day === null) {
+            return res.status(400).json({ error: 'profile_id and day are required' });
+        }
+
+        const diary = loadDiary();
+        const key = `${profile_id}_${day}`;
+
+        const entry = {
+            profile_id,
+            day,
+            meals: meals || [],
+            water_ml: water_ml || 0,
+            mood: mood || {},
+            voice_note: voice_note || null,
+            audio: audio || null,
+            comment: comment || null,
+            updated_at: new Date().toISOString(),
+        };
+
+        if (diary[key]) {
+            diary[key] = { ...diary[key], ...entry };
+        } else {
+            entry.created_at = new Date().toISOString();
+            diary[key] = entry;
+        }
+
+        saveDiary(diary);
+        res.json({ status: 'ok' });
+    } catch (err) {
+        console.error('Error saving diary:', err.message);
+        res.status(500).json({ error: 'Failed to save diary entry' });
+    }
+});
+
+// GET /api/diary/:profile_id/:day – load diary for a given day
+app.get('/api/diary/:profile_id/:day', (req, res) => {
+    try {
+        const { profile_id, day } = req.params;
+        const diary = loadDiary();
+        const key = `${profile_id}_${day}`;
+
+        if (diary[key]) {
+            res.json(diary[key]);
+        } else {
+            res.status(404).json({ error: 'Diary entry not found' });
+        }
+    } catch (err) {
+        console.error('Error loading diary:', err.message);
+        res.status(500).json({ error: 'Failed to load diary entry' });
+    }
+});
+
 const PORT = process.env.PORT || 3051;
 app.listen(PORT, () => {
     console.log(`Healora API running on port ${PORT}`);

@@ -11,15 +11,11 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3050',
+        target: 'http://localhost:3051',
         changeOrigin: true,
         secure: false,
       },
-      '/images/pers': {
-        target: 'http://localhost:3050',
-        changeOrigin: true,
-        secure: false,
-      }
+
     }
   },
   build: {

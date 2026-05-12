@@ -30,6 +30,34 @@
   padding: 2px 8px;
   border-radius: 10px;
   font-size: 9px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.panel-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.panel-tab {
+  padding: 5px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.panel-tab:hover {
+  background: #e0e0e0;
+}
+
+.panel-tab.active {
+  background: #311b92;
+  color: white;
 }
 
 .category-filters {
@@ -145,4 +173,99 @@
   text-align: center;
   font-weight: 700;
   color: #757575;
+}
+
+/* Protocols Tab */
+.protocols-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.protocol-card {
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 12px;
+  transition: all 0.2s;
+}
+
+.protocol-card:hover {
+  border-color: #c0c0c0;
+  background: #f5f5f5;
+}
+
+.protocol-card.protocol-danger {
+  background: #fff5f5;
+  border-color: #ffcdd2;
+  border-left: 3px solid #d50000;
+}
+
+.protocol-card.protocol-danger:hover {
+  background: #ffebee;
+}
+
+.protocol-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.protocol-card-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.protocol-card-cat {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #e0e0e0;
+  color: #555;
+  white-space: nowrap;
+}
+
+.protocol-card-cat.medical {
+  background: #ffcdd2;
+  color: #b71c1c;
+}
+
+.protocol-card-cat.nutritional {
+  background: #fff9c4;
+  color: #f57f17;
+}
+
+.protocol-card-cat.mental {
+  background: #e1bee7;
+  color: #6a1b9a;
+}
+
+.protocol-card-cat.physical {
+  background: #c8e6c9;
+  color: #1b5e20;
+}
+
+.protocol-card-goal {
+  font-size: 10px;
+  color: #757575;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.protocol-card-interventions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.protocol-interv-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-left: 2px solid #757575;
+  border-radius: 3px;
+  color: #555;
 }

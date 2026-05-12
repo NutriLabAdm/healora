@@ -596,6 +596,27 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     });
   }, [profile]);
 
+  // Load saved diary data when diary opens or day changes
+  useEffect(() => {
+    if (!showDiary || !profileId) return;
+    const day = diaryDay ?? simulationDay;
+    fetch(`/api/diary/${profileId}/${day}`)
+      .then(r => { if (!r.ok) throw new Error('No diary'); return r.json(); })
+      .then(data => {
+        const merged = defaultDiaryData(day);
+        if (data.meals) merged.meals = data.meals.map(saved => {
+          const def = merged.meals.find(m => m.type === saved.type);
+          return { ...def, ...saved, ndi: saved.ndi ? Number(saved.ndi) : null };
+        });
+        if (data.water_ml != null) merged.waterMl = data.water_ml;
+        if (data.mood) merged.mood = { ...merged.mood, ...data.mood };
+        if (data.voice_note) merged.voiceNote = data.voice_note;
+        if (data.comment) merged.comment = data.comment;
+        setDiaryData(merged);
+      })
+      .catch(() => { setDiaryData(defaultDiaryData(day)); });
+  }, [showDiary, diaryDay, profileId]);
+
   const digitalTwinData = profile ? {
     profile: {
       title: 'Профиль',
