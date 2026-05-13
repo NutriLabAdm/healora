@@ -34,6 +34,9 @@ function App() {
           <span className="app-topbar-title">Healora</span>
           <span className="app-topbar-tagline">мы формируем привычки для здоровья и долголетия на научных знаниях и современных технологиях</span>
           <a className="app-topbar-project" href="https://bmitech.ru" target="_blank" rel="noopener">проект BMITECH.ru</a>
+          <span className="app-topbar-sep">·</span>
+          <span className="app-topbar-platform">платформа Нутричат</span>
+          <img className="app-topbar-logo" src="https://bmitech.ru/assets/images/logos/nutrichat.png" alt="Нутричат" width="25" height="25" />
         </div>
       </div>
       <div className="app-layout-4col">

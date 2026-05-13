@@ -405,6 +405,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     color: #fff;
     text-decoration: underline;
 }
+.app-topbar-sep {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin: 0 2px;
+}
+.app-topbar-platform {
+    font-size: 10px;
+    color: rgba(255,255,255,0.75);
+    white-space: nowrap;
+}
+.app-topbar-logo {
+    border-radius: 3px;
+    flex-shrink: 0;
+}
 
 /* 4-Column Layout */
 .app-layout-4col {
