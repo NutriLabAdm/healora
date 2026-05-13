@@ -16,6 +16,11 @@ function App() {
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [draggedIntervention, setDraggedIntervention] = useState(null);
   const [cartInterventions, setCartInterventions] = useState([]);
+  const [authEmail, setAuthEmail] = useState(null);
+  const [showAuthPopup, setShowAuthPopup] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
 
   const addToCart = (intervention) => {
     if (cartInterventions.find(i => i.code === intervention.code)) return;
@@ -31,13 +36,43 @@ function App() {
     <Router basename={import.meta.env.VITE_BASE_PATH ? import.meta.env.VITE_BASE_PATH.replace(/\/$/, '') : ''}>
       <div className="app-topbar">
         <div className="app-topbar-inner">
-          <span className="app-topbar-title">Healora</span>
-          <span className="app-topbar-tagline">мы формируем привычки для здоровья и долголетия на научных знаниях и современных технологиях</span>
-          <a className="app-topbar-project" href="https://bmitech.ru" target="_blank" rel="noopener">проект BMITECH.ru</a>
-          <span className="app-topbar-sep">·</span>
-          <span className="app-topbar-platform">платформа Нутричат</span>
-          <img className="app-topbar-logo" src="https://bmitech.ru/assets/images/logos/nutrichat.png" alt="Нутричат" width="25" height="25" />
+          <div className="app-topbar-left">
+            <span className="app-topbar-title">Healora</span>
+            <span className="app-topbar-sep">·</span>
+            <span className="app-topbar-platform">платформа Нутричат</span>
+            <img className="app-topbar-logo" src="https://bmitech.ru/assets/images/logos/nutrichat.png" alt="Нутричат" width="25" height="25" />
+          </div>
+          <div className="app-topbar-center">
+            <span className="app-topbar-tagline">мы формируем привычки для здоровья и долголетия на научных знаниях и современных технологиях</span>
+            <a className="app-topbar-project" href="https://bmitech.ru" target="_blank" rel="noopener">проект BMITECH.ru</a>
+          </div>
+          <div className="app-topbar-right">
+            {!authEmail ? (
+              <button className="auth-btn" onClick={() => setShowAuthPopup(!showAuthPopup)}>Войти</button>
+            ) : (
+              <span className="auth-email">{authEmail}</span>
+            )}
+          </div>
         </div>
+        {showAuthPopup && (
+          <div className="auth-popup">
+            <button className="auth-close" onClick={() => setShowAuthPopup(false)}>×</button>
+            <div className="auth-tabs">
+              <button className={`auth-tab ${authMode === 'login' ? 'active' : ''}`} onClick={() => setAuthMode('login')}>Войти</button>
+              <button className={`auth-tab ${authMode === 'register' ? 'active' : ''}`} onClick={() => setAuthMode('register')}>Регистрация</button>
+            </div>
+            <input className="auth-input" type="email" placeholder="Email" value={emailInput} onChange={e => setEmailInput(e.target.value)} />
+            <input className="auth-input" type="password" placeholder="Пароль" value={passwordInput} onChange={e => setPasswordInput(e.target.value)} />
+            <button className="auth-submit" onClick={() => {
+              if (emailInput && passwordInput) {
+                setAuthEmail(emailInput);
+                setShowAuthPopup(false);
+                setEmailInput('');
+                setPasswordInput('');
+              }
+            }}>{authMode === 'login' ? 'Войти' : 'Зарегистрироваться'}</button>
+          </div>
+        )}
       </div>
       <div className="app-layout-4col">
         <UserAvatarPanel
