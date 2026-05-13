@@ -106,7 +106,7 @@ const UserAvatarPanel = ({ selectedProfile, onSelectProfile, onEditProfile, isEd
                     overflow: 'hidden'
                   }}>
                     <img
-                      src={`/images/pers/${profile.photo}`}
+                      src={`/images/pers/32_32/${profile.photo}`}
                       alt={profile.profile_id}
                       className="profile-photo"
                       onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML += '<span class="avatar-icon"></span>'; }}
@@ -190,7 +190,7 @@ const UserAvatarPanel = ({ selectedProfile, onSelectProfile, onEditProfile, isEd
                     setEditingProfile(null);
                   }}
                 >
-                  <img src={`/images/pers/${photo}`} alt={photo} />
+                  <img src={`/images/pers/32_32/${photo}`} alt={photo} />
                 </div>
               ))}
             </div>

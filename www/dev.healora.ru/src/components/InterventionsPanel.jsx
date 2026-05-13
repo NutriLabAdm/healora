@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/css/InterventionsPanel.css';
+import '../assets/css/CategoryBadges.css';
 import catalogData from '../assets/data/interventions_catalog.json';
 import supplementsCatalog from '../assets/data/supplements_catalog.json';
 import dietsCatalog from '../assets/data/diets_catalog.json';
@@ -121,7 +122,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
           <button className={`panel-tab ${tab === 'interventions' ? 'active' : ''}`} onClick={() => setTab('interventions')}>Интервенции</button>
           <button className={`panel-tab ${tab === 'protocols' ? 'active' : ''}`} onClick={() => setTab('protocols')}>Протоколы</button>
         </div>
-        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.7 | {__BUILD_TIME__}</span>
+        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.8 | {__BUILD_TIME__}</span>
       </div>
 
       {/* Compact Cart Widgets */}
@@ -449,61 +450,236 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
         <div className="backlog-overlay" onClick={() => setShowBacklog(false)}>
           <div className="backlog-modal" onClick={e => e.stopPropagation()}>
             <div className="backlog-header">
-              <span>Healora — Backlog</span>
-              <span className="version-build">{__BUILD_TIME__}</span>
+              <span>Healora — Backlog <span className="backlog-summary"><strong>87</strong>/128 · <strong>280</strong>/670 ч</span></span>
+              <span className="version-build">ver 0.8 · 13.05.2026</span>
               <span className="backlog-close" onClick={() => setShowBacklog(false)}>×</span>
             </div>
             <div className="backlog-body">
-              <div className="backlog-section">
-                <div className="backlog-section-title">✓ Реализовано</div>
-                <ul className="backlog-list">
-                  <li><b>Digital Twin</b> с D3.js графиками: Life Expectancy Dial, Weight Projection, Habit Impact, Biomarker Radar, Adherence Ring, Weight Timeline, Risk Reduction, Network Graph — 24ч</li>
-                  <li><b>Каталог интервенций</b> (32 шт) с категориями, evidence-level, impact score — 6ч</li>
-                  <li><b>Drag & drop</b> на таймлайн с корзиной — 8ч</li>
-                  <li><b>Дневник питания</b> с загрузкой/отображением фото, KBZU, NDI — 12ч</li>
-                  <li><b>API хранения дневника</b> (JSON, POST/GET) — 4ч</li>
-                  <li><b>Протоколы</b> (17 шт) с red flags, рекомендациями, expand/collapse — 10ч</li>
-                  <li><b>Корзина интервенций</b> (+/- из каталога) — 3ч</li>
-                  <li><b>Healora Score</b> — алгоритм и визуализация — 6ч</li>
-                  <li><b>Адаптивная вёрстка</b> 400px панели + табы Интервенции/Протоколы — 5ч</li>
-                  <li><b>Профили пользователей</b> (TEST_001–TEST_003) — 3ч</li>
-                  <li><b>Дашборд</b> с выборкой профиля — 4ч</li>
-                  <li><b>Food-каталог</b> (17 блюд с фото, нутриентами, NDI) — 5ч</li>
-                  <li><b>Proxy API</b> через Vite (dev) + nginx (prod) — 2ч</li>
-                  <li><b>SSL + CI/CD</b> devops.sh, deploy-dev.sh — 4ч</li>
-                  <li><b>Дизайн-система</b>: шрифты Sora/DM Sans, цветовая схема — 6ч</li>
-                  <li><b>Модальное окно беклога</b> с версией — 1ч</li>
-                  <li><b>Диаграмма Gantt</b> для таймлайна интервенций — 8ч</li>
-                  <li><b>Интеграция с GLP-1 протоколом</b> (Ozempic Jumpers) с красной маркировкой — 3ч</li>
-                  <li><b>Сохранение состояния</b> дневника при переключении дней — 4ч</li>
-                  <li><b>Валидация API</b> (profile_id, day обязательны) — 1ч</li>
-                  <li><b>Структура проекта</b>: www/dev.healora.ru + api/ + docs/ — 3ч</li>
-                  <li><b>Документация протоколов</b> (17 JSON-файлов с метриками) — 8ч</li>
-                  <li><b>Разметка веб-страницы</b> healora.ru (landing) — 6ч</li>
-                  <li><b>Мнемонические коды</b> интервенций (≤7 символов: SL_, PH_, MN_, FD_, SP_, DG_, M_) — 4ч</li>
-                  <li><b>Клик → попап</b> вместо корзины: карточка интервенции с описанием и протоколами — 3ч</li>
-                  <li><b>Регулярность</b> односимвольными кодами (D/W/M/Y/P) — 1ч</li>
-                  <li><b>Легенда I/E/Per</b> с модальным пояснением и примерами — 1ч</li>
-                  <li><b>Чат-модалка</b>: панель быстрых действий (Профиль/План/Дневник/Фото еды) — 1ч</li>
-                  <li><b>CSS-переменные</b> вместо inline-стилей для кнопок категорий — 1ч</li>
-                  <li><b>Yandex Metrika</b> с setTimeout(0) — 1ч</li>
-                  <li><b>Build timestamp</b> VITE_BUILD_TIME в версии и беклоге — 1ч</li>
-                </ul>
-              </div>
-              <div className="backlog-section">
-                <div className="backlog-section-title">○ В плане</div>
-                <ul className="backlog-list planned">
-                  <li>AI-рекомендации на основе NDI</li>
-                  <li>Интеграция с носимыми устройствами</li>
-                  <li>Чат-интерфейс</li>
-                  <li>Модуль тренировок с прогрессом</li>
-                  <li>Социальные функции (группы)</li>
-                  <li>Маркетплейс добавок</li>
-                  <li>ML-модель для предсказаний</li>
-                  <li>Мобильное приложение (PWA)</li>
-                  <li>Многоязычность (EN/DE)</li>
-                </ul>
-              </div>
+
+              <h2 className="md-h2">Recent Updates (12–13.05.2026)</h2>
+
+              <h3 className="md-h3">13.05.2026</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Backlog modal</b> — Displays structured BACKLOG.md view (✓/□ checkboxes, h2/h3 headers, hr, clickable repo link, version footer)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Chat interface</b> — Full chat UI with intervention cards (checkbox, points, category badge), task states, optimistic UI, colorful timeline badges grouped by day</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Treatment plans</b> — Medical prescription popup layout with protocols/interventions table, plan per twin in localStorage, plan status badge in profile header</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Collapsible track timeline</b> — N интервенций · M всего summary line, chevron toggle, Дни/Недели/Фазы view switcher</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan search dropdown</b> — Searchable window by client name/ID, lists all saved plans with counts and status</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Enhanced intervention log</b> — Day separators with date (YYYY.MM.DD), day nav buttons (◀ Все дни ▶), tasks badge/popup, activated/skipped highlighting, stars, day filter</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Tasks popup</b> — Unique plan intervention codes with assignment count, completed count, percentage</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan prescription table</b> — Alternating rows (#fafaff), hover (#f0edff), purple protocol/intervention status dots</li>
+              </ul>
+
+              <h3 className="md-h3">12.05.2026 (afternoon)</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Supplements catalog</b> — Loaded from <code>supplements_catalog.json</code> with group field (vitamins/vitamin-like/minerals), classification (мед/нутри), popup detail view</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Diets catalog</b> — Loaded from <code>diets_catalog.json</code> with foodGroup field (diet/habit), subgroup filter buttons</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Protocol cards</b> — Expand/collapse with red flags (🚩), recommendations, category badges, danger style for Ozempic protocol</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Intervention detail popup</b> — Shows description, category, impact/10, evidence (A–D), regularity, linked protocols</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Legend popup</b> — I/E/Per explanation with examples (I: 1–10, E: A–D, Per: D/W/M/Y/P)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Cart widgets panel</b> — Compact badges with remove button, "Заказать План" button, item count</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Tab split</b> — Интервенции / Протоколы tabs in interventions panel</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Chat timeline badges</b> — Colored intervention badges in rows grouped by day, opacity matches timeline dots (1/0.2), filtered to simulationDay-3 window</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Stop button</b> — Chat header stop button</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Profile-id</b> — Hidden by default, shown on card hover (below avatar + parentheses after name)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Panels resize</b> — 200px sidebar / 320px interventions panel</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Main-content padding</b> — Reduced to 7px</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>UserAvatarPanel styles</b> — Moved from inline to CSS</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Vite config fix</b> — loadEnv for base path to avoid Git Bash BASE_PATH conflict</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Diary storage</b> — API (JSON POST/GET), UI with day switching, food photo display, KBZU, NDI</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Proxy config</b> — Vite dev proxy + nginx prod config</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Duplicate CSS removal</b> — .profile-card dups cleaned from shared.css</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Backlog-modal width</b> — Increased to 580px</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Favicon</b> — Added to www root + digital-twin subfolder</li>
+              </ul>
+
+              <hr className="md-hr" />
+
+              <h2 className="md-h2">MVP (Phase 1: 1-3 months)</h2>
+
+              <h3 className="md-h3">Core UX</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Backlog Modal</b> — Structured BACKLOG.md view with version info</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Favicon</b> — Add favicon.svg to www root, fix 404 error</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Profile-screen</b> — Fix switchScreen() to locate profile-screen div</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Context Tips Panel</b> — Add bottom 15% panel with explanations in info-panel</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Drag & Drop Logging</b> — Log drag actions to right "Under the Hood" panel</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Close Button</b> — Ensure redirect to https://healora.ru/</li>
+              </ul>
+
+              <h3 className="md-h3">Onboarding</h3>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>Slide 1</b> — Stars motivation screen (earn stars for completed tasks)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Slide 2</b> — 5 upgrade directions (Knowledge, Activity, Recovery, Nutrition, Specialists)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Slide 3</b> — Quick level test intro</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Quiz</b> — 5 questions to calculate Healora Score (0-100)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Quiz Logic</b> — Map score to tiers (Emerging → Transformational)</li>
+              </ul>
+
+              <h3 className="md-h3">Chat Interface (Сообщения)</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Chat Timeline Badges</b> — Colored intervention badges in rows, grouped by day, opacity matched</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Badge Filter</b> — Filtered to simulationDay-3 window</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Stop Button</b> — Chat header stop button</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Full Badge History</b> — Show full history in chat</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Task Cards</b> — Cards with checkbox, points, category badge</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>States</b> — Not started → In progress → Completed (with animation)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Optimistic UI</b> — Instant points update</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Filters</b> — All, Питание, Активность, Знания badges</li>
+              </ul>
+
+              <h3 className="md-h3">Intervention Buttons</h3>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>"Что поесть"</b> — Nutrition recommendations</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>"Что почитать"</b> — PubMed articles</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>"Научи"</b> — Scientific facts and mechanisms</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>"Новости"</b> — Weight management latest discoveries</li>
+              </ul>
+
+              <h3 className="md-h3">Navigation (Bottom)</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Сообщения</b> — Chat/tasks screen</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Путь</b> — Longevity Path progress</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Цели</b> — Goal tracking (weight, activity, sleep)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Профиль</b> — Stats, level, stars, 52 biomedical parameters</li>
+              </ul>
+
+              <h3 className="md-h3">Digital Twin</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Enhanced Intervention Log</b> — Day separators with date, day nav buttons (◀ Все дни ▶), tasks badge/popup, activated/skipped highlighting, stars, day filter</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Tasks Popup</b> — Unique plan intervention codes with assignment count, completed count, percentage</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan Search Dropdown</b> — Searchable by client name/ID, lists all saved plans with counts and status</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Collapsible Track Timeline</b> — Summary line, chevron toggle, Дни/Недели/Фазы view switcher</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan Prescription Table</b> — Alternating rows (#fafaff), hover (#f0edff), purple status dots</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Protocol Cards</b> — Expand/collapse with red flags, recommendations, category badges, protocol-danger style</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Supplements Catalog</b> — Groups (vitamins/vitamin-like/minerals), classification (мед/нутри), detail popup</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Diets Catalog</b> — Food groups (diet/habit), subgroup filters</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Intervention Detail Popup</b> — Description, category, impact, evidence, regularity, linked protocols</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Legend Popup</b> — I/E/Per explanations with examples</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Cart Widgets Panel</b> — Compact badges, order plan button, remove from cart</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Tab Split</b> — Интервенции / Протоколы tabs</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Treatment Plan Popup</b> — Medical prescription layout with protocols/interventions table</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan per twin</b> — Each twin has own plan stored in localStorage via PlansProvider context</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan Status Badge</b> — Inline indicator in profile-header-card (protocol/intervention counts)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Interventions Panel</b> — 290px wide, category filters</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Category Badge Colors</b> — Per-category `.cat-*`/`.sup-*`/`.food-*` styles in separate CSS</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Action Buttons</b> — Green/blue/orange/purple per button role</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Simulation 30 days</b> — Reduced from 90 to 30 days across all locations</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Empty Plan Guide</b> — Positive wishes + step-by-step guidance when no interventions</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Data Sources Panel</b> (left) — Draggable items: Wearables, Voice, Medical, Food Photos, Genetics, Mental</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Drop Zone</b> — Accept dropped sources → trigger AI analysis</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>ML Model Stub</b> — Input (HRrest, HRpeak, HRR, BMI, waist, BP) → risk output</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Adaptivity</b> — Difficulty based on Health Literacy Score</li>
+              </ul>
+
+              <h3 className="md-h3">Points System</h3>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>Basic Tasks</b> — 5-10 points (water, steps, sleep)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Medium Tasks</b> — 15-25 points (recipes, 20-30 min workouts)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Hard Tasks</b> — 30-50 points (meal prep, sugar-free)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Streak Bonus</b> — +5 for consecutive days</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>On-time Bonus</b> — +10 for completing in time</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>No penalties</b> — Positive reinforcement only</li>
+              </ul>
+
+              <h3 className="md-h3">Categories (5 tracks)</h3>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>Знания</b> — Knowledge tasks (320 pts example)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Активность</b> — Activity tasks (280 pts example)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Восстановление</b> — Recovery tasks (140 pts example)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Питание</b> — Nutrition tasks (240 pts example)</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Специалисты</b> — Specialists tasks (180 pts example)</li>
+              </ul>
+
+              <h3 className="md-h3">Goals & Progress</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Weight Goal</b> — Track weight loss progress (-3.2kg / -5kg)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Activity Goal</b> — Steps tracking (8,432 / 10,000)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Sleep Goal</b> — Hours tracking (7.5h / 8h)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Progress Bars</b> — Visual percentage display</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Healora Score</b> — 6-metric radar chart, stars display, profile health assessment</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Health Radar</b> — SVG radar chart (sleep, stress, steps, BMI, BP, glucose)</li>
+              </ul>
+
+              <h3 className="md-h3">Achievements</h3>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>Первый шаг</b> — 3 tasks in a row</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>На огне</b> — 7 days without missing</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Баланс</b> ≥50 points in each category per week</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Минус 2 кг</b> — Weight tracker integration</li>
+              </ul>
+
+              <h3 className="md-h3">Under the Hood Panel</h3>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>Healora Score Display</b> — Show current tier and score</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Action Log</b> — Log: completed tasks, uploads, quiz results, bonuses</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Technical Info</b> — Show risk assessment output</li>
+              </ul>
+
+              <h3 className="md-h3">Profile & Assets</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Profile-id UI</b> — Hidden by default, shown on card hover (below avatar + parentheses)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Panel Resize</b> — Sidebar 200px, interventions panel 320px</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Main-content padding</b> — Reduced to 7px</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>UserAvatarPanel CSS</b> — Extracted from inline to dedicated stylesheet</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Profile Photos</b> — 30 avatar images with 32×32 and 150×150 thumbnails</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Image Optimization</b> — PNG8 quantization, ≤512KB per source image</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Classification Rename</b> — "Медицинский" → "мед", "Нутрицевтик" → "нутри"</li>
+              </ul>
+
+              <h3 className="md-h3">Plan Templates</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Template Library</b> — 11 protocol-aligned treatment plan templates (markdown + JS module)</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Plan Popup Redesign</b> — Medical prescription header, template selector, QR code, PDF export</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>QR Code</b> — qrcode.react v4 (QRCodeSVG) for plan sharing</li>
+              </ul>
+
+              <h3 className="md-h3">Infrastructure</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Vite config fix</b> — loadEnv for base path, Git Bash BASE_PATH conflict resolved</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Diary storage API</b> — JSON POST/GET endpoints with profile_id + day validation</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Proxy config</b> — Vite dev proxy + nginx production config</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Duplicate CSS cleanup</b> — Removed .profile-card dups from shared.css</li>
+              </ul>
+
+              <hr className="md-hr" />
+
+              <h2 className="md-h2">V1 (Phase 2: 4-8 months)</h2>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>Liquid Biopsy Integration</b> — Blood test results import</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Bayesian Calibration</b> — probabilistic health scoring</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Wearable Sync</b> — Apple Watch, Oura, Whoop API integration</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Genetic Data Import</b> — 23andMe, AncestryDNA parser</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Food Photo Analysis</b> — Computer vision KBJU calculation</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Voice Input</b> — Speech-to-text symptom logging</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Advanced ML Model</b> — Multi-parameter risk prediction</li>
+              </ul>
+
+              <hr className="md-hr" />
+
+              <h2 className="md-h2">Scale (Phase 3: 9-18 months)</h2>
+              <ul className="md-list">
+                <li className="md-todo"><span className="md-box"> </span> <b>RL Optimizer</b> — Reinforcement learning for task recommendations</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>FDA/EMA Pathway</b> — Regulatory compliance</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>B2B White-label API</b> — For clinics</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Pro Plan for Nutriologists</b> — $49/month, saves 10h/week</li>
+                <li className="md-todo"><span className="md-box"> </span> <b>Genetic Add-on</b> — $29.99 one-time upsell</li>
+              </ul>
+
+              <hr className="md-hr" />
+
+              <h2 className="md-h2">Tech Stack</h2>
+              <ul className="md-list md-tech">
+                <li><b>Frontend:</b> React + Vite (JSX components)</li>
+                <li><b>Backend:</b> Beget server (217.114.8.5), Node.js API</li>
+                <li><b>Deploy:</b> devops.sh script</li>
+                <li><b>Repo:</b> <a href="https://github.com/NutriLabAdm/healora" target="_blank" rel="noopener">github.com/NutriLabAdm/healora</a></li>
+                <li><b>Storage:</b> localStorage for per-twin plans (PlansProvider context)</li>
+                <li><b>QR:</b> qrcode.react v4 (QRCodeSVG)</li>
+                <li><b>Charts:</b> SVG inline (no heavy lib)</li>
+              </ul>
+
+              <div className="md-footer">Created: April 2026 | ver 0.8 | Based on PRODUCT_DESCRIPTION.md</div>
             </div>
           </div>
         </div>

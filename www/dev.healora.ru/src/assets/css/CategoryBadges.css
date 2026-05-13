@@ -1,0 +1,29 @@
+/* Category Badges — per-category color assignment for cat-btn filter buttons */
+
+/* Active state backgrounds */
+.cat-btn:is(.cat-all,.sup-all,.food-all).active { background: #6b21c8; }
+.cat-btn.cat-sleep.active { background: #1976d2; }
+.cat-btn.cat-physical.active { background: #388e3c; }
+.cat-btn.cat-mental.active { background: #7b1fa2; }
+.cat-btn.cat-food.active { background: #f57c00; }
+.cat-btn.cat-medical.active { background: #d32f2f; }
+.cat-btn.cat-supplement.active { background: #795548; }
+.cat-btn.sup-vitamins.active { background: #2196f3; }
+.cat-btn.sup-vitamin_like.active { background: #9c27b0; }
+.cat-btn.sup-minerals.active { background: #4caf50; }
+.cat-btn.food-diet.active { background: #e65100; }
+.cat-btn.food-habit.active { background: #f9a825; }
+
+/* Default state — each category gets its own color + border */
+.cat-btn.cat-sleep { color: #1976d2; border-color: #1976d2; }
+.cat-btn.cat-sleep:hover { background: #1976d2; color: white; }
+.cat-btn.cat-physical { color: #388e3c; border-color: #388e3c; }
+.cat-btn.cat-physical:hover { background: #388e3c; color: white; }
+.cat-btn.cat-mental { color: #7b1fa2; border-color: #7b1fa2; }
+.cat-btn.cat-mental:hover { background: #7b1fa2; color: white; }
+.cat-btn.cat-food { color: #f57c00; border-color: #f57c00; }
+.cat-btn.cat-food:hover { background: #f57c00; color: white; }
+.cat-btn.cat-medical { color: #d32f2f; border-color: #d32f2f; }
+.cat-btn.cat-medical:hover { background: #d32f2f; color: white; }
+.cat-btn.cat-supplement { color: #795548; border-color: #795548; }
+.cat-btn.cat-supplement:hover { background: #795548; color: white; }

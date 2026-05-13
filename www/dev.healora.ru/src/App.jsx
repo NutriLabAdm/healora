@@ -9,6 +9,7 @@ import PhoneContainer from './components/PhoneContainer';
 import UserAvatarPanel from './components/UserAvatarPanel';
 import InterventionsPanel from './components/InterventionsPanel';
 import SourcesFooter from './components/SourcesFooter';
+import { PlansProvider } from './context/PlansProvider';
 import './assets/css/shared.css';
 
 function App() {
@@ -26,7 +27,15 @@ function App() {
   };
 
   return (
+    <PlansProvider>
     <Router basename={import.meta.env.VITE_BASE_PATH ? import.meta.env.VITE_BASE_PATH.replace(/\/$/, '') : ''}>
+      <div className="app-topbar">
+        <div className="app-topbar-inner">
+          <span className="app-topbar-title">Healora</span>
+          <span className="app-topbar-tagline">мы формируем привычки для здоровья и долголетия на научных знаниях и современных технологиях</span>
+          <a className="app-topbar-project" href="https://bmitech.ru" target="_blank" rel="noopener">проект BMITECH.ru</a>
+        </div>
+      </div>
       <div className="app-layout-4col">
         <UserAvatarPanel
           selectedProfile={selectedProfile}
@@ -79,6 +88,7 @@ function App() {
         <SourcesFooter />
       </div>
     </Router>
+    </PlansProvider>
   );
 }
 

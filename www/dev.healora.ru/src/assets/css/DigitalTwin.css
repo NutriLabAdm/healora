@@ -95,6 +95,16 @@
   height: 60%;
   text-align: center;
   color: #757575;
+  gap: 16px;
+}
+
+.arrow-left-animated {
+  animation: arrowBounceLeft 1.2s ease-in-out infinite;
+}
+
+@keyframes arrowBounceLeft {
+  0%, 100% { transform: translateX(0); opacity: 0.6; }
+  50% { transform: translateX(-12px); opacity: 1; }
 }
 
 /* Protocols Panel - List under Timeline */
@@ -521,6 +531,31 @@
 
 .view-btn.active { background: white; color: #311b92; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 .view-btn:hover:not(.active) { background: #e0e0e0; }
+
+/* Collapsible Tracks Container */
+.tracks-container { margin-bottom: 12px; }
+.tracks-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; background: #f8f8ff; border: 1px solid #e0e0ff;
+  border-radius: 8px; cursor: pointer; user-select: none;
+  transition: background 0.15s;
+}
+.tracks-header:hover { background: #f0eeff; }
+.tracks-header-title {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: #333;
+}
+.tracks-header-summary {
+  font-size: 11px; color: #888; margin-left: auto;
+}
+.tracks-header-controls {
+  display: flex; gap: 4px; margin-left: auto;
+}
+.tracks-view-btn {
+  padding: 2px 8px; border: 1px solid #ddd; border-radius: 4px;
+  font-size: 10px; background: #fff; color: #666; cursor: pointer;
+}
+.tracks-view-btn.active { background: #613CF5; color: #fff; border-color: #613CF5; }
 
 .tracks {
   display: flex;
@@ -1015,6 +1050,63 @@
   color: #d50000;
 }
 
+/* Log day separator */
+.log-day-separator {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 15px; background: #fafafa;
+}
+.log-day-sep-line { flex: 1; height: 1px; background: #e0e0e0; }
+.log-day-sep-text { font-size: 10px; color: #999; white-space: nowrap; font-family: monospace; }
+
+/* Log day navigation */
+.log-day-nav { display: flex; align-items: center; gap: 4px; margin-left: 8px; }
+.log-day-btn {
+  background: none; border: 1px solid #ddd; border-radius: 4px;
+  cursor: pointer; padding: 1px 6px; font-size: 11px; color: #666;
+}
+.log-day-btn:hover:not(:disabled) { background: #e0e0e0; }
+.log-day-btn:disabled { opacity: 0.4; cursor: default; }
+.log-day-label { font-size: 11px; color: #333; font-weight: 500; min-width: 60px; text-align: center; }
+
+/* Log tasks badge */
+.log-tasks-badge {
+  background: #f0edff; border: 1px solid #d4ccff; border-radius: 12px;
+  padding: 2px 10px; font-size: 10px; color: #613CF5; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap;
+}
+.log-tasks-badge:hover { background: #e0d8ff; }
+
+/* Log row states */
+.log-row-ok { background: #f1f8e9; }
+.log-row-skip { background: #fff; }
+
+.col-state { width: 30px; text-align: center; font-size: 12px; }
+.col-stars { width: 60px; text-align: right; font-size: 10px; color: #f57c00; }
+
+/* Tasks popup */
+.tasks-popup {
+  background: #fff; border-radius: 12px; width: 520px; max-width: 90vw;
+  max-height: 70vh; display: flex; flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.tasks-popup-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid #e0e0e0;
+}
+.tasks-popup-header h3 { margin: 0; font-size: 14px; color: #333; }
+.tasks-popup-body { flex: 1; overflow-y: auto; padding: 8px 16px; }
+.tasks-popup-row {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px 0; border-bottom: 1px solid #f0f0f0;
+}
+.tasks-popup-row:last-child { border-bottom: none; }
+.tasks-popup-row-top { display: flex; align-items: center; gap: 8px; }
+.tasks-popup-code { font-family: monospace; font-size: 10px; color: #613CF5; min-width: 50px; }
+.tasks-popup-name { font-size: 12px; color: #333; font-weight: 500; }
+.tasks-popup-row-meta { display: flex; gap: 12px; font-size: 10px; color: #888; margin-left: 50px; }
+.tasks-popup-done { color: #4caf50; }
+.tasks-popup-pct { font-weight: 600; color: #1a1a2e; }
+
 /* 4-Column Parameter Table */
 .data-panel {
   margin-top: 15px;
@@ -1037,21 +1129,18 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #f57c00, #e65100);
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 6px 14px;
+  border-radius: 7px;
+  padding: 7px 12px;
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
   margin-left: 10px;
 }
-
 .assess-health-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(245, 124, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .profile-header-photo {
@@ -1457,22 +1546,7 @@
   color: #f57c00; font-weight: 600;
 }
 
-.assess-health-btn {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 16px; background: #6b21c8; color: white;
-  border: none; border-radius: 8px; cursor: pointer;
-  font-size: 13px; font-weight: 500;
-  transition: all 0.2s;
-}
-.assess-health-btn:hover { background: #5a189a; transform: scale(1.02); }
-
-.assess-health-btn.generate-btn { background: #6b21c8; }
-.assess-health-btn.generate-btn:hover { background: #5a189a; }
-.assess-health-btn.generate-btn:disabled {
-  background: #b39ddb; cursor: not-allowed; opacity: 0.7; transform: none;
-}
-
-/* Targets Row */
+/* Profile Stars */
 .profile-targets { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 .targets-label { font-size: 12px; color: #666; font-weight: 500; }
@@ -1503,6 +1577,31 @@
 .target-badge-name { color: #333; font-weight: 500; }
 
 .target-badge-value { color: #666; font-size: 10px; }
+
+/* Plan Status Bar */
+.plan-status-bar { display: inline-flex; align-items: center; margin: 4px 0; }
+
+.plan-status-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 10px; border: 1px solid #ddd; border-radius: 12px;
+  background: #fff; color: #333; font-size: 11px; cursor: pointer;
+  transition: all 0.2s; line-height: 1.4;
+}
+.plan-status-btn:hover { border-color: #613CF5; color: #613CF5; }
+
+.plan-status-bar.has-plan .plan-status-btn { background: #613CF5; color: #fff; border-color: #613CF5; }
+.plan-status-bar.has-plan .plan-status-btn:hover { background: #5033d4; }
+
+.plan-status-bar .plan-status-btn svg { flex-shrink: 0; }
+
+.plan-status-dots { display: inline-flex; align-items: center; gap: 3px; margin-left: 2px; }
+.plan-status-dot {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 16px; height: 16px; border-radius: 8px;
+  font-size: 10px; font-weight: 600; line-height: 1; padding: 0 5px;
+}
+.dot-protocols { background: rgba(255,255,255,0.25); color: #fff; }
+.dot-interventions { background: rgba(255,255,255,0.25); color: #fff; }
 
 /* History popup */
 .history-popup-overlay {
@@ -1567,7 +1666,7 @@
   gap: 12px;
 }
 .plan-popup-header-left {
-  display: flex; flex-direction: column; gap: 4px;
+  display: flex; flex-direction: column; gap: 4px; position: relative;
 }
 .plan-popup-badge {
   font-size: 11px; font-weight: 700; color: #1a1a2e;
@@ -1576,6 +1675,52 @@
 .plan-popup-number {
   font-size: 10px; color: #999; font-family: monospace;
 }
+.plan-popup-plan-select {
+  padding: 2px 6px; border: 1px solid #d0d0d0; border-radius: 6px;
+  font-size: 10px; font-family: monospace; background: #fff; cursor: pointer;
+  color: #333; max-width: 320px;
+}
+
+/* Plan search dropdown */
+.plan-search-dropdown { position: relative; min-width: 200px; }
+.plan-search-current {
+  display: flex; align-items: center; gap: 6px; padding: 4px 8px;
+  border: 1px solid #d0d0d0; border-radius: 6px; cursor: pointer;
+  background: #fff; font-size: 11px; transition: border-color 0.15s;
+}
+.plan-search-current:hover { border-color: #613CF5; }
+.plan-search-label { font-weight: 600; color: #333; }
+.plan-search-summary { color: #888; font-size: 10px; margin-left: auto; }
+.plan-search-panel {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
+  margin-top: 4px; background: #fff; border: 1px solid #d0d0d0;
+  border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  width: 300px;
+  overflow: hidden;
+}
+.plan-search-input-wrap {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 10px; border-bottom: 1px solid #eee;
+}
+.plan-search-input-wrap svg { flex-shrink: 0; color: #999; }
+.plan-search-input {
+  flex: 1; border: none; outline: none; font-size: 12px; color: #333;
+  background: transparent;
+}
+.plan-search-input::placeholder { color: #bbb; }
+.plan-search-results { max-height: 200px; overflow-y: auto; }
+.plan-search-empty { padding: 16px; text-align: center; font-size: 11px; color: #999; }
+.plan-search-result {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; cursor: pointer; transition: background 0.1s;
+  font-size: 11px;
+}
+.plan-search-result:hover { background: #f5f3ff; }
+.plan-search-result.active { background: #f0edff; }
+.plan-search-result-name { font-weight: 500; color: #333; }
+.plan-search-result-meta { color: #888; font-size: 10px; }
+.plan-popup-plan-select:focus { outline: none; border-color: #613CF5; }
+.plan-popup-plan-select { display: none; }
 .plan-popup-header h3 { margin: 0; font-size: 16px; color: #333; }
 .plan-popup-header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .plan-template-select {
@@ -1628,6 +1773,17 @@
   line-height: 1.4;
 }
 
+/* Doctor note textarea */
+.plan-doctor-note-block { margin-bottom: 12px; }
+.plan-doctor-note {
+  width: 100%; box-sizing: border-box;
+  padding: 8px 10px; border: 1px solid #d0d0ff; border-radius: 8px;
+  font-size: 12px; font-family: inherit; color: #333;
+  resize: vertical; background: #fafaff; transition: border-color 0.15s;
+}
+.plan-doctor-note:focus { outline: none; border-color: #613CF5; }
+.plan-doctor-note::placeholder { color: #aaa; }
+
 /* Interventions table */
 .plan-interventions-section {
   margin-bottom: 16px;
@@ -1642,11 +1798,70 @@
   padding: 8px 4px; font-size: 12px; border-bottom: 1px solid #f5f5f5;
 }
 .plan-table tr:hover td { background: #fafafa; }
+.plan-table-prescription tbody tr { transition: background 0.15s; }
+.plan-table-prescription tbody tr:nth-child(even) { background: #fafaff; }
+.plan-table-prescription tbody tr:hover { background: #f0edff; }
+.plan-table-prescription tbody tr td { border-bottom: 1px solid #eee; padding: 6px 4px; }
 .plan-table-prescription th:first-child,
 .plan-table-prescription td:first-child { width: 30px; text-align: center; }
 .plan-table-prescription .plan-num { color: #999; font-size: 10px; }
 .plan-table-prescription .plan-code { font-family: monospace; font-size: 11px; color: #613CF5; }
 .plan-table-prescription .plan-reg { font-weight: 600; color: #1a1a2e; text-align: center; }
+
+/* Plan badges (intervention chips) */
+.plan-badges-section { margin-bottom: 12px; }
+.plan-badges-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.plan-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 6px 3px 10px; background: #f0edff; border-radius: 14px;
+  border: 1px solid #d4ccff; font-size: 11px; transition: all 0.15s;
+}
+.plan-badge-name { color: #333; font-weight: 500; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.plan-badge-code { color: #613CF5; font-family: monospace; font-size: 10px; }
+.plan-badge-remove {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border: none; background: transparent;
+  cursor: pointer; color: #999; border-radius: 50%; padding: 0;
+}
+.plan-badge-remove:hover { background: #e0d8ff; color: #d32f2f; }
+
+/* Create plan button */
+.plan-create-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px; padding: 8px 20px;
+  background: #613CF5; color: #fff; border: none; border-radius: 8px;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.plan-create-btn:hover { background: #5033d4; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(97,60,245,0.3); }
+
+/* Plan action buttons */
+.plan-actions-section {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; margin-bottom: 12px; border-top: 1px solid #eee;
+  flex-wrap: wrap; gap: 8px;
+}
+.plan-status-info { font-size: 12px; color: #666; display: flex; align-items: center; gap: 6px; }
+.plan-status-tag {
+  padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600;
+}
+.plan-status-active { background: #e8f5e9; color: #2e7d32; }
+.plan-status-stopped { background: #fff3e0; color: #e65100; }
+.plan-status-archived { background: #f3e5f5; color: #7b1fa2; }
+.plan-action-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn-plan-action {
+  padding: 6px 12px; border: 1px solid #ddd; border-radius: 8px;
+  font-size: 11px; cursor: pointer; background: #fff; color: #333;
+  transition: all 0.15s; display: inline-flex; align-items: center; gap: 4px;
+}
+.btn-plan-action:hover { border-color: #613CF5; color: #613CF5; }
+.btn-plan-save { border-color: #4caf50; color: #2e7d32; }
+.btn-plan-save:hover { background: #e8f5e9; border-color: #2e7d32; }
+.btn-plan-stop { border-color: #ff9800; color: #e65100; }
+.btn-plan-stop:hover { background: #fff3e0; border-color: #e65100; }
+.btn-plan-archive { border-color: #9c27b0; color: #7b1fa2; }
+.btn-plan-archive:hover { background: #f3e5f5; border-color: #7b1fa2; }
+.btn-plan-send { border-color: #2196f3; color: #1565c0; }
+.btn-plan-send:hover { background: #e3f2fd; border-color: #1565c0; }
 
 /* Footer with QR + app mockup */
 .plan-footer-block {
@@ -1663,6 +1878,41 @@
 .plan-app-caption {
   font-size: 10px; color: #888; line-height: 1.4;
   flex: 1;
+}
+
+/* Plan empty guide */
+.plan-empty-guide {
+  padding: 12px 0;
+}
+.plan-empty-wishes {
+  background: linear-gradient(135deg, #f8f6ff, #fff3e6);
+  border-radius: 8px; padding: 16px; margin-bottom: 16px;
+  text-align: center; border: 1px solid #e8e0ff;
+}
+.plan-empty-wishes p {
+  margin: 0 0 8px 0; font-size: 13px; color: #4a3580; line-height: 1.5;
+}
+.plan-empty-wishes p:first-child {
+  font-size: 16px; font-weight: 700; color: #613CF5;
+}
+.plan-empty-wishes p:last-child {
+  margin-bottom: 0;
+}
+.plan-empty-steps {
+  background: #fafafa; border-radius: 8px; padding: 16px;
+  border: 1px solid #eee;
+}
+.plan-empty-steps h4 {
+  margin: 0 0 10px 0; font-size: 13px; color: #1a1a2e;
+}
+.plan-empty-steps ol {
+  margin: 0; padding-left: 20px;
+}
+.plan-empty-steps li {
+  font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 6px;
+}
+.plan-empty-steps li strong {
+  color: #1a1a2e;
 }
 
 @media print {

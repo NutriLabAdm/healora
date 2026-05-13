@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import '../assets/css/DigitalTwin.css';
+import '../assets/css/ActionButtons.css';
 import catalogData from '../assets/data/interventions_catalog.json';
 import protocolData from '../assets/data/protocol_mappings.json';
 import foodCatalog from '../assets/data/food_catalog.json';
 import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js';
+import { usePlans } from '../context/PlansProvider';
 
 const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart }) => {
   const [profile, setProfile] = useState(null);
@@ -33,12 +35,17 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [editingValue, setEditingValue] = useState('');
   const [clipMultipliers, setClipMultipliers] = useState({});
   const [timelineView, setTimelineView] = useState('days'); // 'days' | 'weeks' | 'phases'
+  const [tracksCollapsed, setTracksCollapsed] = useState(true);
   const [draggedClip, setDraggedClip] = useState(null);
   const [showInterventionPopup, setShowInterventionPopup] = useState(false);
   const [selectedInterventionForPopup, setSelectedInterventionForPopup] = useState(null);
   const [showHistoryPopup, setShowHistoryPopup] = useState(false);
   const [showPlanPopup, setShowPlanPopup] = useState(false);
   const [planTemplateId, setPlanTemplateId] = useState('custom');
+  const [planStatus, setPlanStatus] = useState('active'); // 'active' | 'stopped' | 'archived'
+  const [planDoctorNote, setPlanDoctorNote] = useState('');
+  const [planSearchOpen, setPlanSearchOpen] = useState(false);
+  const [planSearchQuery, setPlanSearchQuery] = useState('');
   const [showDiary, setShowDiary] = useState(false);
   const [diaryDay, setDiaryDay] = useState(null);
   const [diaryData, setDiaryData] = useState(null);
@@ -58,7 +65,34 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [chatInputText, setChatInputText] = useState('');
   const [showProtocolPopup, setShowProtocolPopup] = useState(false);
   const [selectedProtocolForPopup, setSelectedProtocolForPopup] = useState(null);
+  const [logViewDay, setLogViewDay] = useState(-1); // -1 = all days
+  const [showTaskPopup, setShowTaskPopup] = useState(false);
   const simulationSpeedRef = useRef(1);
+
+  const { getPlan, savePlan, removePlan, plans } = usePlans();
+  const syncedPlanKeyRef = useRef('');
+
+  // Hydrate timelineInterventions from PlansProvider when profileId changes
+  useEffect(() => {
+    if (!profileId) return;
+    const saved = getPlan(profileId);
+    if (saved.interventions.length > 0 || timelineInterventions.length > 0) {
+      setTimelineInterventions(saved.interventions);
+      setPlanDoctorNote(saved.note || '');
+      setPlanStatus(saved.status || 'active');
+      setPlanTemplateId(saved.templateId || 'custom');
+    }
+  }, [profileId]);
+
+  // Persist timelineInterventions to PlansProvider on change
+  useEffect(() => {
+    if (!profileId) return;
+    const key = `${profileId}_${timelineInterventions.length}_${planDoctorNote}_${planStatus}_${planTemplateId}`;
+    if (key !== syncedPlanKeyRef.current) {
+      syncedPlanKeyRef.current = key;
+      savePlan(profileId, { interventions: timelineInterventions, note: planDoctorNote, status: planStatus, templateId: planTemplateId });
+    }
+  }, [timelineInterventions, planDoctorNote, planStatus, planTemplateId, profileId]);
 
   const defaultDiaryData = (day) => ({
     day, waterMl: 0, mood: { energy: '', mood: '', sleep: '', stress: '', digestion: '' },
@@ -265,6 +299,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
       addFrom(Object.keys(interventionCatalog));
     }
     if (newItems.length > 0) setTimelineInterventions(prev => [...prev, ...newItems]);
+  };
+
+  const removeIntervention = (code) => {
+    setTimelineInterventions(prev => prev.filter(i => i.code !== code));
   };
 
   const attrToBiomarker = {
@@ -750,8 +788,11 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     <div className="digital-twin-container">
       {!profileId && (
         <div className="no-profile-selected">
-          <h3>Выберите Цифровой Двойник</h3>
-          <p>Выберите профиль из левой панели</p>
+          <svg className="arrow-left-animated" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#9c27b0" strokeWidth="1.5">
+            <line x1="20" y1="12" x2="4" y2="12"/>
+            <polyline points="10 6 4 12 10 18"/>
+          </svg>
+          <p>Выберите профиль на левой панели</p>
         </div>
       )}
 
@@ -771,15 +812,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                </div>
               </div>
               <div className="daw-controls">
-                <button className="daw-btn" onClick={() => setShowPlanPopup(true)} title="План интервенций">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <line x1="3" y1="9" x2="21" y2="9"/>
-                    <line x1="9" y1="21" x2="9" y2="9"/>
-                  </svg>
-                  План
-                </button>
-                <button className="daw-btn" onClick={() => setTimelineInterventions([])} title="Очистить план">
+                <button className="daw-btn" onClick={() => { setTimelineInterventions([]); if (profileId) removePlan(profileId); }} title="Очистить план">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                     <polyline points="3 6 5 6 21 6"/>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -867,7 +900,31 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
 
             {interventionTab === 'interventions' && (
             /* Track Table: Category | Name | Multiplier | Track */
-            <div className="tracks" ref={timelineRef} onClick={handleTimelineClick} onDrop={handleDrop} onDragOver={(e) => { e.preventDefault(); }}>
+            <div className="tracks-container">
+              <div className="tracks-header" onClick={() => setTracksCollapsed(v => !v)}>
+                <span className="tracks-header-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"
+                    style={{ transform: tracksCollapsed ? 'rotate(-90deg)' : 'none', transition: 'transform 0.2s' }}>
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                  График интервенций
+                </span>
+                {tracksCollapsed && (
+                  <span className="tracks-header-summary">
+                    {(() => {
+                      const codes = [...new Set(timelineInterventions.map(i => i.code))];
+                      return `${codes.length} интервенций · ${timelineInterventions.length} всего`;
+                    })()}
+                  </span>
+                )}
+                <div className="tracks-header-controls" onClick={e => e.stopPropagation()}>
+                  {!tracksCollapsed && [['days','Дни'],['weeks','Недели'],['phases','Фазы']].map(([v,l]) => (
+                    <button key={v} className={`tracks-view-btn ${timelineView === v ? 'active' : ''}`} onClick={() => setTimelineView(v)}>{l}</button>
+                  ))}
+                </div>
+              </div>
+              {!tracksCollapsed && (
+              <div className="tracks" ref={timelineRef} onClick={handleTimelineClick} onDrop={handleDrop} onDragOver={(e) => { e.preventDefault(); }}>
               <div className="track-table">
                 <div className="track-table-header">
                   <span className="th-cat" title="Категория">Кат</span>
@@ -1015,6 +1072,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                 })()}
               </div>
             </div>
+            )}
+            </div>
           )}
 
             {/* 3-Column Intervention Log */}
@@ -1030,11 +1089,21 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     <h4>Журнал интервенций</h4>
                     <span className="log-count">{interventionLog.length}</span>
                   </div>
+                  {timelineInterventions.length > 0 && (
+                    <button className="log-tasks-badge" onClick={() => setShowTaskPopup(true)} title="Задачи в плане">
+                      📋 {new Set(timelineInterventions.map(i => i.code)).size} задач
+                    </button>
+                  )}
                   <div className="log-stats">
                     <span className="log-stat">Всего: {total}</span>
                     <span className="log-stat">Пройдено: {passed}</span>
                     <span className="log-stat log-stat-ok">Сработало: {success}</span>
                     <span className="log-stat">Осталось: {remain}</span>
+                  </div>
+                  <div className="log-day-nav">
+                    <button className="log-day-btn" onClick={() => setLogViewDay(prev => Math.max(-1, prev - 1))} disabled={logViewDay <= -1} title="Назад">◀</button>
+                    <span className="log-day-label">{logViewDay === -1 ? 'Все дни' : `День ${logViewDay}`}</span>
+                    <button className="log-day-btn" onClick={() => setLogViewDay(prev => prev === -1 ? 0 : Math.min(30, prev + 1))} disabled={logViewDay >= 30} title="Вперёд">▶</button>
                   </div>
                   <button className="log-toggle" onClick={() => setShowLog(v => !v)} title={showLog ? 'Скрыть' : 'Показать'}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"
@@ -1044,31 +1113,88 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   </button>
                 </div>
                 {showLog && (
-                  <div className="log-table">
-                    <div className="log-row header">
-                      <span className="col-day">День</span>
-                      <span className="col-time">Время</span>
-                      <span className="col-intervention">Интервенция</span>
-                    </div>
-                    {interventionLog.length === 0 ? (
-                      <div className="log-empty">Журнал пуст. Запустите симуляцию.</div>
-                    ) : (
-                      interventionLog.map((entry, i) => (
-                        <div key={i} className="log-row">
-                          <span className="col-day">{entry.day}</span>
-                          <span className="col-time">{entry.time || `${String(6 + (entry.day * 7) % 14).padStart(2, '0')}:00`}</span>
-                          <span className="col-intervention">
-                            <span>{entry.code}</span>
-                            <span>{entry.name}</span>
-                          </span>
-                        </div>
-                      ))
-                    )}
+                  <div className="log-table" ref={el => { if (el && logViewDay >= 0) { const dayEl = el.querySelector(`[data-day="${logViewDay}"]`); if (dayEl) dayEl.scrollIntoView({ block: 'center' }); } }}>
+                    {(() => {
+                      const now = new Date();
+                      const grouped = {};
+                      interventionLog.forEach(entry => {
+                        const d = entry.day;
+                        if (logViewDay >= 0 && d !== logViewDay) return;
+                        if (!grouped[d]) grouped[d] = [];
+                        grouped[d].push(entry);
+                      });
+                      const sortedDays = Object.keys(grouped).sort((a,b) => b - a);
+                      if (sortedDays.length === 0) return <div className="log-empty">Журнал пуст. Запустите симуляцию.</div>;
+                      return sortedDays.map(day => {
+                        const date = new Date(now);
+                        date.setDate(date.getDate() + Number(day));
+                        const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '.');
+                        return (
+                          <div key={day} data-day={day}>
+                            <div className="log-day-separator">
+                              <span className="log-day-sep-line"></span>
+                              <span className="log-day-sep-text">{dateStr}</span>
+                              <span className="log-day-sep-line"></span>
+                            </div>
+                            {grouped[day].map((entry, i) => (
+                              <div key={`${day}-${i}`} className={`log-row ${entry.state === 'Активировано' ? 'log-row-ok' : 'log-row-skip'}`}>
+                                <span className="col-day">День {entry.day}</span>
+                                <span className="col-time">{entry.time || `${String(6 + (entry.day * 7) % 14).padStart(2, '0')}:00`}</span>
+                                <span className="col-intervention">
+                                  <span>{entry.code}</span>
+                                  <span>{entry.name}</span>
+                                </span>
+                                <span className="col-state">{entry.state === 'Активировано' ? '✓' : '—'}</span>
+                                <span className="col-stars">{entry.starsGained > 0 ? `+${entry.starsGained} ⭐` : ''}</span>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      });
+                    })()}
                   </div>
                 )}
               </div>
             );
           })()}
+
+          {/* Tasks Popup */}
+          {showTaskPopup && (
+            <div className="plan-popup-overlay" onClick={() => setShowTaskPopup(false)}>
+              <div className="tasks-popup" onClick={e => e.stopPropagation()}>
+                <div className="tasks-popup-header">
+                  <h3>📋 Задачи в плане</h3>
+                  <button className="plan-popup-close" onClick={() => setShowTaskPopup(false)}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+                <div className="tasks-popup-body">
+                  {(() => {
+                    const codes = [...new Set(timelineInterventions.map(i => i.code))];
+                    return codes.map(code => {
+                      const item = timelineInterventions.find(i => i.code === code);
+                      if (!item) return null;
+                      const days = timelineInterventions.filter(i => i.code === code);
+                      const activated = interventionLog.filter(e => e.code === code && e.state === 'Активировано').length;
+                      return (
+                        <div key={code} className="tasks-popup-row">
+                          <div className="tasks-popup-row-top">
+                            <span className="tasks-popup-code">{code}</span>
+                            <span className="tasks-popup-name">{item.name}</span>
+                          </div>
+                          <div className="tasks-popup-row-meta">
+                            <span>{days.length} назначений</span>
+                            <span className="tasks-popup-done">{activated} выполнено</span>
+                            <span className="tasks-popup-pct">{Math.round(activated / days.length * 100)}%</span>
+                          </div>
+                        </div>
+                      );
+                    });
+                  })()}
+                </div>
+              </div>
+            </div>
+          )}
 
 {/* Full Attribute Catalog Table - 2 columns per section */}
           {/* Profile Header with Photo + Targets */}
@@ -1076,7 +1202,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
             <div className="profile-header-card">
               {profile.photo && (
                 <img
-                  src={`/images/pers/${profile.photo}`}
+                  src={`/images/pers/150_150/${profile.photo}`}
                   alt={profile.name || 'Profile'}
                   className="profile-header-photo"
                   onError={(ev) => { ev.target.style.display = 'none'; }}
@@ -1121,6 +1247,20 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     })()}
                     <div>
                       <h2 className="profile-header-name">{profile.name || (() => { try { const p = profile.photo?.replace(/\.\w+$/, '').split('_'); return p?.slice(1).find(s => !/^\d+$/.test(s)) || '—'; } catch(e) { return '—'; } })()}</h2>
+                      {(() => { const codes = [...new Set(timelineInterventions.map(i => i.code))]; const has = codes.length > 0; return (
+                        <div className={`plan-status-bar${has ? ' has-plan' : ''}`}>
+                          <button className="plan-status-btn" onClick={() => setShowPlanPopup(true)} title="План интервенций">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            План
+                            {has && (
+                              <span className="plan-status-dots">
+                                <span className="plan-status-dot dot-protocols" title={`${codes.length} протоколов`}>{codes.length}</span>
+                                <span className="plan-status-dot dot-interventions" title={`${timelineInterventions.length} интервенций`}>{timelineInterventions.length}</span>
+                              </span>
+                            )}
+                          </button>
+                        </div>
+                      );})()}
                       <div className="profile-header-meta">
                         {profile.demographics?.age && <span>{profile.demographics.age} лет</span>}
                         {profile.demographics?.sex && <span>{profile.demographics.sex === 'male' ? 'М' : 'Ж'}</span>}
@@ -1135,37 +1275,19 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       </div>
                     </div>
                   </div>
-                  <button className="assess-health-btn" onClick={() => assessHealth()}>
+                  <button className="assess-health-btn btn-health" onClick={() => assessHealth()}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                       <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
                     </svg>
                     Оценить здоровье
                   </button>
-                  <button
-                    className="assess-health-btn generate-btn"
-                    onClick={createPlanByCategories}
-                    disabled={Object.keys(targetValues).length === 0}
-                    title={Object.keys(targetValues).length === 0 ? 'Сначала выберите цели в таблице атрибутов' : 'Создать план интервенций'}
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                      <rect x="3" y="3" width="18" height="18" rx="2"/>
-                      <line x1="3" y1="9" x2="21" y2="9"/>
-                      <line x1="9" y1="21" x2="9" y2="9"/>
-                    </svg>
-                    Создать план
-                  </button>
-                  <button className="assess-health-btn" onClick={() => {
-                    const d = simulationDay;
-                    setDiaryDay(d);
-                    setDiaryData(defaultDiaryData(d));
-                    setShowDiary(true);
-                  }}>
+                  <button className="assess-health-btn btn-diary" onClick={() => { const d = simulationDay; setDiaryDay(d); setDiaryData(defaultDiaryData(d)); setShowDiary(true); }}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                       <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
                     </svg>
                     Дневник
                   </button>
-                  <button className="assess-health-btn" onClick={() => {
+                  <button className="assess-health-btn btn-chat" onClick={() => {
                     const msgs = timelineInterventions.map((clip, i) => ({
                       id: i,
                       type: 'intervention',
@@ -1652,7 +1774,76 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                 <div className="plan-popup-header">
                   <div className="plan-popup-header-left">
                     <div className="plan-popup-badge">🏥 НАЗНАЧЕНИЕ HEALORA</div>
-                    <span className="plan-popup-number">№ HLR-{simulationDay}-{Date.now().toString(36).toUpperCase()}</span>
+                    {(() => {
+                      const allPlans = Object.entries(plans || {}).filter(([, p]) => p.interventions?.length > 0);
+                      const currentProfileId = profileId;
+                      const filtered = allPlans.filter(([pid, p]) => {
+                        if (!planSearchQuery) return true;
+                        const q = planSearchQuery.toLowerCase();
+                        const profileData = fallbackProfiles[pid];
+                        const name = (profileData?.name || pid).toLowerCase();
+                        return name.includes(q) || pid.toLowerCase().includes(q) || p.status?.includes(q);
+                      });
+                      const currentProfileData = fallbackProfiles[currentProfileId];
+                      const currentName = currentProfileData?.name || currentProfileId || '—';
+                      const currentCount = currentProfileId && plans[currentProfileId]?.interventions ? new Set(plans[currentProfileId].interventions.map(i => i.code)).size : 0;
+                      const currentTotal = plans[currentProfileId]?.interventions?.length || 0;
+                      const currentDone = plans[currentProfileId]?.interventions?.filter(i => i.day <= simulationDay).length || 0;
+                      const currentPct = currentTotal > 0 ? Math.round(currentDone / currentTotal * 100) : 0;
+                      return (
+                        <div className="plan-search-dropdown">
+                          <div className="plan-search-current" onClick={() => setPlanSearchOpen(v => !v)}>
+                            <span className="plan-search-label">{currentName}</span>
+                            <span className="plan-search-summary">{currentCount} протоколов · {currentPct}%</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"
+                              style={{ transform: planSearchOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                              <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                          </div>
+                          {planSearchOpen && (
+                            <div className="plan-search-panel">
+                              <div className="plan-search-input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input className="plan-search-input" type="text" placeholder="Поиск клиента..." value={planSearchQuery} onChange={e => setPlanSearchQuery(e.target.value)} autoFocus />
+                              </div>
+                              <div className="plan-search-results">
+                                {filtered.length === 0 ? (
+                                  <div className="plan-search-empty">Ничего не найдено</div>
+                                ) : (
+                                  filtered.map(([pid, p]) => {
+                                    const profileData = fallbackProfiles[pid];
+                                    const name = profileData?.name || pid;
+                                    const count = new Set(p.interventions.map(i => i.code)).size;
+                                    const total = p.interventions.length;
+                                    const done = p.interventions.filter(i => i.day <= (profileId === pid ? simulationDay : 0)).length;
+                                    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+                                    const isActive = pid === currentProfileId;
+                                    return (
+                                      <div key={pid} className={`plan-search-result ${isActive ? 'active' : ''}`} onClick={() => {
+                                        if (pid !== currentProfileId) {
+                                          const saved = getPlan(pid);
+                                          setTimelineInterventions(saved.interventions);
+                                          setPlanDoctorNote(saved.note || '');
+                                          setPlanStatus(saved.status || 'active');
+                                          setPlanTemplateId(saved.templateId || 'custom');
+                                        }
+                                        setPlanSearchOpen(false);
+                                        setPlanSearchQuery('');
+                                      }}>
+                                        <span className="plan-search-result-name">{name}</span>
+                                        <span className="plan-search-result-meta">
+                                          {count} протоколов · {p.status === 'active' ? '▶ Активен' : p.status === 'stopped' ? '⏹ Остановлен' : '📦 Архив'} · {pct}%
+                                        </span>
+                                      </div>
+                                    );
+                                  })
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                   <div className="plan-popup-header-actions">
                     <select className="plan-template-select" value={planTemplateId} onChange={e => setPlanTemplateId(e.target.value)}>
@@ -1680,7 +1871,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   {(() => {
                     const template = getTemplateById(planTemplateId);
                     const uniqueCodes = [...new Set(timelineInterventions.map(i => i.code))];
-                    const items = uniqueCodes.length > 0
+                    const hasPlan = uniqueCodes.length > 0;
+                    const items = hasPlan
                       ? uniqueCodes.map(code => timelineInterventions.find(i => i.code === code))
                       : template.interventions;
                     return (
@@ -1700,24 +1892,98 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                           <div className="plan-highlight">{template.highlight}</div>
                         </div>
 
+                        {hasPlan && (
+                          <div className="plan-badges-section">
+                            <h4 className="plan-section-title">Назначенные интервенции</h4>
+                            <div className="plan-badges-list">
+                              {uniqueCodes.map(code => {
+                                const item = timelineInterventions.find(i => i.code === code);
+                                if (!item) return null;
+                                return (
+                                  <span key={code} className="plan-badge" title={item.name}>
+                                    <span className="plan-badge-name">{item.name}</span>
+                                    <span className="plan-badge-code">{code}</span>
+                                    <button className="plan-badge-remove" onClick={() => removeIntervention(code)} title="Убрать">
+                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="10" height="10"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                    </button>
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
                         <div className="plan-interventions-section">
                           <h4 className="plan-section-title">План назначений</h4>
-                          <table className="plan-table plan-table-prescription">
-                            <thead>
-                              <tr><th>№</th><th>Интервенция</th><th>Код</th><th>Per</th></tr>
-                            </thead>
-                            <tbody>
-                              {items.map((item, i) => (
-                                <tr key={item.code || i}>
-                                  <td className="plan-num">{i + 1}</td>
-                                  <td>{item.name}</td>
-                                  <td className="plan-code">{item.code}</td>
-                                  <td className="plan-reg">{item.regularity === 'D' ? 'D' : item.regularity === 'W' ? 'W' : item.regularity === 'M' ? 'M' : item.regularity === 'Y' ? 'Y' : item.regularity || 'D'}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                          {items.length === 0 ? (
+                            <div className="plan-empty-guide">
+                              <div className="plan-empty-wishes">
+                                <p>🌟 Ваш путь к здоровью начинается здесь!</p>
+                                <p>HEALORA поможет вам выработать полезные привычки, улучшить сон, питание и физическую активность. Каждый маленький шаг приближает вас к большой цели.</p>
+                              </div>
+                              <div className="plan-empty-steps">
+                                <h4>Как начать:</h4>
+                                <ol>
+                                  <li><strong>Оцените здоровье</strong> — нажмите кнопку «Оценить здоровье» в панели профиля. Система проанализирует ваши текущие показатели и предложит цели.</li>
+                                  <li><strong>Выберите цели</strong> — отметьте атрибуты, которые хотите улучшить (вес, сон, активность, стресс и др.).</li>
+                                  <li><strong>Назначьте интервенции</strong> — перетащите протоколы из каталога на таймлайн или выберите готовый протокол из селектора шаблонов выше.</li>
+                                  <li><strong>Следуйте плану</strong> — после создания плана вы сможете отмечать выполненные интервенции в чате и отслеживать прогресс.</li>
+                                </ol>
+                              </div>
+                              <button className="plan-create-btn" onClick={() => { createPlanByCategories(); setPlanStatus('active'); }}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                                Создать план
+                              </button>
+                            </div>
+                          ) : (
+                            <table className="plan-table plan-table-prescription">
+                              <thead>
+                                <tr><th>№</th><th>Интервенция</th><th>Код</th><th>Per</th></tr>
+                              </thead>
+                              <tbody>
+                                {items.map((item, i) => (
+                                  <tr key={item.code || i}>
+                                    <td className="plan-num">{i + 1}</td>
+                                    <td>{item.name}</td>
+                                    <td className="plan-code">{item.code}</td>
+                                    <td className="plan-reg">{item.regularity === 'D' ? 'Д' : item.regularity === 'W' ? 'Н' : item.regularity === 'M' ? 'М' : item.regularity === 'Y' ? 'Г' : item.regularity || 'Д'}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          )}
                         </div>
+
+                        {hasPlan && (
+                          <div className="plan-doctor-note-block">
+                            <h4 className="plan-section-title">Рекомендации врача / нутрициолога</h4>
+                            <textarea
+                              className="plan-doctor-note"
+                              placeholder="Добавьте рекомендации, пояснения к назначениям, режим приёма, особые указания..."
+                              value={planDoctorNote}
+                              onChange={e => setPlanDoctorNote(e.target.value)}
+                              rows={3}
+                            />
+                          </div>
+                        )}
+
+                        {hasPlan && (
+                          <div className="plan-actions-section">
+                            <div className="plan-status-info">
+                              Статус: <span className={`plan-status-tag plan-status-${planStatus}`}>
+                                {planStatus === 'active' ? 'Активен' : planStatus === 'stopped' ? 'Остановлен' : 'Архивирован'}
+                              </span>
+                            </div>
+                            <div className="plan-action-buttons">
+                              <button className="btn-plan-action btn-plan-save" onClick={() => { savePlan(profileId, { interventions: timelineInterventions, note: planDoctorNote, status: planStatus, templateId: planTemplateId }); setShowPlanPopup(false); }}>💾 Сохранить</button>
+                              <button className="btn-plan-action btn-plan-stop" onClick={() => setPlanStatus(prev => prev === 'stopped' ? 'active' : 'stopped')}>
+                                {planStatus === 'stopped' ? '▶ Возобновить' : '⏹ Остановить'}
+                              </button>
+                              <button className="btn-plan-action btn-plan-archive" onClick={() => setPlanStatus('archived')}>📦 Архивировать</button>
+                              <button className="btn-plan-action btn-plan-send">📤 Отправить</button>
+                            </div>
+                          </div>
+                        )}
 
                         <div className="plan-footer-block">
                           <div className="plan-qr-block">

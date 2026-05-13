@@ -84,23 +84,6 @@
 .cat-btn.active {
   color: white;
 }
-.cat-btn.cat-all.active { background: #6b21c8; }
-.cat-btn.cat-sleep.active { background: #1976d2; }
-.cat-btn.cat-physical.active { background: #388e3c; }
-.cat-btn.cat-mental.active { background: #7b1fa2; }
-.cat-btn.cat-food.active { background: #f57c00; }
-.cat-btn.cat-medical.active { background: #d32f2f; }
-.cat-btn.cat-supplement.active { background: #795548; }
-
-.cat-btn.sup-all.active { background: #6b21c8; }
-.cat-btn.sup-vitamins.active { background: #2196f3; }
-.cat-btn.sup-vitamin_like.active { background: #9c27b0; }
-.cat-btn.sup-minerals.active { background: #4caf50; }
-
-.cat-btn.food-all.active { background: #6b21c8; }
-.cat-btn.food-diet.active { background: #e65100; }
-.cat-btn.food-habit.active { background: #f9a825; }
-
 .cat-btn.sm {
   font-size: 10px;
   padding: 3px 8px;
@@ -401,7 +384,8 @@
   border-radius: 10px;
   width: 580px;
   max-height: 80vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 8px 30px rgba(0,0,0,0.2);
 }
 
@@ -409,10 +393,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
+  padding: 12px 18px;
   border-bottom: 1px solid #eee;
   font-weight: 600;
   font-size: 13px;
+  flex-shrink: 0;
+}
+
+.backlog-summary {
+  font-size: 10px;
+  font-weight: 400;
+  color: #888;
+  white-space: nowrap;
+}
+.backlog-summary strong {
+  color: #311b92;
+  font-weight: 600;
 }
 
 .backlog-close {
@@ -427,49 +423,91 @@
 
 .backlog-body {
   padding: 14px 18px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #333;
+  overflow-y: auto;
+  flex: 1;
 }
 
-.backlog-section {
-  margin-bottom: 14px;
+.md-h2 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #311b92;
+  margin: 12px 0 6px;
 }
 
-.backlog-section:last-child {
-  margin-bottom: 0;
-}
-
-.backlog-section-title {
+.md-h3 {
   font-size: 11px;
   font-weight: 600;
-  color: #311b92;
-  margin-bottom: 6px;
+  color: #555;
+  margin: 8px 0 4px;
 }
 
-.backlog-list {
+.md-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 8px;
 }
 
-.backlog-list li {
-  font-size: 10px;
-  padding: 3px 0 3px 16px;
+.md-list li {
+  padding: 2px 0 2px 18px;
   position: relative;
-  color: #333;
+  font-size: 10px;
+  color: #444;
+  line-height: 1.5;
 }
 
-.backlog-list li::before {
-  content: '';
+.md-list li b {
+  color: #222;
+}
+
+.md-check {
   position: absolute;
   left: 0;
-  top: 8px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #2e7d32;
+  top: 2px;
+  color: #2e7d32;
+  font-weight: 700;
+  font-size: 10px;
 }
 
-.backlog-list.planned li::before {
-  background: #bbb;
+.md-box {
+  position: absolute;
+  left: 1px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid #bbb;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.md-hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 12px 0;
+}
+
+.md-tech li {
+  padding-left: 0;
+}
+
+.md-tech li + li {
+  margin-top: 1px;
+}
+
+.md-list a {
+  color: #311b92;
+  text-decoration: underline;
+}
+
+.md-footer {
+  font-size: 9px;
+  color: #aaa;
+  text-align: center;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
 }
 
 .col-class {
@@ -742,21 +780,4 @@
   color: white;
 }
 
-/* Category color filter buttons */
-.cat-btn.cat-sleep { color: #1976d2; border-color: #1976d2; }
-.cat-btn.cat-sleep:hover { background: #1976d2; color: white; }
 
-.cat-btn.cat-physical { color: #388e3c; border-color: #388e3c; }
-.cat-btn.cat-physical:hover { background: #388e3c; color: white; }
-
-.cat-btn.cat-mental { color: #7b1fa2; border-color: #7b1fa2; }
-.cat-btn.cat-mental:hover { background: #7b1fa2; color: white; }
-
-.cat-btn.cat-food { color: #f57c00; border-color: #f57c00; }
-.cat-btn.cat-food:hover { background: #f57c00; color: white; }
-
-.cat-btn.cat-medical { color: #d32f2f; border-color: #d32f2f; }
-.cat-btn.cat-medical:hover { background: #d32f2f; color: white; }
-
-.cat-btn.cat-supplement { color: #795548; border-color: #795548; }
-.cat-btn.cat-supplement:hover { background: #795548; color: white; }
