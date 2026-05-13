@@ -65,4 +65,20 @@
 
 ---
 
-*Created: 28 April 2026 | HEALORA | AIMLEI-2026*
+*Created: 28 April 2026 | Updated: 13 May 2026 | HEALORA | AIMLEI-2026*
+
+## Recent Completed (May 2026)
+
+| Feature | Description |
+|---------|-------------|
+| Mnemonic codes | Все коды ≤7 символов (SL_, PH_, MN_, FD_, SP_, DG_, M_) |
+| Regularity codes | D/W/M/Y/P вместо full words |
+| Click → popup | Вместо корзины: попап с описанием и протоколами |
+| Legend I/E/Per | Модальное пояснение с примерами |
+| Chat inline forms | Профиль, План, Дневник, Фото еды в переписке |
+| Interactive cards | ✓/✗ кнопки, deadline-селектор в чате |
+| Day counter | `25/90 · 15/45` + stars progress bar |
+| CSS variables | Inline-стили вынесены в CSS (data-атрибуты) |
+| Build timestamp | VITE_BUILD_TIME в версии и беклоге |
+| Yandex Metrika | setTimeout(0) для обхода document.write |
+| Architecture docs | `docs/development/ARCHITECTURE.md` |

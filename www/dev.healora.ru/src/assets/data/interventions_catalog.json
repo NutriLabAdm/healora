@@ -27,19 +27,19 @@
       "description": "Питание и диетология"
     },
     "medical": {
-      "name": "Медицинский",
+      "name": "мед",
       "color": "#f44336",
       "description": "Медицинские обследования и направления"
     },
     "supplement": {
       "name": "Добавки",
       "color": "#795548",
-      "description": "БАДы и нутрицевтики"
+      "description": "БАДы и нутри"
     }
   },
   "interventions": {
-    "01_1": {
-      "code": "01_1",
+    "SL_BED": {
+      "code": "SL_BED",
       "name": "Сон: время отхода",
       "category": "sleep",
       "impact": 9,
@@ -64,7 +64,7 @@
         "diastolic_bp"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -75,8 +75,8 @@
       ],
       "probability": 0.9
     },
-    "01_2": {
-      "code": "01_2",
+    "SL_DUR": {
+      "code": "SL_DUR",
       "name": "Сон: продолжительность",
       "category": "sleep",
       "impact": 8.5,
@@ -99,7 +99,7 @@
         "sleep"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -108,8 +108,8 @@
       ],
       "probability": 0.9
     },
-    "01_3": {
-      "code": "01_3",
+    "SL_QLT": {
+      "code": "SL_QLT",
       "name": "Сон: качество",
       "category": "sleep",
       "impact": 8,
@@ -132,7 +132,7 @@
         "sleep"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -141,8 +141,8 @@
       ],
       "probability": 0.9
     },
-    "02_1": {
-      "code": "02_1",
+    "PH_HIIT": {
+      "code": "PH_HIIT",
       "name": "Тренировки: ВИИТ",
       "category": "physical",
       "impact": 9,
@@ -169,7 +169,7 @@
         "weight"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "detailed",
       "sources": "-",
@@ -182,8 +182,8 @@
       ],
       "probability": 0.9
     },
-    "02_2": {
-      "code": "02_2",
+    "PH_STR": {
+      "code": "PH_STR",
       "name": "Тренировки: силовые",
       "category": "physical",
       "impact": 8.5,
@@ -207,7 +207,7 @@
         "muscle_mass"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -217,8 +217,8 @@
       ],
       "probability": 0.9
     },
-    "02_3": {
-      "code": "02_3",
+    "PH_AER": {
+      "code": "PH_AER",
       "name": "Тренировки: аэробные",
       "category": "physical",
       "impact": 9,
@@ -244,7 +244,7 @@
         "glucose"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -256,8 +256,8 @@
       ],
       "probability": 0.9
     },
-    "02_4": {
-      "code": "02_4",
+    "PH_FLEX": {
+      "code": "PH_FLEX",
       "name": "Тренировки: гибкость",
       "category": "physical",
       "impact": 7.5,
@@ -280,7 +280,7 @@
         "flexibility"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -289,8 +289,8 @@
       ],
       "probability": 0.75
     },
-    "02_6": {
-      "code": "02_6",
+    "PH_Z2": {
+      "code": "PH_Z2",
       "name": "Тренировки: зона 2",
       "category": "physical",
       "impact": 8,
@@ -314,7 +314,7 @@
         "resting_hr"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -324,8 +324,8 @@
       ],
       "probability": 0.9
     },
-    "03_1": {
-      "code": "03_1",
+    "MN_MDT": {
+      "code": "MN_MDT",
       "name": "Медитация",
       "category": "mental",
       "impact": 8.5,
@@ -350,7 +350,7 @@
         "sleep"
       ],
       "color": "#9c27b0",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -361,8 +361,8 @@
       ],
       "probability": 0.9
     },
-    "03_2": {
-      "code": "03_2",
+    "MN_BRTH": {
+      "code": "MN_BRTH",
       "name": "Дыхательные упражнения",
       "category": "mental",
       "impact": 7,
@@ -386,7 +386,7 @@
         "resting_hr"
       ],
       "color": "#9c27b0",
-      "regularity": "on-demand",
+      "regularity": "P",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -396,8 +396,8 @@
       ],
       "probability": 0.75
     },
-    "03_5": {
-      "code": "03_5",
+    "SL_HYG": {
+      "code": "SL_HYG",
       "name": "Сон",
       "category": "sleep",
       "impact": 8,
@@ -420,7 +420,7 @@
         "sleep"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -429,8 +429,8 @@
       ],
       "probability": 0.9
     },
-    "03_6": {
-      "code": "03_6",
+    "MN_STR": {
+      "code": "MN_STR",
       "name": "Управление стрессом",
       "category": "mental",
       "impact": 8,
@@ -454,7 +454,7 @@
         "cortisol"
       ],
       "color": "#9c27b0",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -464,8 +464,8 @@
       ],
       "probability": 0.9
     },
-    "03_7": {
-      "code": "03_7",
+    "MN_DTOX": {
+      "code": "MN_DTOX",
       "name": "Цифровой детокс",
       "category": "mental",
       "impact": 7.5,
@@ -489,7 +489,7 @@
         "eye_strain"
       ],
       "color": "#9c27b0",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -499,8 +499,8 @@
       ],
       "probability": 0.75
     },
-    "03_9": {
-      "code": "03_9",
+    "FD_WATER": {
+      "code": "FD_WATER",
       "name": "Водный режим",
       "category": "food",
       "impact": 8,
@@ -524,7 +524,7 @@
         "kidney_function"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -534,8 +534,8 @@
       ],
       "probability": 0.9
     },
-    "03_10": {
-      "code": "03_10",
+    "FD_ELEC": {
+      "code": "FD_ELEC",
       "name": "Баланс электролитов",
       "category": "food",
       "impact": 7,
@@ -559,7 +559,7 @@
         "muscle_function"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -569,8 +569,8 @@
       ],
       "probability": 0.75
     },
-    "04_1": {
-      "code": "04_1",
+    "FD_CAL": {
+      "code": "FD_CAL",
       "name": "Ограничение калорий",
       "category": "food",
       "impact": 8.5,
@@ -595,7 +595,7 @@
         "weight"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -606,8 +606,8 @@
       ],
       "probability": 0.9
     },
-    "04_2": {
-      "code": "04_2",
+    "FD_CRB": {
+      "code": "FD_CRB",
       "name": "Контроль углеводов",
       "category": "food",
       "impact": 8,
@@ -631,7 +631,7 @@
         "insulin"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -641,8 +641,8 @@
       ],
       "probability": 0.9
     },
-    "04_3": {
-      "code": "04_3",
+    "FD_SUG": {
+      "code": "FD_SUG",
       "name": "Снижение сахара",
       "category": "food",
       "impact": 7.5,
@@ -666,7 +666,7 @@
         "liver"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -676,8 +676,8 @@
       ],
       "probability": 0.9
     },
-    "04_4": {
-      "code": "04_4",
+    "FD_IF": {
+      "code": "FD_IF",
       "name": "Ограничение по времени",
       "category": "food",
       "impact": 8,
@@ -702,7 +702,7 @@
         "autophagy"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "detailed",
       "sources": "-",
@@ -713,8 +713,8 @@
       ],
       "probability": 0.75
     },
-    "04_5": {
-      "code": "04_5",
+    "FD_EAT": {
+      "code": "FD_EAT",
       "name": "Ранние приемы пищи",
       "category": "food",
       "impact": 7.5,
@@ -738,7 +738,7 @@
         "circadian_rhythm"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -748,8 +748,8 @@
       ],
       "probability": 0.75
     },
-    "04_6": {
-      "code": "04_6",
+    "FD_FIB": {
+      "code": "FD_FIB",
       "name": "Богатая клетчаткой диета",
       "category": "food",
       "impact": 7,
@@ -774,7 +774,7 @@
         "gut_health"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -785,8 +785,8 @@
       ],
       "probability": 0.9
     },
-    "04_7": {
-      "code": "04_7",
+    "FD_CAF": {
+      "code": "FD_CAF",
       "name": "Снижение кофеина",
       "category": "food",
       "impact": 6.5,
@@ -811,7 +811,7 @@
         "resting_hr"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -822,8 +822,8 @@
       ],
       "probability": 0.75
     },
-    "05_1": {
-      "code": "05_1",
+    "SP_D3": {
+      "code": "SP_D3",
       "name": "Витамин D3",
       "category": "supplement",
       "impact": 8,
@@ -848,7 +848,7 @@
         "immunity"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -859,8 +859,8 @@
       ],
       "probability": 0.9
     },
-    "05_2": {
-      "code": "05_2",
+    "SP_O3": {
+      "code": "SP_O3",
       "name": "Омега-3",
       "category": "supplement",
       "impact": 8.5,
@@ -885,7 +885,7 @@
         "inflammation"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -896,8 +896,8 @@
       ],
       "probability": 0.9
     },
-    "05_3": {
-      "code": "05_3",
+    "SP_MG": {
+      "code": "SP_MG",
       "name": "Магний",
       "category": "supplement",
       "impact": 7.5,
@@ -922,7 +922,7 @@
         "muscle_tension"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -933,8 +933,8 @@
       ],
       "probability": 0.9
     },
-    "05_4": {
-      "code": "05_4",
+    "SP_BC": {
+      "code": "SP_BC",
       "name": "В-комплекс",
       "category": "supplement",
       "impact": 7,
@@ -959,7 +959,7 @@
         "blood_formation"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -970,8 +970,8 @@
       ],
       "probability": 0.75
     },
-    "05_5": {
-      "code": "05_5",
+    "SP_ADP": {
+      "code": "SP_ADP",
       "name": "Адаптогены",
       "category": "supplement",
       "impact": 7.5,
@@ -996,7 +996,7 @@
         "energy"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -1007,8 +1007,8 @@
       ],
       "probability": 0.75
     },
-    "05_6": {
-      "code": "05_6",
+    "FD_ANTI": {
+      "code": "FD_ANTI",
       "name": "Противовоспалительная диета",
       "category": "food",
       "impact": 8,
@@ -1033,7 +1033,7 @@
         "joint_health"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -1044,8 +1044,8 @@
       ],
       "probability": 0.9
     },
-    "05_7": {
-      "code": "05_7",
+    "SP_NTRP": {
+      "code": "SP_NTRP",
       "name": "Ноотропы",
       "category": "supplement",
       "impact": 7,
@@ -1070,7 +1070,7 @@
         "focus"
       ],
       "color": "#795548",
-      "regularity": "on-demand",
+      "regularity": "P",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -1081,8 +1081,8 @@
       ],
       "probability": 0.75
     },
-    "07_1": {
-      "code": "07_1",
+    "DG_CHK": {
+      "code": "DG_CHK",
       "name": "Регулярный чекап",
       "category": "medical",
       "impact": 9,
@@ -1108,7 +1108,7 @@
         "early_detection"
       ],
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -1120,8 +1120,8 @@
       ],
       "probability": 0.9
     },
-    "07_2": {
-      "code": "07_2",
+    "DG_CARD": {
+      "code": "DG_CARD",
       "name": "Направление к кардиологу",
       "category": "medical",
       "impact": 9,
@@ -1146,7 +1146,7 @@
         "cholesterol"
       ],
       "color": "#f44336",
-      "regularity": "on-demand",
+      "regularity": "P",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -1157,8 +1157,8 @@
       ],
       "probability": 0.9
     },
-    "08_1": {
-      "code": "08_1",
+    "PH_HRV": {
+      "code": "PH_HRV",
       "name": "Мониторинг ЧСС",
       "category": "physical",
       "impact": 8.5,
@@ -1183,7 +1183,7 @@
         "recovery"
       ],
       "color": "#4caf50",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "voice_report",
       "report_effort": "light",
       "sources": "-",
@@ -1194,8 +1194,8 @@
       ],
       "probability": 0.75
     },
-    "MED_END_01": {
-      "code": "MED_END_01",
+    "M_END01": {
+      "code": "M_END01",
       "name": "Консультация эндокринолога",
       "category": "medical",
       "impact": 9,
@@ -1204,15 +1204,15 @@
       "short_description": "Направление к эндокринологу",
       "full_description": "Консультация эндокринолога при выявлении отклонений гормонального профиля (ТТГ, T3, T4, инсулин, кортизол, половые гормоны). Включает сбор анамнеза, физикальное обследование, интерпретацию лабораторных данных.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации МЗ РФ",
       "biomarkers": ["tsh", "glucose", "testosterone", "cortisol"],
       "probability": 0.85
     },
-    "MED_END_02": {
-      "code": "MED_END_02",
+    "M_END02": {
+      "code": "M_END02",
       "name": "Интенсификация сахароснижающей терапии",
       "category": "medical",
       "impact": 9.5,
@@ -1221,15 +1221,15 @@
       "short_description": "Коррекция сахароснижающей терапии",
       "full_description": "Коррекция сахароснижающей терапии при неэффективности монотерапии метформином: добавление GLP-1 агонистов, SGLT2-ингибиторов, ДПП-4 или инсулина. Требует контроля гликемии и HbA1c.",
       "color": "#f44336",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "heavy",
       "sources": "ADA Standards of Care 2025",
       "biomarkers": ["glucose", "hba1c"],
       "probability": 0.75
     },
-    "MED_END_03": {
-      "code": "MED_END_03",
+    "M_END03": {
+      "code": "M_END03",
       "name": "Заместительная терапия (щитовидная железа)",
       "category": "medical",
       "impact": 9,
@@ -1238,15 +1238,15 @@
       "short_description": "Терапия L-тироксином",
       "full_description": "Назначение L-тироксина (левотироксин) при гипотиреозе с титрацией дозы под контролем ТТГ каждые 6-8 недель до достижения целевого уровня ТТГ 0.5-2.5 мМЕ/л.",
       "color": "#f44336",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "ATA Guidelines",
       "biomarkers": ["tsh", "t3", "t4"],
       "probability": 0.9
     },
-    "MED_CARD_01": {
-      "code": "MED_CARD_01",
+    "M_CAR01": {
+      "code": "M_CAR01",
       "name": "Назначение гипотензивной терапии",
       "category": "medical",
       "impact": 9.5,
@@ -1255,15 +1255,15 @@
       "short_description": "Старт антигипертензивной терапии",
       "full_description": "Старт антигипертензивной терапии (иАПФ/сартаны, тиазидные диуретики, антагонисты Ca) при стойком АД >140/90 мм рт.ст. Целевое АД <130/80 для большинства пациентов.",
       "color": "#f44336",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "ESC/ESH Guidelines 2024",
       "biomarkers": ["systolic_bp", "diastolic_bp"],
       "probability": 0.9
     },
-    "MED_CARD_02": {
-      "code": "MED_CARD_02",
+    "M_CAR02": {
+      "code": "M_CAR02",
       "name": "Назначение статинов",
       "category": "medical",
       "impact": 9,
@@ -1272,15 +1272,15 @@
       "short_description": "Старт терапии статинами",
       "full_description": "Назначение статинов (аторвастатин/розувастатин) при ЛПНП >3.0 ммоль/л и/или высоком риске ССЗ (SCORE >5%). Целевой ЛПНП <1.8 ммоль/л (высокий риск) или <2.6 ммоль/л (умеренный).",
       "color": "#f44336",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "ESC/EAS Guidelines 2024",
       "biomarkers": ["ldl", "total_cholesterol", "triglycerides"],
       "probability": 0.85
     },
-    "MED_CARD_03": {
-      "code": "MED_CARD_03",
+    "M_CAR03": {
+      "code": "M_CAR03",
       "name": "Холтер ЭКГ",
       "category": "medical",
       "impact": 7.5,
@@ -1289,15 +1289,15 @@
       "short_description": "Суточное мониторирование ЭКГ",
       "full_description": "Суточное (или 48-часовое) мониторирование ЭКГ по Холтеру при тахикардии, аритмии, синкопальных состояниях, подозрении на ишемию миокарда.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "РКО рекомендации",
       "biomarkers": ["resting_hr", "hrv"],
       "probability": 0.8
     },
-    "MED_GASTRO_01": {
-      "code": "MED_GASTRO_01",
+    "M_GAS01": {
+      "code": "M_GAS01",
       "name": "Консультация гастроэнтеролога",
       "category": "medical",
       "impact": 8.5,
@@ -1306,15 +1306,15 @@
       "short_description": "Направление к гастроэнтерологу",
       "full_description": "Консультация гастроэнтеролога при хронических жалобах (боли, вздутие, нарушение стула), изменении печёночных проб, подозрении на ВЗК или H. pylori.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
       "biomarkers": ["alt", "ast", "crp", "ggt"],
       "probability": 0.8
     },
-    "MED_GASTRO_02": {
-      "code": "MED_GASTRO_02",
+    "M_GAS02": {
+      "code": "M_GAS02",
       "name": "ЭГДС (гастроскопия)",
       "category": "medical",
       "impact": 8,
@@ -1323,15 +1323,15 @@
       "short_description": "Эндоскопия верхних отделов ЖКТ",
       "full_description": "Эзофагогастродуоденоскопия при диспепсии, ГЭРБ, анемии, подозрении на язвенную болезнь или H. pylori. С биопсией при необходимости.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
       "biomarkers": ["hemoglobin", "ferritin"],
       "probability": 0.8
     },
-    "MED_GASTRO_03": {
-      "code": "MED_GASTRO_03",
+    "M_GAS03": {
+      "code": "M_GAS03",
       "name": "Колоноскопия",
       "category": "medical",
       "impact": 9,
@@ -1340,15 +1340,15 @@
       "short_description": "Скрининг колоректального рака",
       "full_description": "Скрининговая колоноскопия с 45 лет (или раньше при семейном анамнезе). Диагностика воспалительных заболеваний кишечника, полипов, колоректального рака. Периодичность 5-10 лет.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "heavy",
       "sources": "ACG Guidelines",
       "biomarkers": ["hemoglobin", "ferritin", "early_detection"],
       "probability": 0.85
     },
-    "MED_NEURO_01": {
-      "code": "MED_NEURO_01",
+    "M_NEU01": {
+      "code": "M_NEU01",
       "name": "Консультация невролога",
       "category": "medical",
       "impact": 9,
@@ -1357,15 +1357,15 @@
       "short_description": "Направление к неврологу",
       "full_description": "Консультация невролога при хронических головных болях, когнитивных нарушениях, парестезиях, нарушении сна неясной этиологии, головокружении.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
       "biomarkers": ["sleep", "stress"],
       "probability": 0.8
     },
-    "MED_NEURO_02": {
-      "code": "MED_NEURO_02",
+    "M_NEU02": {
+      "code": "M_NEU02",
       "name": "МРТ головного мозга",
       "category": "medical",
       "impact": 8.5,
@@ -1374,15 +1374,15 @@
       "short_description": "МРТ при неврологической симптоматике",
       "full_description": "МРТ головного мозга при подозрении на объёмное образование, демиелинизацию, сосудистую патологию (после консультации невролога).",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
       "biomarkers": ["early_detection"],
       "probability": 0.7
     },
-    "MED_LAB_01": {
-      "code": "MED_LAB_01",
+    "M_LAB01": {
+      "code": "M_LAB01",
       "name": "Расширенная биохимия крови",
       "category": "medical",
       "impact": 8.5,
@@ -1391,15 +1391,15 @@
       "short_description": "Расширенный биохимический анализ",
       "full_description": "Расширенная биохимия: глюкоза, HbA1c, липидный профиль (ОХ, ЛПНП, ЛПВП, ТГ), печёночные пробы (АЛТ, АСТ, ГГТП, ЩФ), креатинин, мочевая кислота, СРБ, ферритин, витамин D, B12.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "Рекомендации МЗ РФ",
       "biomarkers": ["glucose", "hba1c", "ldl", "crp", "vitamin_d", "ferritin", "alt", "ast"],
       "probability": 0.95
     },
-    "MED_LAB_02": {
-      "code": "MED_LAB_02",
+    "M_LAB02": {
+      "code": "M_LAB02",
       "name": "Гормональный профиль",
       "category": "medical",
       "impact": 8,
@@ -1408,15 +1408,15 @@
       "short_description": "Анализ гормонов",
       "full_description": "Определение гормонального профиля: ТТГ, T3, T4, кортизол, инсулин, тестостерон (муж), прогестерон/эстрадиол (жен) при подозрении на эндокринные нарушения.",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "Клинические рекомендации",
       "biomarkers": ["tsh", "cortisol", "testosterone", "glucose"],
       "probability": 0.85
     },
-    "MED_LAB_03": {
-      "code": "MED_LAB_03",
+    "M_LAB03": {
+      "code": "M_LAB03",
       "name": "Омега-3 индекс",
       "category": "medical",
       "impact": 6.5,
@@ -1425,7 +1425,7 @@
       "short_description": "Анализ омега-3 в эритроцитах",
       "full_description": "Определение омега-3 индекса (сумма EPA+DHA в мембранах эритроцитов). Целевой уровень >8% (оптимально), >4% (минимально для кардиопротекции).",
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "Harris WS, 2018",

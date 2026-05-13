@@ -1,8 +1,10 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import '../assets/css/DigitalTwin.css';
 import catalogData from '../assets/data/interventions_catalog.json';
 import protocolData from '../assets/data/protocol_mappings.json';
 import foodCatalog from '../assets/data/food_catalog.json';
+import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js';
 
 const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart }) => {
   const [profile, setProfile] = useState(null);
@@ -36,9 +38,15 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [selectedInterventionForPopup, setSelectedInterventionForPopup] = useState(null);
   const [showHistoryPopup, setShowHistoryPopup] = useState(false);
   const [showPlanPopup, setShowPlanPopup] = useState(false);
+  const [planTemplateId, setPlanTemplateId] = useState('custom');
   const [showDiary, setShowDiary] = useState(false);
   const [diaryDay, setDiaryDay] = useState(null);
   const [diaryData, setDiaryData] = useState(null);
+  const [chatDiaryActive, setChatDiaryActive] = useState(false);
+  const [chatDiaryDay, setChatDiaryDay] = useState(null);
+  const [chatDiaryData, setChatDiaryData] = useState(null);
+  const [chatInlineMode, setChatInlineMode] = useState('none'); // 'none' | 'profile' | 'plan' | 'diary' | 'food'
+  const [chatPhotoPreview, setChatPhotoPreview] = useState(null);
   const [showFoodSelector, setShowFoodSelector] = useState(false);
   const [selectedFoodMealIdx, setSelectedFoodMealIdx] = useState(null);
   const [selectedFoodItem, setSelectedFoodItem] = useState(null);
@@ -47,6 +55,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [selectedProtocolForScheduling, setSelectedProtocolForScheduling] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
+  const [chatInputText, setChatInputText] = useState('');
   const [showProtocolPopup, setShowProtocolPopup] = useState(false);
   const [selectedProtocolForPopup, setSelectedProtocolForPopup] = useState(null);
   const simulationSpeedRef = useRef(1);
@@ -213,9 +222,9 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const getDaysForIntervention = (regularity, startDay = 0) => {
     const days = [];
     switch (regularity) {
-      case 'daily': for (let d = startDay; d <= 90; d++) days.push(d); break;
-      case 'weekly': for (let d = startDay; d <= 90; d += 7) days.push(d); break;
-      case 'monthly': for (let d = startDay; d <= 90; d += 30) days.push(d); break;
+      case 'D': for (let d = startDay; d <= 30; d++) days.push(d); break;
+      case 'W': for (let d = startDay; d <= 30; d += 7) days.push(d); break;
+      case 'M': for (let d = startDay; d <= 30; d += 30) days.push(d); break;
       case 'once': default: days.push(startDay); break;
     }
     return days;
@@ -350,7 +359,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     const rect = timelineRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percent = x / rect.width;
-    const newDay = Math.max(0, Math.min(90, Math.round(percent * 90)));
+      const newDay = Math.max(0, Math.min(30, Math.round(percent * 30)));
     setSimulationDay(newDay);
     if (lastProcessedDayRef.current < 0) lastProcessedDayRef.current = simulationDayRef.current;
     const start = lastProcessedDayRef.current + 1;
@@ -371,7 +380,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     const rect = timelineRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percent = x / rect.width;
-    const dropDay = Math.max(0, Math.min(90, Math.round(percent * 90)));
+    const dropDay = Math.max(0, Math.min(30, Math.round(percent * 30)));
 
     setTimelineInterventions(prev => {
       const filtered = prev.filter(i => i.code !== intervention.code);
@@ -398,7 +407,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
       const rect = timelineRef.current.getBoundingClientRect();
       const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
       const percent = x / rect.width;
-      const newDay = Math.max(0, Math.min(90, Math.round(percent * 90)));
+    const newDay = Math.max(0, Math.min(30, Math.round(percent * 30)));
       setSimulationDay(newDay);
       const start = lastProcessedDayRef.current + 1;
       for (let d = start; d <= newDay; d++) {
@@ -461,11 +470,11 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     simulationRef.current = setInterval(() => {
       setSimulationDay(prev => {
         const next = prev + 1;
-        if (next > 90) {
+        if (next > 30) {
           clearInterval(simulationRef.current);
           setIsSimulating(false);
           setIsPlaying(false);
-          return 90;
+          return 30;
         }
 
         timelineInterventionsRef.current.forEach(clip => {
@@ -517,6 +526,9 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     const exists = chatMessages.some(m => m.id === `${last.day}_${last.code}`);
     if (exists) return;
     const catData = interventionCatalog[last.code];
+    const regularity = catData?.regularity || last.regularity || 'D';
+    const defaultDeadlines = { D: '23:59', W: 'ПН 23:59', M: '1-е число', Y: '31.12 23:59', P: '—' };
+    const names = { D: 'ежедневно', W: 'еженедельно', M: 'ежемесячно', Y: 'ежегодно', P: 'по требованию' };
     const msg = {
       id: `${last.day}_${last.code}`,
       type: 'intervention',
@@ -525,6 +537,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
       name: last.name,
       state: last.state,
       category: catData?.category || last.category,
+      regularity,
+      deadline: defaultDeadlines[regularity] || '23:59',
+      done: false,
+      skipped: false,
       time: `${String(6 + (last.day * 7) % 14).padStart(2, '0')}:${String((last.day * 17) % 60).padStart(2, '0')}`,
     };
     setChatMessages(prev => [...prev, msg]);
@@ -539,6 +555,48 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   useEffect(() => {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }, [chatMessages]);
+
+  const sampleChatTasks = [
+    { name: 'Пить 2л воды', code: 'TASK_01', category: 'food', points: 10 },
+    { name: 'Прогулка 30 мин', code: 'TASK_02', category: 'physical', points: 15 },
+    { name: 'Лечь до 23:00', code: 'TASK_03', category: 'sleep', points: 20 },
+    { name: 'Медитация 10 мин', code: 'TASK_04', category: 'mental', points: 10 },
+    { name: 'Записать приемы пищи', code: 'TASK_05', category: 'food', points: 5 },
+    { name: 'Измерить пульс', code: 'TASK_06', category: 'medical', points: 15 },
+  ];
+
+  const handleChatSend = () => {
+    const text = chatInputText.trim();
+    if (!text) return;
+    setChatInputText('');
+    setChatMessages(prev => [...prev, {
+      id: `chat_${Date.now()}`,
+      day: simulationDay,
+      text,
+      user: true,
+      time: new Date().toLocaleTimeString(),
+    }]);
+    const taskKeywords = /задач|реком|совет|предлож|делать|план|тренировк|упражнен/i;
+    if (taskKeywords.test(text)) {
+      setTimeout(() => {
+        sampleChatTasks.forEach((t, i) => {
+          setChatMessages(prev => [...prev, {
+            id: `chat_task_${Date.now()}_${i}`,
+            type: 'intervention',
+            day: simulationDay,
+            code: t.code,
+            name: t.name,
+            category: t.category,
+            regularity: 'D',
+            deadline: '23:59',
+            done: false,
+            skipped: false,
+            time: new Date().toLocaleTimeString(),
+          }]);
+        });
+      }, 500);
+    }
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -741,7 +799,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   </div>
                 )}
                 <div className="daw-day-display">
-                  <span>День: {simulationDay}/90</span>
+                  <span>День: {simulationDay}/30</span>
                 </div>
                 <div className="timeline-view-toggle">
                   <button className={`view-btn ${timelineView === 'days' ? 'active' : ''}`} onClick={() => setTimelineView('days')}>1д</button>
@@ -817,8 +875,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   <span className="th-track">
                     <span className="th-track-text">График интервенций</span>
                     <span className="th-track-labels">
-                      {timelineView === 'days' && [0,10,20,30,40,50,60,70,80,90].map(d => (
-                        <span key={d} className="th-track-label" style={{ left: `${(d/90)*100}%` }}>{d}</span>
+                      {timelineView === 'days' && [0,5,10,15,20,25,30].map(d => (
+                        <span key={d} className="th-track-label" style={{ left: `${(d/30)*100}%` }}>{d}</span>
                       ))}
                       {timelineView === 'weeks' && [1,2,3,4,5,6,7,8,9,10,11,12,13].map(w => (
                         <span key={w} className="th-track-label" style={{ left: `${((w-1)/13)*100}%` }}>{w}н</span>
@@ -835,7 +893,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     'physical': { name: 'Физический', color: '#4caf50', interventions: [] },
                     'mental': { name: 'Ментальный', color: '#9c27b0', interventions: [] },
                     'food': { name: 'Питание', color: '#ff9800', interventions: [] },
-                    'medical': { name: 'Медицинский', color: '#f44336', interventions: [] },
+                    'medical': { name: 'мед', color: '#f44336', interventions: [] },
                     'supplement': { name: 'Добавки', color: '#795548', interventions: [] },
                   };
 
@@ -888,8 +946,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
 
                   // Generate day positions based on regularity & multiplier
                   const getClipPositions = (clip, multiplier) => {
-                    const maxUnit = timelineView === 'days' ? 90 : timelineView === 'weeks' ? 13 : 4;
-                    const regularityGap = clip.regularity === 'daily' ? 1 : clip.regularity === 'weekly' ? (timelineView === 'weeks' ? 1 : 7) : clip.regularity === 'monthly' ? (timelineView === 'phases' ? 1 : 30) : clip.regularity === 'yearly' ? maxUnit : 7;
+                    const maxUnit = timelineView === 'days' ? 30 : timelineView === 'weeks' ? 13 : 4;
+                    const regularityGap = clip.regularity === 'D' ? 1 : clip.regularity === 'W' ? (timelineView === 'weeks' ? 1 : 7) : clip.regularity === 'M' ? (timelineView === 'phases' ? 1 : 30) : clip.regularity === 'Y' ? maxUnit : 7;
                     const effectiveGap = Math.max(1, Math.round(regularityGap / multiplier));
                     const positions = [];
                     let pos = timelineView === 'days' ? clip.day : Math.ceil(clip.day / (timelineView === 'weeks' ? 7 : 22.5));
@@ -900,7 +958,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     return positions.slice(0, Math.ceil(maxUnit / effectiveGap));
                   };
 
-                  const dayProgress = simulationDay / 90;
+                  const dayProgress = simulationDay / 30;
 
                   return (
                     <>
@@ -935,7 +993,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                       interventionLog.filter(e => e.state === 'Активировано').map(e => `${e.code}_${e.day}`)
                                     );
                                     return positions.map((day, i) => {
-                                      const cx = (day/90)*1000;
+                                      const cx = (day/30)*1000;
                                       const triggered = activatedDays.has(`${clip.code}_${day}`);
                                       return (
                                         <g key={i} style={{ cursor:'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedInterventionForPopup(clip); setShowInterventionPopup(true); }}>
@@ -991,7 +1049,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <span className="col-day">День</span>
                       <span className="col-time">Время</span>
                       <span className="col-intervention">Интервенция</span>
-                      <span className="col-status">Статус</span>
                     </div>
                     {interventionLog.length === 0 ? (
                       <div className="log-empty">Журнал пуст. Запустите симуляцию.</div>
@@ -1003,17 +1060,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                           <span className="col-intervention">
                             <span>{entry.code}</span>
                             <span>{entry.name}</span>
-                          </span>
-                          <span className={`col-status ${entry.state === 'Активировано' ? 'success' : 'failed'}`}>
-                            {entry.state}
-                            {entry.starsGained > 0 && (
-                              <span>
-                                +{entry.starsGained}
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12">
-                                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                </svg>
-                              </span>
-                            )}
                           </span>
                         </div>
                       ))
@@ -1332,11 +1378,11 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   <div className="popup-row">
                     <span className="popup-label">Периодичность</span>
                     <span className="popup-value">
-                      {selectedInterventionForPopup.regularity === 'daily' ? 'Ежедневно' :
-                       selectedInterventionForPopup.regularity === 'weekly' ? 'Еженедельно' :
-                       selectedInterventionForPopup.regularity === 'monthly' ? 'Ежемесячно' :
-                       selectedInterventionForPopup.regularity === 'yearly' ? 'Ежегодно' :
-                       selectedInterventionForPopup.regularity === 'on-demand' ? 'По запросу' :
+                      {selectedInterventionForPopup.regularity === 'D' ? 'Ежедневно' :
+                       selectedInterventionForPopup.regularity === 'W' ? 'Еженедельно' :
+                       selectedInterventionForPopup.regularity === 'M' ? 'Ежемесячно' :
+                       selectedInterventionForPopup.regularity === 'Y' ? 'Ежегодно' :
+                       selectedInterventionForPopup.regularity === 'P' ? 'P' :
                        selectedInterventionForPopup.regularity}
                     </span>
                   </div>
@@ -1385,9 +1431,9 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         const start = selectedInterventionForPopup.day;
                         if (start == null) return '—';
                         const reg = selectedInterventionForPopup.regularity;
-                        if (reg === 'daily') return `День ${Math.min(90, start + 90)}`;
-                        if (reg === 'weekly') return `День ${Math.min(90, start + 84)}`;
-                        if (reg === 'monthly') return `День ${Math.min(90, start + 60)}`;
+                        if (reg === 'D') return `День ${Math.min(30, start + 30)}`;
+                        if (reg === 'W') return `День ${Math.min(30, start + 28)}`;
+                        if (reg === 'M') return `День ${Math.min(30, start + 30)}`;
                         return `День ${start}`;
                       })()}
                     </span>
@@ -1602,27 +1648,25 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
           {/* Plan Popup */}
           {showPlanPopup && (
             <div className="plan-popup-overlay" onClick={() => setShowPlanPopup(false)}>
-              <div className="plan-popup" onClick={(e) => e.stopPropagation()}>
+              <div className="plan-popup plan-prescription" onClick={(e) => e.stopPropagation()}>
                 <div className="plan-popup-header">
-                  <h3>План интервенций</h3>
+                  <div className="plan-popup-header-left">
+                    <div className="plan-popup-badge">🏥 НАЗНАЧЕНИЕ HEALORA</div>
+                    <span className="plan-popup-number">№ HLR-{simulationDay}-{Date.now().toString(36).toUpperCase()}</span>
+                  </div>
                   <div className="plan-popup-header-actions">
-                    <button className="daw-btn" onClick={() => {
-                      const txt = timelineInterventions
-                        .sort((a,b) => a.day - b.day)
-                        .map(i => `День ${i.day} | ${i.code} | ${i.name} | ${i.category}`)
-                        .join('\n');
-                      const blob = new Blob([`План интервенций\n${'='.repeat(50)}\n${txt}`], { type: 'text/plain' });
-                      const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url; a.download = 'plan-interventions.txt';
-                      a.click(); URL.revokeObjectURL(url);
-                    }}>
+                    <select className="plan-template-select" value={planTemplateId} onChange={e => setPlanTemplateId(e.target.value)}>
+                      {planTemplates.map(t => (
+                        <option key={t.id} value={t.id}>{t.name}</option>
+                      ))}
+                    </select>
+                    <button className="daw-btn" onClick={() => window.print()}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                         <polyline points="7 10 12 15 17 10"/>
                         <line x1="12" y1="15" x2="12" y2="3"/>
                       </svg>
-                      Скачать txt
+                      Скачать PDF
                     </button>
                     <button className="plan-popup-close" onClick={() => setShowPlanPopup(false)}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
@@ -1633,35 +1677,85 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   </div>
                 </div>
                 <div className="plan-popup-body">
-                  {timelineInterventions.length === 0 ? (
-                    <div className="plan-empty">План пуст. Добавьте интервенции из каталога.</div>
-                  ) : (
-                    <table className="plan-table">
-                      <thead>
-                        <tr>
-                          <th>День</th>
-                          <th>Код</th>
-                          <th>Название</th>
-                          <th>Категория</th>
-                          <th>Периодичность</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {[...new Set(timelineInterventions.map(i => i.code))].map(code => {
-                          const item = timelineInterventions.find(i => i.code === code);
-                          return (
-                            <tr key={code}>
-                              <td>{item.day}</td>
-                              <td style={{ fontFamily: 'monospace', fontSize: 11 }}>{code}</td>
-                              <td>{item.name}</td>
-                              <td>{item.category}</td>
-                              <td>{item.regularity === 'daily' ? 'Ежедневно' : item.regularity === 'weekly' ? 'Еженедельно' : item.regularity === 'monthly' ? 'Ежемесячно' : item.regularity}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  )}
+                  {(() => {
+                    const template = getTemplateById(planTemplateId);
+                    const uniqueCodes = [...new Set(timelineInterventions.map(i => i.code))];
+                    const items = uniqueCodes.length > 0
+                      ? uniqueCodes.map(code => timelineInterventions.find(i => i.code === code))
+                      : template.interventions;
+                    return (
+                      <>
+                        <div className="plan-doctor-block">
+                          <div className="plan-doctor-info">
+                            <div className="plan-info-row"><span className="plan-info-label">Пациент:</span><span className="plan-info-value">{profile?.name || profileId || '—'}</span></div>
+                            <div className="plan-info-row"><span className="plan-info-label">Врач:</span><span className="plan-info-value">{template.doctor}</span></div>
+                            <div className="plan-info-row"><span className="plan-info-label">Дата:</span><span className="plan-info-value">{new Date().toLocaleDateString('ru-RU')}</span></div>
+                            <div className="plan-info-row"><span className="plan-info-label">Срок:</span><span className="plan-info-value">30 дней</span></div>
+                          </div>
+                        </div>
+
+                        <div className="plan-summary-block">
+                          <h4 className="plan-section-title">Заключение</h4>
+                          <p className="plan-summary-text">{template.summary}</p>
+                          <div className="plan-highlight">{template.highlight}</div>
+                        </div>
+
+                        <div className="plan-interventions-section">
+                          <h4 className="plan-section-title">План назначений</h4>
+                          <table className="plan-table plan-table-prescription">
+                            <thead>
+                              <tr><th>№</th><th>Интервенция</th><th>Код</th><th>Per</th></tr>
+                            </thead>
+                            <tbody>
+                              {items.map((item, i) => (
+                                <tr key={item.code || i}>
+                                  <td className="plan-num">{i + 1}</td>
+                                  <td>{item.name}</td>
+                                  <td className="plan-code">{item.code}</td>
+                                  <td className="plan-reg">{item.regularity === 'D' ? 'D' : item.regularity === 'W' ? 'W' : item.regularity === 'M' ? 'M' : item.regularity === 'Y' ? 'Y' : item.regularity || 'D'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div className="plan-footer-block">
+                          <div className="plan-qr-block">
+                            <QRCodeSVG value={`https://healora.ru/digital-twin/?plan=${template.id}&profile=${profileId || 'anon'}`} size={100} fgColor="#1a1a2e" />
+                          </div>
+                          <div className="plan-app-mockup">
+                            <svg viewBox="0 0 120 220" width="100%" style={{ maxWidth: 90 }}>
+                              <rect x="10" y="0" width="100" height="210" rx="18" fill="#1a1a2e" stroke="#333" strokeWidth="1"/>
+                              <rect x="14" y="3" width="92" height="18" rx="4" fill="#2d2d5e"/>
+                              <text x="55" y="15" textAnchor="middle" fontSize="6" fill="#fff" fontFamily="sans-serif" fontWeight="bold">HEALORA</text>
+                              <circle cx="55" cy="40" r="12" fill="#613CF5" opacity="0.3"/>
+                              <circle cx="45" cy="36" r="8" fill="#613CF5" opacity="0.5"/>
+                              <circle cx="65" cy="36" r="8" fill="#022374" opacity="0.5"/>
+                              <circle cx="55" cy="36" r="2.5" fill="#fff"/>
+                              <text x="55" y="70" textAnchor="middle" fontSize="4" fill="#aaa" fontFamily="sans-serif">Цифровой двойник</text>
+                              <rect x="20" y="80" width="80" height="4" rx="2" fill="#FEAAE6"/>
+                              <rect x="20" y="80" width="50" height="4" rx="2" fill="#613CF5"/>
+                              <text x="55" y="95" textAnchor="middle" fontSize="4" fill="#666" fontFamily="sans-serif">25/30 · 15/45</text>
+                              <rect x="20" y="105" width="80" height="12" rx="4" fill="#2d2d5e"/>
+                              <text x="24" y="113" fontSize="3.5" fill="#fff" fontFamily="sans-serif">Сон: время отхода</text>
+                              <text x="85" y="113" fontSize="3.5" fill="#4caf50" fontFamily="sans-serif">✓</text>
+                              <rect x="20" y="120" width="80" height="12" rx="4" fill="#2d2d5e"/>
+                              <text x="24" y="128" fontSize="3.5" fill="#fff" fontFamily="sans-serif">Прогулка 30 мин</text>
+                              <rect x="84" y="122" width="14" height="8" rx="2" fill="#333"/>
+                              <circle cx="62" cy="155" r="16" fill="none" stroke="#FEAAE6" strokeWidth="2"/>
+                              <circle cx="62" cy="155" r="16" fill="none" stroke="#613CF5" strokeWidth="2" strokeDasharray="50 50" strokeDashoffset="0" transform="rotate(-90 62 155)"/>
+                              <text x="62" y="159" textAnchor="middle" fontSize="5" fill="#fff" fontFamily="sans-serif">32</text>
+                              <rect x="35" y="190" width="55" height="8" rx="4" fill="#FEAAE6"/>
+                              <text x="62" y="196" textAnchor="middle" fontSize="3.5" fill="#1a1a2e" fontFamily="sans-serif">Напишите сообщение...</text>
+                            </svg>
+                          </div>
+                          <div className="plan-app-caption">
+                            Установите HEALORA для повышения эффективности выполнения рекомендаций
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
             </div>
@@ -1677,7 +1771,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h3>Дневник питания — День {diaryDay ?? simulationDay}</h3>
-                    <button className="diary-nav-btn" onClick={() => { const d = (diaryDay ?? simulationDay) + 1; if (d <= 90) { setDiaryDay(d); setDiaryData(defaultDiaryData(d)); } }} disabled={(diaryDay ?? simulationDay) >= 90}>
+                    <button className="diary-nav-btn" onClick={() => { const d = (diaryDay ?? simulationDay) + 1; if (d <= 30) { setDiaryDay(d); setDiaryData(defaultDiaryData(d)); } }} disabled={(diaryDay ?? simulationDay) >= 30}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
                     </button>
                   </div>
@@ -2027,7 +2121,20 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
             <div className="chat-modal-overlay" onClick={() => setShowChat(false)}>
               <div className="chat-modal" onClick={e => e.stopPropagation()}>
                 <div className="chat-modal-header">
-                  <h3>Чат интервенций</h3>
+                  <div className="chat-header-left">
+                    <h3>HEALORA</h3>
+                    <span className="chat-user-name">{profile?.name || profileId || '—'}</span>
+                    <span className="chat-header-stars">{stars} ⭐</span>
+                    <div className="chat-stars-bar-wrap">
+                      <div className="chat-stars-bar" style={{ width: Math.min(100, (stars / 2000) * 100) + '%' }}></div>
+                    </div>
+                  </div>
+                  <div className="chat-header-right">
+                    {isSimulating && (
+                      <span className="chat-day-counter">
+                        {simulationDay}/30 · {chatMessages.filter(m => m.done || m.skipped).length}/{chatMessages.length}
+                      </span>
+                    )}
                   <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                     {timelineInterventions.length > 0 && !isSimulating && (
                       <button className="chat-start-btn" onClick={startSimulation}>
@@ -2055,6 +2162,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </button>
                   </div>
                 </div>
+              </div>
                 <div className="chat-messages" ref={chatRef}>
                   {chatMessages.length === 0 && !isSimulating && (
                     <div className="chat-empty">
@@ -2073,24 +2181,248 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       if (!grouped[msg.day]) grouped[msg.day] = [];
                       grouped[msg.day].push(msg);
                     });
-                    return Object.entries(grouped).sort((a, b) => a[0] - b[0]).map(([day, msgs]) => (
+                    return Object.entries(grouped).sort((a, b) => a[0] - b[0]).map(([day, msgs]) => {
+                      const doneCount = msgs.filter(m => m.done).length;
+                      return (
                       <React.Fragment key={day}>
-                        <div className="chat-date-divider"><span>День {day}</span></div>
+                        <div className="chat-date-divider">
+                          <span>День {day} {doneCount > 0 && <span className="chat-day-done">{doneCount}/{msgs.length}</span>}</span>
+                        </div>
                         <div className="chat-interventions-row">
                           {msgs.map(msg => {
+                            if (msg.user) {
+                              return (
+                                <div key={msg.id} className="chat-user-message">
+                                  {msg.photo && <img src={msg.photo} className="chat-user-photo" alt="" />}
+                                  <span className="chat-user-text">{msg.text}</span>
+                                  <span className="chat-interv-time">{msg.time}</span>
+                                </div>
+                              );
+                            }
                             const color = categoryColors[msg.category] || '#6b21c8';
-                            const activated = msg.state === 'Активировано';
                             return (
-                              <div key={msg.id} className={`chat-interv-badge ${activated ? 'activated' : 'skipped'}`} style={{ backgroundColor: color }} title={`${msg.code} ${msg.time}`}>
-                                <span className="chat-interv-badge-name">{msg.name}</span>
-                                <span className="chat-interv-badge-state">{activated ? '✓' : '✗'}</span>
+                              <div key={msg.id} className={`chat-interv-card ${msg.done ? 'done' : msg.skipped ? 'skipped' : ''}`}>
+                                <div className="chat-interv-card-top">
+                                  <span className="chat-interv-badge" style={{ borderLeftColor: color }}>
+                                    <span className="chat-interv-badge-name">{msg.name}</span>
+                                    <span className="chat-interv-badge-code">{msg.code}</span>
+                                  </span>
+                                  <span className="chat-interv-time">{msg.time}</span>
+                                </div>
+                                {msg.done ? (
+                                  <div className="chat-interv-card-status done">✓ Выполнено</div>
+                                ) : msg.skipped ? (
+                                  <div className="chat-interv-card-status skipped">✗ Пропущено</div>
+                                ) : (
+                                  <div className="chat-interv-card-actions">
+                                    <div className="chat-interv-deadline">
+                                      <span className="chat-deadline-label">⏰ до</span>
+                                      <select
+                                        className="chat-deadline-select"
+                                        value={msg.deadline}
+                                        onChange={e => setChatMessages(prev => prev.map(m => m.id === msg.id ? { ...m, deadline: e.target.value } : m))}
+                                      >
+                                        <option value="23:59">23:59</option>
+                                        <option value="11:00">11:00 (завтрак)</option>
+                                        <option value="22:00">22:00 (отход ко сну)</option>
+                                        <option value="07:00">07:00 (раннее пробуждение)</option>
+                                        <option value="—">нет дедлайна</option>
+                                      </select>
+                                    </div>
+                                    <div className="chat-interv-btns">
+                                      <button className="chat-btn-done" onClick={() => setChatMessages(prev => prev.map(m => m.id === msg.id ? { ...m, done: true, skipped: false } : m))}>✓</button>
+                                      <button className="chat-btn-skip" onClick={() => setChatMessages(prev => prev.map(m => m.id === msg.id ? { ...m, skipped: true, done: false } : m))}>✗</button>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             );
                           })}
                         </div>
                       </React.Fragment>
-                    ));
+                      );
+                    })
                   })()}
+                  {chatInlineMode === 'profile' && (
+                    <div className="chat-diary-form" key="chat-profile">
+                      <div className="chat-diary-header">
+                        <span className="chat-diary-title">👤 Профиль</span>
+                        <button className="chat-diag-close" onClick={() => setChatInlineMode('none')}>×</button>
+                      </div>
+                      <div className="chat-diary-body">
+                        <div className="chat-profile-row"><span className="chat-profile-label">Имя</span><span className="chat-profile-value">{profile?.name || '—'}</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">ID</span><span className="chat-profile-value">{profileId || '—'}</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">Возраст</span><span className="chat-profile-value">{profile?.demographics?.age || '—'} лет</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">Пол</span><span className="chat-profile-value">{profile?.demographics?.sex === 'male' ? 'М' : 'Ж'}</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">Вес</span><span className="chat-profile-value">{profile?.anthropometrics?.weight_kg || '—'} кг</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">Рост</span><span className="chat-profile-value">{profile?.anthropometrics?.height_cm || '—'} см</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">ИМТ</span><span className="chat-profile-value">{profile?.anthropometrics?.bmi || '—'}</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">Healora Score</span><span className="chat-profile-value">{profile?.digital_twin_scores?.current_stars || 0} ⭐</span></div>
+                        <div className="chat-profile-row"><span className="chat-profile-label">Риск</span><span className={`chat-profile-value risk-${profile?.digital_twin_scores?.risk_level || 'unknown'}`}>{profile?.digital_twin_scores?.risk_level || '—'}</span></div>
+                      </div>
+                    </div>
+                  )}
+                  {chatInlineMode === 'plan' && (
+                    <div className="chat-diary-form" key="chat-plan">
+                      <div className="chat-diary-header">
+                        <span className="chat-diary-title">📋 План интервенций</span>
+                        <button className="chat-diag-close" onClick={() => setChatInlineMode('none')}>×</button>
+                      </div>
+                      <div className="chat-diary-body">
+                        {timelineInterventions.length === 0 ? (
+                          <div className="chat-plan-empty">Нет запланированных интервенций</div>
+                        ) : (
+                          [...new Set(timelineInterventions.map(i => i.code))].map(code => {
+                            const items = timelineInterventions.filter(i => i.code === code);
+                            const item = items[0];
+                            const catColors = { sleep: '#2196f3', physical: '#4caf50', mental: '#9c27b0', food: '#ff9800', medical: '#f44336', supplement: '#795548' };
+                            return (
+                              <div key={code} className="chat-plan-item" style={{ borderLeftColor: catColors[item.category] || '#6b21c8' }}>
+                                <div className="chat-plan-item-top">
+                                  <span className="chat-plan-item-name">{item.name}</span>
+                                  <span className="chat-plan-item-code">{code}</span>
+                                </div>
+                                <div className="chat-plan-item-days">
+                                  {items.map(i => (
+                                    <span key={i.day} className="chat-plan-day-badge" style={{ backgroundColor: i.day <= simulationDay ? (catColors[item.category] || '#6b21c8') : '#e0e0e0', color: i.day <= simulationDay ? '#fff' : '#999' }}>
+                                      Д{i.day}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {chatInlineMode === 'diary' && chatDiaryData && (() => {
+                    const form = chatDiaryData;
+                    const updateMeal = (idx, field, val) => {
+                      const m = [...form.meals]; m[idx] = { ...m[idx], [field]: val };
+                      setChatDiaryData({ ...form, meals: m });
+                    };
+                    const handlePhoto = (idx, file) => {
+                      if (!file) return;
+                      const r = new FileReader();
+                      r.onload = () => updateMeal(idx, 'photo', r.result);
+                      r.readAsDataURL(file);
+                    };
+                    const submitChatDiary = () => {
+                      const cals = form.meals.reduce((s, m) => s + (Number(m.calories) || 0), 0);
+                      const prot = form.meals.reduce((s, m) => s + (Number(m.protein) || 0), 0);
+                      const summary = `📋 День ${form.day}: ${cals} ккал, ${prot}г белка, вода ${form.waterMl}мл`;
+                      setChatMessages(prev => [...prev, {
+                        id: `diary_${Date.now()}`,
+                        type: 'diary',
+                        day: form.day,
+                        text: summary,
+                        user: true,
+                        time: new Date().toLocaleTimeString(),
+                      }]);
+                      setDiaryData(form);
+                      setDiaryDay(form.day);
+                      setShowDiary(true);
+                      setChatDiaryActive(false);
+                      setChatDiaryData(null);
+                    };
+                    return (
+                      <div className="chat-diary-form" key="chat-diary">
+                        <div className="chat-diary-header">
+                          <span className="chat-diary-title">📋 Дневник питания</span>
+                          <span className="chat-diary-day">
+                            День
+                            <button className="chat-diary-day-btn" onClick={() => { const d = form.day - 1; if (d >= 0) { setChatDiaryData({ ...form, day: d }); setChatDiaryDay(d); } }} disabled={form.day <= 0}>−</button>
+                            <span className="chat-diary-day-val">{form.day}</span>
+                            <button className="chat-diary-day-btn" onClick={() => { const d = form.day + 1; if (d <= 30) { setChatDiaryData({ ...form, day: d }); setChatDiaryDay(d); } }} disabled={form.day >= 30}>+</button>
+                          </span>
+                        </div>
+                        {form.meals.map((meal, idx) => (
+                          <div key={meal.type} className="chat-diary-meal">
+                            <div className="chat-diary-meal-header">{meal.label}</div>
+                            <div className="chat-diary-meal-fields">
+                              <input className="chat-diary-input" placeholder="🔍 Описание" value={meal.description} onChange={e => updateMeal(idx, 'description', e.target.value)} />
+                              <input className="chat-diary-input sm" placeholder="ккал" type="number" value={meal.calories} onChange={e => updateMeal(idx, 'calories', e.target.value)} />
+                              <input className="chat-diary-input sm" placeholder="белки" type="number" value={meal.protein} onChange={e => updateMeal(idx, 'protein', e.target.value)} />
+                              <input className="chat-diary-input sm" placeholder="жиры" type="number" value={meal.fat} onChange={e => updateMeal(idx, 'fat', e.target.value)} />
+                              <input className="chat-diary-input sm" placeholder="углеводы" type="number" value={meal.carbs} onChange={e => updateMeal(idx, 'carbs', e.target.value)} />
+                              <label className="chat-diary-photo-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                <input type="file" accept="image/*" hidden onChange={e => { handlePhoto(idx, e.target.files[0]); e.target.value = ''; }} />
+                              </label>
+                              {meal.photo && <img src={meal.photo} className="chat-diary-photo-preview" alt="" />}
+                            </div>
+                          </div>
+                        ))}
+                        <div className="chat-diary-row">
+                          <span className="chat-diary-label">💧 Вода</span>
+                          <input className="chat-diary-input" placeholder="мл" type="number" value={form.waterMl || ''} onChange={e => setChatDiaryData({ ...form, waterMl: Number(e.target.value) })} />
+                        </div>
+                        <div className="chat-diary-row">
+                          <span className="chat-diary-label">😊 Самочувствие</span>
+                          <div className="chat-diary-mood">
+                            {['energy','mood','sleep','stress','digestion'].map(key => (
+                              <select key={key} className="chat-diary-select" value={form.mood[key]} onChange={e => setChatDiaryData({ ...form, mood: { ...form.mood, [key]: e.target.value } })}>
+                                <option value="">{key}</option>
+                                {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
+                              </select>
+                            ))}
+                          </div>
+                        </div>
+                        <button className="chat-diary-submit" onClick={submitChatDiary}>✓ Сохранить</button>
+                      </div>
+                    );
+                  })()}
+                  {chatInlineMode === 'food' && (
+                    <div className="chat-diary-form" key="chat-food">
+                      <div className="chat-diary-header">
+                        <span className="chat-diary-title">📸 Фото еды</span>
+                        <button className="chat-diag-close" onClick={() => setChatInlineMode('none')}>×</button>
+                      </div>
+                      <div className="chat-diary-body">
+                        <label className="chat-food-upload">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                          <span>Загрузить фото еды</span>
+                          <input type="file" accept="image/*" hidden onChange={e => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const r = new FileReader();
+                            r.onload = () => setChatPhotoPreview(r.result);
+                            r.readAsDataURL(file);
+                            e.target.value = '';
+                          }} />
+                        </label>
+                        {chatPhotoPreview && (
+                          <div className="chat-food-preview-wrap">
+                            <img src={chatPhotoPreview} className="chat-food-preview-img" alt="food" />
+                            <button className="chat-food-remove" onClick={() => setChatPhotoPreview(null)}>×</button>
+                          </div>
+                        )}
+                        <button className="chat-diary-submit" onClick={() => {
+                          if (!chatPhotoPreview) return;
+                          setChatMessages(prev => [...prev, {
+                            id: `food_${Date.now()}`,
+                            type: 'food',
+                            day: simulationDay,
+                            text: '📸 Фото еды загружено',
+                            photo: chatPhotoPreview,
+                            user: true,
+                            time: new Date().toLocaleTimeString(),
+                          }]);
+                          if (chatDiaryData && chatInlineMode === 'food') {
+                            const emptyMeal = chatDiaryData.meals.findIndex(m => !m.photo);
+                            if (emptyMeal >= 0) {
+                              const m = [...chatDiaryData.meals];
+                              m[emptyMeal] = { ...m[emptyMeal], photo: chatPhotoPreview };
+                              setChatDiaryData({ ...chatDiaryData, meals: m });
+                            }
+                          }
+                          setChatPhotoPreview(null);
+                          setChatInlineMode('none');
+                        }}>✓ Отправить в чат</button>
+                      </div>
+                    </div>
+                  )}
                   {isSimulating && (
                     <div className="chat-typing">
                       <span className="typing-dot"></span>
@@ -2099,9 +2431,20 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </div>
                   )}
                 </div>
+                <div className="chat-actions-bar">
+                  <button className="chat-action-btn" onClick={() => setChatInlineMode(chatInlineMode === 'profile' ? 'none' : 'profile')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Профиль</button>
+                  <button className="chat-action-btn" onClick={() => setChatInlineMode(chatInlineMode === 'plan' ? 'none' : 'plan')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> План</button>
+                  <button className="chat-action-btn" onClick={() => {
+                    if (chatInlineMode === 'diary') { setChatInlineMode('none'); setChatDiaryData(null); return; }
+                    setChatInlineMode('diary');
+                    setChatDiaryDay(chatDiaryDay ?? simulationDay);
+                    setChatDiaryData(defaultDiaryData(chatDiaryDay ?? simulationDay));
+                  }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Дневник</button>
+                  <button className="chat-action-btn" onClick={() => setChatInlineMode(chatInlineMode === 'food' ? 'none' : 'food')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Фото еды</button>
+                </div>
                 <div className="chat-input-bar">
-                  <input type="text" className="chat-input" placeholder="Напишите сообщение..." disabled />
-                  <button className="chat-send-btn" disabled>
+                  <input type="text" className="chat-input" placeholder="Напишите сообщение..." value={chatInputText} onChange={e => setChatInputText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && chatInputText.trim()) handleChatSend(); }} />
+                  <button className="chat-send-btn" disabled={!chatInputText.trim()} onClick={handleChatSend}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                       <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>

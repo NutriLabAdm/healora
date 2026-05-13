@@ -29,9 +29,47 @@ const ChatInterface = () => {
       id: Date.now(),
       text,
       user,
+      time: new Date().toLocaleTimeString(),
+      type: 'text'
+    };
+    setMessages(prev => [...prev, newMsg]);
+  };
+
+  const addTask = (title, points, category) => {
+    const newMsg = {
+      id: Date.now(),
+      type: 'task',
+      title,
+      points,
+      category,
+      completed: false,
+      user: false,
       time: new Date().toLocaleTimeString()
     };
     setMessages(prev => [...prev, newMsg]);
+  };
+
+  const sampleTasks = [
+    { title: 'Пить 2л воды в день', points: 10, category: 'Питание' },
+    { title: 'Прогулка 30 мин', points: 15, category: 'Активность' },
+    { title: 'Ложиться до 23:00', points: 20, category: 'Сон' },
+    { title: 'Медитация 10 мин', points: 10, category: 'Ментальное' },
+    { title: 'Записать приемы пищи', points: 5, category: 'Дневник' },
+    { title: 'Измерить пульс утром', points: 15, category: 'Мониторинг' }
+  ];
+
+  const toggleTask = (id) => {
+    setMessages(prev => prev.map(m => {
+      if (m.id === id && !m.completed) {
+        const newEntry = {
+          time: new Date().toLocaleTimeString(),
+          action: `Выполнено: ${m.title} (+${m.points} звёзд)`
+        };
+        setLog(prev => [newEntry, ...prev].slice(0, 20));
+        return { ...m, completed: true };
+      }
+      return m;
+    }));
   };
 
   const send = async (e) => {
@@ -61,6 +99,14 @@ const ChatInterface = () => {
         setAnswers(Array(data.quiz.questions.length).fill(null));
         setScore(0);
         setQIndex(0);
+      }
+
+      const taskKeywords = /задач|реком|совет|предлож|делать|план|тренировк|упражнен/i;
+      if (taskKeywords.test(msg)) {
+        setTimeout(() => {
+          addMessage('Вот рекомендованные задачи на сегодня:', false);
+          sampleTasks.forEach(t => addTask(t.title, t.points, t.category));
+        }, 500);
       }
     } catch (err) {
       console.error(err);
@@ -177,12 +223,23 @@ const ChatInterface = () => {
       
       <div className="chat-messages">
         {messages.map(m => (
-          <div key={m.id} className={`message ${m.user ? 'user-message' : 'ai-message'}`}>
-            <div className="message-content">
-              <p>{m.text}</p>
-              <small className="message-time">{m.time}</small>
+          m.type === 'task' ? (
+            <div key={m.id} className={`task-card ${m.completed ? 'completed' : ''}`} onClick={() => toggleTask(m.id)}>
+              <div className="checkbox">{m.completed ? '✓' : ''}</div>
+              <div className="content">
+                <div className="title">{m.title}</div>
+                <div className="points">+{m.points} звёзд</div>
+                <div className="category">{m.category}</div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div key={m.id} className={`message ${m.user ? 'user-message' : 'ai-message'}`}>
+              <div className="message-content">
+                <p>{m.text}</p>
+                <small className="message-time">{m.time}</small>
+              </div>
+            </div>
+          )
         ))}
         {loading && (
           <div className="message ai-message">

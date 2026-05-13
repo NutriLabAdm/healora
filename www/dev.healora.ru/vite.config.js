@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const basePath = env.VITE_BASE_PATH || '/';
+  process.env.VITE_BUILD_TIME = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
   return {
     plugins: [react()],
     base: basePath,

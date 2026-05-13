@@ -4,7 +4,9 @@ import catalogData from '../assets/data/interventions_catalog.json';
 import supplementsCatalog from '../assets/data/supplements_catalog.json';
 import dietsCatalog from '../assets/data/diets_catalog.json';
 
-const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, onRemoveFromCart }) => {
+const __BUILD_TIME__ = import.meta.env.VITE_BUILD_TIME || new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+
+const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, onRemoveFromCart, onOrderPlan }) => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [supplementGroup, setSupplementGroup] = useState('all');
   const [foodGroup, setFoodGroup] = useState('all');
@@ -12,6 +14,8 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
   const [expandedProtocol, setExpandedProtocol] = useState(null);
   const [showBacklog, setShowBacklog] = useState(false);
   const [selectedSupplement, setSelectedSupplement] = useState(null);
+  const [selectedIntervention, setSelectedIntervention] = useState(null);
+  const [showLegend, setShowLegend] = useState(false);
 
   const categories = [
     { key: 'all', label: 'Все', color: '#6b21c8' },
@@ -19,7 +23,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
     { key: 'physical', label: 'Физический', color: '#388e3c' },
     { key: 'mental', label: 'Ментальный', color: '#7b1fa2' },
     { key: 'food', label: 'Питание', color: '#f57c00' },
-    { key: 'medical', label: 'Медицинский', color: '#d32f2f' },
+    { key: 'medical', label: 'мед', color: '#d32f2f' },
     { key: 'supplement', label: 'Добавки', color: '#795548' },
   ];
 
@@ -44,7 +48,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
       category: entry.category,
       color: entry.color,
       impact: entry.impact,
-      regularity: entry.regularity || 'daily',
+      regularity: entry.regularity || 'D',
       type: entry.type,
       evidence: entry.evidence,
       description: entry.short_description || entry.full_description,
@@ -98,21 +102,16 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
     return colors[evidence] || '#757575';
   };
 
-  const isInCart = (code) => {
-    return cartItems && cartItems.find(i => i.code === code);
-  };
-
   const getCategoryColor = (category) => {
-    const cat = categories.find(c => c.key === category);
-    return cat ? cat.color : '#757575';
-  };
-
-  const toggleCart = (intervention) => {
-    if (isInCart(intervention.code)) {
-      if (onRemoveFromCart) onRemoveFromCart(intervention.code);
-    } else {
-      if (onAddToCart) onAddToCart(intervention);
-    }
+    const catColors = {
+      sleep: '#1976d2',
+      physical: '#388e3c',
+      mental: '#7b1fa2',
+      food: '#f57c00',
+      medical: '#d32f2f',
+      supplement: '#795548',
+    };
+    return catColors[category] || '#6b21c8';
   };
 
   return (
@@ -122,23 +121,59 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
           <button className={`panel-tab ${tab === 'interventions' ? 'active' : ''}`} onClick={() => setTab('interventions')}>Интервенции</button>
           <button className={`panel-tab ${tab === 'protocols' ? 'active' : ''}`} onClick={() => setTab('protocols')}>Протоколы</button>
         </div>
-        <span className="count">{cartItems ? cartItems.length : 0} в корзине</span>
-        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.7</span>
+        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.7 | {__BUILD_TIME__}</span>
       </div>
+
+      {/* Compact Cart Widgets */}
+      {cartItems && cartItems.length > 0 && (
+        <div className="cart-widgets-panel">
+          <div className="cart-widgets-header">
+            <span>Корзина ({cartItems.length})</span>
+            <button className="cart-clear-btn" onClick={() => cartItems.forEach(i => onRemoveFromCart(i.code))}>×</button>
+          </div>
+          <button
+            className="order-plan-btn"
+            onClick={() => onOrderPlan && onOrderPlan(cartItems)}
+            title="Разместить все интервенции из корзины на таймлайне"
+          >
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="9" y1="21" x2="9" y2="9"/>
+            </svg>
+            Заказать План
+          </button>
+          <div className="cart-widgets-wrap">
+            {cartItems.map(item => {
+              const catColor = item.color || '#6b21c8';
+              return (
+                <div
+                  key={item.code}
+                  className="compact-cart-badge"
+                  style={{ '--cat-color': catColor }}
+                  title={item.name}
+                >
+                  <span className="badge-index">{item.code}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {tab === 'interventions' && (
         <>
           <div className="category-filters">
-            {categories.map(cat => (
+              {categories.map(cat => (
               <button
                 key={cat.key}
-                className={`cat-btn ${activeCategory === cat.key ? 'active' : ''}`}
+                className={`cat-btn cat-${cat.key} ${activeCategory === cat.key ? 'active' : ''}`}
                 onClick={() => setActiveCategory(cat.key)}
-                style={activeCategory === cat.key ? { background: cat.color, color: 'white' } : {}}
               >
                 {cat.label}
               </button>
             ))}
+              <button className="cat-btn legend-btn" onClick={() => setShowLegend(!showLegend)} title="Пояснение сокращений">?</button>
           </div>
 
           {activeCategory === 'supplement' && (
@@ -146,9 +181,8 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               {supplementGroups.map(g => (
                 <button
                   key={g.key}
-                  className={`cat-btn sm ${supplementGroup === g.key ? 'active' : ''}`}
+                  className={`cat-btn sm sup-${g.key} ${supplementGroup === g.key ? 'active' : ''}`}
                   onClick={() => setSupplementGroup(g.key)}
-                  style={supplementGroup === g.key ? { background: g.color, color: 'white' } : {}}
                 >
                   {g.label}
                 </button>
@@ -161,9 +195,8 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               {foodGroups.map(g => (
                 <button
                   key={g.key}
-                  className={`cat-btn sm ${foodGroup === g.key ? 'active' : ''}`}
+                  className={`cat-btn sm food-${g.key} ${foodGroup === g.key ? 'active' : ''}`}
                   onClick={() => setFoodGroup(g.key)}
-                  style={foodGroup === g.key ? { background: g.color, color: 'white' } : {}}
                 >
                   {g.label}
                 </button>
@@ -178,35 +211,28 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               {activeCategory === 'supplement' && <span className="col-class">Тип</span>}
               <span className="col-impact">I</span>
               <span className="col-evidence">E</span>
-              <span className="col-regularity">Период</span>
+              <span className="col-regularity">Per</span>
             </div>
             {filteredInterventions.map(intervention => {
               const isSubItem = intervention.classification || intervention.foodGroup;
               return (
               <div
                 key={intervention.code}
-                className={`table-row ${isInCart(intervention.code) ? 'in-cart' : ''} ${isSubItem ? 'sup-row' : ''}`}
-                draggable={!isSubItem}
-                onDragStart={(e) => {
-                  if (!isSubItem) {
-                    e.dataTransfer.setData('application/json', JSON.stringify(intervention));
-                    if (onDragStart) onDragStart(intervention);
-                  }
-                }}
+                className={`table-row ${isSubItem ? 'sup-row' : ''}`}
                 onClick={() => {
                   if (isSubItem) {
                     setSelectedSupplement(intervention);
                   } else {
-                    toggleCart(intervention);
+                    setSelectedIntervention(intervention);
                   }
                 }}
-                style={{ cursor: isSubItem ? 'pointer' : 'grab', borderLeftColor: getCategoryColor(intervention.category || 'supplement') }}
-                title={isSubItem ? 'Клик: подробная информация' : "Клик: добавить/убрать из корзины, перетащите на таймлайн"}
+                style={{ cursor: 'pointer', borderLeftColor: getCategoryColor(intervention.category || 'supplement') }}
+                title={isSubItem ? 'Клик: подробная информация' : 'Клик: карточка интервенции'}
               >
                  <span className="col-code">{intervention.code}</span>
                  <span className="col-name">{intervention.name}</span>
                  {activeCategory === 'supplement' && (
-                   <span className={`col-class ${intervention.classification === 'медицинский' ? 'class-med' : 'class-nutr'}`}>
+                    <span className={`col-class ${intervention.classification === 'мед' ? 'class-med' : 'class-nutr'}`}>
                      {intervention.classification}
                    </span>
                  )}
@@ -216,13 +242,53 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                  <span className="col-evidence" style={{ color: getEvidenceBadge(intervention.evidence) }}>
                   {intervention.evidence}
                  </span>
-                 <span className="col-regularity">
-                  {intervention.regularity === 'daily' ? 'Ежедн.' : intervention.regularity === 'weekly' ? 'Еженед.' : intervention.regularity === 'yearly' ? 'Ежегодно' : intervention.regularity}
-                 </span>
-              </div>
+                  <span className="col-regularity">
+                   {intervention.regularity}
+                  </span>
+                  <span className="col-actions">
+                    {cartItems && cartItems.find(c => c.code === intervention.code) ? (
+                      <button className="cart-toggle-btn remove" onClick={(e) => { e.stopPropagation(); onRemoveFromCart(intervention.code); }}>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                      </button>
+                    ) : (
+                      <button className="cart-toggle-btn add" onClick={(e) => { e.stopPropagation(); onAddToCart(intervention); }}>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                      </button>
+                    )}
+                  </span>
+               </div>
               );
             })}
           </div>
+
+          {showLegend && (
+            <div className="supplement-popup-overlay" onClick={() => setShowLegend(false)}>
+              <div className="supplement-popup" onClick={e => e.stopPropagation()} style={{ maxWidth: '320px' }}>
+                <div className="supplement-popup-header" style={{ borderLeftColor: '#6b21c8' }}>
+                  <h3 style={{ margin: 0, fontSize: '14px' }}>Пояснение сокращений</h3>
+                  <button className="supplement-popup-close" onClick={() => setShowLegend(false)}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </button>
+                </div>
+                <div className="supplement-popup-body">
+                  <div className="legend-item">
+                    <span className="legend-symbol">I</span>
+                    <span className="legend-desc">Impact — сила воздействия (1–10)<br/><span className="legend-example">9–10: высокая &nbsp; 5–8: средняя &nbsp; 1–4: низкая</span></span>
+                  </div>
+                  <div className="legend-item">
+                    <span className="legend-symbol">E</span>
+                    <span className="legend-desc">Evidence — уровень доказательности (A–D)<br/><span className="legend-example">A: мета-анализы &nbsp; B: РКИ &nbsp; C: наблюд. &nbsp; D: эксперты</span></span>
+                  </div>
+                  <div className="legend-item">
+                    <span className="legend-symbol">Per</span>
+                    <span className="legend-desc">Period — периодичность<br/><span className="legend-example">D: ежедневно &nbsp; W: еженедельно &nbsp; M: ежемесячно &nbsp; Y: ежегодно &nbsp; P: по требованию</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
 
@@ -283,7 +349,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
       {selectedSupplement && (
         <div className="supplement-popup-overlay" onClick={() => setSelectedSupplement(null)}>
           <div className="supplement-popup" onClick={e => e.stopPropagation()}>
-            <div className="supplement-popup-header" style={{ borderLeftColor: selectedSupplement.classification === 'медицинский' ? '#d32f2f' : '#795548' }}>
+            <div className="supplement-popup-header" style={{ borderLeftColor: selectedSupplement.classification === 'мед' ? '#d32f2f' : '#795548' }}>
               <span className="supplement-popup-code">{selectedSupplement.code}</span>
               <h3>{selectedSupplement.name}</h3>
               <button className="supplement-popup-close" onClick={() => setSelectedSupplement(null)}>
@@ -299,8 +365,8 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               </div>
               <div className="supplement-popup-row">
                 <span className="supplement-popup-label">Тип</span>
-                <span className={`supplement-popup-value ${selectedSupplement.classification === 'медицинский' ? 'class-med' : 'class-nutr'}`}>
-                  {selectedSupplement.classification === 'медицинский' ? '🏥 Медицинский' : '🌿 Нутрицевтический'}
+                <span className={`supplement-popup-value ${selectedSupplement.classification === 'мед' ? 'class-med' : 'class-nutr'}`}>
+                  {selectedSupplement.classification === 'мед' ? '🏥 мед' : '🌿 нутри'}
                 </span>
               </div>
               <div className="supplement-popup-row">
@@ -324,11 +390,67 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
         </div>
       )}
 
+      {selectedIntervention && (
+        <div className="supplement-popup-overlay" onClick={() => setSelectedIntervention(null)}>
+          <div className="supplement-popup" onClick={e => e.stopPropagation()}>
+            <div className="supplement-popup-header" style={{ borderLeftColor: getCategoryColor(selectedIntervention.category) }}>
+              <span className="supplement-popup-code">{selectedIntervention.code}</span>
+              <h3>{selectedIntervention.name}</h3>
+              <button className="supplement-popup-close" onClick={() => setSelectedIntervention(null)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+            <div className="supplement-popup-body">
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Описание</span>
+                <span className="supplement-popup-value">{selectedIntervention.description || 'Нет данных'}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Категория</span>
+                <span className="supplement-popup-value" style={{ color: getCategoryColor(selectedIntervention.category) }}>
+                  {categories.find(c => c.key === selectedIntervention.category)?.label || selectedIntervention.category}
+                </span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Воздействие</span>
+                <span className="supplement-popup-value" style={{ color: getImpactColor(selectedIntervention.impact) }}>{selectedIntervention.impact}/10</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Доказательность</span>
+                <span className="supplement-popup-value" style={{ color: getEvidenceBadge(selectedIntervention.evidence) }}>{selectedIntervention.evidence}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Периодичность</span>
+                <span className="supplement-popup-value">{selectedIntervention.regularity}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Протоколы</span>
+                <span className="supplement-popup-value">
+                  {(() => {
+                    const linked = protocols.filter(p => p.interventions.includes(selectedIntervention.code));
+                    return linked.length > 0
+                      ? linked.map(p => (
+                          <span key={p.id} className={`protocol-interv-badge ${p.id === 'OZEMPIC_JUMPERS' ? 'protocol-danger' : ''}`} style={{ display: 'inline-block', margin: '2px 4px', borderLeftColor: p.category === 'medical' ? '#d32f2f' : p.category === 'nutritional' ? '#f57c00' : p.category === 'mental' ? '#7b1fa2' : '#388e3c' }}>
+                            {p.name}
+                          </span>
+                        ))
+                      : 'Не входит в протоколы';
+                  })()}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showBacklog && (
         <div className="backlog-overlay" onClick={() => setShowBacklog(false)}>
           <div className="backlog-modal" onClick={e => e.stopPropagation()}>
             <div className="backlog-header">
               <span>Healora — Backlog</span>
+              <span className="version-build">{__BUILD_TIME__}</span>
               <span className="backlog-close" onClick={() => setShowBacklog(false)}>×</span>
             </div>
             <div className="backlog-body">
@@ -358,6 +480,14 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                   <li><b>Структура проекта</b>: www/dev.healora.ru + api/ + docs/ — 3ч</li>
                   <li><b>Документация протоколов</b> (17 JSON-файлов с метриками) — 8ч</li>
                   <li><b>Разметка веб-страницы</b> healora.ru (landing) — 6ч</li>
+                  <li><b>Мнемонические коды</b> интервенций (≤7 символов: SL_, PH_, MN_, FD_, SP_, DG_, M_) — 4ч</li>
+                  <li><b>Клик → попап</b> вместо корзины: карточка интервенции с описанием и протоколами — 3ч</li>
+                  <li><b>Регулярность</b> односимвольными кодами (D/W/M/Y/P) — 1ч</li>
+                  <li><b>Легенда I/E/Per</b> с модальным пояснением и примерами — 1ч</li>
+                  <li><b>Чат-модалка</b>: панель быстрых действий (Профиль/План/Дневник/Фото еды) — 1ч</li>
+                  <li><b>CSS-переменные</b> вместо inline-стилей для кнопок категорий — 1ч</li>
+                  <li><b>Yandex Metrika</b> с setTimeout(0) — 1ч</li>
+                  <li><b>Build timestamp</b> VITE_BUILD_TIME в версии и беклоге — 1ч</li>
                 </ul>
               </div>
               <div className="backlog-section">

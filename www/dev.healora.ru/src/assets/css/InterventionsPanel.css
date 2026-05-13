@@ -6,9 +6,9 @@
   height: 100%;
   overflow-y: auto;
   color: #1a1a1a;
-  width: 320px;
-  min-width: 320px;
-  max-width: 320px;
+  width: 290px;
+  min-width: 290px;
+  max-width: 290px;
 }
 
 .panel-header {
@@ -84,6 +84,22 @@
 .cat-btn.active {
   color: white;
 }
+.cat-btn.cat-all.active { background: #6b21c8; }
+.cat-btn.cat-sleep.active { background: #1976d2; }
+.cat-btn.cat-physical.active { background: #388e3c; }
+.cat-btn.cat-mental.active { background: #7b1fa2; }
+.cat-btn.cat-food.active { background: #f57c00; }
+.cat-btn.cat-medical.active { background: #d32f2f; }
+.cat-btn.cat-supplement.active { background: #795548; }
+
+.cat-btn.sup-all.active { background: #6b21c8; }
+.cat-btn.sup-vitamins.active { background: #2196f3; }
+.cat-btn.sup-vitamin_like.active { background: #9c27b0; }
+.cat-btn.sup-minerals.active { background: #4caf50; }
+
+.cat-btn.food-all.active { background: #6b21c8; }
+.cat-btn.food-diet.active { background: #e65100; }
+.cat-btn.food-habit.active { background: #f9a825; }
 
 .cat-btn.sm {
   font-size: 10px;
@@ -143,7 +159,7 @@
   font-family: monospace;
   font-size: 9px;
   color: #757575;
-  width: 32px;
+  width: 42px;
   flex-shrink: 0;
 }
 
@@ -175,7 +191,7 @@
 
 .col-regularity {
   font-size: 9px;
-  width: 52px;
+  width: 30px;
   text-align: center;
   flex-shrink: 0;
   color: #757575;
@@ -362,6 +378,12 @@
 }
 .version-link:hover {
   color: #311b92;
+}
+
+.version-build {
+  font-size: 10px;
+  color: #999;
+  white-space: nowrap;
 }
 
 .backlog-overlay {
@@ -575,3 +597,166 @@
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+
+.legend-btn {
+  background: #e0e0e0 !important;
+  color: #555 !important;
+  font-weight: 700;
+  font-size: 13px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  line-height: 1;
+}
+.legend-btn:hover {
+  background: #d0d0d0 !important;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+.legend-item + .legend-item {
+  border-top: 1px solid #eee;
+}
+.legend-symbol {
+  font-weight: 700;
+  font-family: monospace;
+  color: #311b92;
+  width: 28px;
+  text-align: center;
+}
+.legend-desc {
+  color: #555;
+}
+.legend-example {
+  font-size: 10px;
+  color: #999;
+}
+
+/* Compact Cart Badges */
+.cart-widgets-panel {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 6px;
+  margin: 5px 8px 8px 8px;
+}
+
+.cart-widgets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #311b92;
+}
+
+.cart-clear-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.cart-widgets-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.compact-cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-size: 8px;
+  font-weight: 600;
+  font-family: monospace;
+  background: color-mix(in srgb, var(--cat-color) 15%, white);
+  border: 1px solid color-mix(in srgb, var(--cat-color) 40%, transparent);
+  color: var(--cat-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.compact-cart-badge:hover {
+  background: color-mix(in srgb, var(--cat-color) 30%, white);
+  transform: scale(1.1);
+}
+
+/* +/- buttons in table */
+.col-actions {
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.cart-toggle-btn.add {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.cart-toggle-btn.add:hover {
+  background: #2e7d32;
+  color: white;
+}
+
+.cart-toggle-btn.remove {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.cart-toggle-btn.remove:hover {
+  background: #c62828;
+  color: white;
+}
+
+/* Category color filter buttons */
+.cat-btn.cat-sleep { color: #1976d2; border-color: #1976d2; }
+.cat-btn.cat-sleep:hover { background: #1976d2; color: white; }
+
+.cat-btn.cat-physical { color: #388e3c; border-color: #388e3c; }
+.cat-btn.cat-physical:hover { background: #388e3c; color: white; }
+
+.cat-btn.cat-mental { color: #7b1fa2; border-color: #7b1fa2; }
+.cat-btn.cat-mental:hover { background: #7b1fa2; color: white; }
+
+.cat-btn.cat-food { color: #f57c00; border-color: #f57c00; }
+.cat-btn.cat-food:hover { background: #f57c00; color: white; }
+
+.cat-btn.cat-medical { color: #d32f2f; border-color: #d32f2f; }
+.cat-btn.cat-medical:hover { background: #d32f2f; color: white; }
+
+.cat-btn.cat-supplement { color: #795548; border-color: #795548; }
+.cat-btn.cat-supplement:hover { background: #795548; color: white; }
