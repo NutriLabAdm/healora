@@ -2805,16 +2805,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </div>
                     <a className="voice-link-btn" href="https://t.me/HealoraBot" target="_blank" rel="noopener">Открыть бота</a>
                   </div>
-                  <div className="voice-method">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="20" height="20">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                      <line x1="12" y1="8" x2="12" y2="14"/><line x1="9" y1="11" x2="15" y2="11"/>
-                    </svg>
-                    <div>
-                      <strong>WhatsApp / Viber</strong>
-                      <p>Напишите на номер <strong>+7 XXX XXX-XX-XX</strong> в WhatsApp или Viber. Отправьте голосовое сообщение с параметрами здоровья.</p>
-                    </div>
-                  </div>
+
                 </div>
                 <button className="voice-done-btn" onClick={() => setShowVoicePopup(false)}>Закрыть</button>
               </div>
