@@ -233,6 +233,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
       report_effort: entry.report_effort || 'light',
       sources: entry.sources || '-',
       biomarkers: entry.biomarkers || entry.affects || [],
+      schedule: entry.schedule || null,
     };
   });
 
@@ -253,13 +254,19 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     '08_1': ['hrv', 'resting_hr']
   };
 
-  const getDaysForIntervention = (regularity, startDay = 0) => {
+  const getDaysForIntervention = (regularity, startDay = 0, schedule = null) => {
     const days = [];
-    switch (regularity) {
-      case 'D': for (let d = startDay; d <= 30; d++) days.push(d); break;
-      case 'W': for (let d = startDay; d <= 30; d += 7) days.push(d); break;
-      case 'M': for (let d = startDay; d <= 30; d += 30) days.push(d); break;
-      case 'once': default: days.push(startDay); break;
+    if (schedule && schedule.days && schedule.days.length > 0) {
+      for (let d = startDay; d <= 30; d++) {
+        if (schedule.days.includes(d % 7)) days.push(d);
+      }
+    } else {
+      switch (regularity) {
+        case 'D': for (let d = startDay; d <= 30; d++) days.push(d); break;
+        case 'W': for (let d = startDay; d <= 30; d += 7) days.push(d); break;
+        case 'M': for (let d = startDay; d <= 30; d += 30) days.push(d); break;
+        case 'once': default: days.push(startDay); break;
+      }
     }
     return days;
   };
@@ -271,7 +278,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     protocol.interventions.forEach(code => {
       const intervention = interventionCatalog[code];
       if (!intervention || timelineInterventions.find(i => i.code === code)) return;
-      const days = getDaysForIntervention(intervention.regularity, 0);
+      const days = getDaysForIntervention(intervention.regularity, 0, intervention.schedule);
       days.forEach(day => newItems.push({ ...intervention, day, protocolKey }));
     });
     if (newItems.length > 0) setTimelineInterventions(prev => [...prev, ...newItems]);
@@ -289,7 +296,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         const intervention = interventionCatalog[code];
         if (!intervention || timelineInterventions.find(i => i.code === code)) return;
         added.add(code);
-        const days = getDaysForIntervention(intervention.regularity, 0);
+        const days = getDaysForIntervention(intervention.regularity, 0, intervention.schedule);
         days.forEach(day => newItems.push({ ...intervention, day, categoryKey: intervention.category }));
       });
     };
@@ -422,7 +429,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
 
     setTimelineInterventions(prev => {
       const filtered = prev.filter(i => i.code !== intervention.code);
-      const days = getDaysForIntervention(intervention.regularity, dropDay);
+      const days = getDaysForIntervention(intervention.regularity, dropDay, intervention.schedule);
       const newItems = days.map(day => ({ ...intervention, day }));
       return [...filtered, ...newItems];
     });
@@ -1039,29 +1046,32 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                 <span className="interv-label-name">{clip.name}</span>
                               </div>
                               <div className="td-track">
-                                <svg viewBox="0 0 1000 32" width="100%" height="32" style={{ display: 'block' }}>
-                                  <rect width="1000" height="32" fill="#fafafa"/>
+                                <svg viewBox="0 0 1000 42" width="100%" height="42" style={{ display: 'block' }}>
+                                  <rect width="1000" height="42" fill="#fafafa"/>
                                   {[1,2,3,4,5,6,7,8,9].map(i => (
-                                    <line key={i} x1={i*100} y1={0} x2={i*100} y2={32} stroke="#eee" strokeWidth={1}/>
+                                    <line key={i} x1={i*100} y1={0} x2={i*100} y2={42} stroke="#eee" strokeWidth={1}/>
                                   ))}
-                                  <rect x={0} y={0} width={dayProgress*1000} height={32} fill={`${catColor}15`}/>
+                                  <rect x={0} y={0} width={dayProgress*1000} height={42} fill={`${catColor}15`}/>
                                   {(() => {
                                     const activatedDays = new Set(
                                       interventionLog.filter(e => e.state === 'Активировано').map(e => `${e.code}_${e.day}`)
                                     );
+                                    const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
                                     return positions.map((day, i) => {
                                       const cx = (day/30)*1000;
                                       const triggered = activatedDays.has(`${clip.code}_${day}`);
+                                      const hasTime = clip.schedule && clip.schedule.time;
                                       return (
                                         <g key={i} style={{ cursor:'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedInterventionForPopup(clip); setShowInterventionPopup(true); }}>
-                                          <title>{`${clip.name} — день ${day}`}</title>
+                                          <title>{`${clip.name} — ${dayNames[day%7]} день ${day}${hasTime ? ' ' + clip.schedule.time : ''}`}</title>
                                           <rect x={cx-12} y={4} width={24} height={24} rx={4} fill="transparent"/>
                                           <circle cx={cx} cy={16} r={4} fill={catColor} opacity={day <= simulationDay && triggered ? 1 : 0.2}/>
+                                          {hasTime && <text x={cx} y={30} textAnchor="middle" fontSize="7" fill="#666">{clip.schedule.time}</text>}
                                         </g>
                                       );
                                     });
                                   })()}
-                                  <line x1={dayProgress*1000} y1={0} x2={dayProgress*1000} y2={32} stroke="#d50000" strokeWidth={2}/>
+                                  <line x1={dayProgress*1000} y1={0} x2={dayProgress*1000} y2={42} stroke="#d50000" strokeWidth={2}/>
                                 </svg>
                               </div>
                             </div>
@@ -1508,6 +1518,15 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                        selectedInterventionForPopup.regularity}
                     </span>
                   </div>
+                  {selectedInterventionForPopup.schedule && (
+                  <div className="popup-row">
+                    <span className="popup-label">Расписание</span>
+                    <span className="popup-value">
+                      {['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].filter((_,i) => selectedInterventionForPopup.schedule.days.includes(i)).join(', ')}
+                      {selectedInterventionForPopup.schedule.time ? ` в ${selectedInterventionForPopup.schedule.time}` : ''}
+                    </span>
+                  </div>
+                  )}
                   <div className="popup-row">
                     <span className="popup-label">Доказательность</span>
                     <span className="popup-value evidence" style={{ color: selectedInterventionForPopup.evidence === 'A' ? '#00c853' : selectedInterventionForPopup.evidence === 'B' ? '#ff9100' : '#ffd600' }}>
@@ -1938,17 +1957,22 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                           ) : (
                             <table className="plan-table plan-table-prescription">
                               <thead>
-                                <tr><th>№</th><th>Интервенция</th><th>Код</th><th>Per</th></tr>
+                                <tr><th>№</th><th>Интервенция</th><th>Код</th><th>Per</th><th>Расписание</th></tr>
                               </thead>
                               <tbody>
-                                {items.map((item, i) => (
+                                {items.map((item, i) => {
+                                  const sched = item.schedule || (interventionCatalog[item.code] && interventionCatalog[item.code].schedule);
+                                  const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+                                  const schedStr = sched ? (sched.days.map(d => dayNames[d]).join(',') + (sched.time ? ' ' + sched.time : '')) : '';
+                                  return (
                                   <tr key={item.code || i}>
                                     <td className="plan-num">{i + 1}</td>
                                     <td>{item.name}</td>
                                     <td className="plan-code">{item.code}</td>
                                     <td className="plan-reg">{item.regularity === 'D' ? 'Д' : item.regularity === 'W' ? 'Н' : item.regularity === 'M' ? 'М' : item.regularity === 'Y' ? 'Г' : item.regularity || 'Д'}</td>
+                                    <td className="plan-sched">{schedStr}</td>
                                   </tr>
-                                ))}
+                                );})}
                               </tbody>
                             </table>
                           )}

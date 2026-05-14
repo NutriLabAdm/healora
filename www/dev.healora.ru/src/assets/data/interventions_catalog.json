@@ -180,7 +180,14 @@
         "cholesterol",
         "weight"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          1,
+          3
+        ],
+        "time": "10:00"
+      }
     },
     "PH_STR": {
       "code": "PH_STR",
@@ -215,7 +222,15 @@
         "weight",
         "muscle_mass"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "time": "09:00"
+      }
     },
     "PH_AER": {
       "code": "PH_AER",
@@ -254,7 +269,17 @@
         "diastolic_bp",
         "glucose"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "time": "07:00"
+      }
     },
     "PH_FLEX": {
       "code": "PH_FLEX",
@@ -287,7 +312,14 @@
       "biomarkers": [
         "flexibility"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          3
+        ],
+        "time": "18:00"
+      }
     },
     "PH_Z2": {
       "code": "PH_Z2",
@@ -322,7 +354,15 @@
         "endurance",
         "resting_hr"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "time": "09:00"
+      }
     },
     "MN_MDT": {
       "code": "MN_MDT",
@@ -1192,7 +1232,19 @@
         "resting_hr",
         "recovery"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "M_END01": {
       "code": "M_END01",
@@ -1208,7 +1260,12 @@
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации МЗ РФ",
-      "biomarkers": ["tsh", "glucose", "testosterone", "cortisol"],
+      "biomarkers": [
+        "tsh",
+        "glucose",
+        "testosterone",
+        "cortisol"
+      ],
       "probability": 0.85
     },
     "M_END02": {
@@ -1225,7 +1282,10 @@
       "delivery_type": "chatbot",
       "report_effort": "heavy",
       "sources": "ADA Standards of Care 2025",
-      "biomarkers": ["glucose", "hba1c"],
+      "biomarkers": [
+        "glucose",
+        "hba1c"
+      ],
       "probability": 0.75
     },
     "M_END03": {
@@ -1242,7 +1302,11 @@
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "ATA Guidelines",
-      "biomarkers": ["tsh", "t3", "t4"],
+      "biomarkers": [
+        "tsh",
+        "t3",
+        "t4"
+      ],
       "probability": 0.9
     },
     "M_CAR01": {
@@ -1259,7 +1323,10 @@
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "ESC/ESH Guidelines 2024",
-      "biomarkers": ["systolic_bp", "diastolic_bp"],
+      "biomarkers": [
+        "systolic_bp",
+        "diastolic_bp"
+      ],
       "probability": 0.9
     },
     "M_CAR02": {
@@ -1276,7 +1343,11 @@
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "ESC/EAS Guidelines 2024",
-      "biomarkers": ["ldl", "total_cholesterol", "triglycerides"],
+      "biomarkers": [
+        "ldl",
+        "total_cholesterol",
+        "triglycerides"
+      ],
       "probability": 0.85
     },
     "M_CAR03": {
@@ -1293,7 +1364,10 @@
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "РКО рекомендации",
-      "biomarkers": ["resting_hr", "hrv"],
+      "biomarkers": [
+        "resting_hr",
+        "hrv"
+      ],
       "probability": 0.8
     },
     "M_GAS01": {
@@ -1310,7 +1384,12 @@
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
-      "biomarkers": ["alt", "ast", "crp", "ggt"],
+      "biomarkers": [
+        "alt",
+        "ast",
+        "crp",
+        "ggt"
+      ],
       "probability": 0.8
     },
     "M_GAS02": {
@@ -1327,7 +1406,10 @@
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
-      "biomarkers": ["hemoglobin", "ferritin"],
+      "biomarkers": [
+        "hemoglobin",
+        "ferritin"
+      ],
       "probability": 0.8
     },
     "M_GAS03": {
@@ -1344,7 +1426,11 @@
       "delivery_type": "web_report",
       "report_effort": "heavy",
       "sources": "ACG Guidelines",
-      "biomarkers": ["hemoglobin", "ferritin", "early_detection"],
+      "biomarkers": [
+        "hemoglobin",
+        "ferritin",
+        "early_detection"
+      ],
       "probability": 0.85
     },
     "M_NEU01": {
@@ -1361,7 +1447,10 @@
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
-      "biomarkers": ["sleep", "stress"],
+      "biomarkers": [
+        "sleep",
+        "stress"
+      ],
       "probability": 0.8
     },
     "M_NEU02": {
@@ -1378,7 +1467,9 @@
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "Клинические рекомендации",
-      "biomarkers": ["early_detection"],
+      "biomarkers": [
+        "early_detection"
+      ],
       "probability": 0.7
     },
     "M_LAB01": {
@@ -1395,7 +1486,16 @@
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "Рекомендации МЗ РФ",
-      "biomarkers": ["glucose", "hba1c", "ldl", "crp", "vitamin_d", "ferritin", "alt", "ast"],
+      "biomarkers": [
+        "glucose",
+        "hba1c",
+        "ldl",
+        "crp",
+        "vitamin_d",
+        "ferritin",
+        "alt",
+        "ast"
+      ],
       "probability": 0.95
     },
     "M_LAB02": {
@@ -1412,7 +1512,12 @@
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "Клинические рекомендации",
-      "biomarkers": ["tsh", "cortisol", "testosterone", "glucose"],
+      "biomarkers": [
+        "tsh",
+        "cortisol",
+        "testosterone",
+        "glucose"
+      ],
       "probability": 0.85
     },
     "M_LAB03": {
@@ -1429,7 +1534,9 @@
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "Harris WS, 2018",
-      "biomarkers": ["omega_3_index"],
+      "biomarkers": [
+        "omega_3_index"
+      ],
       "probability": 0.75
     }
   }

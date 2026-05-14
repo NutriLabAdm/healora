@@ -1807,6 +1807,7 @@
 .plan-table-prescription .plan-num { color: #999; font-size: 10px; }
 .plan-table-prescription .plan-code { font-family: monospace; font-size: 11px; color: #613CF5; }
 .plan-table-prescription .plan-reg { font-weight: 600; color: #1a1a2e; text-align: center; }
+.plan-table-prescription .plan-sched { font-size: 10px; color: #666; white-space: nowrap; }
 
 /* Plan badges (intervention chips) */
 .plan-badges-section { margin-bottom: 12px; }
