@@ -67,6 +67,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [selectedProtocolForPopup, setSelectedProtocolForPopup] = useState(null);
   const [logViewDay, setLogViewDay] = useState(-1); // -1 = all days
   const [showTaskPopup, setShowTaskPopup] = useState(false);
+  const [showVoicePopup, setShowVoicePopup] = useState(false);
+  const [voiceSection, setVoiceSection] = useState(null);
   const simulationSpeedRef = useRef(1);
 
   const { getPlan, savePlan, removePlan, plans } = usePlans();
@@ -1373,6 +1375,14 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <span className="section-dot" style={{ backgroundColor: section.color }}></span>
                       <h4 style={{ color: section.color }}>{section.title}</h4>
                     </div>
+                    <button className="mic-btn" title="Голосовой ввод параметров" onClick={(e) => { e.stopPropagation(); setVoiceSection(key); setShowVoicePopup(true); }}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                      </svg>
+                    </button>
                     <button className="collapse-btn" title={isCollapsed ? 'Развернуть' : 'Свернуть'}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                         {isCollapsed ? (
@@ -2740,6 +2750,73 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </svg>
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {showVoicePopup && (
+            <div className="voice-overlay" onClick={() => setShowVoicePopup(false)}>
+              <div className="voice-popup" onClick={e => e.stopPropagation()}>
+                <button className="voice-close" onClick={() => setShowVoicePopup(false)}>×</button>
+                <div className="voice-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="24" height="24">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+                  </svg>
+                  <h3>Голосовой ввод параметров</h3>
+                </div>
+                <p className="voice-desc">Заполните раздел <strong>«{attributeCatalog[voiceSection]?.title || voiceSection}»</strong> голосом</p>
+                <div className="voice-methods">
+                  <div className="voice-method">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="20" height="20">
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                      <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                    <div>
+                      <strong>Браузер (Web Speech API)</strong>
+                      <p>Нажмите «Начать запись» и продиктуйте значения параметров. Например: «возраст 35, вес 70 кг, рост 170 см».</p>
+                    </div>
+                    <button className="voice-record-btn" onClick={() => {
+                      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                        alert('Голосовой ввод не поддерживается в этом браузере. Используйте Telegram бота.');
+                        return;
+                      }
+                      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                      const recognition = new SpeechRecognition();
+                      recognition.lang = 'ru-RU';
+                      recognition.onresult = (event) => {
+                        const text = event.results[0][0].transcript;
+                        alert('Распознано: ' + text + '\n\nЗначения будут заполнены в ближайшем обновлении.');
+                        setShowVoicePopup(false);
+                      };
+                      recognition.start();
+                    }}>Начать запись</button>
+                  </div>
+                  <div className="voice-method">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="20" height="20">
+                      <rect x="3" y="2" width="18" height="20" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
+                      <circle cx="12" cy="13" r="2"/><path d="M12 15v3"/><path d="M9 11a3 3 0 0 1 6 0"/>
+                    </svg>
+                    <div>
+                      <strong>Telegram бот @HealoraBot</strong>
+                      <p>Отправьте голосовое сообщение или текст в нашего Telegram бота. Бот пришлёт QR-код для синхронизации с профилем.</p>
+                    </div>
+                    <a className="voice-link-btn" href="https://t.me/HealoraBot" target="_blank" rel="noopener">Открыть бота</a>
+                  </div>
+                  <div className="voice-method">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="20" height="20">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                      <line x1="12" y1="8" x2="12" y2="14"/><line x1="9" y1="11" x2="15" y2="11"/>
+                    </svg>
+                    <div>
+                      <strong>WhatsApp / Viber</strong>
+                      <p>Напишите на номер <strong>+7 XXX XXX-XX-XX</strong> в WhatsApp или Viber. Отправьте голосовое сообщение с параметрами здоровья.</p>
+                    </div>
+                  </div>
+                </div>
+                <button className="voice-done-btn" onClick={() => setShowVoicePopup(false)}>Закрыть</button>
               </div>
             </div>
           )}
