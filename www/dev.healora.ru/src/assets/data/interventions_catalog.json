@@ -73,7 +73,19 @@
         "systolic_bp",
         "diastolic_bp"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "22:00"
+      }
     },
     "SL_DUR": {
       "code": "SL_DUR",
@@ -106,7 +118,19 @@
       "biomarkers": [
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "22:00"
+      }
     },
     "SL_QLT": {
       "code": "SL_QLT",
@@ -139,7 +163,19 @@
       "biomarkers": [
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "21:00"
+      }
     },
     "PH_HIIT": {
       "code": "PH_HIIT",
@@ -399,7 +435,19 @@
         "hrv",
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "MN_BRTH": {
       "code": "MN_BRTH",
@@ -467,7 +515,19 @@
       "biomarkers": [
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "21:30"
+      }
     },
     "MN_STR": {
       "code": "MN_STR",
@@ -502,7 +562,19 @@
         "stress",
         "cortisol"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "MN_DTOX": {
       "code": "MN_DTOX",
@@ -537,7 +609,19 @@
         "sleep",
         "eye_strain"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "FD_WATER": {
       "code": "FD_WATER",
@@ -572,7 +656,19 @@
         "hydration",
         "kidney_function"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      }
     },
     "FD_ELEC": {
       "code": "FD_ELEC",
@@ -607,7 +703,19 @@
         "electrolytes",
         "muscle_function"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "12:00"
+      }
     },
     "FD_CAL": {
       "code": "FD_CAL",
@@ -644,7 +752,19 @@
         "cholesterol",
         "weight"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "FD_CRB": {
       "code": "FD_CRB",
@@ -679,7 +799,19 @@
         "glucose",
         "insulin"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "FD_SUG": {
       "code": "FD_SUG",
@@ -714,7 +846,19 @@
         "glucose",
         "liver"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "12:00"
+      }
     },
     "FD_IF": {
       "code": "FD_IF",
@@ -751,7 +895,19 @@
         "insulin",
         "autophagy"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "10:00"
+      }
     },
     "FD_EAT": {
       "code": "FD_EAT",
@@ -786,7 +942,19 @@
         "glucose",
         "circadian_rhythm"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "FD_FIB": {
       "code": "FD_FIB",
@@ -823,7 +991,19 @@
         "glucose",
         "gut_health"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "FD_CAF": {
       "code": "FD_CAF",
@@ -860,7 +1040,19 @@
         "anxiety",
         "resting_hr"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "10:00"
+      }
     },
     "SP_D3": {
       "code": "SP_D3",
@@ -897,7 +1089,19 @@
         "bone_health",
         "immunity"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      }
     },
     "SP_O3": {
       "code": "SP_O3",
@@ -934,7 +1138,19 @@
         "triglycerides",
         "inflammation"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      }
     },
     "SP_MG": {
       "code": "SP_MG",
@@ -971,7 +1187,19 @@
         "sleep",
         "muscle_tension"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "21:00"
+      }
     },
     "SP_BC": {
       "code": "SP_BC",
@@ -1008,7 +1236,19 @@
         "nervous_system",
         "blood_formation"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      }
     },
     "SP_ADP": {
       "code": "SP_ADP",
@@ -1045,7 +1285,19 @@
         "cortisol",
         "energy"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      }
     },
     "FD_ANTI": {
       "code": "FD_ANTI",
@@ -1082,7 +1334,19 @@
         "crp",
         "joint_health"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "SP_NTRP": {
       "code": "SP_NTRP",
@@ -1286,7 +1550,19 @@
         "glucose",
         "hba1c"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "M_END03": {
       "code": "M_END03",
@@ -1307,7 +1583,19 @@
         "t3",
         "t4"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "M_CAR01": {
       "code": "M_CAR01",
@@ -1327,7 +1615,19 @@
         "systolic_bp",
         "diastolic_bp"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "M_CAR02": {
       "code": "M_CAR02",
@@ -1348,7 +1648,19 @@
         "total_cholesterol",
         "triglycerides"
       ],
-      "probability": 0.85
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
     },
     "M_CAR03": {
       "code": "M_CAR03",
