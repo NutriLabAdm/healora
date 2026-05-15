@@ -522,6 +522,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
       .then(data => {
         setProfile(data.profile || null);
         setStars(data.profile?.digital_twin_scores?.current_stars || 0);
+        setParamHistory(data.profile?.history || {});
         setLoading(false);
       })
       .catch(() => {
@@ -1164,6 +1165,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         sex: profileOverrides.sex ?? profile.demographics.sex,
         ethnicity_or_background: profileOverrides.ethnicity ?? profile.demographics.ethnicity_or_background,
       } : undefined,
+      history: paramHistory,
     };
     try {
       let res = await fetch(`/api/profiles/${profile.profile_id}`, {

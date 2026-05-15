@@ -156,7 +156,6 @@ app.post('/api/profiles', (req, res) => {
 
         // Add to array
         data.healora_test_profiles.push(newProfile);
-        data.healora_test_profiles.push(newProfile);
 
         // Save back to file
         fs.writeFileSync(profilesPath, JSON.stringify(data, null, 2), 'utf8');
