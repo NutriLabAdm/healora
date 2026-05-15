@@ -2116,7 +2116,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                             </div>
                             {(() => {
                               const cells = [];
-                              const origVal = attr.current;
                               for (let i = 0; i < 7; i++) {
                                 const d = new Date(); d.setDate(d.getDate() - i);
                                 const dateKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -2124,15 +2123,12 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                 const matches = history.filter(h => h.timestamp && h.timestamp.startsWith(dateKey));
                                 const match = matches.length > 0 ? matches[matches.length - 1] : null;
                                 const override = i === 0 && attr.id in profileOverrides ? profileOverrides[attr.id] : null;
-                                const raw = match ? match.value : override;
-                                const changed = raw != null && raw != origVal;
-                                const val = changed ? raw : null;
-                                const isOverride = !match && override !== null && changed;
-                                cells.push(
-                                  <div key={i} className={`attr-day-cell ${i === 0 ? 'today' : ''} ${isOverride ? 'overridden' : ''}`}>
-                                    {val !== null ? <span className="day-value">{val}</span> : <span className="day-empty">—</span>}
-                                  </div>
-                                );
+                                const val = match ? match.value : (override ?? null);
+                                  cells.push(
+                                    <div key={i} className={`attr-day-cell ${i === 0 ? 'today' : ''}`}>
+                                      {val !== null ? <span className="day-value">{val}</span> : <span className="day-empty">—</span>}
+                                    </div>
+                                  );
                               }
                               return cells;
                             })()}

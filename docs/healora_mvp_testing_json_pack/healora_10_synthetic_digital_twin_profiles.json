@@ -108,8 +108,8 @@
       },
       "anthropometrics": {
         "height_cm": 178,
-        "weight_kg": 99,
-        "bmi": 31.2,
+        "weight_kg": 94,
+        "bmi": 29.7,
         "waist_cm": 100
       },
       "vitals": {
@@ -193,7 +193,37 @@
         "Do not recommend HIIT now.",
         "Suggest specialist if BP repeatedly above 140/90."
       ],
-      "name": "Михаил"
+      "name": "Михаил",
+      "history": {
+        "weight": [
+          {
+            "value": 92,
+            "timestamp": "2026-05-15T10:57:56.486Z"
+          },
+          {
+            "value": 93,
+            "timestamp": "2026-05-15T10:58:14.868Z"
+          },
+          {
+            "value": 94,
+            "timestamp": "2026-05-15T10:58:29.465Z"
+          }
+        ],
+        "bmi": [
+          {
+            "value": 29,
+            "timestamp": "2026-05-15T10:57:56.486Z"
+          },
+          {
+            "value": 29.4,
+            "timestamp": "2026-05-15T10:58:14.868Z"
+          },
+          {
+            "value": 29.7,
+            "timestamp": "2026-05-15T10:58:29.465Z"
+          }
+        ]
+      }
     },
     {
       "profile_id": "TEST_003",
