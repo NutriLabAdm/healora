@@ -2990,7 +2990,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       </span>
                     )}
                   <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                    {timelineInterventions.length > 0 && !isSimulating && (
+                    {chatMode === 'simulation' && timelineInterventions.length > 0 && !isSimulating && (
                       <button className="chat-start-btn" onClick={startSimulation}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                           <polygon points="5 3 19 12 5 21 5 3"/>
@@ -3009,8 +3009,12 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         </button>
                       </>
                     )}
-                    <button className={`chat-gigachat-btn ${chatMode === 'gigachat' ? 'active' : ''}`} onClick={() => setChatMode(m => m === 'gigachat' ? 'simulation' : 'gigachat')} title="GigaChat">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <button className={`chat-gigachat-btn ${chatMode === 'gigachat' ? 'active' : ''}`} onClick={() => setChatMode(m => m === 'gigachat' ? 'simulation' : 'gigachat')} title={chatMode === 'gigachat' ? 'Симуляция' : 'GigaChat'}>
+                      {chatMode === 'gigachat' ? (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                      )}
                     </button>
                     <button className="chat-close-btn" onClick={() => setShowChat(false)}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
