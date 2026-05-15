@@ -3074,6 +3074,25 @@
   white-space: nowrap;
 }
 
+.chat-gigachat-btn {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff; transition: all 0.2s;
+}
+.chat-gigachat-btn:hover { background: rgba(255,255,255,0.3); }
+.chat-gigachat-btn.active { background: #00c853; border-color: #00c853; }
+
+.chat-ai-msg { display: flex; margin-bottom: 6px; }
+.chat-ai-msg-user { justify-content: flex-end; }
+.chat-ai-msg-bot { justify-content: flex-start; }
+.chat-ai-bubble {
+  max-width: 80%; padding: 8px 12px; border-radius: 12px;
+  font-size: 12px; line-height: 1.4;
+}
+.chat-ai-msg-user .chat-ai-bubble { background: #6b21c8; color: #fff; border-bottom-right-radius: 2px; }
+.chat-ai-msg-bot .chat-ai-bubble { background: #fff; color: #333; border-bottom-left-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.chat-ai-text { white-space: pre-wrap; word-break: break-word; }
+
 .chat-user-message {
   background: #e8f5e9;
   border-radius: 8px 8px 4px 8px;

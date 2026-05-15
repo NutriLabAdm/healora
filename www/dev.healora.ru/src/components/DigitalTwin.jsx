@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import '../assets/css/DigitalTwin.css';
 import '../assets/css/ActionButtons.css';
@@ -89,7 +89,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [selectedProtocolForScheduling, setSelectedProtocolForScheduling] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
-  const [chatInputText, setChatInputText] = useState('');
+  const chatInputRef = useRef(null);
+  const [chatMode, setChatMode] = useState('simulation');
+  const [gigachatMessages, setGigachatMessages] = useState([]);
+  const [gigachatLoading, setGigachatLoading] = useState(false);
   const [showProtocolPopup, setShowProtocolPopup] = useState(false);
   const [selectedProtocolForPopup, setSelectedProtocolForPopup] = useState(null);
   const [logViewDay, setLogViewDay] = useState(-1); // -1 = all days
@@ -753,9 +756,25 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   ];
 
   const handleChatSend = () => {
-    const text = chatInputText.trim();
+    const text = chatInputRef.current ? chatInputRef.current.value.trim() : '';
     if (!text) return;
-    setChatInputText('');
+    if (chatInputRef.current) chatInputRef.current.value = '';
+    if (chatMode === 'gigachat') {
+      setGigachatMessages(prev => [...prev, { id: Date.now(), text, user: true, time: new Date().toLocaleTimeString() }]);
+      setGigachatLoading(true);
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, profile: profileId }),
+      }).then(r => r.json()).then(data => {
+        if (data.reply) {
+          setGigachatMessages(prev => [...prev, { id: Date.now(), text: data.reply, user: false, time: new Date().toLocaleTimeString() }]);
+        }
+      }).catch(() => {
+        setGigachatMessages(prev => [...prev, { id: Date.now(), text: 'Ошибка соединения с GigaChat', user: false, time: new Date().toLocaleTimeString() }]);
+      }).finally(() => setGigachatLoading(false));
+      return;
+    }
     setChatMessages(prev => [...prev, {
       id: `chat_${Date.now()}`,
       day: simulationDay,
@@ -2990,6 +3009,9 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         </button>
                       </>
                     )}
+                    <button className={`chat-gigachat-btn ${chatMode === 'gigachat' ? 'active' : ''}`} onClick={() => setChatMode(m => m === 'gigachat' ? 'simulation' : 'gigachat')} title="GigaChat">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
                     <button className="chat-close-btn" onClick={() => setShowChat(false)}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -2999,8 +3021,29 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                 </div>
               </div>
                 <div className="chat-messages" ref={chatRef}>
-                  {chatMessages.length === 0 && !isSimulating && (
-                    <div className="chat-empty">
+                  {chatMode === 'gigachat' ? (
+                    <>
+                      {gigachatMessages.length === 0 && (
+                        <div className="chat-empty">Спросите у GigaChat о здоровье, питании, тренировках</div>
+                      )}
+                      {gigachatMessages.map(m => (
+                        <div key={m.id} className={`chat-ai-msg ${m.user ? 'chat-ai-msg-user' : 'chat-ai-msg-bot'}`}>
+                          <div className="chat-ai-bubble">
+                            <span className="chat-ai-text">{m.text}</span>
+                            <span className="chat-interv-time">{m.time}</span>
+                          </div>
+                        </div>
+                      ))}
+                      {gigachatLoading && (
+                        <div className="chat-ai-msg chat-ai-msg-bot">
+                          <div className="chat-ai-bubble"><span className="chat-ai-text">...</span></div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {chatMessages.length === 0 && !isSimulating && (
+                        <div className="chat-empty">
                       {timelineInterventions.length === 0
                         ? 'Нет запланированных интервенций. Создайте план.'
                         : 'Нажмите «Запустить» чтобы начать симуляцию'}
@@ -3268,6 +3311,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <span className="typing-dot"></span>
                     </div>
                   )}
+                  </>
+                  )}
                 </div>
                 <div className="chat-actions-bar">
                   <button className="chat-action-btn" onClick={() => setChatInlineMode(chatInlineMode === 'profile' ? 'none' : 'profile')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Профиль</button>
@@ -3281,8 +3326,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   <button className="chat-action-btn" onClick={() => setChatInlineMode(chatInlineMode === 'food' ? 'none' : 'food')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Фото еды</button>
                 </div>
                 <div className="chat-input-bar">
-                  <input type="text" className="chat-input" placeholder="Напишите сообщение..." value={chatInputText} onChange={e => setChatInputText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && chatInputText.trim()) handleChatSend(); }} />
-                  <button className="chat-send-btn" disabled={!chatInputText.trim()} onClick={handleChatSend}>
+                  <input type="text" className="chat-input" ref={chatInputRef} placeholder="Напишите сообщение..." defaultValue="" onKeyDown={e => { if (e.key === 'Enter') handleChatSend(); }} />
+                  <button className="chat-send-btn" onClick={handleChatSend}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                       <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
