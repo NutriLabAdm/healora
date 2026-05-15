@@ -1904,8 +1904,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         <span>Интервенции</span>
                         {(() => {
                           const cols = [];
-                          for (let i = -2; i <= 3; i++) {
-                            const d = new Date(); d.setDate(d.getDate() + i);
+                          for (let i = 0; i < 7; i++) {
+                            const d = new Date(); d.setDate(d.getDate() - i);
                             const dayName = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][d.getDay()];
                             const dateStr = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}`;
                             cols.push(<span key={i} className={`attr-day-header ${i === 0 ? 'today' : ''}`}>{dayName}<br/>{dateStr}</span>);
@@ -1999,8 +1999,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                             {(() => {
                               const cells = [];
                               const origVal = attr.current;
-                              for (let i = -2; i <= 3; i++) {
-                                const d = new Date(); d.setDate(d.getDate() + i);
+                              for (let i = 0; i < 7; i++) {
+                                const d = new Date(); d.setDate(d.getDate() - i);
                                 const dateKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
                                 const history = paramHistory[attr.id] || [];
                                 const matches = history.filter(h => h.timestamp && h.timestamp.startsWith(dateKey));
