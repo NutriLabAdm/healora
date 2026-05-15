@@ -4,8 +4,13 @@ import '../assets/css/CategoryBadges.css';
 import catalogData from '../assets/data/interventions_catalog.json';
 import supplementsCatalog from '../assets/data/supplements_catalog.json';
 import dietsCatalog from '../assets/data/diets_catalog.json';
+import backlogMd from '../../../../docs/development/BACKLOG.md?raw';
 
-const __BUILD_TIME__ = import.meta.env.VITE_BUILD_TIME || new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+const backlogVersion = (() => {
+  const lines = backlogMd.split('\n');
+  const verLine = lines.find(l => l.startsWith('> ver '));
+  return verLine ? verLine.replace(/^>\s*/, '').replace(/, \d{2}:\d{2}$/, '').replace(' | ', ' · ') : '0.10.3';
+})();
 
 const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, onRemoveFromCart, onOrderPlan }) => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -123,7 +128,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
           <button className={`panel-tab ${tab === 'interventions' ? 'active' : ''}`} onClick={() => setTab('interventions')}>Интервенции</button>
           <button className={`panel-tab ${tab === 'protocols' ? 'active' : ''}`} onClick={() => setTab('protocols')}>Протоколы</button>
         </div>
-        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.10.3 | 13.05.2026, 07:25:33</span>
+        <span className="version-link" onClick={() => setShowBacklog(true)}>ver {backlogVersion}</span>
       </div>
 
       {/* Compact Cart Widgets */}
