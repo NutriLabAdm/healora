@@ -1802,13 +1802,13 @@
 .pref-custom-input:focus { border-color: #9c27b0; background: #fff; }
 .pref-custom-input::placeholder { color: #bbb; }
 
-.pref-protocol-btn {
+.pref-practice-btn {
   display: inline-flex; align-items: center; gap: 3px;
   padding: 3px 8px; border: 1px solid #e0e0e0; border-radius: 10px;
   font-size: 10px; font-family: inherit; background: #fafafa; color: #666;
   cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
-.pref-protocol-btn:hover { border-color: #9c27b0; color: #9c27b0; background: #f3e5f5; }
+.pref-practice-btn:hover { border-color: #9c27b0; color: #9c27b0; background: #f3e5f5; }
 
 .protocol-picker-dropdown {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;

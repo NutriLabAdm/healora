@@ -8,11 +8,29 @@ import foodCatalog from '../assets/data/food_catalog.json';
 import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js';
 import { usePlans } from '../context/PlansProvider';
 import protocolTypes from '../assets/data/protocols_type.json';
+import dietPrefsData from '../assets/data/diet_preferences.json';
+import dietRestrictionsData from '../assets/data/diet_restrictions.json';
 
 const practiceMdModules = import.meta.glob('../../../../docs/domain/med_traditional_practices/practice_*.md', { as: 'raw', eager: true });
 const practiceContentByKey = Object.fromEntries(
   Object.entries(practiceMdModules).map(([path, content]) => {
     const m = path.match(/practice_(\w+)\.md$/);
+    return m ? [m[1], content] : null;
+  }).filter(Boolean)
+);
+
+const dietPrefMdModules = import.meta.glob('../../../../docs/domain/diet_preferences/diet_*.md', { as: 'raw', eager: true });
+const dietPrefContentByKey = Object.fromEntries(
+  Object.entries(dietPrefMdModules).map(([path, content]) => {
+    const m = path.match(/diet_(\w+)\.md$/);
+    return m ? [m[1], content] : null;
+  }).filter(Boolean)
+);
+
+const dietRestrictionMdModules = import.meta.glob('../../../../docs/domain/diet_restrictions/restriction_*.md', { as: 'raw', eager: true });
+const dietRestrictionContentByKey = Object.fromEntries(
+  Object.entries(dietRestrictionMdModules).map(([path, content]) => {
+    const m = path.match(/restriction_(\w+)\.md$/);
     return m ? [m[1], content] : null;
   }).filter(Boolean)
 );
@@ -178,6 +196,16 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [showProtocolPicker, setShowProtocolPicker] = useState(false);
   const [regulatoryInfo, setRegulatoryInfo] = useState(null);
   const [practicePopup, setPracticePopup] = useState(null);
+  const [prefDietBadges, setPrefDietBadges] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('healora_pref_diet') || '[]'); } catch { return []; }
+  });
+  const [prefRestrictionBadges, setPrefRestrictionBadges] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('healora_pref_restrictions') || '[]'); } catch { return []; }
+  });
+  const [showDietPrefs, setShowDietPrefs] = useState(false);
+  const [showRestrictions, setShowRestrictions] = useState(false);
+  const [dietPrefPopup, setDietPrefPopup] = useState(null);
+  const [restrictionPopup, setRestrictionPopup] = useState(null);
   const simulationSpeedRef = useRef(1);
 
   const { getPlan, savePlan, removePlan, plans } = usePlans();
@@ -1595,7 +1623,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       paramHistory,
                       plans: plans[profileId] || null,
                       interventions: timelineInterventions,
-                      preferences: { badges: prefBadges, custom: prefCustom },
+                      preferences: { badges: prefBadges, custom: prefCustom, diet: prefDietBadges, restrictions: prefRestrictionBadges },
                       exportedAt: new Date().toISOString(),
                     };
                     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1613,26 +1641,30 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                 </div>
                 <div className="profile-prefs">
                   <span className="prefs-label">Предпочтения:</span>
-                  {['вегетарианство'].concat(prefBadges.filter(b => b !== 'вегетарианство')).map(badge => (
-                    <span
-                      key={badge}
-                      className={`pref-badge ${prefBadges.includes(badge) ? 'active' : ''}`}
-                      onClick={() => {
-                        const next = prefBadges.includes(badge) ? prefBadges.filter(b => b !== badge) : [...prefBadges, badge];
-                        setPrefBadges(next);
-                        localStorage.setItem('healora_pref_badges', JSON.stringify(next));
-                      }}
-                    >
+                  {prefDietBadges.map(badge => (
+                    <span key={'d_'+badge} className="pref-badge active">
                       {badge}
-                      {badge !== 'вегетарианство' && (
-                        <span className="pref-badge-remove" onClick={e => { e.stopPropagation(); const next = prefBadges.filter(b => b !== badge); setPrefBadges(next); localStorage.setItem('healora_pref_badges', JSON.stringify(next)); }}>×</span>
-                      )}
+                      <span className="pref-badge-remove" onClick={e => { e.stopPropagation(); const next = prefDietBadges.filter(b => b !== badge); setPrefDietBadges(next); localStorage.setItem('healora_pref_diet', JSON.stringify(next)); }}>×</span>
+                    </span>
+                  ))}
+                  {prefRestrictionBadges.map(badge => (
+                    <span key={'r_'+badge} className="pref-badge active">
+                      {badge}
+                      <span className="pref-badge-remove" onClick={e => { e.stopPropagation(); const next = prefRestrictionBadges.filter(b => b !== badge); setPrefRestrictionBadges(next); localStorage.setItem('healora_pref_restrictions', JSON.stringify(next)); }}>×</span>
                     </span>
                   ))}
                   <span className="pref-custom-wrap">
-                    <button className="pref-protocol-btn" onClick={() => setShowProtocolPicker(p => !p)} title="Выбрать тип протокола">
+                    <button className="pref-practice-btn" onClick={() => setShowDietPrefs(p => !p)} title="Выбрать вкусовые предпочтения">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M3 7h18M3 12h18M3 17h12"/><circle cx="19" cy="17" r="3"/></svg>
+                      вкусовые
+                    </button>
+                    <button className="pref-practice-btn" onClick={() => setShowRestrictions(p => !p)} title="Выбрать ограничения">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      ограничения
+                    </button>
+                    <button className="pref-practice-btn" onClick={() => setShowProtocolPicker(p => !p)} title="Выбрать типы практик">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-                      практики 
+                      практики
                     </button>
                     <input
                       className="pref-custom-input"
@@ -1653,6 +1685,60 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         }
                       }}
                     />
+                    {showDietPrefs && (
+                      <div className="protocol-picker-dropdown" onClick={() => setShowDietPrefs(false)}>
+                        <div className="protocol-picker-body" onClick={e => e.stopPropagation()}>
+                          <div className="protocol-picker-header">Вкусовые предпочтения</div>
+                          {dietPrefsData.map(dp => {
+                            const active = prefDietBadges.includes(dp.name);
+                            const cls = ['protocol-picker-item'];
+                            if (active) cls.push('active');
+                            return (
+                              <div key={dp.id} className={cls.join(' ')} onClick={() => {
+                                const nameMap = { 'Вегетарианство':'vegetarian','Веганство':'vegan','Без глютена':'gluten_free','Без лактозы':'lactose_free','Низкоуглеводное':'low_carb','Средиземноморская':'mediterranean','Кетодиета':'keto','Интервальное голодание':'if','Без сахара':'no_sugar','Спортивное питание':'sports' };
+                                const key = nameMap[dp.name];
+                                const content = key ? dietPrefContentByKey[key] : null;
+                                if (content) setDietPrefPopup({ name: dp.name, content });
+                              }}>
+                                <span className="protocol-picker-stars">{'★'.repeat(dp.stars)}{'☆'.repeat(5 - dp.stars)}</span>
+                                <span className="protocol-picker-name-group">
+                                  <span className="protocol-picker-name">{dp.name}</span>
+                                  <span className="protocol-picker-applic">{dp.applicability}</span>
+                                </span>
+                                <span className="protocol-picker-cb" onClick={e => { e.stopPropagation(); const next = active ? prefDietBadges.filter(b => b !== dp.name) : [...prefDietBadges, dp.name]; setPrefDietBadges(next); localStorage.setItem('healora_pref_diet', JSON.stringify(next)); }}>{active ? '☑' : '☐'}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                    {showRestrictions && (
+                      <div className="protocol-picker-dropdown" onClick={() => setShowRestrictions(false)}>
+                        <div className="protocol-picker-body" onClick={e => e.stopPropagation()}>
+                          <div className="protocol-picker-header">Ограничения</div>
+                          {dietRestrictionsData.map(dr => {
+                            const active = prefRestrictionBadges.includes(dr.name);
+                            const cls = ['protocol-picker-item'];
+                            if (active) cls.push('active');
+                            return (
+                              <div key={dr.id} className={cls.join(' ')} onClick={() => {
+                                const nameMap = { 'Аллергии':'allergies','Нелюбимые продукты':'disliked','Религиозные':'religious','Другие ограничения':'other' };
+                                const key = nameMap[dr.name];
+                                const content = key ? dietRestrictionContentByKey[key] : null;
+                                if (content) setRestrictionPopup({ name: dr.name, content });
+                              }}>
+                                <span className="protocol-picker-stars">{'★'.repeat(dr.stars)}{'☆'.repeat(5 - dr.stars)}</span>
+                                <span className="protocol-picker-name-group">
+                                  <span className="protocol-picker-name">{dr.name}</span>
+                                  <span className="protocol-picker-applic">{dr.applicability}</span>
+                                </span>
+                                <span className="protocol-picker-cb" onClick={e => { e.stopPropagation(); const next = active ? prefRestrictionBadges.filter(b => b !== dr.name) : [...prefRestrictionBadges, dr.name]; setPrefRestrictionBadges(next); localStorage.setItem('healora_pref_restrictions', JSON.stringify(next)); }}>{active ? '☑' : '☐'}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                     {showProtocolPicker && (
                       <div className="protocol-picker-dropdown" onClick={() => setShowProtocolPicker(false)}>
                         <div className="protocol-picker-body" onClick={e => e.stopPropagation()}>
@@ -3385,10 +3471,23 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     <span className="reg-text">{practicePopup.regulatory}</span>
                   </div>
                 )}
-                <div
-                  className="practice-content"
-                  dangerouslySetInnerHTML={{ __html: practiceMdToHtml(practicePopup.content) }}
-                />
+                <div className="practice-content" dangerouslySetInnerHTML={{ __html: practiceMdToHtml(practicePopup.content) }} />
+              </div>
+            </div>
+          )}
+          {dietPrefPopup && (
+            <div className="practice-overlay" onClick={() => setDietPrefPopup(null)}>
+              <div className="practice-popup" onClick={e => e.stopPropagation()}>
+                <button className="practice-close" onClick={() => setDietPrefPopup(null)}>×</button>
+                <div className="practice-content" dangerouslySetInnerHTML={{ __html: practiceMdToHtml(dietPrefPopup.content) }} />
+              </div>
+            </div>
+          )}
+          {restrictionPopup && (
+            <div className="practice-overlay" onClick={() => setRestrictionPopup(null)}>
+              <div className="practice-popup" onClick={e => e.stopPropagation()}>
+                <button className="practice-close" onClick={() => setRestrictionPopup(null)}>×</button>
+                <div className="practice-content" dangerouslySetInnerHTML={{ __html: practiceMdToHtml(restrictionPopup.content) }} />
               </div>
             </div>
           )}
