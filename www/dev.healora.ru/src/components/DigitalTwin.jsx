@@ -7,6 +7,7 @@ import protocolData from '../assets/data/protocol_mappings.json';
 import foodCatalog from '../assets/data/food_catalog.json';
 import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js';
 import { usePlans } from '../context/PlansProvider';
+import protocolTypes from '../assets/data/protocols_type.json';
 
 const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart }) => {
   const [profile, setProfile] = useState(null);
@@ -69,6 +70,105 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [showTaskPopup, setShowTaskPopup] = useState(false);
   const [showVoicePopup, setShowVoicePopup] = useState(false);
   const [voiceSection, setVoiceSection] = useState(null);
+  const [voiceStatus, setVoiceStatus] = useState('idle'); // idle | recording | done
+  const [voiceTranscript, setVoiceTranscript] = useState('');
+  const [voiceParsedValues, setVoiceParsedValues] = useState([]);
+  const [voiceError, setVoiceError] = useState('');
+  const [voiceFormValues, setVoiceFormValues] = useState({});
+  const [voiceSpeaking, setVoiceSpeaking] = useState(false);
+  const [showVoiceSettings, setShowVoiceSettings] = useState(false);
+  const [voiceLang, setVoiceLang] = useState('ru-RU');
+  const [voiceMicDevices, setVoiceMicDevices] = useState([]);
+  const [voiceMicDeviceId, setVoiceMicDeviceId] = useState('');
+  const [voiceMicLoading, setVoiceMicLoading] = useState(false);
+  const [voiceLevel, setVoiceLevel] = useState(0);
+  const [voiceMonitorActive, setVoiceMonitorActive] = useState(false);
+  const voiceRecognitionRef = useRef(null);
+  const voiceStreamRef = useRef(null);
+  const voiceAnalyserRef = useRef(null);
+  const voiceMonitorRafRef = useRef(null);
+
+  const stopMicMonitor = () => {
+    if (voiceMonitorRafRef.current) { cancelAnimationFrame(voiceMonitorRafRef.current); voiceMonitorRafRef.current = null; }
+    if (voiceStreamRef.current) { voiceStreamRef.current.getTracks().forEach(t => t.stop()); voiceStreamRef.current = null; }
+    voiceAnalyserRef.current = null;
+    setVoiceLevel(0);
+    setVoiceMonitorActive(false);
+  };
+
+  const startMicMonitor = async (deviceId) => {
+    stopMicMonitor();
+    if (!deviceId) return;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { deviceId: { exact: deviceId } }
+      });
+      voiceStreamRef.current = stream;
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const source = audioCtx.createMediaStreamSource(stream);
+      const analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      source.connect(analyser);
+      voiceAnalyserRef.current = analyser;
+      setVoiceMonitorActive(true);
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      const tick = () => {
+        if (!voiceAnalyserRef.current) return;
+        voiceAnalyserRef.current.getByteFrequencyData(dataArray);
+        const avg = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+        const pct = Math.min(100, Math.round((avg / 255) * 100));
+        setVoiceLevel(pct);
+        voiceMonitorRafRef.current = requestAnimationFrame(tick);
+      };
+      tick();
+    } catch (e) {
+      console.warn('Mic monitor failed:', e);
+      setVoiceMonitorActive(false);
+    }
+  };
+
+  const handleMicDeviceChange = async (deviceId) => {
+    setVoiceMicDeviceId(deviceId);
+    if (deviceId) await startMicMonitor(deviceId);
+  };
+
+  const enumerateMics = async () => {
+    try {
+      setVoiceMicLoading(true);
+      // Request permission first
+      const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      tempStream.getTracks().forEach(t => t.stop());
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const mics = devices.filter(d => d.kind === 'audioinput');
+      setVoiceMicDevices(mics);
+      if (mics.length > 0 && !voiceMicDeviceId) {
+        setVoiceMicDeviceId(mics[0].deviceId);
+      }
+    } catch (e) {
+      console.warn('Microphone enumeration failed:', e);
+    } finally {
+      setVoiceMicLoading(false);
+    }
+  };
+
+  const startVoiceWithMic = (recognition) => {
+    try { recognition.start(); } catch (e) { setVoiceError('Ошибка запуска микрофона: ' + e.message); }
+  };
+  const [showParamHistory, setShowParamHistory] = useState(null);
+  const [paramHistory, setParamHistory] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('healora_param_history') || '{}'); } catch { return {}; }
+  });
+  const [profileOverrides, setProfileOverrides] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('healora_param_overrides') || '{}'); } catch { return {}; }
+  });
+  const [prefBadges, setPrefBadges] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('healora_pref_badges') || '[]'); } catch { return []; }
+  });
+  const [prefCustom, setPrefCustom] = useState(() => {
+    try { return localStorage.getItem('healora_pref_custom') || ''; } catch { return ''; }
+  });
+  const [showProtocolPicker, setShowProtocolPicker] = useState(false);
+  const [regulatoryInfo, setRegulatoryInfo] = useState(null);
   const simulationSpeedRef = useRef(1);
 
   const { getPlan, savePlan, removePlan, plans } = usePlans();
@@ -778,19 +878,179 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     setTargetValues(prev => ({ ...prev, [attrId]: newValue }));
   };
 
-  const startEdit = (attrId, currentVal) => {
-    setEditingField(attrId);
+  const startEdit = (sectionKey, attrId, currentVal) => {
+    setEditingField(sectionKey + '_' + attrId);
     setEditingValue(currentVal !== null && currentVal !== undefined ? String(currentVal) : '');
   };
 
   const saveEdit = (sectionKey, attrId) => {
     setEditingField(null);
+    const attr = attributeCatalog[sectionKey]?.attributes.find(a => a.id === attrId);
+    if (!attr) return;
+    const numVal = parseFloat(editingValue);
+    const val = isNaN(numVal) ? editingValue : numVal;
+    const now = new Date().toISOString();
+    const newOverrides = { ...profileOverrides, [attrId]: val };
+    const newHistory = { ...paramHistory };
+    if (!newHistory[attrId]) newHistory[attrId] = [];
+    newHistory[attrId] = [...newHistory[attrId], { value: val, timestamp: now }];
+    setProfileOverrides(newOverrides);
+    setParamHistory(newHistory);
+    localStorage.setItem('healora_param_overrides', JSON.stringify(newOverrides));
+    localStorage.setItem('healora_param_history', JSON.stringify(newHistory));
   };
 
   const formatAttrValue = (val) => {
     if (val === null || val === undefined || val === '') return '—';
     if (typeof val === 'boolean') return val ? 'Да' : 'Нет';
     return val;
+  };
+
+  const getAttrCurrent = (attr) => {
+    if (attr.id in profileOverrides) return profileOverrides[attr.id];
+    return attr.current;
+  };
+
+  const parseVoiceTranscript = (text, sectionKey) => {
+    if (!text || !sectionKey) return [];
+    const section = attributeCatalog[sectionKey];
+    if (!section) return [];
+
+    const results = [];
+
+    const nameMap = {
+      age: ['возраст', 'лет'],
+      sex: ['пол', 'gender'],
+      height: ['рост', 'высота', 'длина тела'],
+      weight: ['вес', 'масса', 'вешу'],
+      waist: ['талия', 'обхват талии', 'окружность талии'],
+      bmi: ['ибт', 'имт', 'индекс массы тела'],
+      ethnicity: ['этническая', 'национальность', 'раса'],
+      bp_syst: ['ад систолическое', 'систолическое', 'верхнее'],
+      bp_diast: ['ад диастолическое', 'диастолическое', 'нижнее'],
+      hr: ['пульс', 'чсс', 'сердцебиение', 'частота пульса'],
+      hrv: ['hrv'],
+      spo2: ['сатурация', 'spo2', 'кислород', 'насыщение'],
+      glucose: ['глюкоза', 'сахар', 'глюкоза крови'],
+      hba1c: ['hba1c', 'гликированный', 'гемоглобин'],
+      tchol: ['холестерин', 'холестерин общий', 'общий холестерин'],
+      hdl: ['лпвп', 'хороший холестерин', 'липопротеины высокой'],
+      ldl: ['лпнп', 'плохой холестерин', 'липопротеины низкой'],
+      tg: ['триглицериды', 'триглицерид'],
+      crp: ['crp', 'срб', 'с-реактивный'],
+      vitd: ['витамин d', 'витамин д', 'vitamin d', '25-oh'],
+      ferritin: ['ферритин'],
+      tsh: ['ттг', 'tsh', 'тиреотропный'],
+      sleep: ['сон', 'сплю', 'ночной сон'],
+      stress: ['стресс', 'уровень стресса'],
+      steps: ['шаги', 'шагов'],
+      water: ['вода', 'воды', 'пью воды'],
+      smoking: ['курение', 'курю', 'сигареты'],
+      alcohol: ['алкоголь', 'алкоголя'],
+      exercise_freq: ['тренировки', 'занятия', 'спорт', 'физическая активность'],
+      exercise_type: ['тип активности', 'вид спорта', 'активность'],
+      diet: ['питание', 'диета', 'рацион'],
+      apoe: ['apoe'],
+      mthfr: ['mthfr'],
+      lactase: ['лактаза', 'lactase'],
+      brca: ['brca', 'brca1', 'brca2'],
+      medications: ['препараты', 'лекарства', 'медикаменты', 'принимаю'],
+      allergies: ['аллергии', 'аллергия', 'аллергические'],
+      cv_history: ['ссз', 'сердечно-сосудистые', 'сердце', 'сосуды'],
+      dm_history: ['диабет', 'сахарный диабет'],
+      family_history: ['онкология', 'рак', 'опухоли'],
+    };
+
+    const sectionAttrIds = section.attributes.map(a => a.id);
+    const relevantNames = {};
+    sectionAttrIds.forEach(id => {
+      if (nameMap[id]) relevantNames[id] = nameMap[id];
+    });
+
+    const segments = text.split(/[,.;:]+/).map(s => s.trim()).filter(Boolean);
+
+    segments.forEach(seg => {
+      const lower = seg.toLowerCase().trim();
+      if (!lower) return;
+
+      // Special case: blood pressure "120 на 80" or "120/80"
+      if (relevantNames.bp_syst || relevantNames.bp_diast) {
+        const bpMatch = lower.match(/(?:ад|давление)\s*[:]?\s*(\d{2,3})\s*(?:\/|на|из|к)\s*(\d{2,3})/i);
+        if (bpMatch) {
+          const systolic = parseInt(bpMatch[1]);
+          const diastolic = parseInt(bpMatch[2]);
+          if (systolic > 50 && systolic < 250 && diastolic > 30 && diastolic < 150) {
+            if (sectionAttrIds.includes('bp_syst')) results.push({ attrId: 'bp_syst', value: systolic, label: 'АД систолическое', displayValue: `${systolic} мм рт.ст.` });
+            if (sectionAttrIds.includes('bp_diast')) results.push({ attrId: 'bp_diast', value: diastolic, label: 'АД диастолическое', displayValue: `${diastolic} мм рт.ст.` });
+          }
+          return;
+        }
+      }
+
+      for (const [attrId, keywords] of Object.entries(relevantNames)) {
+        const attrDef = section.attributes.find(a => a.id === attrId);
+        if (!attrDef) continue;
+
+        const foundKeyword = keywords.find(k => lower.includes(k));
+        if (!foundKeyword) continue;
+
+        // Try to extract number value
+        const numMatch = lower.match(new RegExp(`${foundKeyword}[\\s:]*([+-]?\\d+(?:[.,]\\d+)?)`, 'i'));
+        if (numMatch) {
+          const val = parseFloat(numMatch[1].replace(',', '.'));
+          const displayUnit = attrDef.unit ? `${val} ${attrDef.unit}` : String(val);
+          results.push({ attrId, value: val, label: attrDef.name, displayValue: displayUnit });
+          continue;
+        }
+
+        // Text value (no number) - capture words after keyword
+        const textMatch = lower.match(new RegExp(`${foundKeyword}[\\s:]+(.+)`, 'i'));
+        if (textMatch) {
+          const val = textMatch[1].trim().replace(/\s+/g, ' ').replace(/[.,;]+$/, '');
+          if (val && !/^[+-]?\d+(?:[.,]\d+)?$/.test(val)) {
+            results.push({ attrId, value: val, label: attrDef.name, displayValue: val });
+          }
+        }
+      }
+    });
+
+    return results;
+  };
+
+  const applyVoiceValues = (sectionKey, parsedValues) => {
+    const now = new Date().toISOString();
+    const newOverrides = { ...profileOverrides };
+    const newHistory = { ...paramHistory };
+
+    parsedValues.forEach(({ attrId, value }) => {
+      newOverrides[attrId] = value;
+      if (!newHistory[attrId]) newHistory[attrId] = [];
+      newHistory[attrId] = [...newHistory[attrId], { value, timestamp: now }];
+    });
+
+    setProfileOverrides(newOverrides);
+    setParamHistory(newHistory);
+    localStorage.setItem('healora_param_overrides', JSON.stringify(newOverrides));
+    localStorage.setItem('healora_param_history', JSON.stringify(newHistory));
+  };
+
+  const getVoiceHint = (sectionKey) => {
+    const section = attributeCatalog[sectionKey];
+    if (!section) return 'Продиктуйте значения параметров.';
+    const exampleValues = {
+      demographics: { age: '35', sex: 'мужской', height: '175', weight: '70', waist: '80', ethnicity: 'европеоид' },
+      vitals: { bp_syst: '120', bp_diast: '80', hr: '72', hrv: '60', spo2: '98' },
+      labs: { glucose: '90', hba1c: '5.5', tchol: '180', hdl: '60', ldl: '100', tg: '150', crp: '1', vitd: '40', ferritin: '80', tsh: '2.5' },
+      lifestyle: { sleep: '8', stress: '3', steps: '10000', water: '2', smoking: 'нет', alcohol: 'редко', exercise_freq: '3', exercise_type: 'бег', diet: 'средиземноморская' },
+      genetics: { apoe: 'e3/e3', mthfr: 'нет', lactase: 'да', brca: 'отрицательно' },
+      medical: { medications: 'лизиноприл', allergies: 'нет', cv_history: 'нет', dm_history: 'нет', family_history: 'нет' },
+    };
+    const ev = exampleValues[sectionKey] || {};
+    const examples = section.attributes.map(attr => {
+      const exVal = ev[attr.id];
+      return exVal ? `${attr.name} ${exVal}${attr.unit ? ' ' + attr.unit : ''}` : attr.name;
+    });
+    return `Продиктуйте значения параметров: «${examples.join('», «')}»`;
   };
 
   return (
@@ -1319,6 +1579,120 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </svg>
                     Чат
                   </button>
+                  <button className="assess-health-btn btn-export" onClick={() => {
+                    const data = {
+                      profile,
+                      profileOverrides,
+                      paramHistory,
+                      plans: plans[profileId] || null,
+                      interventions: timelineInterventions,
+                      preferences: { badges: prefBadges, custom: prefCustom },
+                      exportedAt: new Date().toISOString(),
+                    };
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url; a.download = `healora-twin-${profile.id || profile.name || 'data'}-${new Date().toISOString().slice(0,10)}.json`;
+                    document.body.appendChild(a); a.click();
+                    document.body.removeChild(a); URL.revokeObjectURL(url);
+                  }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Выгрузить
+                  </button>
+                </div>
+                <div className="profile-prefs">
+                  <span className="prefs-label">Предпочтения:</span>
+                  {['вегетарианство'].concat(prefBadges.filter(b => b !== 'вегетарианство')).map(badge => (
+                    <span
+                      key={badge}
+                      className={`pref-badge ${prefBadges.includes(badge) ? 'active' : ''}`}
+                      onClick={() => {
+                        const next = prefBadges.includes(badge) ? prefBadges.filter(b => b !== badge) : [...prefBadges, badge];
+                        setPrefBadges(next);
+                        localStorage.setItem('healora_pref_badges', JSON.stringify(next));
+                      }}
+                    >
+                      {badge}
+                      {badge !== 'вегетарианство' && (
+                        <span className="pref-badge-remove" onClick={e => { e.stopPropagation(); const next = prefBadges.filter(b => b !== badge); setPrefBadges(next); localStorage.setItem('healora_pref_badges', JSON.stringify(next)); }}>×</span>
+                      )}
+                    </span>
+                  ))}
+                  <span className="pref-custom-wrap">
+                    <button className="pref-protocol-btn" onClick={() => setShowProtocolPicker(p => !p)} title="Выбрать тип протокола">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+                      методы 
+                    </button>
+                    <input
+                      className="pref-custom-input"
+                      type="text"
+                      placeholder="+ другая"
+                      value={prefCustom}
+                      onChange={e => setPrefCustom(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' && prefCustom.trim()) {
+                          e.preventDefault();
+                          const val = prefCustom.trim();
+                          if (!prefBadges.includes(val)) {
+                            const next = [...prefBadges, val];
+                            setPrefBadges(next);
+                            localStorage.setItem('healora_pref_badges', JSON.stringify(next));
+                          }
+                          setPrefCustom('');
+                        }
+                      }}
+                    />
+                    {showProtocolPicker && (
+                      <div className="protocol-picker-dropdown" onClick={() => setShowProtocolPicker(false)}>
+                        <div className="protocol-picker-body" onClick={e => e.stopPropagation()}>
+                          <div className="protocol-picker-header">Типы протоколов / подходов</div>
+                          {[...protocolTypes].sort((a, b) => b.stars - a.stars).map(pt => {
+                            const active = prefBadges.includes(pt.name) || prefBadges.includes(pt.short);
+                            const cls = ['protocol-picker-item'];
+                            if (active) cls.push('active');
+                            if (pt.official) cls.push('official');
+                            const srcCount = pt.official && pt.regulatory ? pt.regulatory.split(';').filter(s => s.trim()).length : 0;
+                            return (
+                              <div
+                                key={pt.id}
+                                className={cls.join(' ')}
+                                onClick={() => {
+                                  const existing = prefBadges.includes(pt.name);
+                                  const next = existing
+                                    ? prefBadges.filter(b => b !== pt.name && b !== pt.short)
+                                    : [...prefBadges, pt.name];
+                                  setPrefBadges(next);
+                                  localStorage.setItem('healora_pref_badges', JSON.stringify(next));
+                                }}
+                              >
+                                {pt.official && (
+                                  <span
+                                    className="protocol-picker-src-badge"
+                                    title={pt.official ? 'Источники: законы, практики, регламенты' : ''}
+                                    onClick={e => { e.stopPropagation(); setRegulatoryInfo(regulatoryInfo === pt.id ? null : pt.id); }}
+                                  >
+                                    {srcCount}
+                                    {regulatoryInfo === pt.id && (
+                                      <div className="protocol-picker-reg-popup" onClick={e => e.stopPropagation()}>
+                                        <div className="reg-popup-title">Источники</div>
+                                        <div className="reg-popup-text">{pt.regulatory}</div>
+                                      </div>
+                                    )}
+                                  </span>
+                                )}
+                                {!pt.official && <span style={{width:16,flexShrink:0}} />}
+                                <span className="protocol-picker-stars">{'★'.repeat(pt.stars)}{'☆'.repeat(5 - pt.stars)}</span>
+                                <span className="protocol-picker-name">{pt.name}</span>
+                                <span className="protocol-picker-applic">{pt.applicability}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </span>
                 </div>
                 <div className="profile-targets">
                   <span className="targets-label">Цели:</span>
@@ -1333,7 +1707,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                             <span
                               key={`target_${attr.id}`}
                               className={`target-badge ${alert ? 'alert' : ''}`}
-                              title={`${attr.name}: текущее ${attr.current} → цель ${targetValues[attr.id] ?? attr.target} ${attr.unit}`}
+                              title={`${attr.name}: текущее ${getAttrCurrent(attr)} → цель ${targetValues[attr.id] ?? attr.target} ${attr.unit}`}
                             >
                               <span className="target-badge-dot" style={{ backgroundColor: attributeCatalog[sectionKey].color }}></span>
                               <span className="target-badge-name">{attr.name}</span>
@@ -1372,17 +1746,13 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                 <div key={key} className="data-section" style={{ borderLeft: `3px solid ${section.color}` }}>
                   <div className="section-header" onClick={() => setCollapsedSections(prev => ({ ...prev, [key]: !prev[key] }))}>
                     <div className="section-title-row">
-                      <span className="section-dot" style={{ backgroundColor: section.color }}></span>
+                      <button className="mic-btn" title="Редактировать параметры" onClick={(e) => { e.stopPropagation(); setVoiceSection(key); setShowVoicePopup(true); const form = {}; attributeCatalog[key]?.attributes.forEach(a => { const v = getAttrCurrent(a); if (v !== null && v !== undefined && v !== '—') form[a.id] = v; }); setVoiceFormValues(form); setVoiceTranscript(''); setVoiceParsedValues([]); setVoiceStatus('idle'); }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke={section.color} strokeWidth="2" width="16" height="16">
+                          <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                        </svg>
+                      </button>
                       <h4 style={{ color: section.color }}>{section.title}</h4>
                     </div>
-                    <button className="mic-btn" title="Голосовой ввод параметров" onClick={(e) => { e.stopPropagation(); setVoiceSection(key); setShowVoicePopup(true); }}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                        <line x1="12" y1="19" x2="12" y2="23"/>
-                        <line x1="8" y1="23" x2="16" y2="23"/>
-                      </svg>
-                    </button>
                     <button className="collapse-btn" title={isCollapsed ? 'Развернуть' : 'Свернуть'}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
                         {isCollapsed ? (
@@ -1398,10 +1768,21 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <div className="attr-row header">
                         <span>Код</span>
                         <span>Параметр</span>
+                        <span>Было</span>
                         <span>Текущее</span>
                         <span>Цель</span>
                         <span>Норма</span>
                         <span>Интервенции</span>
+                        {(() => {
+                          const cols = [];
+                          for (let i = 0; i < 7; i++) {
+                            const d = new Date(); d.setDate(d.getDate() - i);
+                            const dayName = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][d.getDay()];
+                            const dateStr = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}`;
+                            cols.push(<span key={i} className={`attr-day-header ${i === 0 ? 'today' : ''}`}>{dayName}<br/>{dateStr}</span>);
+                          }
+                          return cols;
+                        })()}
                       </div>
                       {section.attributes.map(attr => {
                         const alert = parameterAlerts[attr.id] || parameterAlerts[attr.name];
@@ -1414,23 +1795,26 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                           >
                             <span className="attr-code">{attr.code}</span>
                             <span className="attr-name">{attr.name}</span>
+                            <div className={`attr-cell orig ${attr.id in profileOverrides && attr.current != null ? 'has-orig' : ''}`}>
+                              {attr.id in profileOverrides && attr.current != null ? formatAttrValue(attr.current) : '—'}
+                            </div>
                             <div className="attr-cell current">
                               {isEditing && attr.editable ? (
                                 <input
-                                  className="edit-input"
-                                  value={editingValue}
-                                  onChange={(e) => setEditingValue(e.target.value)}
-                                  onBlur={() => saveEdit(key, attr.id)}
-                                  onKeyDown={(e) => e.key === 'Enter' && saveEdit(key, attr.id)}
-                                  autoFocus
-                                />
+                                    className="edit-input"
+                                    value={editingValue}
+                                    onChange={(e) => setEditingValue(e.target.value)}
+                                    onBlur={() => saveEdit(key, attr.id)}
+                                    onKeyDown={(e) => e.key === 'Enter' && saveEdit(key, attr.id)}
+                                    autoFocus
+                                  />
                               ) : (
                                 <span
                                   className="editable-value"
-                                  onClick={() => attr.editable && startEdit(attr.id, attr.current)}
-                                  title={attr.editable ? 'Нажмите для редактирования' : ''}
+                                  onDoubleClick={() => attr.editable && startEdit(key, attr.id, getAttrCurrent(attr))}
+                                  title={attr.editable ? 'Двойной клик для редактирования' : ''}
                                 >
-                                  {formatAttrValue(attr.current)}
+                                  {formatAttrValue(getAttrCurrent(attr))}
                                   {alert && (
                                     <span className="alert-badge" title={alert.message}>
                                       {alert.direction === 'up' ? (
@@ -1483,6 +1867,27 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                 <span className="no-interv">—</span>
                               )}
                             </div>
+                            {(() => {
+                              const cells = [];
+                              const origVal = attr.current;
+                              for (let i = 0; i < 7; i++) {
+                                const d = new Date(); d.setDate(d.getDate() - i);
+                                const dateKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                                const history = paramHistory[attr.id] || [];
+                                const match = history.find(h => h.timestamp && h.timestamp.startsWith(dateKey));
+                                const override = i === 0 && attr.id in profileOverrides ? profileOverrides[attr.id] : null;
+                                const raw = match ? match.value : override;
+                                const changed = raw != null && raw != origVal;
+                                const val = changed ? raw : null;
+                                const isOverride = !match && override !== null && changed;
+                                cells.push(
+                                  <div key={i} className={`attr-day-cell ${i === 0 ? 'today' : ''} ${isOverride ? 'overridden' : ''}`}>
+                                    {val !== null ? <span className="day-value">{val}</span> : <span className="day-empty">—</span>}
+                                  </div>
+                                );
+                              }
+                              return cells;
+                            })()}
                           </div>
                         );
                       })}
@@ -2755,59 +3160,192 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
           )}
 
           {showVoicePopup && (
-            <div className="voice-overlay" onClick={() => setShowVoicePopup(false)}>
+            <div className="voice-overlay" onClick={() => { if (voiceStatus !== 'recording') { stopMicMonitor(); setShowVoicePopup(false); setVoiceStatus('idle'); setVoiceTranscript(''); setVoiceParsedValues([]); setVoiceFormValues({}); setVoiceError(''); setVoiceSpeaking(false); setShowVoiceSettings(false); } }}>
               <div className="voice-popup" onClick={e => e.stopPropagation()}>
-                <button className="voice-close" onClick={() => setShowVoicePopup(false)}>×</button>
+                <button className="voice-close" onClick={() => { if (voiceStatus !== 'recording') { stopMicMonitor(); setShowVoicePopup(false); setVoiceStatus('idle'); setVoiceTranscript(''); setVoiceParsedValues([]); setVoiceFormValues({}); setVoiceError(''); setVoiceSpeaking(false); setShowVoiceSettings(false); } }}>×</button>
                 <div className="voice-header">
                   <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="24" height="24">
-                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                    <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+                    <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                   </svg>
-                  <h3>Голосовой ввод параметров</h3>
+                  <h3>Редактор параметров</h3>
                 </div>
-                <p className="voice-desc">Заполните раздел <strong>«{attributeCatalog[voiceSection]?.title || voiceSection}»</strong> голосом</p>
-                <div className="voice-methods">
-                  <div className="voice-method">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="20" height="20">
-                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                      <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
-                    </svg>
-                    <div>
-                      <strong>Браузер (Web Speech API)</strong>
-                      <p>Нажмите «Начать запись» и продиктуйте значения параметров. Например: «возраст 35, вес 70 кг, рост 170 см».</p>
-                    </div>
-                    <button className="voice-record-btn" onClick={() => {
-                      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                        alert('Голосовой ввод не поддерживается в этом браузере. Используйте Telegram бота.');
-                        return;
-                      }
-                      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                      const recognition = new SpeechRecognition();
-                      recognition.lang = 'ru-RU';
-                      recognition.onresult = (event) => {
-                        const text = event.results[0][0].transcript;
-                        alert('Распознано: ' + text + '\n\nЗначения будут заполнены в ближайшем обновлении.');
-                        setShowVoicePopup(false);
-                      };
-                      recognition.start();
-                    }}>Начать запись</button>
-                  </div>
-                  <div className="voice-method">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="20" height="20">
-                      <rect x="3" y="2" width="18" height="20" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
-                      <circle cx="12" cy="13" r="2"/><path d="M12 15v3"/><path d="M9 11a3 3 0 0 1 6 0"/>
-                    </svg>
-                    <div>
-                      <strong>Telegram бот @HealoraBot</strong>
-                      <p>Отправьте голосовое сообщение или текст в нашего Telegram бота. Бот пришлёт QR-код для синхронизации с профилем.</p>
-                    </div>
-                    <a className="voice-link-btn" href="https://t.me/HealoraBot" target="_blank" rel="noopener">Открыть бота</a>
-                  </div>
+                <p className="voice-desc">Заполните раздел <strong>«{attributeCatalog[voiceSection]?.title || voiceSection}»</strong> голосом. {getVoiceHint(voiceSection)}</p>
 
+                {voiceError && (
+                  <div className="voice-error-banner">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d32f2f" strokeWidth="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>{voiceError}</span>
+                  </div>
+                )}
+
+                <div className="voice-top-bar">
+                  <div className="voice-top-right">
+                    {voiceStatus === 'recording' && (
+                      <span className="voice-rec-indicator">
+                        <span className={`voice-rec-dot ${voiceSpeaking ? 'speaking' : ''}`}></span>
+                        {voiceSpeaking ? 'Голос' : '...'}
+                      </span>
+                    )}
+                    <button className="voice-settings-gear" onClick={() => {
+                      const next = !showVoiceSettings;
+                      setShowVoiceSettings(next);
+                      if (next) {
+                        if (voiceMicDevices.length === 0) enumerateMics();
+                        if (voiceMicDeviceId) setTimeout(() => startMicMonitor(voiceMicDeviceId), 100);
+                      } else {
+                        stopMicMonitor();
+                      }
+                    }} title="Настройки микрофона">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                      </svg>
+                    </button>
+                    {showVoiceSettings && (
+                      <div className="voice-settings-dropdown">
+                        <div className="voice-settings-item">
+                          <span className="voice-settings-label">Язык распознавания</span>
+                          <select className="voice-settings-select" value={voiceLang} onChange={e => setVoiceLang(e.target.value)}>
+                            <option value="ru-RU">Русский</option>
+                            <option value="en-US">English</option>
+                            <option value="de-DE">Deutsch</option>
+                            <option value="fr-FR">Français</option>
+                            <option value="es-ES">Español</option>
+                            <option value="it-IT">Italiano</option>
+                            <option value="zh-CN">中文</option>
+                            <option value="ja-JP">日本語</option>
+                          </select>
+                        </div>
+                        <div className="voice-settings-item">
+                          <span className="voice-settings-label">Микрофон</span>
+                          <div className="voice-settings-mic-row">
+                            <select className="voice-settings-select" value={voiceMicDeviceId} onChange={e => handleMicDeviceChange(e.target.value)}>
+                              {voiceMicDevices.length === 0 && <option value="">{voiceMicLoading ? 'Загрузка...' : 'Не найдены'}</option>}
+                              {voiceMicDevices.map(d => (
+                                <option key={d.deviceId} value={d.deviceId}>{d.label || `Микрофон ${d.deviceId.slice(0, 8)}...`}</option>
+                              ))}
+                            </select>
+                            <button className="voice-settings-refresh" onClick={enumerateMics} title="Обновить">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                            </button>
+                          </div>
+                          {voiceMonitorActive && (
+                            <div className="voice-level-meter">
+                              <div className="voice-level-bar"><div className="voice-level-fill" style={{ width: `${voiceLevel}%`, background: voiceLevel > 60 ? '#4caf50' : voiceLevel > 20 ? '#ff9800' : '#9e9e9e' }}></div></div>
+                              <span className="voice-level-label">{voiceLevel}%</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <button className="voice-done-btn" onClick={() => setShowVoicePopup(false)}>Закрыть</button>
+
+                {voiceTranscript && (
+                  <div className="voice-transcript-section">
+                    <textarea
+                      className="voice-transcript-input"
+                      value={voiceTranscript}
+                      onChange={e => {
+                        setVoiceTranscript(e.target.value);
+                        const parsed = parseVoiceTranscript(e.target.value, voiceSection);
+                        setVoiceParsedValues(parsed);
+                        setVoiceFormValues(prev => {
+                          const updated = { ...prev };
+                          parsed.forEach(pv => { updated[pv.attrId] = pv.value; });
+                          return updated;
+                        });
+                      }}
+                      rows={2}
+                      placeholder=""
+                    />
+                  </div>
+                )}
+
+                {(() => {
+                  const section = attributeCatalog[voiceSection];
+                  const attrs = section ? section.attributes : [];
+                  const changedCount = Object.entries(voiceFormValues).filter(([k, v]) => {
+                    if (v === '') return false;
+                    const attrDef = attrs.find(a => a.id === k);
+                    if (!attrDef) return false;
+                    return v != attrDef.current;
+                  }).length;
+                  const detectedIds = new Set(voiceParsedValues.map(pv => pv.attrId));
+                  return (
+                    <div className="voice-form-section">
+                      <label className="voice-section-label">Параметры раздела «{section?.title || ''}»</label>
+                      <div className="voice-form-list">
+                        {attrs.map(attr => {
+                          const isDetected = detectedIds.has(attr.id);
+                          const val = voiceFormValues[attr.id] !== undefined ? String(voiceFormValues[attr.id]) : '';
+                          const isChanged = val !== '' && val != attr.current;
+                          return (
+                            <div key={attr.id} className={`voice-form-row ${isDetected ? 'detected' : ''} ${isChanged ? 'changed' : ''} ${val ? 'filled' : ''}`}>
+                              <span className="voice-form-label">{attr.name}</span>
+                              <div className="voice-form-input-wrap">
+                                <input
+                                  className="voice-form-input"
+                                  type="text"
+                                  placeholder={attr.unit ? `введите ${attr.unit}` : 'введите значение'}
+                                  value={val}
+                                  onChange={e => setVoiceFormValues(prev => ({ ...prev, [attr.id]: e.target.value }))}
+                                />
+                                {isDetected && <span className="voice-form-badge">✓</span>}
+                              </div>
+                              <span className="voice-form-orig">{formatAttrValue(getAttrCurrent(attr))}</span>
+                              <button className="voice-form-mic" title="Продиктовать" onClick={() => {
+                                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return;
+                                const sr = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                                sr.lang = voiceLang;
+                                sr.interimResults = false;
+                                sr.onresult = (ev) => {
+                                  const text = ev.results[0][0].transcript;
+                                  setVoiceFormValues(prev => ({ ...prev, [attr.id]: text }));
+                                };
+                                sr.start();
+                              }}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                                  <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div className="voice-actions">
+                        <button className="voice-done-btn" onClick={() => { stopMicMonitor(); setShowVoicePopup(false); setVoiceStatus('idle'); setVoiceTranscript(''); setVoiceParsedValues([]); setVoiceFormValues({}); setVoiceError(''); setVoiceSpeaking(false); setShowVoiceSettings(false); }}>Отмена</button>
+                        <button
+                          className="voice-apply-btn"
+                          disabled={changedCount === 0}
+                          onClick={() => {
+                            stopMicMonitor();
+                            const parsed = Object.entries(voiceFormValues)
+                              .filter(([, v]) => v !== '')
+                              .map(([attrId, value]) => {
+                                const attrDef = attrs.find(a => a.id === attrId);
+                                const numVal = parseFloat(String(value).replace(',', '.'));
+                                const finalVal = isNaN(numVal) ? value : numVal;
+                                return { attrId, value: finalVal, label: attrDef?.name || attrId, displayValue: attrDef?.unit ? `${finalVal} ${attrDef.unit}` : String(finalVal) };
+                              });
+                            applyVoiceValues(voiceSection, parsed);
+                            setShowVoicePopup(false);
+                            setVoiceStatus('idle');
+                            setVoiceTranscript('');
+                            setVoiceParsedValues([]);
+                            setVoiceFormValues({});
+                            setVoiceError('');
+                            setVoiceSpeaking(false);
+                            setShowVoiceSettings(false);
+                          }}
+                        >
+                          Применить ({changedCount})
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+
               </div>
             </div>
           )}

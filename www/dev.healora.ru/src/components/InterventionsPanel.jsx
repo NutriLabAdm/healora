@@ -74,6 +74,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
     { id: 'EATING_DISORDERS', name: 'Расстройства пищевого поведения', category: 'mental', goal: 'Нормализация пищевого поведения', interventions: ['04_4','04_5','03_1','03_6','03_7'], red_flags: [{metric:'Пропуск приемов пищи',threshold:'>1 раза/день',action:'Психотерапия + регулярное питание'},{metric:'Переедание',threshold:'>2 раз/нед',action:'Дневник питания + психолог'}], recommendations:['3+1 приемов пищи в день','Осознанное питание','Медитация перед едой','Исключить диеты','Цифровой детокс'] },
     { id: 'HORMONAL_ENDOCRINE', name: 'Гормональный/эндокринный', category: 'medical', goal: 'Балансировка гормонального фона', interventions: ['07_1','04_6','05_1','05_3','05_2','02_2','03_6'], red_flags: [{metric:'ТТГ',threshold:'>4.0 мМЕ/л',action:'Эндокринолог'},{metric:'Тестостерон (муж)',threshold:'<12 нмоль/л',action:'Андролог'}], recommendations:['Чекап гормонов раз в 6 мес','Силовые 3 раза/нед','D3 5000 МЕ/день','Магний 400 мг/день','Омега-3 2 г/день'] },
     { id: 'LONGEVITY', name: 'Долголетие', category: 'nutritional', goal: 'Комплексная программа для активного долголетия', interventions: ['04_1','04_6','02_1','02_2','03_6','05_1','05_2','07_1'], red_flags: [{metric:'Показатель Healora Score',threshold:'<60',action:'Комплексная коррекция образа жизни'},{metric:'Биологический возраст',threshold:'>хронологического на 5+ лет',action:'Интенсификация протокола'}], recommendations:['Ограничение калорий (CR)','ВИИТ + силовые','Противовоспалительная диета','D3 5000 МЕ/день','Омега-3 2-3 г/день','Чекап раз в год'] },
+    { id: 'SPEECH_TOMATIS', name: 'Коррекция речевых нарушений (Tomatiс®)', category: 'medical', goal: 'Коррекция ЗРР, алалии, ОНР, заикания, РАС методом Tomatis® + логопедия', interventions: ['ST_01','ST_02','ST_03','ST_04','ST_05'], red_flags: [{metric:'Усиление заикания после сеанса',threshold:'Любое',action:'Снизить интенсивность, увеличить интервалы'},{metric:'Отсутствие динамики',threshold:'>7 сеансов',action:'Пересмотр программы, доп. диагностика'},{metric:'Головная боль/головокружение',threshold:'>2 ч после сеанса',action:'Консультация невролога'}], recommendations:['Курс Tomatis 14 сеансов (40-80 мин)','Артикуляционная гимнастика ежедневно','ЛФМ 2 раза в неделю','Трекинг речевых навыков еженедельно','Смирнова Л.И. Tomatis-терапевт: +7 985 285-74-44'] },
   ];
 
   const filteredSupplements = supplementGroup === 'all'
@@ -122,7 +123,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
           <button className={`panel-tab ${tab === 'interventions' ? 'active' : ''}`} onClick={() => setTab('interventions')}>Интервенции</button>
           <button className={`panel-tab ${tab === 'protocols' ? 'active' : ''}`} onClick={() => setTab('protocols')}>Протоколы</button>
         </div>
-        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.8 | {__BUILD_TIME__}</span>
+        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.9 | {__BUILD_TIME__}</span>
       </div>
 
       {/* Compact Cart Widgets */}
@@ -450,11 +451,31 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
         <div className="backlog-overlay" onClick={() => setShowBacklog(false)}>
           <div className="backlog-modal" onClick={e => e.stopPropagation()}>
             <div className="backlog-header">
-              <span>Healora — Backlog <span className="backlog-summary"><strong>87</strong>/128 · <strong>280</strong>/670 ч</span></span>
-              <span className="version-build">ver 0.8 · 13.05.2026</span>
+              <span>Healora — Backlog <span className="backlog-summary"><strong>94</strong>/128 · <strong>302</strong>/670 ч</span></span>
+              <span className="version-build">ver 0.9 · 15.05.2026</span>
               <span className="backlog-close" onClick={() => setShowBacklog(false)}>×</span>
             </div>
             <div className="backlog-body">
+
+              <h2 className="md-h2">Recent Updates (14–15.05.2026)</h2>
+
+              <h3 className="md-h3">15.05.2026</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Voice popup redesign</b> — Always-visible form with per-field inputs, settings gear (language 8 langs, mic device picker with level meter via AnalyserNode), transcript preview with correction, per-field record button</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Parameter history</b> — profileOverrides + paramHistory in localStorage, getAttrCurrent helper, 7 weekday columns in attr table showing recent values</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Export twin data</b> — JSON download with profile, overrides, history, plans, interventions</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Preference badges</b> — Toggle badges (вегетарианство, только РКИ) + custom text field, persisted in localStorage, included in export</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Icon cleanup</b> — Mic icon replaced with pencil edit icon in section header, voice popup header, per-field buttons</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Profile header mic→edit</b> — Mic button moved to bullet position, opens editor popup</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Weekday column fix</b> — Only show values that differ from original (<code>attr.current</code>), loose comparison</li>
+              </ul>
+
+              <h3 className="md-h3">14.05.2026</h3>
+              <ul className="md-list">
+                <li className="md-done"><span className="md-check">✓</span> <b>Inline edit persistence</b> — saveEdit writes to profileOverrides + paramHistory</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Weekday columns</b> — 7 columns (today + 6 previous) in attr grid, CSS grid <code>repeat(7, 45px)</code></li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Deploy cleanup</b> — Stale asset cleanup on server</li>
+              </ul>
 
               <h2 className="md-h2">Recent Updates (12–13.05.2026)</h2>
 
@@ -651,7 +672,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                 <li className="md-todo"><span className="md-box"> </span> <b>Wearable Sync</b> — Apple Watch, Oura, Whoop API integration</li>
                 <li className="md-todo"><span className="md-box"> </span> <b>Genetic Data Import</b> — 23andMe, AncestryDNA parser</li>
                 <li className="md-todo"><span className="md-box"> </span> <b>Food Photo Analysis</b> — Computer vision KBJU calculation</li>
-                <li className="md-todo"><span className="md-box"> </span> <b>Voice Input</b> — Speech-to-text symptom logging</li>
+                <li className="md-done"><span className="md-check">✓</span> <b>Voice Input</b> — Speech-to-text symptom logging, editable transcripts, per-field recording, settings with language/mic selection</li>
                 <li className="md-todo"><span className="md-box"> </span> <b>Advanced ML Model</b> — Multi-parameter risk prediction</li>
               </ul>
 

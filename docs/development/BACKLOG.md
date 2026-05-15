@@ -1,6 +1,22 @@
 # Healora Backlog
-> ver 0.8 | 13.05.2026, 12:00
-> **87**/128 задач · **280**/670 ч
+> ver 0.9 | 15.05.2026, 22:00
+> **94**/128 задач · **302**/670 ч
+
+## Recent Updates (14–15.05.2026)
+
+### 15.05.2026
+- [x] **Voice popup redesign** — Always-visible form with per-field inputs, settings gear (language 8 langs, mic device picker with level meter via AnalyserNode), transcript preview with correction, per-field record button (10 ч)
+- [x] **Parameter history** — profileOverrides + paramHistory in localStorage, getAttrCurrent helper, 7 weekday columns in attr table showing recent values (6 ч)
+- [x] **Export twin data** — JSON download with profile, overrides, history, plans, interventions (1 ч)
+- [x] **Preference badges** — Toggle badges (вегетарианство, только РКИ) + custom text field, persisted in localStorage, included in export (2 ч)
+- [x] **Icon cleanup** — Mic icon→pencil edit icon in section header, voice popup header, per-field buttons (1 ч)
+- [x] **Profile header mic→edit** — Mic button moved to bullet position, opens editor popup (1 ч)
+- [x] **Weekday column fix** — Only show changed values (differs from `attr.current`), loose comparison fixes false negatives (1.5 ч)
+
+### 14.05.2026
+- [x] **Inline edit persistence** — saveEdit writes to profileOverrides + paramHistory (2 ч)
+- [x] **Weekday columns** — 7 columns (today + 6 previous) in attr grid, CSS grid `repeat(7, 45px)` (3 ч)
+- [x] **Deploy cleanup** — Stale asset cleanup on server (0.5 ч)
 
 ## Recent Updates (12–13.05.2026)
 

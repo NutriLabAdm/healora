@@ -11,3 +11,7 @@
 
 .btn-chat { background: #9c27b0; }
 .btn-chat:hover { background: #7b1fa2; transform: scale(1.03); box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4); }
+
+.btn-export { background: #455a64; }
+.btn-export:hover { background: #37474f; transform: scale(1.03); box-shadow: 0 4px 12px rgba(69, 90, 100, 0.4); }
+
