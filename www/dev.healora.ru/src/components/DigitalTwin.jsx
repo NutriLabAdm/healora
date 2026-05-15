@@ -3011,8 +3011,11 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       sleep: '#2196f3', physical: '#4caf50', mental: '#9c27b0',
                       food: '#ff9800', medical: '#f44336', supplement: '#795548',
                     };
+                    const maxDay = Math.max(-1, ...chatMessages.map(m => m.day));
+                    const minDay = Math.max(0, maxDay - 2);
+                    const filtered = chatMessages.filter(m => m.day >= minDay);
                     const grouped = {};
-                    chatMessages.forEach(msg => {
+                    filtered.forEach(msg => {
                       if (!grouped[msg.day]) grouped[msg.day] = [];
                       grouped[msg.day].push(msg);
                     });
