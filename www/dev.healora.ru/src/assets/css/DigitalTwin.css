@@ -1839,6 +1839,8 @@
 .protocol-picker-name { font-weight: 600; }
 .protocol-picker-applic { color: #999; font-size: 9px; }
 .protocol-picker-cb { font-size: 14px; flex-shrink: 0; width: 20px; text-align: center; color: #6b21c8; }
+.protocol-picker-input { flex: 1; min-width: 120px; padding: 2px 6px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 10px; font-family: inherit; background: #fff; outline: none; }
+.protocol-picker-input:focus { border-color: #9c27b0; }
 .protocol-picker-src-badge {
   position: relative; display: inline-flex; align-items: center; justify-content: center;
   min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px;

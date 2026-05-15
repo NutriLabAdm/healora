@@ -200,7 +200,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     try { return JSON.parse(localStorage.getItem('healora_pref_diet') || '[]'); } catch { return []; }
   });
   const [prefRestrictionBadges, setPrefRestrictionBadges] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('healora_pref_restrictions') || '[]'); } catch { return []; }
+    try {
+      const raw = JSON.parse(localStorage.getItem('healora_pref_restrictions') || '[]');
+      return raw.map(r => typeof r === 'string' ? { name: r, text: '' } : r);
+    } catch { return []; }
   });
   const [showDietPrefs, setShowDietPrefs] = useState(false);
   const [showRestrictions, setShowRestrictions] = useState(false);
@@ -1648,9 +1651,9 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </span>
                   ))}
                   {prefRestrictionBadges.map(badge => (
-                    <span key={'r_'+badge} className="pref-badge active">
-                      {badge}
-                      <span className="pref-badge-remove" onClick={e => { e.stopPropagation(); const next = prefRestrictionBadges.filter(b => b !== badge); setPrefRestrictionBadges(next); localStorage.setItem('healora_pref_restrictions', JSON.stringify(next)); }}>×</span>
+                    <span key={'r_'+badge.name} className="pref-badge active" title={badge.text || ''}>
+                      {badge.name}{badge.text ? ': ' + badge.text : ''}
+                      <span className="pref-badge-remove" onClick={e => { e.stopPropagation(); const next = prefRestrictionBadges.filter(b => b.name !== badge.name); setPrefRestrictionBadges(next); localStorage.setItem('healora_pref_restrictions', JSON.stringify(next)); }}>×</span>
                     </span>
                   ))}
                   <span className="pref-custom-wrap">
@@ -1717,7 +1720,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         <div className="protocol-picker-body" onClick={e => e.stopPropagation()}>
                           <div className="protocol-picker-header">Ограничения</div>
                           {dietRestrictionsData.map(dr => {
-                            const active = prefRestrictionBadges.includes(dr.name);
+                            const badge = prefRestrictionBadges.find(b => b.name === dr.name);
+                            const active = !!badge;
                             const cls = ['protocol-picker-item'];
                             if (active) cls.push('active');
                             return (
@@ -1732,7 +1736,22 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                   <span className="protocol-picker-name">{dr.name}</span>
                                   <span className="protocol-picker-applic">{dr.applicability}</span>
                                 </span>
-                                <span className="protocol-picker-cb" onClick={e => { e.stopPropagation(); const next = active ? prefRestrictionBadges.filter(b => b !== dr.name) : [...prefRestrictionBadges, dr.name]; setPrefRestrictionBadges(next); localStorage.setItem('healora_pref_restrictions', JSON.stringify(next)); }}>{active ? '☑' : '☐'}</span>
+                                {active && (
+                                  <input
+                                    className="protocol-picker-input"
+                                    type="text"
+                                    placeholder="Описание ограничения..."
+                                    value={badge.text}
+                                    onClick={e => e.stopPropagation()}
+                                    onChange={e => {
+                                      e.stopPropagation();
+                                      const next = prefRestrictionBadges.map(b => b.name === dr.name ? { ...b, text: e.target.value } : b);
+                                      setPrefRestrictionBadges(next);
+                                      localStorage.setItem('healora_pref_restrictions', JSON.stringify(next));
+                                    }}
+                                  />
+                                )}
+                                <span className="protocol-picker-cb" onClick={e => { e.stopPropagation(); const next = active ? prefRestrictionBadges.filter(b => b.name !== dr.name) : [...prefRestrictionBadges, { name: dr.name, text: '' }]; setPrefRestrictionBadges(next); localStorage.setItem('healora_pref_restrictions', JSON.stringify(next)); }}>{active ? '☑' : '☐'}</span>
                               </div>
                             );
                           })}
