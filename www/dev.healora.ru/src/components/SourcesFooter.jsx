@@ -99,7 +99,7 @@ const SourcesFooter = () => {
 
             <button
               className="digital-twin-btn"
-              onClick={() => navigate('/digital-twin')}
+              onClick={() => navigate('/')}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6"/><path d="M1 12h6m6 0h6"/><path d="M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24"/><path d="M19.78 4.22l-4.24 4.24m-7.08 7.08l-4.24 4.24"/></svg>
               <span>Open Digital Twin</span>

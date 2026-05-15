@@ -63,7 +63,7 @@ const SourcesPanel = () => {
       {/* Digital Twin Navigation Button */}
       <button 
         className="digital-twin-btn"
-        onClick={() => navigate('/digital-twin')}
+        onClick={() => navigate('/')}
         style={{
           width: '100%',
           padding: '12px',

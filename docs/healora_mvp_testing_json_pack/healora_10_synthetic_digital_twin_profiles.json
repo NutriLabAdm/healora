@@ -48,7 +48,7 @@
         "physical_activity": "5-6 times/week",
         "exercise_type": "HIIT, gym",
         "daily_steps": 8432,
-        "sleep_hours": 8.0,
+        "sleep_hours": 8,
         "stress_level_0_10": 4,
         "diet": "vegetarian",
         "water_l_day": 2.5,
@@ -99,7 +99,7 @@
     },
     {
       "profile_id": "TEST_002",
-      "photo": "05_Дмитрий_55_notepad.png",
+      "photo": "10_Alex_48_soup.png",
       "scenario_name": "Overweight male with high blood pressure and low activity",
       "demographics": {
         "age": 42,
@@ -192,7 +192,8 @@
       "avoid_or_safety_notes": [
         "Do not recommend HIIT now.",
         "Suggest specialist if BP repeatedly above 140/90."
-      ]
+      ],
+      "name": "Михаил"
     },
     {
       "profile_id": "TEST_003",
@@ -205,8 +206,8 @@
       },
       "anthropometrics": {
         "height_cm": 170,
-        "weight_kg": 63,
-        "bmi": 21.8,
+        "weight_kg": 60,
+        "bmi": 20.8,
         "waist_cm": 74
       },
       "vitals": {
@@ -234,7 +235,7 @@
         "crp_mg_l": 1.1,
         "vitamin_d_ng_ml": 27,
         "ferritin_ng_ml": 45,
-        "tsh_miu_l": 2.0
+        "tsh_miu_l": 2
       },
       "lifestyle": {
         "smoking": "no",
@@ -322,7 +323,7 @@
       },
       "labs": {
         "glucose_mg_dl": 82,
-        "hba1c_percent": 5.0,
+        "hba1c_percent": 5,
         "total_cholesterol_mg_dl": 165,
         "hdl_mg_dl": 62,
         "ldl_mg_dl": 88,
@@ -341,7 +342,7 @@
         "sleep_hours": 7.2,
         "stress_level_0_10": 5,
         "diet": "vegetarian",
-        "water_l_day": 2.0,
+        "water_l_day": 2,
         "screen_time_h_day": 5,
         "work_schedule": "daytime"
       },
@@ -498,7 +499,7 @@
       "anthropometrics": {
         "height_cm": 162,
         "weight_kg": 76,
-        "bmi": 29.0,
+        "bmi": 29,
         "waist_cm": 94
       },
       "vitals": {
@@ -716,7 +717,7 @@
         "hdl_mg_dl": 45,
         "ldl_mg_dl": 118,
         "triglycerides_mg_dl": 150,
-        "crp_mg_l": 2.0,
+        "crp_mg_l": 2,
         "vitamin_d_ng_ml": 18,
         "ferritin_ng_ml": 90,
         "tsh_miu_l": 2.1
@@ -969,6 +970,456 @@
       "avoid_or_safety_notes": [
         "Do not encourage unsupervised metformin, rapamycin, hormones or senolytics."
       ]
+    },
+    {
+      "profile_id": "P005",
+      "name": "Дмитрий",
+      "photo": "05_Дмитрий_55_notepad.png",
+      "demographics": {
+        "sex": "male",
+        "age": 57,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 88,
+        "height_cm": 178,
+        "bmi": 27.8,
+        "waist_cm": 95
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 135,
+        "diastolic_bp_mmhg": 88,
+        "resting_hr_bpm": 72,
+        "hrv_ms": 35,
+        "spo2_percent": 96
+      },
+      "labs": {
+        "glucose_mg_dl": 105,
+        "total_cholesterol_mg_dl": 220,
+        "hdl_mg_dl": 42,
+        "ldl_mg_dl": 140,
+        "triglycerides_mg_dl": 180,
+        "hba1c_percent": 5.7,
+        "crp_mg_l": 2.1,
+        "vitamin_d": 20,
+        "ferritin": 130,
+        "tsh": 2.8
+      },
+      "lifestyle": {
+        "sleep_hours": 6.5,
+        "stress_level_0_10": 6,
+        "daily_steps": 5000,
+        "water_l_day": 1.4,
+        "smoking": "Бросил",
+        "alcohol": "1-2/нед",
+        "physical_activity": "1-2/нед",
+        "diet": "смешанная"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Гетерозигота",
+        "lactase_persistence": "Нет",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [
+          "гипотензивные"
+        ],
+        "allergies": "Нет",
+        "cardiovascular_disease": "yes",
+        "diabetes": "no",
+        "family_history": "Гипертония"
+      },
+      "digital_twin_scores": {
+        "current_stars": 450,
+        "health_risk_score": 42,
+        "risk_level": "medium"
+      }
+    },
+    {
+      "profile_id": "P007",
+      "name": "Иван",
+      "photo": "07_Ivan_13_chips.png",
+      "demographics": {
+        "sex": "male",
+        "age": 13,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 48,
+        "height_cm": 158,
+        "bmi": 19.2,
+        "waist_cm": 65
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 108,
+        "diastolic_bp_mmhg": 68,
+        "resting_hr_bpm": 78,
+        "hrv_ms": 58,
+        "spo2_percent": 99
+      },
+      "labs": {
+        "glucose_mg_dl": 82,
+        "total_cholesterol_mg_dl": 140,
+        "hdl_mg_dl": 48,
+        "ldl_mg_dl": 80,
+        "triglycerides_mg_dl": 90,
+        "hba1c_percent": 4.8,
+        "crp_mg_l": 0.5,
+        "vitamin_d": 30,
+        "ferritin": 50,
+        "tsh": 1.9
+      },
+      "lifestyle": {
+        "sleep_hours": 9,
+        "stress_level_0_10": 2,
+        "daily_steps": 10000,
+        "water_l_day": 1,
+        "smoking": "Нет",
+        "alcohol": "Нет",
+        "physical_activity": "5-7/нед",
+        "diet": "домашняя"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Нет",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [],
+        "allergies": "Нет",
+        "cardiovascular_disease": "no",
+        "diabetes": "no",
+        "family_history": "Нет"
+      },
+      "digital_twin_scores": {
+        "current_stars": 950,
+        "health_risk_score": 10,
+        "risk_level": "low"
+      }
+    },
+    {
+      "profile_id": "P014",
+      "name": "Екатерина",
+      "photo": "14_Ekaterina_39_wearable.png",
+      "demographics": {
+        "sex": "female",
+        "age": 39,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 60,
+        "height_cm": 170,
+        "bmi": 20.8,
+        "waist_cm": 72
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 115,
+        "diastolic_bp_mmhg": 74,
+        "resting_hr_bpm": 66,
+        "hrv_ms": 58,
+        "spo2_percent": 98
+      },
+      "labs": {
+        "glucose_mg_dl": 90,
+        "total_cholesterol_mg_dl": 180,
+        "hdl_mg_dl": 58,
+        "ldl_mg_dl": 105,
+        "triglycerides_mg_dl": 115,
+        "hba1c_percent": 5.1,
+        "crp_mg_l": 0.9,
+        "vitamin_d": 30,
+        "ferritin": 70,
+        "tsh": 2.2
+      },
+      "lifestyle": {
+        "sleep_hours": 7.8,
+        "stress_level_0_10": 4,
+        "daily_steps": 8000,
+        "water_l_day": 1.7,
+        "smoking": "Нет",
+        "alcohol": "Редко",
+        "physical_activity": "3-4/нед",
+        "exercise_type": "бег",
+        "diet": "средиземноморская"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Нет",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [],
+        "allergies": "Нет",
+        "cardiovascular_disease": "no",
+        "diabetes": "no",
+        "family_history": "Нет"
+      },
+      "digital_twin_scores": {
+        "current_stars": 780,
+        "health_risk_score": 22,
+        "risk_level": "low"
+      }
+    },
+    {
+      "profile_id": "P019b",
+      "name": "Стас",
+      "photo": "19_Stas_35_dog_bike.png",
+      "demographics": {
+        "sex": "male",
+        "age": 35,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 82,
+        "height_cm": 178,
+        "bmi": 24.8,
+        "waist_cm": 84
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 125,
+        "diastolic_bp_mmhg": 80,
+        "resting_hr_bpm": 68,
+        "hrv_ms": 50,
+        "spo2_percent": 98
+      },
+      "labs": {
+        "glucose_mg_dl": 92,
+        "total_cholesterol_mg_dl": 190,
+        "hdl_mg_dl": 48,
+        "ldl_mg_dl": 115,
+        "triglycerides_mg_dl": 135,
+        "hba1c_percent": 5.3,
+        "crp_mg_l": 1,
+        "vitamin_d": 28,
+        "ferritin": 90,
+        "tsh": 2.4
+      },
+      "lifestyle": {
+        "sleep_hours": 7.2,
+        "stress_level_0_10": 4,
+        "daily_steps": 7500,
+        "water_l_day": 1.8,
+        "smoking": "Нет",
+        "alcohol": "Редко",
+        "physical_activity": "3-4/нед",
+        "exercise_type": "велосипед",
+        "diet": "сбалансированная"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Нет",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [],
+        "allergies": "Нет",
+        "cardiovascular_disease": "no",
+        "diabetes": "no",
+        "family_history": "Нет"
+      },
+      "digital_twin_scores": {
+        "current_stars": 680,
+        "health_risk_score": 26,
+        "risk_level": "low"
+      }
+    },
+    {
+      "profile_id": "P022",
+      "name": "Варя",
+      "photo": "22_Varya_30_yoga.png",
+      "demographics": {
+        "sex": "female",
+        "age": 30,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 57,
+        "height_cm": 166,
+        "bmi": 20.2,
+        "waist_cm": 70
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 110,
+        "diastolic_bp_mmhg": 70,
+        "resting_hr_bpm": 65,
+        "hrv_ms": 62,
+        "spo2_percent": 99
+      },
+      "labs": {
+        "glucose_mg_dl": 86,
+        "total_cholesterol_mg_dl": 165,
+        "hdl_mg_dl": 62,
+        "ldl_mg_dl": 95,
+        "triglycerides_mg_dl": 100,
+        "hba1c_percent": 5,
+        "crp_mg_l": 0.6,
+        "vitamin_d": 35,
+        "ferritin": 60,
+        "tsh": 2
+      },
+      "lifestyle": {
+        "sleep_hours": 8,
+        "stress_level_0_10": 3,
+        "daily_steps": 9000,
+        "water_l_day": 2,
+        "smoking": "Нет",
+        "alcohol": "Редко",
+        "physical_activity": "4-5/нед",
+        "exercise_type": "йога",
+        "diet": "вегетарианская"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Нет",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [],
+        "allergies": "Нет",
+        "cardiovascular_disease": "no",
+        "diabetes": "no",
+        "family_history": "Нет"
+      },
+      "digital_twin_scores": {
+        "current_stars": 900,
+        "health_risk_score": 14,
+        "risk_level": "low"
+      }
+    },
+    {
+      "profile_id": "P025",
+      "name": "Катя",
+      "photo": "25_Katya_29_office.png",
+      "demographics": {
+        "sex": "female",
+        "age": 29,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 59,
+        "height_cm": 167,
+        "bmi": 20.7,
+        "waist_cm": 71
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 110,
+        "diastolic_bp_mmhg": 70,
+        "resting_hr_bpm": 66,
+        "hrv_ms": 60,
+        "spo2_percent": 99
+      },
+      "labs": {
+        "glucose_mg_dl": 88,
+        "total_cholesterol_mg_dl": 170,
+        "hdl_mg_dl": 60,
+        "ldl_mg_dl": 98,
+        "triglycerides_mg_dl": 105,
+        "hba1c_percent": 5.1,
+        "crp_mg_l": 0.7,
+        "vitamin_d": 32,
+        "ferritin": 62,
+        "tsh": 2.1
+      },
+      "lifestyle": {
+        "sleep_hours": 7.5,
+        "stress_level_0_10": 4,
+        "daily_steps": 7000,
+        "water_l_day": 1.6,
+        "smoking": "Нет",
+        "alcohol": "Редко",
+        "physical_activity": "2-3/нед",
+        "exercise_type": "фитнес",
+        "diet": "сбалансированная"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Нет",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [],
+        "allergies": "Нет",
+        "cardiovascular_disease": "no",
+        "diabetes": "no",
+        "family_history": "Нет"
+      },
+      "digital_twin_scores": {
+        "current_stars": 640,
+        "health_risk_score": 24,
+        "risk_level": "low"
+      }
+    },
+    {
+      "profile_id": "P008",
+      "name": "Галина",
+      "photo": "08_Galina_75_Vika_9_balcony.png",
+      "demographics": {
+        "sex": "female",
+        "age": 75,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 68,
+        "height_cm": 160,
+        "bmi": 26.6,
+        "waist_cm": 86
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 148,
+        "diastolic_bp_mmhg": 88,
+        "resting_hr_bpm": 74,
+        "hrv_ms": 28,
+        "spo2_percent": 94
+      },
+      "labs": {
+        "glucose_mg_dl": 110,
+        "total_cholesterol_mg_dl": 235,
+        "hdl_mg_dl": 40,
+        "ldl_mg_dl": 155,
+        "triglycerides_mg_dl": 195,
+        "hba1c_percent": 6,
+        "crp_mg_l": 3.5,
+        "vitamin_d": 14,
+        "ferritin": 105,
+        "tsh": 3.5
+      },
+      "lifestyle": {
+        "sleep_hours": 6,
+        "stress_level_0_10": 3,
+        "daily_steps": 3500,
+        "water_l_day": 1.2,
+        "smoking": "Нет",
+        "alcohol": "Нет",
+        "physical_activity": "1/нед",
+        "diet": "домашняя"
+      },
+      "genetics": {
+        "apoe": "e3/e4",
+        "mthfr": "Гетерозигота",
+        "lactase_persistence": "Нет",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [
+          "гипотензивные",
+          "статины"
+        ],
+        "allergies": "Нет",
+        "cardiovascular_disease": "yes",
+        "diabetes": "yes",
+        "family_history": "ИБС, СД 2 типа"
+      },
+      "digital_twin_scores": {
+        "current_stars": 320,
+        "health_risk_score": 55,
+        "risk_level": "high"
+      }
     }
   ]
 }

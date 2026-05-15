@@ -184,12 +184,9 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     try { recognition.start(); } catch (e) { setVoiceError('Ошибка запуска микрофона: ' + e.message); }
   };
   const [showParamHistory, setShowParamHistory] = useState(null);
-  const [paramHistory, setParamHistory] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('healora_param_history') || '{}'); } catch { return {}; }
-  });
-  const [profileOverrides, setProfileOverrides] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('healora_param_overrides') || '{}'); } catch { return {}; }
-  });
+  const [paramHistory, setParamHistory] = useState({});
+  const [profileOverrides, setProfileOverrides] = useState({});
+  const [hasUnsavedEdits, setHasUnsavedEdits] = useState(false);
   const [prefBadges, setPrefBadges] = useState(() => {
     try { return JSON.parse(localStorage.getItem('healora_pref_badges') || '[]'); } catch { return []; }
   });
@@ -503,7 +500,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     'TEST_001': { profile_id: 'TEST_001', name: 'Анна', photo: '03_Natalia_42_salad.png', demographics: { sex: 'female', age: 28, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 58, height_cm: 168, bmi: 20.2, waist_cm: 72 }, vitals: { systolic_bp_mmhg: 105, diastolic_bp_mmhg: 68, resting_hr_bpm: 64, hrv_ms: 72, spo2_percent: 98 }, labs: { glucose_mg_dl: 88, total_cholesterol_mg_dl: 175, hdl_mg_dl: 55, ldl_mg_dl: 100, triglycerides_mg_dl: 120, hba1c_percent: 5.2, crp_mg_l: 0.8, vitamin_d: 32, ferritin: 65, tsh: 2.1 }, lifestyle: { sleep_hours: 7.5, stress_level_0_10: 3, daily_steps: 8200, water_l_day: 1.8, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-5/нед', exercise_type: 'бег', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 840, health_risk_score: 18, risk_level: 'low' } },
     'TEST_002': { profile_id: 'TEST_002', name: 'Михаил', photo: '10_Alex_48_soup.png', demographics: { sex: 'male', age: 42, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 96, height_cm: 182, bmi: 31.2, waist_cm: 104 }, vitals: { systolic_bp_mmhg: 142, diastolic_bp_mmhg: 91, resting_hr_bpm: 78, hrv_ms: 38, spo2_percent: 96 }, labs: { glucose_mg_dl: 112, total_cholesterol_mg_dl: 245, hdl_mg_dl: 38, ldl_mg_dl: 160, triglycerides_mg_dl: 210, hba1c_percent: 5.9, crp_mg_l: 3.2, vitamin_d: 18, ferritin: 140, tsh: 3.8 }, lifestyle: { sleep_hours: 6, stress_level_0_10: 7, daily_steps: 4200, water_l_day: 1.2, smoking: 'Курит', alcohol: 'Регулярно', physical_activity: '0-1/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e4', mthfr: 'Гетерозигота', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: ['статины'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'ИБС у отца' }, digital_twin_scores: { current_stars: 210, health_risk_score: 52, risk_level: 'high' } },
     'TEST_003': { profile_id: 'TEST_003', name: 'Елена', photo: '16_Anastasia_37_street.png', demographics: { sex: 'female', age: 34, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 64, height_cm: 170, bmi: 22.1, waist_cm: 76 }, vitals: { systolic_bp_mmhg: 118, diastolic_bp_mmhg: 76, resting_hr_bpm: 70, hrv_ms: 55, spo2_percent: 98 }, labs: { glucose_mg_dl: 95, total_cholesterol_mg_dl: 200, hdl_mg_dl: 52, ldl_mg_dl: 120, triglycerides_mg_dl: 140, hba1c_percent: 5.4, crp_mg_l: 1.2, vitamin_d: 24, ferritin: 80, tsh: 2.8 }, lifestyle: { sleep_hours: 7, stress_level_0_10: 5, daily_steps: 6500, water_l_day: 1.5, smoking: 'Нет', alcohol: 'По праздникам', physical_activity: '2-3/нед', exercise_type: 'йога', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 650, health_risk_score: 28, risk_level: 'medium' } },
-    'P005': { profile_id: 'P005', name: 'Дмитрий', photo: '05_Дмитрий_55_notepad.png', demographics: { sex: 'male', age: 55, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 88, height_cm: 178, bmi: 27.8, waist_cm: 98 }, vitals: { systolic_bp_mmhg: 135, diastolic_bp_mmhg: 88, resting_hr_bpm: 72, hrv_ms: 35, spo2_percent: 96 }, labs: { glucose_mg_dl: 105, total_cholesterol_mg_dl: 220, hdl_mg_dl: 42, ldl_mg_dl: 140, triglycerides_mg_dl: 180, hba1c_percent: 5.7, crp_mg_l: 2.1, vitamin_d: 20, ferritin: 130, tsh: 2.8 }, lifestyle: { sleep_hours: 6.5, stress_level_0_10: 6, daily_steps: 5000, water_l_day: 1.4, smoking: 'Бросил', alcohol: '1-2/нед', physical_activity: '1-2/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e3', mthfr: 'Гетерозигота', lactase_persistence: 'Нет', brca_status: 'Neg' }, medical_history: { current_medications: ['гипотензивные'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'Гипертония' }, digital_twin_scores: { current_stars: 450, health_risk_score: 42, risk_level: 'medium' } },
+    'P005': { profile_id: 'P005', name: 'Дмитрий', photo: '05_Дмитрий_55_notepad.png', demographics: { sex: 'male', age: 57, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 88, height_cm: 178, bmi: 27.8, waist_cm: 98 }, vitals: { systolic_bp_mmhg: 135, diastolic_bp_mmhg: 88, resting_hr_bpm: 72, hrv_ms: 35, spo2_percent: 96 }, labs: { glucose_mg_dl: 105, total_cholesterol_mg_dl: 220, hdl_mg_dl: 42, ldl_mg_dl: 140, triglycerides_mg_dl: 180, hba1c_percent: 5.7, crp_mg_l: 2.1, vitamin_d: 20, ferritin: 130, tsh: 2.8 }, lifestyle: { sleep_hours: 6.5, stress_level_0_10: 6, daily_steps: 5000, water_l_day: 1.4, smoking: 'Бросил', alcohol: '1-2/нед', physical_activity: '1-2/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e3', mthfr: 'Гетерозигота', lactase_persistence: 'Нет', brca_status: 'Neg' }, medical_history: { current_medications: ['гипотензивные'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'Гипертония' }, digital_twin_scores: { current_stars: 450, health_risk_score: 42, risk_level: 'medium' } },
     'P007': { profile_id: 'P007', name: 'Иван', photo: '07_Ivan_13_chips.png', demographics: { sex: 'male', age: 13, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 48, height_cm: 158, bmi: 19.2, waist_cm: 65 }, vitals: { systolic_bp_mmhg: 108, diastolic_bp_mmhg: 68, resting_hr_bpm: 78, hrv_ms: 58, spo2_percent: 99 }, labs: { glucose_mg_dl: 82, total_cholesterol_mg_dl: 140, hdl_mg_dl: 48, ldl_mg_dl: 80, triglycerides_mg_dl: 90, hba1c_percent: 4.8, crp_mg_l: 0.5, vitamin_d: 30, ferritin: 50, tsh: 1.9 }, lifestyle: { sleep_hours: 9, stress_level_0_10: 2, daily_steps: 10000, water_l_day: 1.0, smoking: 'Нет', alcohol: 'Нет', physical_activity: '5-7/нед', diet: 'домашняя' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 950, health_risk_score: 10, risk_level: 'low' } },
     'P014': { profile_id: 'P014', name: 'Екатерина', photo: '14_Ekaterina_39_wearable.png', demographics: { sex: 'female', age: 39, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 60, height_cm: 170, bmi: 20.8, waist_cm: 72 }, vitals: { systolic_bp_mmhg: 115, diastolic_bp_mmhg: 74, resting_hr_bpm: 66, hrv_ms: 58, spo2_percent: 98 }, labs: { glucose_mg_dl: 90, total_cholesterol_mg_dl: 180, hdl_mg_dl: 58, ldl_mg_dl: 105, triglycerides_mg_dl: 115, hba1c_percent: 5.1, crp_mg_l: 0.9, vitamin_d: 30, ferritin: 70, tsh: 2.2 }, lifestyle: { sleep_hours: 7.8, stress_level_0_10: 4, daily_steps: 8000, water_l_day: 1.7, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-4/нед', exercise_type: 'бег', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 780, health_risk_score: 22, risk_level: 'low' } },
     'P019b': { profile_id: 'P019b', name: 'Стас', photo: '19_Stas_35_dog_bike.png', demographics: { sex: 'male', age: 35, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 82, height_cm: 178, bmi: 24.8, waist_cm: 84 }, vitals: { systolic_bp_mmhg: 125, diastolic_bp_mmhg: 80, resting_hr_bpm: 68, hrv_ms: 50, spo2_percent: 98 }, labs: { glucose_mg_dl: 92, total_cholesterol_mg_dl: 190, hdl_mg_dl: 48, ldl_mg_dl: 115, triglycerides_mg_dl: 135, hba1c_percent: 5.3, crp_mg_l: 1.0, vitamin_d: 28, ferritin: 90, tsh: 2.4 }, lifestyle: { sleep_hours: 7.2, stress_level_0_10: 4, daily_steps: 7500, water_l_day: 1.8, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-4/нед', exercise_type: 'велосипед', diet: 'сбалансированная' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 680, health_risk_score: 26, risk_level: 'low' } },
@@ -520,11 +517,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     }
     setLoading(true);
     const cached = fallbackProfiles[profileId];
-    if (cached) {
-      setProfile(cached);
-      setStars(cached.digital_twin_scores?.current_stars || 0);
-      setLoading(false);
-    }
     fetch(`/api/profiles/${profileId}`)
       .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
       .then(data => {
@@ -533,9 +525,18 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         setLoading(false);
       })
       .catch(() => {
-        if (!cached) setProfile(null);
+        if (cached) {
+          setProfile(cached);
+          setStars(cached.digital_twin_scores?.current_stars || 0);
+        } else {
+          setProfile(null);
+        }
         setLoading(false);
       });
+    // Reset per-profile state on change
+    setProfileOverrides({});
+    setParamHistory({});
+    setHasUnsavedEdits(false);
   }, [profileId]);
 
   const simulationDayRef = useRef(0);
@@ -953,10 +954,19 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     const newHistory = { ...paramHistory };
     if (!newHistory[attrId]) newHistory[attrId] = [];
     newHistory[attrId] = [...newHistory[attrId], { value: val, timestamp: now }];
+    if (attrId === 'weight' || attrId === 'height') {
+      const w = newOverrides.weight ?? profile?.anthropometrics?.weight_kg;
+      const h = newOverrides.height ?? profile?.anthropometrics?.height_cm;
+      if (w && h && h > 0) {
+        const bmiVal = Math.round((w / ((h / 100) ** 2)) * 10) / 10;
+        newOverrides.bmi = bmiVal;
+        if (!newHistory.bmi) newHistory.bmi = [];
+        newHistory.bmi = [...newHistory.bmi, { value: bmiVal, timestamp: now }];
+      }
+    }
     setProfileOverrides(newOverrides);
     setParamHistory(newHistory);
-    localStorage.setItem('healora_param_overrides', JSON.stringify(newOverrides));
-    localStorage.setItem('healora_param_history', JSON.stringify(newHistory));
+    setHasUnsavedEdits(true);
   };
 
   const formatAttrValue = (val) => {
@@ -1081,16 +1091,99 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
     const newOverrides = { ...profileOverrides };
     const newHistory = { ...paramHistory };
 
+    const voiceAttrIds = new Set(parsedValues.map(p => p.attrId));
     parsedValues.forEach(({ attrId, value }) => {
       newOverrides[attrId] = value;
       if (!newHistory[attrId]) newHistory[attrId] = [];
       newHistory[attrId] = [...newHistory[attrId], { value, timestamp: now }];
     });
 
+    if (voiceAttrIds.has('weight') || voiceAttrIds.has('height')) {
+      const w = newOverrides.weight ?? profile?.anthropometrics?.weight_kg;
+      const h = newOverrides.height ?? profile?.anthropometrics?.height_cm;
+      if (w && h && h > 0) {
+        const bmiVal = Math.round((w / ((h / 100) ** 2)) * 10) / 10;
+        newOverrides.bmi = bmiVal;
+        if (!newHistory.bmi) newHistory.bmi = [];
+        newHistory.bmi = [...newHistory.bmi, { value: bmiVal, timestamp: now }];
+      }
+    }
+
     setProfileOverrides(newOverrides);
     setParamHistory(newHistory);
-    localStorage.setItem('healora_param_overrides', JSON.stringify(newOverrides));
-    localStorage.setItem('healora_param_history', JSON.stringify(newHistory));
+    setHasUnsavedEdits(true);
+  };
+
+  const saveToServer = async () => {
+    if (!profile) return;
+    const merged = {
+      ...profile,
+      anthropometrics: {
+        ...profile.anthropometrics,
+        weight_kg: profileOverrides.weight ?? profile.anthropometrics?.weight_kg,
+        height_cm: profileOverrides.height ?? profile.anthropometrics?.height_cm,
+        bmi: profileOverrides.bmi ?? profile.anthropometrics?.bmi,
+        waist_cm: profileOverrides.waist ?? profile.anthropometrics?.waist_cm,
+      },
+      vitals: profile.vitals ? {
+        ...profile.vitals,
+        systolic_bp_mmhg: profileOverrides.bp_syst ?? profile.vitals.systolic_bp_mmhg,
+        diastolic_bp_mmhg: profileOverrides.bp_diast ?? profile.vitals.diastolic_bp_mmhg,
+        resting_hr_bpm: profileOverrides.hr ?? profile.vitals.resting_hr_bpm,
+        hrv_ms: profileOverrides.hrv ?? profile.vitals.hrv_ms,
+        spo2_percent: profileOverrides.spo2 ?? profile.vitals.spo2_percent,
+      } : undefined,
+      labs: profile.labs ? {
+        ...profile.labs,
+        glucose_mg_dl: profileOverrides.glucose ?? profile.labs.glucose_mg_dl,
+        hba1c_percent: profileOverrides.hba1c ?? profile.labs.hba1c_percent,
+        total_cholesterol_mg_dl: profileOverrides.tchol ?? profile.labs.total_cholesterol_mg_dl,
+        hdl_mg_dl: profileOverrides.hdl ?? profile.labs.hdl_mg_dl,
+        ldl_mg_dl: profileOverrides.ldl ?? profile.labs.ldl_mg_dl,
+        triglycerides_mg_dl: profileOverrides.tg ?? profile.labs.triglycerides_mg_dl,
+        crp_mg_l: profileOverrides.crp ?? profile.labs.crp_mg_l,
+        vitamin_d: profileOverrides.vitd ?? profile.labs.vitamin_d,
+        ferritin: profileOverrides.ferritin ?? profile.labs.ferritin,
+        tsh: profileOverrides.tsh ?? profile.labs.tsh,
+      } : undefined,
+      lifestyle: profile.lifestyle ? {
+        ...profile.lifestyle,
+        sleep_hours: profileOverrides.sleep ?? profile.lifestyle.sleep_hours,
+        stress_level_0_10: profileOverrides.stress ?? profile.lifestyle.stress_level_0_10,
+        daily_steps: profileOverrides.steps ?? profile.lifestyle.daily_steps,
+        water_l_day: profileOverrides.water ?? profile.lifestyle.water_l_day,
+        smoking: profileOverrides.smoking ?? profile.lifestyle.smoking,
+        alcohol: profileOverrides.alcohol ?? profile.lifestyle.alcohol,
+        physical_activity: profileOverrides.exercise_freq ?? profile.lifestyle.physical_activity,
+        exercise_type: profileOverrides.exercise_type ?? profile.lifestyle.exercise_type,
+        diet: profileOverrides.diet ?? profile.lifestyle.diet,
+      } : undefined,
+      demographics: profile.demographics ? {
+        ...profile.demographics,
+        age: profileOverrides.age ?? profile.demographics.age,
+        sex: profileOverrides.sex ?? profile.demographics.sex,
+        ethnicity_or_background: profileOverrides.ethnicity ?? profile.demographics.ethnicity_or_background,
+      } : undefined,
+    };
+    try {
+      let res = await fetch(`/api/profiles/${profile.profile_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(merged),
+      });
+      if (res.status === 404) {
+        res = await fetch('/api/profiles', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(merged),
+        });
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setHasUnsavedEdits(false);
+    } catch (err) {
+      console.error('Save failed:', err);
+      alert('Ошибка сохранения: бэкенд недоступен');
+    }
   };
 
   const getVoiceHint = (sectionKey) => {
@@ -1417,7 +1510,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
               <div className={`log-full ${showLog ? '' : 'log-collapsed'}`}>
                 <div className="log-header">
                   <div className="log-header-left">
-                    <h4>Журнал интервенций</h4>
+                    <h4>Профиль</h4>
                     <span className="log-count">{interventionLog.length}</span>
                   </div>
                   {timelineInterventions.length > 0 && (
@@ -1659,6 +1752,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
                     </svg>
                     Выгрузить
+                  </button>
+                  <button className={`assess-health-btn ${hasUnsavedEdits ? 'btn-save-active' : ''}`} onClick={saveToServer} style={{ opacity: hasUnsavedEdits ? 1 : 0.5 }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Сохранить
                   </button>
                 </div>
                 <div className="profile-prefs">

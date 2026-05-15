@@ -15,3 +15,6 @@
 .btn-export { background: #455a64; }
 .btn-export:hover { background: #37474f; transform: scale(1.03); box-shadow: 0 4px 12px rgba(69, 90, 100, 0.4); }
 
+.btn-save-active { background: #2e7d32; }
+.btn-save-active:hover { background: #1b5e20; transform: scale(1.03); box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4); }
+

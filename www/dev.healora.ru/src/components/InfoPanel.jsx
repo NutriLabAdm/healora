@@ -63,7 +63,7 @@ const InfoPanel = () => {
             <IconTwin /> Digital Twin
           </h4>
           <button 
-            onClick={() => navigate('/digital-twin')}
+            onClick={() => navigate('/')}
             style={{
               background: 'rgba(255,255,255,0.2)',
               border: 'none',

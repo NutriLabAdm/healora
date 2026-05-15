@@ -4,19 +4,24 @@ const OpenAI = require('openai');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
+const gigachat = require('./gigachat');
 
 dotenv.config();
+dotenv.config({ path: path.join(__dirname, 'gigachat.env') });
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// AI provider config
+const AI_PROVIDER = process.env.AI_PROVIDER || 'openai'; // 'openai' | 'gigachat'
 
 // Initialize OpenAI only if API key is available
 let openai = null;
 if (process.env.OPENAI_API_KEY) {
     openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 } else {
-    console.warn('WARNING: OPENAI_API_KEY not set. AI features will use fallback responses.');
+    console.warn('WARNING: OPENAI_API_KEY not set.');
 }
 
 // Load profiles
@@ -207,8 +212,24 @@ app.post('/api/chat', async (req, res) => {
         }
 
         let reply;
+        let source = 'fallback';
 
-        if (openai) {
+        if (AI_PROVIDER === 'gigachat') {
+            try {
+                const response = await gigachat.chatCompletion({
+                    model: 'GigaChat-Max',
+                    messages: [
+                        { role: 'system', content: `You are Healora AI Coach. Profile: ${profileText}. Be positive, brief.` },
+                        { role: 'user', content: message }
+                    ],
+                    max_tokens: 200
+                });
+                reply = response.choices?.[0]?.message?.content?.trim();
+                source = 'gigachat';
+            } catch (apiError) {
+                console.error('GigaChat API error:', apiError.message);
+            }
+        } else if (openai) {
             try {
                 const response = await openai.chat.completions.create({
                     model: 'gpt-3.5-turbo',
@@ -219,6 +240,7 @@ app.post('/api/chat', async (req, res) => {
                     max_tokens: 200
                 });
                 reply = response.choices[0].message.content.trim();
+                source = 'openai';
             } catch (apiError) {
                 console.error('OpenAI API error:', apiError.message);
             }
@@ -242,7 +264,7 @@ app.post('/api/chat', async (req, res) => {
             }
         }
 
-        res.json({ reply, source: openai ? 'openai' : 'fallback' });
+        res.json({ reply, source });
     } catch (err) {
         console.error('Server error:', err);
         res.status(500).json({ error: 'Internal server error' });
@@ -266,19 +288,32 @@ app.post('/api/generate-quiz', async (req, res) => {
         }
 
         try {
-            const response = await openai.chat.completions.create({
-                model: 'gpt-3.5-turbo',
-                messages: [
-                    { role: 'system', content: `You are Healora AI Coach. Profile: ${profileText}. Create articles and quizzes.` },
-                    { role: 'user', content: `Based on: "${text}". Create 5 articles and 5 questions each in JSON format.` }
-                ],
-                max_tokens: 1000
-            });
+            let response;
+
+            if (AI_PROVIDER === 'gigachat') {
+                response = await gigachat.chatCompletion({
+                    model: 'GigaChat-Max',
+                    messages: [
+                        { role: 'system', content: `You are Healora AI Coach. Profile: ${profileText}. Create articles and quizzes.` },
+                        { role: 'user', content: `Based on: "${text}". Create 5 articles and 5 questions each in JSON format.` }
+                    ],
+                    max_tokens: 1000
+                });
+            } else {
+                response = await openai.chat.completions.create({
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        { role: 'system', content: `You are Healora AI Coach. Profile: ${profileText}. Create articles and quizzes.` },
+                        { role: 'user', content: `Based on: "${text}". Create 5 articles and 5 questions each in JSON format.` }
+                    ],
+                    max_tokens: 1000
+                });
+            }
 
             const data = JSON.parse(response.choices[0].message.content.trim());
             res.json(data);
         } catch (apiError) {
-            console.error('OpenAI API error:', apiError.message);
+            console.error('AI API error:', apiError.message);
             res.json({
                 articles: [{ title: 'Sample Article', summary: 'Description', questions: [{ q: 'Q1?', options: ['Yes', 'No'], answer: 0 }] }],
                 warning: 'API unavailable'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ChatInterface from './components/ChatInterface';
 import ProgressPath from './components/ProgressPath';
@@ -13,7 +13,14 @@ import { PlansProvider } from './context/PlansProvider';
 import './assets/css/shared.css';
 
 function App() {
-  const [selectedProfile, setSelectedProfile] = useState(null);
+  const getProfileFromHash = () => {
+    try {
+      const h = window.location.hash.replace('#', '');
+      return h || null;
+    } catch { return null; }
+  };
+
+  const [selectedProfile, setSelectedProfile] = useState(getProfileFromHash());
   const [draggedIntervention, setDraggedIntervention] = useState(null);
   const [cartInterventions, setCartInterventions] = useState([]);
   const [authEmail, setAuthEmail] = useState(null);
@@ -21,6 +28,20 @@ function App() {
   const [authMode, setAuthMode] = useState('login');
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+
+  const basePath = import.meta.env.VITE_BASE_PATH ? import.meta.env.VITE_BASE_PATH.replace(/\/$/, '') : '';
+
+  // Sync selectedProfile from URL hash
+  useEffect(() => {
+    const handler = () => setSelectedProfile(getProfileFromHash());
+    window.addEventListener('hashchange', handler);
+    return () => window.removeEventListener('hashchange', handler);
+  }, []);
+
+  const handleSelectProfile = (profileId) => {
+    setSelectedProfile(profileId);
+    window.location.hash = profileId;
+  };
 
   const addToCart = (intervention) => {
     if (cartInterventions.find(i => i.code === intervention.code)) return;
@@ -33,7 +54,7 @@ function App() {
 
   return (
     <PlansProvider>
-    <Router basename={import.meta.env.VITE_BASE_PATH ? import.meta.env.VITE_BASE_PATH.replace(/\/$/, '') : ''}>
+      <Router basename={basePath}>
       <div className="app-topbar">
         <div className="app-topbar-inner">
           <div className="app-topbar-left">
@@ -77,12 +98,21 @@ function App() {
       <div className="app-layout-4col">
         <UserAvatarPanel
           selectedProfile={selectedProfile}
-          onSelectProfile={setSelectedProfile}
+          onSelectProfile={handleSelectProfile}
         />
 
         <div className="main-content">
           <Routes>
-            <Route path="/" element={<Navigate replace to="/digital-twin" />} />
+            {basePath ? (
+              <Route path="/" element={<DigitalTwin
+                profileId={selectedProfile}
+                selectedProtocol={draggedIntervention}
+                cartItems={cartInterventions}
+                onRemoveFromCart={removeFromCart}
+              />} />
+            ) : (
+              <Route path="/" element={<Navigate replace to="/digital-twin" />} />
+            )}
             <Route path="/chat" element={
               <PhoneContainer title="Healthora AI" onBack={() => window.history.back()}>
                 <ChatInterface />
@@ -111,6 +141,7 @@ function App() {
                 <Goals />
               </PhoneContainer>
             } />
+            <Route path="*" element={<Navigate replace to={basePath ? '/' : '/digital-twin'} />} />
           </Routes>
         </div>
 
