@@ -128,14 +128,14 @@ function App() {
                 <Profile />
               </PhoneContainer>
             } />
-            <Route path="/digital-twin" element={
+            {!basePath && <Route path="/digital-twin" element={
               <DigitalTwin
                 profileId={selectedProfile}
                 selectedProtocol={draggedIntervention}
                 cartItems={cartInterventions}
                 onRemoveFromCart={removeFromCart}
               />
-            } />
+            } />}
             <Route path="/goals" element={
               <PhoneContainer title="Ваши Цели" onBack={() => window.history.back()}>
                 <Goals />
