@@ -1611,7 +1611,7 @@
 
 .attr-row {
   display: grid;
-  grid-template-columns: 90px 130px 55px 110px 90px 55px 1fr repeat(7, 45px);
+  grid-template-columns: 90px 130px 55px 110px 90px 55px 1fr repeat(6, 45px);
   align-items: center;
   padding: 4px 6px;
   border-bottom: 1px solid #f0f0f0;
