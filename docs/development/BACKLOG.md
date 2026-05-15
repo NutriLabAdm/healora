@@ -1,6 +1,6 @@
 # Healora Backlog
-> ver 0.9 | 15.05.2026, 22:00
-> **94**/128 задач · **302**/670 ч
+> ver 0.10.3 | 13.05.2026, 07:25
+> **101**/128 задач · **312**/670 ч
 
 ## Recent Updates (14–15.05.2026)
 
@@ -12,6 +12,13 @@
 - [x] **Icon cleanup** — Mic icon→pencil edit icon in section header, voice popup header, per-field buttons (1 ч)
 - [x] **Profile header mic→edit** — Mic button moved to bullet position, opens editor popup (1 ч)
 - [x] **Weekday column fix** — Only show changed values (differs from `attr.current`), loose comparison fixes false negatives (1.5 ч)
+- [x] **Protocol picker checkbox** — ☐/☑ replaces row background highlight for selection state (1 ч)
+- [x] **Practice name+applic 2 lines** — Vertical stack layout in protocol picker rows (0.5 ч)
+- [x] **13 practice descriptions** — MD files in `docs/domain/med_traditional_practices/` with 8 sections each (3 ч)
+- [x] **Practice popup** — Build-time `import.meta.glob` loads MD, regulatory-info banner, full markdown renderer (3 ч)
+- [x] **Интегративная медицина regulatory** — Made official: true, added regulatory text (0.5 ч)
+- [x] **Prohibitions in practice MDs** — Section added to all 13 files (1 ч)
+- [x] **RCT/publication refs** — Key references added to section 6 of all 13 practice MDs (1 ч)
 
 ### 14.05.2026
 - [x] **Inline edit persistence** — saveEdit writes to profileOverrides + paramHistory (2 ч)
@@ -207,4 +214,4 @@
 
 ---
 
-*Created: April 2026 | ver 0.8 | Based on PRODUCT_DESCRIPTION.md*
+*Created: April 2026 | ver 0.10.3 | Based on PRODUCT_DESCRIPTION.md*

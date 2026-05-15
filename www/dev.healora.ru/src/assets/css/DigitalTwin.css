@@ -1830,13 +1830,15 @@
   font-size: 10px; color: #444; transition: background 0.15s;
 }
 .protocol-picker-item:hover { background: #f5f5f5; }
-.protocol-picker-item.active { background: #f3e5f5; color: #6b21c8; font-weight: 500; }
+.protocol-picker-item.active { font-weight: 600; }
 .protocol-picker-item.official { background: #e8f5e9; }
 .protocol-picker-item.official:hover { background: #c8e6c9; }
-.protocol-picker-item.official.active { background: #c8e6c9; color: #2e7d32; font-weight: 600; }
+.protocol-picker-item.official.active { font-weight: 600; }
 .protocol-picker-stars { color: #ffb300; font-size: 9px; flex-shrink: 0; letter-spacing: -1px; }
-.protocol-picker-name { font-weight: 600; flex-shrink: 0; min-width: 80px; }
+.protocol-picker-name-group { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.protocol-picker-name { font-weight: 600; }
 .protocol-picker-applic { color: #999; font-size: 9px; }
+.protocol-picker-cb { font-size: 14px; flex-shrink: 0; width: 20px; text-align: center; color: #6b21c8; }
 .protocol-picker-src-badge {
   position: relative; display: inline-flex; align-items: center; justify-content: center;
   min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px;
@@ -1852,6 +1854,61 @@
 }
 .reg-popup-title { font-size: 10px; font-weight: 700; color: #2e7d32; margin-bottom: 4px; }
 .reg-popup-text { font-size: 9px; color: #555; line-height: 1.5; }
+
+.practice-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 10002;
+  display: flex; align-items: center; justify-content: center;
+}
+.practice-popup {
+  background: #fff; border-radius: 12px; padding: 24px;
+  max-width: 640px; width: 92%; max-height: 80vh; overflow-y: auto;
+  position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+}
+.practice-close {
+  position: sticky; top: 0; float: right;
+  background: none; border: none; font-size: 22px; color: #999;
+  cursor: pointer; padding: 0 4px; line-height: 1; z-index: 1;
+}
+.practice-close:hover { color: #333; }
+.practice-content { font-size: 13px; color: #333; line-height: 1.6; }
+.practice-regulatory {
+  background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px;
+  padding: 8px 12px; margin-bottom: 12px; font-size: 11px; line-height: 1.5;
+}
+.practice-regulatory .reg-label { font-weight: 700; color: #2e7d32; margin-right: 4px; }
+.practice-regulatory .reg-text { color: #444; }
+.practice-content h1 {
+  font-size: 18px; color: #1a1a2e; margin: 0 0 4px; padding-right: 30px;
+}
+.practice-content .practice-category {
+  font-size: 11px; color: #6b21c8; font-weight: 600; margin-bottom: 12px;
+}
+.practice-content h2 {
+  font-size: 14px; color: #311b92; margin: 16px 0 8px; padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+}
+.practice-content h3 {
+  font-size: 12px; color: #444; margin: 12px 0 4px; font-weight: 600;
+}
+.practice-content p { margin: 6px 0; }
+.practice-content ul { margin: 4px 0 8px; padding-left: 20px; }
+.practice-content li { margin: 2px 0; }
+.practice-content table {
+  width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12px;
+}
+.practice-content th, .practice-content td {
+  border: 1px solid #e0e0e0; padding: 4px 8px; text-align: left;
+}
+.practice-content th { background: #f5f5f5; color: #311b92; font-weight: 600; }
+.practice-content code {
+  background: #f5f5f5; padding: 1px 4px; border-radius: 3px; font-size: 11px;
+}
+.practice-content a { color: #6b21c8; }
+.practice-content .practice-footer {
+  font-size: 11px; color: #999; font-style: italic; text-align: center; margin-top: 16px;
+}
+.practice-content hr { display: none; }
 
 .profile-targets { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 

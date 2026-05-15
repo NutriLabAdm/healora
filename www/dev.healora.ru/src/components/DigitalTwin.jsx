@@ -9,6 +9,14 @@ import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js
 import { usePlans } from '../context/PlansProvider';
 import protocolTypes from '../assets/data/protocols_type.json';
 
+const practiceMdModules = import.meta.glob('../../../../docs/domain/med_traditional_practices/practice_*.md', { as: 'raw', eager: true });
+const practiceContentByKey = Object.fromEntries(
+  Object.entries(practiceMdModules).map(([path, content]) => {
+    const m = path.match(/practice_(\w+)\.md$/);
+    return m ? [m[1], content] : null;
+  }).filter(Boolean)
+);
+
 const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -169,6 +177,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   });
   const [showProtocolPicker, setShowProtocolPicker] = useState(false);
   const [regulatoryInfo, setRegulatoryInfo] = useState(null);
+  const [practicePopup, setPracticePopup] = useState(null);
   const simulationSpeedRef = useRef(1);
 
   const { getPlan, savePlan, removePlan, plans } = usePlans();
@@ -1623,7 +1632,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   <span className="pref-custom-wrap">
                     <button className="pref-protocol-btn" onClick={() => setShowProtocolPicker(p => !p)} title="Выбрать тип протокола">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-                      методы 
+                      практики 
                     </button>
                     <input
                       className="pref-custom-input"
@@ -1647,7 +1656,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     {showProtocolPicker && (
                       <div className="protocol-picker-dropdown" onClick={() => setShowProtocolPicker(false)}>
                         <div className="protocol-picker-body" onClick={e => e.stopPropagation()}>
-                          <div className="protocol-picker-header">Типы протоколов / подходов</div>
+                          <div className="protocol-picker-header">Практики</div>
                           {[...protocolTypes].sort((a, b) => b.stars - a.stars).map(pt => {
                             const active = prefBadges.includes(pt.name) || prefBadges.includes(pt.short);
                             const cls = ['protocol-picker-item'];
@@ -1659,12 +1668,24 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                 key={pt.id}
                                 className={cls.join(' ')}
                                 onClick={() => {
-                                  const existing = prefBadges.includes(pt.name);
-                                  const next = existing
-                                    ? prefBadges.filter(b => b !== pt.name && b !== pt.short)
-                                    : [...prefBadges, pt.name];
-                                  setPrefBadges(next);
-                                  localStorage.setItem('healora_pref_badges', JSON.stringify(next));
+                                  const nameMap = {
+                                    'РКИ (медицина)': 'rki',
+                                    'Нутрициология': 'nutriciology',
+                                    'Китайская медицина': 'chinese_medicine',
+                                    'Интегративная медицина': 'integrative',
+                                    'Аюрведа': 'ayurveda',
+                                    'Персонализированная медицина': 'personalized',
+                                    'Поведенческая психология': 'behavioral',
+                                    'Цифровые биомаркеры': 'biomarkers',
+                                    'Шаманизм': 'shamanism',
+                                    'Клинические гайдлайны': 'guidelines',
+                                    'Медицина Майя': 'maya',
+                                    'Народные практики': 'folk',
+                                    'Культурная адаптация': 'cultural',
+                                  };
+                                  const key = nameMap[pt.name];
+                                  const content = key ? practiceContentByKey[key] : null;
+                                  if (content) setPracticePopup({ name: pt.name, content, regulatory: pt.regulatory || '' });
                                 }}
                               >
                                 {pt.official && (
@@ -1684,8 +1705,11 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                 )}
                                 {!pt.official && <span style={{width:16,flexShrink:0}} />}
                                 <span className="protocol-picker-stars">{'★'.repeat(pt.stars)}{'☆'.repeat(5 - pt.stars)}</span>
-                                <span className="protocol-picker-name">{pt.name}</span>
-                                <span className="protocol-picker-applic">{pt.applicability}</span>
+                                <span className="protocol-picker-name-group">
+                                  <span className="protocol-picker-name">{pt.name}</span>
+                                  <span className="protocol-picker-applic">{pt.applicability}</span>
+                                </span>
+                                <span className="protocol-picker-cb" onClick={e => { e.stopPropagation(); const existing = prefBadges.includes(pt.name); const next = existing ? prefBadges.filter(b => b !== pt.name && b !== pt.short) : [...prefBadges, pt.name]; setPrefBadges(next); localStorage.setItem('healora_pref_badges', JSON.stringify(next)); }}>{active ? '☑' : '☐'}</span>
                               </div>
                             );
                           })}
@@ -1874,7 +1898,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                 const d = new Date(); d.setDate(d.getDate() - i);
                                 const dateKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
                                 const history = paramHistory[attr.id] || [];
-                                const match = history.find(h => h.timestamp && h.timestamp.startsWith(dateKey));
+                                const matches = history.filter(h => h.timestamp && h.timestamp.startsWith(dateKey));
+                                const match = matches.length > 0 ? matches[matches.length - 1] : null;
                                 const override = i === 0 && attr.id in profileOverrides ? profileOverrides[attr.id] : null;
                                 const raw = match ? match.value : override;
                                 const changed = raw != null && raw != origVal;
@@ -3349,11 +3374,121 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
               </div>
             </div>
           )}
+
+          {practicePopup && (
+            <div className="practice-overlay" onClick={() => setPracticePopup(null)}>
+              <div className="practice-popup" onClick={e => e.stopPropagation()}>
+                <button className="practice-close" onClick={() => setPracticePopup(null)}>×</button>
+                {practicePopup.regulatory && (
+                  <div className="practice-regulatory">
+                    <span className="reg-label">Нормативная база:</span>
+                    <span className="reg-text">{practicePopup.regulatory}</span>
+                  </div>
+                )}
+                <div
+                  className="practice-content"
+                  dangerouslySetInnerHTML={{ __html: practiceMdToHtml(practicePopup.content) }}
+                />
+              </div>
+            </div>
+          )}
         </>
 
       )}
     </div>
   );
 };
+
+function practiceMdToHtml(md) {
+  const lines = md.split('\n');
+  const parts = [];
+  let inTable = false;
+  let tableAcc = [];
+  let inList = false;
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function inlineHtml(text) {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, (_, m) => '<strong>' + esc(m) + '</strong>')
+      .replace(/`([^`]+)`/g, (_, m) => '<code>' + esc(m) + '</code>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => '<a href="' + esc(u) + '" target="_blank">' + esc(t) + '</a>');
+  }
+  function escInline(text) {
+    return inlineHtml(esc(text));
+  }
+  function closeTable() {
+    if (!inTable) return;
+    if (tableAcc.length > 0) {
+      parts.push('<table>');
+      tableAcc.forEach((row, ri) => {
+        if (ri === 0) {
+          parts.push('<thead><tr>' + row.map(c => '<th>' + esc(c) + '</th>').join('') + '</tr></thead><tbody>');
+        } else {
+          parts.push('<tr>' + row.map(c => '<td>' + escInline(c) + '</td>').join('') + '</tr>');
+        }
+      });
+      parts.push('</tbody></table>');
+    }
+    inTable = false;
+    tableAcc = [];
+  }
+  function closeList() {
+    if (inList) { parts.push('</ul>'); inList = false; }
+  }
+
+  for (const rawLine of lines) {
+    const line = rawLine.trimEnd();
+    if (!line.trim()) { closeTable(); closeList(); continue; }
+
+    if (line.startsWith('# ') && !line.startsWith('## ')) {
+      closeTable(); closeList();
+      parts.push('<h1>' + esc(line.slice(2)) + '</h1>');
+      continue;
+    }
+    if (line.startsWith('## ') && !line.startsWith('### ')) {
+      closeTable(); closeList();
+      parts.push('<h2>' + esc(line.slice(3)) + '</h2>');
+      continue;
+    }
+    if (line.startsWith('### ')) {
+      closeTable(); closeList();
+      const h3text = line.slice(4);
+      if (h3text.startsWith('Category:')) {
+        parts.push('<div class="practice-category">' + esc(h3text) + '</div>');
+      } else {
+        parts.push('<h3>' + esc(h3text) + '</h3>');
+      }
+      continue;
+    }
+    if (line.trim() === '---') { closeTable(); closeList(); continue; }
+
+    if (line.startsWith('|')) {
+      closeList();
+      const cells = line.split('|').filter(c => c.trim()).map(c => c.trim());
+      if (cells.length && cells.every(c => /^[-:\s]+$/.test(c))) continue;
+      inTable = true;
+      tableAcc.push(cells);
+      continue;
+    }
+
+    if (line.startsWith('- ')) {
+      closeTable();
+      if (!inList) { parts.push('<ul>'); inList = true; }
+      parts.push('<li>' + escInline(line.slice(2)) + '</li>');
+      continue;
+    }
+
+    closeTable(); closeList();
+    if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
+      parts.push('<p class="practice-footer">' + escInline(line.slice(1, -1)) + '</p>');
+    } else {
+      parts.push('<p>' + escInline(line) + '</p>');
+    }
+  }
+  closeTable(); closeList();
+  return parts.join('\n');
+}
 
 export default DigitalTwin;

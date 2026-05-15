@@ -123,7 +123,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
           <button className={`panel-tab ${tab === 'interventions' ? 'active' : ''}`} onClick={() => setTab('interventions')}>Интервенции</button>
           <button className={`panel-tab ${tab === 'protocols' ? 'active' : ''}`} onClick={() => setTab('protocols')}>Протоколы</button>
         </div>
-        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.9 | {__BUILD_TIME__}</span>
+        <span className="version-link" onClick={() => setShowBacklog(true)}>ver 0.10.3 | 13.05.2026, 07:25:33</span>
       </div>
 
       {/* Compact Cart Widgets */}
@@ -451,8 +451,8 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
         <div className="backlog-overlay" onClick={() => setShowBacklog(false)}>
           <div className="backlog-modal" onClick={e => e.stopPropagation()}>
             <div className="backlog-header">
-              <span>Healora — Backlog <span className="backlog-summary"><strong>94</strong>/128 · <strong>302</strong>/670 ч</span></span>
-              <span className="version-build">ver 0.9 · 15.05.2026</span>
+              <span>Healora — Backlog <span className="backlog-summary"><strong>101</strong>/128 · <strong>312</strong>/670 ч</span></span>
+              <span className="version-build">ver 0.10.3 · 13.05.2026</span>
               <span className="backlog-close" onClick={() => setShowBacklog(false)}>×</span>
             </div>
             <div className="backlog-body">
@@ -700,7 +700,7 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                 <li><b>Charts:</b> SVG inline (no heavy lib)</li>
               </ul>
 
-              <div className="md-footer">Created: April 2026 | ver 0.8 | Based on PRODUCT_DESCRIPTION.md</div>
+              <div className="md-footer">Created: April 2026 | ver 0.10.3 | Based on PRODUCT_DESCRIPTION.md</div>
             </div>
           </div>
         </div>
