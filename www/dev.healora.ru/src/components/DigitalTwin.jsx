@@ -1171,7 +1171,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(merged),
       });
-      if (res.status === 404) {
+      if (res.status === 404 || res.status === 405) {
         res = await fetch('/api/profiles', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
