@@ -142,12 +142,20 @@ app.post('/api/profiles', (req, res) => {
             return res.status(400).json({ error: 'profile_id and demographics required' });
         }
 
-        // Check for duplicate ID
-        if (data.healora_test_profiles.find(p => p.profile_id === newProfile.profile_id)) {
-            return res.status(400).json({ error: 'Profile ID already exists' });
+        // Upsert: update if exists, create if new
+        const existingIndex = data.healora_test_profiles.findIndex(p => p.profile_id === newProfile.profile_id);
+        if (existingIndex !== -1) {
+            data.healora_test_profiles[existingIndex] = newProfile;
+            fs.writeFileSync(profilesPath, JSON.stringify(data, null, 2), 'utf8');
+            return res.json({
+                success: true,
+                profile: newProfile,
+                message: 'Profile updated successfully'
+            });
         }
 
         // Add to array
+        data.healora_test_profiles.push(newProfile);
         data.healora_test_profiles.push(newProfile);
 
         // Save back to file
