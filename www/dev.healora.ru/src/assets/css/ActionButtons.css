@@ -18,3 +18,6 @@
 .btn-save-active { background: #2e7d32; }
 .btn-save-active:hover { background: #1b5e20; transform: scale(1.03); box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4); }
 
+.btn-save-inactive { background: #2e7d32; opacity: 0.1; }
+.btn-save-inactive:hover { background: #1b5e20; opacity: 0.15; }
+
