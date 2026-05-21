@@ -1,0 +1,592 @@
+{
+  "profile_id": "DMITRY_57_110KG",
+  "source_photo": "05_Дмитрий_57_110kg_notepad.png",
+  "name": "Дмитрий",
+  "age": 57,
+  "sex": "male",
+  "visual_description": "Мужчина с блокнотом и ручкой, деловой стиль одежды, сосредоточенный взгляд",
+  "scene_context": "В кабинете или коворкинге, делает записи",
+  "mood_expression": "сосредоточенный, серьёзный",
+  "inferred_lifestyle": {
+    "typical_day": "Рабочий день, встречи, планирование, ведение записей",
+    "occupation_type": "Руководитель, предприниматель или менеджер",
+    "activity_level": "sedentary",
+    "social_context": "работа",
+    "diet_hints": "Нерегулярное питание, возможны перекусы на ходу",
+    "sleep_quality_hints": "Недостаток сна из-за высокой занятости",
+    "stress_hints": "Повышенный уровень стресса, связанный с ответственностью"
+  },
+  "health_observations": {
+    "body_type": "normosthenic",
+    "posture": "moderate",
+    "visible_skin_tone": "светлый",
+    "notable_features": [
+      "очки",
+      "деловая одежда"
+    ],
+    "suggested_biomarkers_attention": [
+      "артериальное давление",
+      "холестерин",
+      "сахар в крови"
+    ],
+    "risk_factors_visible": [
+      "сидячая работа",
+      "возрастные риски сердечно-сосудистых заболеваний"
+    ]
+  },
+  "narrative_summary": "Дмитрий — 57-летний руководитель с ожирением I степени (ИМТ 34.7). Много работает, малоподвижный образ жизни. Приоритет — снижение веса с 110 до 88 кг за 180 дней. Требуется комплексный подход: умеренный дефицит, низкоударная активность, коррекция пищевого поведения.",
+  "goals": [
+    {
+      "id": "G01",
+      "label": "Снизить вес с 110 до 88 кг",
+      "type": "weight",
+      "unit": "кг",
+      "current": 110,
+      "target": 88,
+      "deadline_days": 180
+    },
+    {
+      "id": "G02",
+      "label": "Нормализовать АД до 125/80",
+      "type": "bp",
+      "unit": "мм рт.ст.",
+      "current": "145/92",
+      "target": "125/80",
+      "deadline_days": 90
+    },
+    {
+      "id": "G03",
+      "label": "Снизить глюкозу до < 100 мг/дл",
+      "type": "glucose",
+      "unit": "мг/дл",
+      "current": 110,
+      "target": 95,
+      "deadline_days": 90
+    }
+  ],
+  "ttm_stage": "Preparation",
+  "parameters": {
+    "demographics": {
+      "title": "01 Демография",
+      "rows": [
+        {
+          "code": "01_1_DEMO_AGE",
+          "unit": "лет",
+          "parameter": "Возраст",
+          "was": "57",
+          "current": "57",
+          "goal": "",
+          "norm": "18-65",
+          "range_allowed": "0-120",
+          "range_optimal": "25-55",
+          "interventions": "-"
+        },
+        {
+          "code": "01_2_DEMO_GENDER",
+          "unit": "",
+          "parameter": "Пол",
+          "was": "-",
+          "current": "male",
+          "goal": "",
+          "norm": "M/F",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "01_3_DEMO_HEIGHT",
+          "unit": "см",
+          "parameter": "Рост",
+          "was": "178",
+          "current": "178",
+          "goal": "",
+          "norm": "150-200",
+          "range_allowed": "100-250",
+          "range_optimal": "160-190",
+          "interventions": "-"
+        },
+        {
+          "code": "01_4_DEMO_WEIGHT",
+          "unit": "кг",
+          "parameter": "Вес",
+          "was": "110",
+          "current": "110",
+          "goal": "80",
+          "norm": "50-120",
+          "range_allowed": "30-250",
+          "range_optimal": "60-85",
+          "interventions": "4 (FD_CAL, PH_WALK, PH_LOW, FD_IF)"
+        },
+        {
+          "code": "01_19_BIO_BMI",
+          "unit": "кг/м²",
+          "parameter": "ИМТ",
+          "was": "34.7",
+          "current": "34.7",
+          "goal": "22",
+          "norm": "18.5-25",
+          "range_allowed": "14-55",
+          "range_optimal": "20-23",
+          "interventions": "-"
+        },
+        {
+          "code": "01_20_BIO_WAIST",
+          "unit": "см",
+          "parameter": "Талия",
+          "was": "112",
+          "current": "112",
+          "goal": "90",
+          "norm": "60-100",
+          "range_allowed": "40-180",
+          "range_optimal": "70-90",
+          "interventions": "-"
+        },
+        {
+          "code": "01_5_DEMO_ETHNICITY",
+          "unit": "",
+          "parameter": "Этническая принадлежность",
+          "was": "-",
+          "current": "европеоидная",
+          "goal": "",
+          "norm": "-",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
+      ]
+    },
+    "vitals": {
+      "title": "02 Витальные",
+      "rows": [
+        {
+          "code": "02_1_BIO_BP_SYST",
+          "unit": "мм рт.ст.",
+          "parameter": "АД систолическое",
+          "was": "145",
+          "current": "145",
+          "goal": "120",
+          "norm": "90-130",
+          "range_allowed": "70-200",
+          "range_optimal": "110-120",
+          "interventions": "4 (PH_WALK, FD_CAL, MN_BRTH, M_CAR01)"
+        },
+        {
+          "code": "02_2_BIO_BP_DIAST",
+          "unit": "мм рт.ст.",
+          "parameter": "АД диастолическое",
+          "was": "92",
+          "current": "92",
+          "goal": "80",
+          "norm": "60-85",
+          "range_allowed": "40-130",
+          "range_optimal": "70-80",
+          "interventions": "3 (PH_WALK, MN_BRTH, M_CAR01)"
+        },
+        {
+          "code": "02_3_BIO_HR",
+          "unit": "уд/мин",
+          "parameter": "ЧСС покоя",
+          "was": "78",
+          "current": "78",
+          "goal": "72",
+          "norm": "60-80",
+          "range_allowed": "40-120",
+          "range_optimal": "55-70",
+          "interventions": "5 (PH_WALK, PH_LOW, MN_BRTH, MN_MDT, FD_CAF)"
+        },
+        {
+          "code": "02_3_BIO_HRV",
+          "unit": "мс",
+          "parameter": "HRV",
+          "was": "-",
+          "current": "35",
+          "goal": "60",
+          "norm": "40-100",
+          "range_allowed": "10-200",
+          "range_optimal": "50-80",
+          "interventions": "3 (MN_MDT, PH_HRV, M_CAR03)"
+        },
+        {
+          "code": "02_3_BIO_SPO2",
+          "unit": "%",
+          "parameter": "SpO2",
+          "was": "96",
+          "current": "96",
+          "goal": "98",
+          "norm": "95-100",
+          "range_allowed": "85-100",
+          "range_optimal": "97-100",
+          "interventions": "-"
+        }
+      ]
+    },
+    "labs": {
+      "title": "03 Лаборатории",
+      "rows": [
+        {
+          "code": "02_4_BIO_GLUCOSE",
+          "unit": "мг/дл",
+          "parameter": "Глюкоза",
+          "was": "110",
+          "current": "110",
+          "goal": "95",
+          "norm": "70-100",
+          "range_allowed": "40-300",
+          "range_optimal": "75-95",
+          "interventions": "8 (PH_WALK, FD_CAL, FD_SUG, FD_IF, FD_FIB, M_LAB01, M_END01, ED_SCH)"
+        },
+        {
+          "code": "02_4_BIO_HBA1C",
+          "unit": "%",
+          "parameter": "HbA1c",
+          "was": "6.0",
+          "current": "6.0",
+          "goal": "5.5",
+          "norm": "4.0-5.6",
+          "range_allowed": "3.0-10.0",
+          "range_optimal": "4.5-5.4",
+          "interventions": "2 (M_END02, M_LAB01)"
+        },
+        {
+          "code": "02_5_BIO_TCHOL",
+          "unit": "мг/дл",
+          "parameter": "Холестерин общий",
+          "was": "240",
+          "current": "240",
+          "goal": "200",
+          "norm": "<200",
+          "range_allowed": "100-350",
+          "range_optimal": "150-180",
+          "interventions": "-"
+        },
+        {
+          "code": "02_6_BIO_HDL",
+          "unit": "мг/дл",
+          "parameter": "ЛПВП",
+          "was": "38",
+          "current": "38",
+          "goal": "50",
+          "norm": ">40",
+          "range_allowed": "20-100",
+          "range_optimal": "50-70",
+          "interventions": "-"
+        },
+        {
+          "code": "02_7_BIO_LDL",
+          "unit": "мг/дл",
+          "parameter": "ЛПНП",
+          "was": "155",
+          "current": "155",
+          "goal": "100",
+          "norm": "<100",
+          "range_allowed": "30-250",
+          "range_optimal": "70-100",
+          "interventions": "2 (M_CAR02, M_LAB01)"
+        },
+        {
+          "code": "02_8_BIO_TG",
+          "unit": "мг/дл",
+          "parameter": "Триглицериды",
+          "was": "210",
+          "current": "210",
+          "goal": "150",
+          "norm": "<150",
+          "range_allowed": "30-500",
+          "range_optimal": "70-130",
+          "interventions": "-"
+        },
+        {
+          "code": "02_9_BIO_CRP",
+          "unit": "мг/л",
+          "parameter": "CRP",
+          "was": "3.5",
+          "current": "3.5",
+          "goal": "1",
+          "norm": "<3",
+          "range_allowed": "0-20",
+          "range_optimal": "0-1",
+          "interventions": "3 (FD_ANTI, M_GAS01, M_LAB01)"
+        },
+        {
+          "code": "02_16_BIO_VITD",
+          "unit": "нг/мл",
+          "parameter": "Витамин D",
+          "was": "20",
+          "current": "20",
+          "goal": "40",
+          "norm": "30-100",
+          "range_allowed": "5-150",
+          "range_optimal": "40-80",
+          "interventions": "-"
+        },
+        {
+          "code": "02_18_BIO_FERRITIN",
+          "unit": "нг/мл",
+          "parameter": "Ферритин",
+          "was": "130",
+          "current": "130",
+          "goal": "80",
+          "norm": "20-200",
+          "range_allowed": "5-500",
+          "range_optimal": "50-150",
+          "interventions": "4 (DG_CHK, M_GAS02, M_GAS03, M_LAB01)"
+        },
+        {
+          "code": "02_15_BIO_TSH",
+          "unit": "мМЕ/л",
+          "parameter": "ТТГ",
+          "was": "2.8",
+          "current": "2.8",
+          "goal": "2.5",
+          "norm": "0.4-4.0",
+          "range_allowed": "0.1-10.0",
+          "range_optimal": "0.5-2.5",
+          "interventions": "4 (DG_CHK, M_END01, M_END03, M_LAB02)"
+        }
+      ]
+    },
+    "lifestyle": {
+      "title": "04 Образ жизни",
+      "rows": [
+        {
+          "code": "03_5_LIFE_SLEEP",
+          "unit": "ч",
+          "parameter": "Сон",
+          "was": "6.5",
+          "current": "6.5",
+          "goal": "7.5",
+          "norm": "7-9",
+          "range_allowed": "3-14",
+          "range_optimal": "7.5-8.5",
+          "interventions": "6 (SL_BED, MN_MDT, MN_DTOX, BEH_EAT, M_CAR01, FD_CAF)"
+        },
+        {
+          "code": "03_6_LIFE_STRESS",
+          "unit": "/10",
+          "parameter": "Стресс",
+          "was": "7",
+          "current": "7",
+          "goal": "3",
+          "norm": "<5",
+          "range_allowed": "0-10",
+          "range_optimal": "0-3",
+          "interventions": "7 (MN_BRTH, MN_MDT, BEH_EAT, MN_STR, M_NEU01, ED_MA, ED_BODY)"
+        },
+        {
+          "code": "03_8_LIFE_STEPS",
+          "unit": "/день",
+          "parameter": "Шаги",
+          "was": "3500",
+          "current": "3500",
+          "goal": "8000",
+          "norm": "8000-12000",
+          "range_allowed": "0-30000",
+          "range_optimal": "10000-15000",
+          "interventions": "-"
+        },
+        {
+          "code": "03_9_LIFE_WATER",
+          "unit": "л/день",
+          "parameter": "Вода",
+          "was": "1.4",
+          "current": "1.4",
+          "goal": "2.5",
+          "norm": "2-3",
+          "range_allowed": "0-5",
+          "range_optimal": "2-2.5",
+          "interventions": "-"
+        },
+        {
+          "code": "03_1_LIFE_SMOKE",
+          "unit": "",
+          "parameter": "Курение",
+          "was": "Курил",
+          "current": "Бросил",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_2_LIFE_ALCOHOL",
+          "unit": "",
+          "parameter": "Алкоголь",
+          "was": "1-2/нед",
+          "current": "1-2/нед",
+          "goal": "",
+          "norm": "Редко",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_3_LIFE_EXERC_FREQ",
+          "unit": "",
+          "parameter": "Тренировки",
+          "was": "1-2/нед",
+          "current": "1-2/нед",
+          "goal": "",
+          "norm": "3-5/нед",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_4_LIFE_EXERC_TYPE",
+          "unit": "",
+          "parameter": "Тип активности",
+          "was": "-",
+          "current": "—",
+          "goal": "",
+          "norm": "-",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_7_LIFE_DIET",
+          "unit": "",
+          "parameter": "Питание",
+          "was": "смешанная",
+          "current": "смешанная",
+          "goal": "",
+          "norm": "Сбалансир.",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_10_LIFE_RPP",
+          "unit": "",
+          "parameter": "РПП",
+          "was": "-",
+          "current": "Нет",
+          "goal": "Нет",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
+      ]
+    },
+    "genetics": {
+      "title": "05 Генетика",
+      "rows": [
+        {
+          "code": "04_1_GENE_APOE",
+          "unit": "",
+          "parameter": "APOE",
+          "was": "-",
+          "current": "e3/e3",
+          "goal": "",
+          "norm": "e3/e3",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "04_2_GENE_MTHFR",
+          "unit": "",
+          "parameter": "MTHFR",
+          "was": "-",
+          "current": "Гетерозигота",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "04_3_GENE_LACTASE",
+          "unit": "",
+          "parameter": "Лактаза",
+          "was": "-",
+          "current": "Нет",
+          "goal": "",
+          "norm": "Да",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "04_4_GENE_BRCA",
+          "unit": "",
+          "parameter": "BRCA1/2",
+          "was": "-",
+          "current": "Neg",
+          "goal": "",
+          "norm": "Neg",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
+      ]
+    },
+    "medical": {
+      "title": "06 Медицина",
+      "rows": [
+        {
+          "code": "06_3_MED_MED",
+          "unit": "",
+          "parameter": "Препараты",
+          "was": "-",
+          "current": "гипотензивные",
+          "goal": "",
+          "norm": "-",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "06_4_MED_ALLR",
+          "unit": "",
+          "parameter": "Аллергии",
+          "was": "-",
+          "current": "Нет",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "05_1_FAM_CVD",
+          "unit": "",
+          "parameter": "ССЗ в семье",
+          "was": "-",
+          "current": "Есть",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "05_2_FAM_DM",
+          "unit": "",
+          "parameter": "Диабет в семье",
+          "was": "-",
+          "current": "Нет",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "05_3_FAM_CA",
+          "unit": "",
+          "parameter": "Онкология в семье",
+          "was": "-",
+          "current": "Гипертония",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
+      ]
+    }
+  }
+}

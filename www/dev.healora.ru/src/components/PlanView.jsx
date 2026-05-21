@@ -14,6 +14,7 @@ const PlanView = ({
   planTemplates,
   getTemplateById,
   simulationDay,
+  planDuration = 60,
   onSetPlanTemplateId,
   onSetPlanDoctorNote,
   onSetPlanStatus,
@@ -29,6 +30,14 @@ const PlanView = ({
   const items = hasPlan
     ? uniqueCodes.map(code => timelineInterventions.find(i => i.code === code))
     : template.interventions;
+
+  const intervCounts = {};
+  timelineInterventions.forEach(i => {
+    if (i.day > (simulationDay || 0)) return;
+    if (!intervCounts[i.code]) intervCounts[i.code] = { total: 0, done: 0 };
+    intervCounts[i.code].total++;
+    if (i.done) intervCounts[i.code].done++;
+  });
 
   const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
   const [schedPopup, setSchedPopup] = React.useState(null);
@@ -193,9 +202,10 @@ const PlanView = ({
             <div className="plan-info-row"><span className="plan-info-label">Пациент:</span><span className="plan-info-value">{profile?.name || profileId || '—'}</span></div>
             <div className="plan-info-row"><span className="plan-info-label">Ассистент:</span><span className="plan-info-value">{template.doctor}</span></div>
             <div className="plan-info-row"><span className="plan-info-label">Дата:</span><span className="plan-info-value">{new Date().toLocaleDateString('ru-RU')}</span></div>
-            <div className="plan-info-row"><span className="plan-info-label">Срок:</span><span className="plan-info-value">30 дней{(simulationDay ?? 0) > 0 ? <span style={{fontSize:9,color:'#888',marginLeft:4}}> (пройдено {Math.min(simulationDay ?? 0, 30)}/{30})</span> : ''}</span>
+            <div className="plan-info-row"><span className="plan-info-label">Интервенций:</span><span className="plan-info-value">{items.length}</span></div>
+            <div className="plan-info-row"><span className="plan-info-label">Срок:</span><span className="plan-info-value">{planDuration} дней{(simulationDay ?? 0) > 0 ? <span style={{fontSize:9,color:'#888',marginLeft:4}}> (пройдено {Math.min(simulationDay ?? 0, planDuration)}/{planDuration})</span> : ''}</span>
               {(simulationDay ?? 0) > 0 && <div style={{flex:'1 1 100%',height:3,background:'#eee',borderRadius:2,marginTop:2,overflow:'hidden'}}>
-                <div style={{width:`${Math.min((simulationDay ?? 0) / 30 * 100, 100)}%`,height:'100%',background:'#613CF5',borderRadius:2,transition:'width 0.3s'}}/>
+                <div style={{width:`${Math.min((simulationDay ?? 0) / planDuration * 100, 100)}%`,height:'100%',background:'#613CF5',borderRadius:2,transition:'width 0.3s'}}/>
               </div>}
             </div>
           </div>
@@ -358,7 +368,7 @@ const PlanView = ({
             </div>
           ) : (
             <table className="plan-table plan-table-prescription">
-              <thead><tr><th>№</th><th className="plan-col-per">Пер</th><th className="plan-col-interv">Интервенция</th>{!compact && <th>Код</th>}<th>Интервал</th><th style={{width:28}}></th></tr></thead>
+              <thead><tr><th>№</th><th className="plan-col-per">Пер</th><th className="plan-col-interv">Интервенция</th>{!compact && <th>Код</th>}<th>Усп/Всего</th><th style={{width:28}}></th></tr></thead>
               <tbody>
                 {items.map((item, i) => {
                   const sched = item.schedule || (interventionCatalog?.[item.code] && interventionCatalog[item.code].schedule);
@@ -395,14 +405,8 @@ const PlanView = ({
                         </td>
                         <td className="plan-col-interv" onClick={() => setEditRow(expanded ? null : i)} style={{cursor:'pointer'}}>{item.name}</td>
                         {!compact && <td className="plan-code">{item.code}</td>}
-                        <td style={{fontSize:10,color:'#666',textAlign:'center',whiteSpace:'nowrap'}}>
-                          {unitLo !== null ? `${unitLo}–${unitHi} ${am?.unit||genericUnit||''}` : '—'}
-                          {unitLo !== null && <>
-                            <div style={{width:40,height:3,background:'#eee',borderRadius:2,margin:'2px auto 0',position:'relative',overflow:'hidden'}}>
-                              <div style={{position:'absolute',top:0,left:0,height:'100%',width:((1-spreadPct)*100)+'%',background:spreadPct>0.15?'#ff9800':spreadPct>0.08?'#ffc107':'#4caf50',borderRadius:2}}/>
-                            </div>
-                            <div style={{fontSize:8,color:'#888',marginTop:1}}>{Math.round((simulationDay??0)/30*100)}% плана</div>
-                          </>}
+                        <td style={{fontSize:10,color:'#666',textAlign:'center'}}>
+                          {intervCounts[item.code] ? `${intervCounts[item.code].done}/${intervCounts[item.code].total}` : '—'}
                         </td>
                         <td style={{textAlign:'center'}}>
                           <svg viewBox="0 0 24 24" fill="none" stroke={expanded?'#613CF5':'#999'} strokeWidth="2" width="14" height="14" style={{cursor:'pointer'}}

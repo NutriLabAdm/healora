@@ -1,0 +1,1862 @@
+[
+  {
+    "day": 31,
+    "date": "2026-06-16",
+    "adherence_pct": 70,
+    "tasks": [
+      {
+        "datetime": "2026-06-16",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "7307 шагов"
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "MN_BRTH",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-16",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 74,
+    "notes": ""
+  },
+  {
+    "day": 32,
+    "date": "2026-06-17",
+    "adherence_pct": 77,
+    "tasks": [
+      {
+        "datetime": "2026-06-17",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "7164 шагов"
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Утром и вечером"
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "SL_BED",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "PR_04",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-06-17",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 71,
+    "notes": ""
+  },
+  {
+    "day": 33,
+    "date": "2026-06-18",
+    "adherence_pct": 78,
+    "tasks": [
+      {
+        "datetime": "2026-06-18",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "10200 шагов"
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:45"
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "FD_WATER",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "PR_06",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-06-18",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 70,
+    "notes": ""
+  },
+  {
+    "day": 34,
+    "date": "2026-06-19",
+    "adherence_pct": 77,
+    "tasks": [
+      {
+        "datetime": "2026-06-19",
+        "code": "FD_CAL",
+        "status": "undone",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6600 шагов"
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "MN_BRTH",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "23:00"
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "PR_01",
+        "status": "done",
+        "comment": "Меню на неделю по Гарвардской тарелке"
+      },
+      {
+        "datetime": "2026-06-19",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 71,
+    "notes": ""
+  },
+  {
+    "day": 35,
+    "date": "2026-06-20",
+    "adherence_pct": 70,
+    "tasks": [
+      {
+        "datetime": "2026-06-20",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6489 шагов"
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "MN_BRTH",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "23:00"
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "FD_WATER",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-20",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 78,
+    "notes": ""
+  },
+  {
+    "day": 36,
+    "date": "2026-06-21",
+    "adherence_pct": 81,
+    "tasks": [
+      {
+        "datetime": "2026-06-21",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "PH_WALK",
+        "status": "undone",
+        "comment": "8100 шагов"
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:45"
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-21",
+        "code": "BEH_EAT",
+        "status": "undone",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 83,
+    "notes": ""
+  },
+  {
+    "day": 37,
+    "date": "2026-06-22",
+    "adherence_pct": 70,
+    "tasks": [
+      {
+        "datetime": "2026-06-22",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "PH_WALK",
+        "status": "pending",
+        "comment": "9092 шагов"
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "FD_SUG",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "MN_BRTH",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-22",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 80,
+    "notes": ""
+  },
+  {
+    "day": 38,
+    "date": "2026-06-23",
+    "adherence_pct": 80,
+    "tasks": [
+      {
+        "datetime": "2026-06-23",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "7179 шагов"
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "MN_BRTH",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:45"
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-23",
+        "code": "BEH_EAT",
+        "status": "undone",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 82,
+    "notes": ""
+  },
+  {
+    "day": 39,
+    "date": "2026-06-24",
+    "adherence_pct": 81,
+    "tasks": [
+      {
+        "datetime": "2026-06-24",
+        "code": "FD_CAL",
+        "status": "undone",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "10827 шагов"
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-24",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 80,
+    "notes": ""
+  },
+  {
+    "day": 40,
+    "date": "2026-06-25",
+    "adherence_pct": 72,
+    "tasks": [
+      {
+        "datetime": "2026-06-25",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "10233 шагов"
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "MN_BRTH",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-25",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 79,
+    "notes": ""
+  },
+  {
+    "day": 41,
+    "date": "2026-06-26",
+    "adherence_pct": 76,
+    "tasks": [
+      {
+        "datetime": "2026-06-26",
+        "code": "FD_CAL",
+        "status": "undone",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6658 шагов"
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "FD_FIB",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "PR_01",
+        "status": "done",
+        "comment": "Меню на неделю по Гарвардской тарелке"
+      },
+      {
+        "datetime": "2026-06-26",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 81,
+    "notes": ""
+  },
+  {
+    "day": 42,
+    "date": "2026-06-27",
+    "adherence_pct": 83,
+    "tasks": [
+      {
+        "datetime": "2026-06-27",
+        "code": "FD_CAL",
+        "status": "undone",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6231 шагов"
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "FD_SUG",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "23:00"
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      },
+      {
+        "datetime": "2026-06-27",
+        "code": "M_LAB01",
+        "status": "done",
+        "comment": "Контроль глюкозы и липидов"
+      }
+    ],
+    "Z_score": 76,
+    "notes": ""
+  },
+  {
+    "day": 43,
+    "date": "2026-06-28",
+    "adherence_pct": 89,
+    "tasks": [
+      {
+        "datetime": "2026-06-28",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6429 шагов"
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "FD_SUG",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:45"
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-28",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 86,
+    "notes": ""
+  },
+  {
+    "day": 44,
+    "date": "2026-06-29",
+    "adherence_pct": 77,
+    "tasks": [
+      {
+        "datetime": "2026-06-29",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "PH_WALK",
+        "status": "pending",
+        "comment": "7432 шагов"
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-29",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 81,
+    "notes": ""
+  },
+  {
+    "day": 45,
+    "date": "2026-06-30",
+    "adherence_pct": 78,
+    "tasks": [
+      {
+        "datetime": "2026-06-30",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "9813 шагов"
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "FD_SUG",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-06-30",
+        "code": "BEH_EAT",
+        "status": "pending",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 86,
+    "notes": "[CHAT] Половина протокола. Вес стабильно снижается. Нужно обновить КБЖУ под новый вес."
+  },
+  {
+    "day": 46,
+    "date": "2026-07-01",
+    "adherence_pct": 84,
+    "tasks": [
+      {
+        "datetime": "2026-07-01",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "10066 шагов"
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "FD_WATER",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-01",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 81,
+    "notes": ""
+  },
+  {
+    "day": 47,
+    "date": "2026-07-02",
+    "adherence_pct": 76,
+    "tasks": [
+      {
+        "datetime": "2026-07-02",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "PH_WALK",
+        "status": "pending",
+        "comment": "6114 шагов"
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "SL_BED",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-02",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 88,
+    "notes": ""
+  },
+  {
+    "day": 48,
+    "date": "2026-07-03",
+    "adherence_pct": 75,
+    "tasks": [
+      {
+        "datetime": "2026-07-03",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "7349 шагов"
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Утром и вечером"
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "PR_01",
+        "status": "undone",
+        "comment": "Меню на неделю по Гарвардской тарелке"
+      },
+      {
+        "datetime": "2026-07-03",
+        "code": "BEH_EAT",
+        "status": "undone",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 81,
+    "notes": ""
+  },
+  {
+    "day": 49,
+    "date": "2026-07-04",
+    "adherence_pct": 91,
+    "tasks": [
+      {
+        "datetime": "2026-07-04",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "10464 шагов"
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-04",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 82,
+    "notes": ""
+  },
+  {
+    "day": 50,
+    "date": "2026-07-05",
+    "adherence_pct": 76,
+    "tasks": [
+      {
+        "datetime": "2026-07-05",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "PH_WALK",
+        "status": "pending",
+        "comment": "9571 шагов"
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-05",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 90,
+    "notes": ""
+  },
+  {
+    "day": 51,
+    "date": "2026-07-06",
+    "adherence_pct": 79,
+    "tasks": [
+      {
+        "datetime": "2026-07-06",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "8637 шагов"
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "FD_SUG",
+        "status": "undone",
+        "comment": "Пропустил"
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Утром и вечером"
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "SL_BED",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-06",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 82,
+    "notes": ""
+  },
+  {
+    "day": 52,
+    "date": "2026-07-07",
+    "adherence_pct": 94,
+    "tasks": [
+      {
+        "datetime": "2026-07-07",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "9816 шагов"
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Утром и вечером"
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "23:00"
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-07",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 84,
+    "notes": ""
+  },
+  {
+    "day": 53,
+    "date": "2026-07-08",
+    "adherence_pct": 94,
+    "tasks": [
+      {
+        "datetime": "2026-07-08",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6875 шагов"
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Утром и вечером"
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-08",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 85,
+    "notes": ""
+  },
+  {
+    "day": 54,
+    "date": "2026-07-09",
+    "adherence_pct": 85,
+    "tasks": [
+      {
+        "datetime": "2026-07-09",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6678 шагов"
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "FD_WATER",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-09",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 85,
+    "notes": ""
+  },
+  {
+    "day": 55,
+    "date": "2026-07-10",
+    "adherence_pct": 94,
+    "tasks": [
+      {
+        "datetime": "2026-07-10",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "PH_WALK",
+        "status": "undone",
+        "comment": "7645 шагов"
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "23:00"
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "PR_01",
+        "status": "done",
+        "comment": "Меню на неделю по Гарвардской тарелке"
+      },
+      {
+        "datetime": "2026-07-10",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Осознанно"
+      }
+    ],
+    "Z_score": 83,
+    "notes": ""
+  },
+  {
+    "day": 56,
+    "date": "2026-07-11",
+    "adherence_pct": 79,
+    "tasks": [
+      {
+        "datetime": "2026-07-11",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "8797 шагов"
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "SL_BED",
+        "status": "undone",
+        "comment": "Не успел"
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "FD_WATER",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      },
+      {
+        "datetime": "2026-07-11",
+        "code": "M_LAB01",
+        "status": "done",
+        "comment": "Контроль глюкозы и липидов"
+      }
+    ],
+    "Z_score": 90,
+    "notes": ""
+  },
+  {
+    "day": 57,
+    "date": "2026-07-12",
+    "adherence_pct": 93,
+    "tasks": [
+      {
+        "datetime": "2026-07-12",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "10449 шагов"
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "FD_FIB",
+        "status": "undone",
+        "comment": "Забыл"
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "23:00"
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "PR_06",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-12",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 92,
+    "notes": ""
+  },
+  {
+    "day": 58,
+    "date": "2026-07-13",
+    "adherence_pct": 94,
+    "tasks": [
+      {
+        "datetime": "2026-07-13",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "План выполнен"
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "PH_WALK",
+        "status": "undone",
+        "comment": "9100 шагов"
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-13",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 93,
+    "notes": ""
+  },
+  {
+    "day": 59,
+    "date": "2026-07-14",
+    "adherence_pct": 95,
+    "tasks": [
+      {
+        "datetime": "2026-07-14",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "КБЖУ в норме"
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "8320 шагов"
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "5+5 мин"
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:45"
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-14",
+        "code": "BEH_EAT",
+        "status": "done",
+        "comment": "Медленно"
+      }
+    ],
+    "Z_score": 92,
+    "notes": ""
+  },
+  {
+    "day": 60,
+    "date": "2026-07-15",
+    "adherence_pct": 79,
+    "tasks": [
+      {
+        "datetime": "2026-07-15",
+        "code": "FD_CAL",
+        "status": "done",
+        "comment": "Дефицит соблюдён"
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "PH_WALK",
+        "status": "done",
+        "comment": "6602 шагов"
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "FD_SUG",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "FD_FIB",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "MN_BRTH",
+        "status": "done",
+        "comment": "Только утром"
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "SL_BED",
+        "status": "done",
+        "comment": "22:30"
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "FD_WATER",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "PR_04",
+        "status": "done",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "PR_06",
+        "status": "pending",
+        "comment": ""
+      },
+      {
+        "datetime": "2026-07-15",
+        "code": "BEH_EAT",
+        "status": "undone",
+        "comment": "Без телефона"
+      }
+    ],
+    "Z_score": 93,
+    "notes": "[CHAT] 60 дней. Итоги. Вес +0.3 кг от цели — отличный результат. План: следующий протокол."
+  }
+]

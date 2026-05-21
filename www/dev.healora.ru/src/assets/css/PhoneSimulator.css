@@ -10,6 +10,7 @@
 .phone-overlay .status-icons { display: flex; gap: 8px; align-items: center; }
 .phone-overlay .header-content { display: flex; align-items: center; gap: 14px; }
 .phone-overlay .header-avatar { position: relative; }
+.phone-overlay .header-avatar .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
 .phone-overlay .mood-indicator { border-radius: 50%; border: 2px solid rgba(255,255,255,0.5); }
 .phone-overlay .mood-dot { width: 12px; height: 12px; background: #4caf50; border-radius: 50%; position: absolute; bottom: 0; right: -2px; border: 2px solid #311b92; }
 .phone-overlay .header-info { flex: 1; }

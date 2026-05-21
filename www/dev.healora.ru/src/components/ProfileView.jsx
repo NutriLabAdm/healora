@@ -37,9 +37,9 @@ const ProfileView = ({ profile, compact = false }) => {
         { id:'age', name:'Возраст', current:profile?.demographics?.age, target:null, unit:'лет', norm:'18-65' },
         { id:'sex', name:'Пол', current:profile?.demographics?.sex==='male'?'Мужской':'Женский', target:null, unit:'', norm:'-' },
         { id:'height', name:'Рост', current:profile?.anthropometrics?.height_cm, target:null, unit:'см', norm:'150-200' },
-        { id:'weight', name:'Вес', current:profile?.anthropometrics?.weight_kg, target:70, unit:'кг', norm:'50-120' },
+        { id:'weight', name:'Вес', current:profile?.anthropometrics?.weight_kg, target:80, unit:'кг', norm:'50-120' },
         { id:'bmi', name:'ИМТ', current:profile?.anthropometrics?.bmi, target:22, unit:'кг/м²', norm:'18.5-25' },
-        { id:'waist', name:'Талия', current:profile?.anthropometrics?.waist_cm, target:80, unit:'см', norm:'60-100' },
+        { id:'waist', name:'Талия', current:profile?.anthropometrics?.waist_cm, target:90, unit:'см', norm:'60-100' },
         { id:'ethnicity', name:'Этническая принадлежность', current:profile?.demographics?.ethnicity_or_background, target:null, unit:'', norm:'-' },
       ]
     },
@@ -56,10 +56,10 @@ const ProfileView = ({ profile, compact = false }) => {
     labs: {
       title: '03 Лаборатории', color: '#0288d1',
       attributes: [
-        { id:'glucose', name:'Глюкоза', current:profile?.labs?.glucose_mg_dl, target:100, unit:'мг/дл', norm:'70-100' },
+        { id:'glucose', name:'Глюкоза', current:profile?.labs?.glucose_mg_dl, target:95, unit:'мг/дл', norm:'70-100' },
         { id:'hba1c', name:'HbA1c', current:profile?.labs?.hba1c_percent, target:5.5, unit:'%', norm:'4.0-5.6' },
         { id:'tchol', name:'Холестерин общий', current:profile?.labs?.total_cholesterol_mg_dl, target:200, unit:'мг/дл', norm:'<200' },
-        { id:'hdl', name:'ЛПВП', current:profile?.labs?.hdl_mg_dl, target:60, unit:'мг/дл', norm:'>40' },
+        { id:'hdl', name:'ЛПВП', current:profile?.labs?.hdl_mg_dl, target:50, unit:'мг/дл', norm:'>40' },
         { id:'ldl', name:'ЛПНП', current:profile?.labs?.ldl_mg_dl, target:100, unit:'мг/дл', norm:'<100' },
         { id:'tg', name:'Триглицериды', current:profile?.labs?.triglycerides_mg_dl, target:150, unit:'мг/дл', norm:'<150' },
         { id:'crp', name:'CRP', current:profile?.labs?.crp_mg_l, target:1, unit:'мг/л', norm:'<3' },
@@ -73,7 +73,7 @@ const ProfileView = ({ profile, compact = false }) => {
       attributes: [
         { id:'sleep', name:'Сон', current:profile?.lifestyle?.sleep_hours, target:7.5, unit:'ч', norm:'7-9' },
         { id:'stress', name:'Стресс', current:profile?.lifestyle?.stress_level_0_10, target:3, unit:'/10', norm:'<5' },
-        { id:'steps', name:'Шаги', current:profile?.lifestyle?.daily_steps, target:10000, unit:'/день', norm:'8000-12000' },
+        { id:'steps', name:'Шаги', current:profile?.lifestyle?.daily_steps, target:8000, unit:'/день', norm:'8000-12000' },
         { id:'water', name:'Вода', current:profile?.lifestyle?.water_l_day, target:2.5, unit:'л/день', norm:'2-3' },
         { id:'smoking', name:'Курение', current:profile?.lifestyle?.smoking, target:null, unit:'', norm:'Нет' },
         { id:'alcohol', name:'Алкоголь', current:profile?.lifestyle?.alcohol, target:null, unit:'', norm:'Редко' },

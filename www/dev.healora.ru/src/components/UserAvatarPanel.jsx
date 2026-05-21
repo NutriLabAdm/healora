@@ -9,7 +9,7 @@ const UserAvatarPanel = ({ selectedProfile, onSelectProfile, onEditProfile, isEd
   const availablePhotos = [
     '03_Natalia_42_salad.png', '10_Alex_48_soup.png', '16_Anastasia_37_street.png',
     '01_Maia_55_flowers.png', '02_Stepan_14_on_bench.png', '04_Nina_75_Oleg_27_notebook.png',
-    '05_Дмитрий_55_notepad.png', '06_Maria_43_kitchen_apron.png', '07_Ivan_13_chips.png',
+    '05_Дмитрий_55_notepad.png', '05_Дмитрий_57_110kg_notepad.png', '06_Maria_43_kitchen_apron.png', '07_Ivan_13_chips.png',
     '08_Galina_75_Vika_9_balcony.png', '09_Tanya_15_pasta.png', '11_Nilolay_23_chocolate_bar.png',
     '12_Galina_43_remote_work.png', '14_Ekaterina_39_wearable.png', '15_Polina_21_coffie.png',
     '17_Stepan_72_terier.png', '17_Stepan_72_terier_2.png', '19_Danil_29_sofa_blue_jeanse.png', '19_Stas_35_dog_bike.png',
@@ -209,6 +209,7 @@ const generateFallbackProfiles = () => {
     { profile_id: 'MIKHAIL_42_96', name: 'Михаил', photo: '10_Alex_48_soup.png', demographics: { sex: 'male', age: 42 }, anthropometrics: { bmi: 31.2, weight_kg: 96 }, vitals: { systolic_bp_mmhg: 142, diastolic_bp_mmhg: 91 }, digital_twin_scores: { current_stars: 210, risk_level: 'high' } },
     { profile_id: 'ELENA_34_64', name: 'Елена', photo: '16_Anastasia_37_street.png', demographics: { sex: 'female', age: 34 }, anthropometrics: { bmi: 22.1, weight_kg: 64 }, vitals: { systolic_bp_mmhg: 118, diastolic_bp_mmhg: 76 }, digital_twin_scores: { current_stars: 650, risk_level: 'medium' } },
     { profile_id: 'DMITRY_57_88', name: 'Дмитрий', photo: '05_Дмитрий_55_notepad.png', demographics: { sex: 'male', age: 57 }, anthropometrics: { bmi: 27.8, weight_kg: 88 }, vitals: { systolic_bp_mmhg: 135, diastolic_bp_mmhg: 88 }, digital_twin_scores: { current_stars: 450, risk_level: 'medium' } },
+    { profile_id: 'DMITRY_57_110KG', name: 'Дмитрий (110)', photo: '05_Дмитрий_55_notepad.png', demographics: { sex: 'male', age: 57 }, anthropometrics: { bmi: 34.7, weight_kg: 110 }, vitals: { systolic_bp_mmhg: 145, diastolic_bp_mmhg: 92 }, digital_twin_scores: { current_stars: 350, risk_level: 'high' } },
     { profile_id: 'IVAN_13_48', name: 'Иван', photo: '07_Ivan_13_chips.png', demographics: { sex: 'male', age: 13 }, anthropometrics: { bmi: 19.2, weight_kg: 48 }, vitals: { systolic_bp_mmhg: 108, diastolic_bp_mmhg: 68 }, digital_twin_scores: { current_stars: 950, risk_level: 'low' } },
     { profile_id: 'EKATERINA_39_60', name: 'Екатерина', photo: '14_Ekaterina_39_wearable.png', demographics: { sex: 'female', age: 39 }, anthropometrics: { bmi: 20.8, weight_kg: 60 }, vitals: { systolic_bp_mmhg: 115, diastolic_bp_mmhg: 74 }, digital_twin_scores: { current_stars: 780, risk_level: 'low' } },
     { profile_id: 'STAS_35_82', name: 'Стас', photo: '19_Stas_35_dog_bike.png', demographics: { sex: 'male', age: 35 }, anthropometrics: { bmi: 24.8, weight_kg: 82 }, vitals: { systolic_bp_mmhg: 125, diastolic_bp_mmhg: 80 }, digital_twin_scores: { current_stars: 680, risk_level: 'low' } },

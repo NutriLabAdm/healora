@@ -273,7 +273,7 @@ ${planSection}
 
 app.post('/api/chat', async (req, res) => {
     try {
-        const { message, profile, history, provider, tasks } = req.body;
+        const { message, profile, history, provider, tasks, systemPrompt } = req.body;
 
         if (!message) {
             return res.status(400).json({ error: 'Message required' });
@@ -284,7 +284,8 @@ app.post('/api/chat', async (req, res) => {
             found = profiles.find(p => p.profile_id === profile);
         }
 
-        const systemMsg = { role: 'system', content: buildSystemPrompt(found, tasks) };
+        const promptContent = systemPrompt || buildSystemPrompt(found, tasks);
+        const systemMsg = { role: 'system', content: promptContent };
         const historyMsgs = (history || []).map(m => ({ role: m.role, content: m.content }));
         const userMsg = { role: 'user', content: message };
         const messages = [systemMsg, ...historyMsgs, userMsg];
