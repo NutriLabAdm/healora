@@ -111,9 +111,23 @@ cat > /etc/nginx/sites-available/healora << 'ENDNGINX'
 server {
     listen 80;
     server_name healora.ru www.healora.ru;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name healora.ru www.healora.ru;
+
+    ssl_certificate /etc/letsencrypt/live/healora.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/healora.ru/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
 
     root /var/www/healora.ru;
-    index index.html index.htm;
+    index index.html;
+
+    client_max_body_size 50M;
 
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
@@ -121,8 +135,12 @@ server {
     gzip on;
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
 
+    location /digital-twin/ {
+        try_files $uri $uri/ /digital-twin/index.html;
+    }
+
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ /index.html;
     }
 
     location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
@@ -201,6 +219,10 @@ build_and_sync_digital_twin() {
     rm -rf "$DT_DEST"/*
     cp -r "$DEV_BUILD/"* "$DT_DEST/"
     log_info "Digital twin source updated"
+
+    # Copy built index.html to production root so / serves the same SPA
+    cp "$DEV_BUILD/index.html" "$PROJECT_ROOT/www/healora.ru/index.html"
+    log_info "Root index.html updated"
 
     # Copy images from public/ to www/healora.ru/images/
     # (the code references /images/pers/32_32/ at root, not /digital-twin/images/)
