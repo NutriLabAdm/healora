@@ -234,6 +234,17 @@
   color: #1a1a1a;
 }
 
+.protocol-card-id {
+  font-size: 8px;
+  font-family: monospace;
+  color: #7b1fa2;
+  background: #f3e5f5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
 .protocol-card-cat {
   font-size: 9px;
   padding: 1px 6px;

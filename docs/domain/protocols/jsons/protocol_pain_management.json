@@ -7,18 +7,39 @@
   "goal_ru": "Выявление и управление хронической болью",
   "type": "red_flag",
   "red_flags": [
-    { "metric": "Pain duration", "threshold": ">3 days in any location", "action": "Consult specialist" },
-    { "metric": "Pain intensity", "threshold": ">7/10 unmanageable", "action": "Emergency consultation" },
-    { "metric": "Chest pain", "threshold": "Any duration", "action": "Emergency: call 103" }
+    {
+      "metric": "Pain duration",
+      "threshold": ">3 days in any location",
+      "action": "Consult specialist"
+    },
+    {
+      "metric": "Pain intensity",
+      "threshold": ">7/10 unmanageable",
+      "action": "Emergency consultation"
+    },
+    {
+      "metric": "Chest pain",
+      "threshold": "Any duration",
+      "action": "Emergency: call 103"
+    }
   ],
   "interventions": [
-    { "id": "03_3", "name": "Pain Management", "name_ru": "Управление болью" },
-    { "id": "02_5", "name": "Low Impact Training", "name_ru": "Низкоударные тренировки" }
+    {
+      "id": "03_3",
+      "name": "Pain Management",
+      "name_ru": "Управление болью"
+    },
+    {
+      "id": "02_5",
+      "name": "Low Impact Training",
+      "name_ru": "Низкоударные тренировки"
+    }
   ],
   "recommendations": [
     "Never ignore persistent pain for more than 3 days",
     "Use RICE protocol (Rest, Ice, Compression, Elevation) for acute pain",
     "Maintain movement within pain-free range",
     "Consider physical therapy for chronic pain"
-  ]
+  ],
+  "protocol_id": "PTL_PAIN"
 }

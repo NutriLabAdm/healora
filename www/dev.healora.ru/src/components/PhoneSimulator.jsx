@@ -5,20 +5,40 @@ import PlanView from './PlanView';
 import '../assets/css/PhoneSimulator.css';
 
 const SIMULATION_HISTORY = {
-  "description": "История симуляции дней 1–10 для профиля Дмитрий",
+  "description": "История симуляции дней 1–30 для профиля Дмитрий",
   "days": [
-    {"day":1,"date":"2026-05-01","adherence_pct":70,"tasks":[{"datetime":"2026-05-01 22:15:00","code":"SL_BED","status":"done","comment":"Отбой в 22:15"},{"datetime":"2026-05-02 05:45:00","code":"SL_DUR","status":"done","comment":"7.5 часов сна"},{"datetime":"2026-05-01 08:00:00","code":"MN_MDT","status":"done","comment":"Утренняя медитация 10 мин"},{"datetime":"2026-05-01 12:30:00","code":"MN_BRTH","status":"done","comment":"Дыхательные 5 мин"},{"datetime":"2026-05-01 20:00:00","code":"FD_CAL","status":"done","comment":"1850 ккал"},{"datetime":"","code":"FD_WATER","status":"missed","comment":"Не пил воду"},{"datetime":"","code":"PH_HIIT","status":"pending","comment":""}],"Z_score":42,"notes":"Первый день. Заполнил дневник, но пропустил воду. ВИИТ не сделал."},
-    {"day":2,"date":"2026-05-02","adherence_pct":86,"tasks":[{"datetime":"2026-05-02 22:30:00","code":"SL_BED","status":"done","comment":"Отбой в 22:30"},{"datetime":"2026-05-03 05:30:00","code":"SL_DUR","status":"done","comment":"7 часов сна"},{"datetime":"2026-05-02 07:45:00","code":"MN_MDT","status":"done","comment":"Медитация после пробуждения"},{"datetime":"2026-05-02 18:00:00","code":"MN_BRTH","status":"done","comment":"Дыхательные вечером"},{"datetime":"2026-05-02 20:00:00","code":"FD_CAL","status":"done","comment":"1950 ккал"},{"datetime":"2026-05-02 15:00:00","code":"FD_WATER","status":"done","comment":"1.6 литра"},{"datetime":"2026-05-02 19:00:00","code":"PH_AER","status":"done","comment":"Прогулка 30 мин"}],"Z_score":48,"notes":"Выполнил почти всё. Прогулка 30 мин. Калории в норме."},
-    {"day":3,"date":"2026-05-03","adherence_pct":75,"tasks":[{"datetime":"2026-05-03 23:00:00","code":"SL_BED","status":"done","comment":"Отбой в 23:00"},{"datetime":"2026-05-04 05:30:00","code":"SL_DUR","status":"done","comment":"6.5 часов сна"},{"datetime":"2026-05-03 08:30:00","code":"MN_MDT","status":"done","comment":"Медитация утром"},{"datetime":"","code":"MN_BRTH","status":"missed","comment":"Пропущено — аврал"},{"datetime":"","code":"FD_CAL","status":"missed","comment":"Перебор по калориям"},{"datetime":"2026-05-03 14:00:00","code":"FD_WATER","status":"done","comment":"1.8 литра"},{"datetime":"2026-05-03 20:00:00","code":"FD_CRB","status":"done","comment":"Углеводы в норме"}],"Z_score":45,"notes":"Сложный день на работе. Перебор по калориям."},
-    {"day":4,"date":"2026-05-04","adherence_pct":88,"tasks":[{"datetime":"2026-05-04 22:00:00","code":"SL_BED","status":"done","comment":"Отбой в 22:00"},{"datetime":"2026-05-05 06:00:00","code":"SL_DUR","status":"done","comment":"8 часов сна"},{"datetime":"2026-05-04 07:30:00","code":"MN_MDT","status":"done","comment":"Медитация утром"},{"datetime":"2026-05-04 13:00:00","code":"MN_BRTH","status":"done","comment":"Дыхательные после обеда"},{"datetime":"2026-05-04 20:00:00","code":"FD_CAL","status":"done","comment":"1800 ккал"},{"datetime":"2026-05-04 16:00:00","code":"FD_WATER","status":"done","comment":"2.0 литра"},{"datetime":"2026-05-04 07:00:00","code":"PH_HIIT","status":"done","comment":"ВИИТ 20 мин"}],"Z_score":52,"notes":"Отличный день! ВИИТ утром, хороший сон."},
-    {"day":5,"date":"2026-05-05","adherence_pct":78,"tasks":[{"datetime":"2026-05-05 22:45:00","code":"SL_BED","status":"done","comment":"Отбой в 22:45"},{"datetime":"2026-05-06 05:15:00","code":"SL_DUR","status":"done","comment":"6.5 часов сна"},{"datetime":"2026-05-05 09:00:00","code":"MN_MDT","status":"done","comment":"Медитация"},{"datetime":"2026-05-05 15:00:00","code":"MN_BRTH","status":"done","comment":"Дыхательные днём"},{"datetime":"2026-05-05 20:00:00","code":"FD_CAL","status":"done","comment":"2100 ккал"},{"datetime":"","code":"FD_WATER","status":"missed","comment":"Забыл пить воду"},{"datetime":"","code":"FD_SUG","status":"missed","comment":"Сорвался на сладкое"}],"Z_score":47,"notes":"Недосып. Сорвался на сладкое."},
-    {"day":6,"date":"2026-05-06","adherence_pct":90,"tasks":[{"datetime":"2026-05-06 22:00:00","code":"SL_BED","status":"done","comment":"Отбой в 22:00"},{"datetime":"2026-05-07 06:00:00","code":"SL_DUR","status":"done","comment":"8 часов сна"},{"datetime":"2026-05-06 07:00:00","code":"MN_MDT","status":"done","comment":"Медитация утром"},{"datetime":"2026-05-06 12:00:00","code":"MN_BRTH","status":"done","comment":"Дыхательные"},{"datetime":"2026-05-06 20:00:00","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-05-06 17:00:00","code":"FD_WATER","status":"done","comment":"2.2 литра"},{"datetime":"2026-05-06 18:30:00","code":"PH_AER","status":"done","comment":"Прогулка 45 мин"}],"Z_score":56,"notes":"Выходной. Всё отлично, Z растёт."},
-    {"day":7,"date":"2026-05-07","adherence_pct":82,"tasks":[{"datetime":"2026-05-07 22:30:00","code":"SL_BED","status":"done","comment":"Отбой в 22:30"},{"datetime":"2026-05-08 05:30:00","code":"SL_DUR","status":"done","comment":"7 часов сна"},{"datetime":"2026-05-07 08:15:00","code":"MN_MDT","status":"done","comment":"Медитация"},{"datetime":"","code":"MN_BRTH","status":"missed","comment":"Не успел"},{"datetime":"2026-05-07 20:00:00","code":"FD_CAL","status":"done","comment":"1850 ккал"},{"datetime":"2026-05-07 16:00:00","code":"FD_WATER","status":"done","comment":"1.8 литра"},{"datetime":"2026-05-07 12:00:00","code":"FD_IF","status":"done","comment":"Окно 16/8"}],"Z_score":51,"notes":"Начал 16/8. Запись на гастроскопию."},
-    {"day":8,"date":"2026-05-08","adherence_pct":85,"tasks":[{"datetime":"2026-05-08 22:00:00","code":"SL_BED","status":"done","comment":"Отбой в 22:00"},{"datetime":"2026-05-09 05:30:00","code":"SL_DUR","status":"done","comment":"7.5 часов сна"},{"datetime":"2026-05-08 07:00:00","code":"SL_QLT","status":"done","comment":"Качество сна: хорошее"},{"datetime":"2026-05-08 07:45:00","code":"MN_MDT","status":"done","comment":"Медитация утром"},{"datetime":"2026-05-08 11:30:00","code":"MN_BRTH","status":"done","comment":"Дыхательные"},{"datetime":"2026-05-08 20:00:00","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-05-08 15:00:00","code":"FD_WATER","status":"done","comment":"2.0 литра"},{"datetime":"2026-05-08 06:45:00","code":"PH_HIIT","status":"done","comment":"ВИИТ 25 мин"},{"datetime":"2026-05-08 21:00:00","code":"SP_MG","status":"done","comment":"Магний 200 мг"}],"Z_score":55,"notes":"Добавил магний. ВИИТ прошёл хорошо."},
-    {"day":9,"date":"2026-05-09","adherence_pct":72,"tasks":[{"datetime":"2026-05-09 23:30:00","code":"SL_BED","status":"done","comment":"Поздний отбой"},{"datetime":"2026-05-10 05:30:00","code":"SL_DUR","status":"done","comment":"6 часов сна"},{"datetime":"","code":"SL_QLT","status":"missed","comment":"Не оценил"},{"datetime":"","code":"MN_MDT","status":"missed","comment":"Не было времени"},{"datetime":"","code":"MN_BRTH","status":"missed","comment":"Не было времени"},{"datetime":"","code":"FD_CAL","status":"missed","comment":"Не считал"},{"datetime":"2026-05-09 14:00:00","code":"FD_WATER","status":"done","comment":"1.2 литра"},{"datetime":"","code":"MN_STR","status":"missed","comment":"Сильный стресс"}],"Z_score":38,"notes":"Аврал. Все практики пропущены. Z упал."},
-    {"day":10,"date":"2026-05-10","adherence_pct":92,"tasks":[{"datetime":"2026-05-10 22:00:00","code":"SL_BED","status":"done","comment":"Отбой в 22:00"},{"datetime":"2026-05-11 06:00:00","code":"SL_DUR","status":"done","comment":"8 часов сна"},{"datetime":"2026-05-10 07:00:00","code":"MN_MDT","status":"done","comment":"Медитация утром"},{"datetime":"2026-05-10 12:30:00","code":"MN_BRTH","status":"done","comment":"Дыхательные 10 мин"},{"datetime":"2026-05-10 19:00:00","code":"FD_CAL","status":"done","comment":"1750 ккал"},{"datetime":"2026-05-10 16:00:00","code":"FD_WATER","status":"done","comment":"2.0 литра"},{"datetime":"2026-05-10 17:00:00","code":"PH_AER","status":"done","comment":"Прогулка 40 мин"},{"datetime":"2026-05-10 21:30:00","code":"SP_MG","status":"done","comment":"Магний 200 мг"}],"Z_score":60,"notes":"Компенсировал провал. Z достиг 60."}
+    {"day":1,"date":"2026-05-17","adherence_pct":67,"tasks":[{"datetime":"2026-05-17  20:00:00","code":"FD_CAL","status":"done","comment":"Спланировал меню на день"},{"datetime":"2026-05-17  18:00:00","code":"PH_WALK","status":"done","comment":"6200 шагов — чуть меньше цели, но прогресс"},{"datetime":"2026-05-17  14:00:00","code":"FD_SUG","status":"done","comment":"Выпил чай без сахара, отказался от десерта на встрече"},{"datetime":"2026-05-17  13:00:00","code":"FD_FIB","status":"done","comment":"Овощи на обед и ужин"},{"datetime":"2026-05-17  07:15:00","code":"MN_BRTH","status":"done","comment":"Утром 5 мин, вечером пропустил — заснул сразу"},{"datetime":"2026-05-17  23:00:00","code":"SL_BED","status":"undone","comment":"Лёг в 23:30 — пришлось доделать отчёт"},{"datetime":"2026-05-17  08:00:00","code":"M_LAB01","status":"pending","comment":"Запланировано на день 14"},{"datetime":"2026-05-17  15:00:00","code":"FD_WATER","status":"done","comment":"Выпил 1.8 л воды"}],"Z_score":53.2,"notes":"Первый день — было непривычно планировать еду, но вечером почувствовал контроль"},
+    {"day":2,"date":"2026-05-18","adherence_pct":75,"tasks":[{"datetime":"2026-05-18  20:00:00","code":"FD_CAL","status":"done","comment":"Соблюдал дефицит"},{"datetime":"2026-05-18  18:00:00","code":"PH_WALK","status":"done","comment":"7800 шагов — почти достиг!"},{"datetime":"2026-05-18  14:00:00","code":"FD_SUG","status":"done","comment":"Без сахара весь день"},{"datetime":"2026-05-18  13:00:00","code":"FD_FIB","status":"done","comment":"Овощи + овсянка"},{"datetime":"2026-05-18  07:15:00","code":"MN_BRTH","status":"done","comment":"Утром и вечером по 5 мин"},{"datetime":"2026-05-18  23:00:00","code":"SL_BED","status":"done","comment":"Лёг в 23:00"},{"datetime":"2026-05-18  08:00:00","code":"M_LAB01","status":"pending","comment":""},{"datetime":"2026-05-18  15:00:00","code":"FD_WATER","status":"done","comment":"2.0 л"}],"Z_score":79.2,"notes":"Почувствовал прилив энергии к вечеру. Сон стал глубже."},
+    {"day":3,"date":"2026-05-19","adherence_pct":50,"tasks":[{"datetime":"2026-05-19  20:00:00","code":"FD_CAL","status":"done","comment":"Дефицит соблюдён"},{"datetime":"2026-05-19  18:00:00","code":"PH_WALK","status":"undone","comment":"3500 шагов — весь день в совещаниях"},{"datetime":"2026-05-19  14:00:00","code":"FD_SUG","status":"done","comment":"Удержался, хотя в столовой был соблазн"},{"datetime":"2026-05-19  13:00:00","code":"FD_FIB","status":"done","comment":"Салат на обед"},{"datetime":"2026-05-19  07:15:00","code":"MN_BRTH","status":"undone","comment":"Забыл — накладка с дедлайном"},{"datetime":"2026-05-19  23:00:00","code":"SL_BED","status":"done","comment":"Лёг в 23:00"},{"datetime":"2026-05-19  08:00:00","code":"M_LAB01","status":"pending","comment":""},{"datetime":"2026-05-19  15:00:00","code":"FD_WATER","status":"done","comment":"1.5 л — маловато"}],"Z_score":62.8,"notes":"Рабочий день вымотал. Шаги и дыхание провалил из-за загруженности."},
+    {"day":4,"date":"2026-05-20","adherence_pct":62,"tasks":[{"datetime":"2026-05-20  20:00:00","code":"FD_CAL","status":"done","comment":"Норма"},{"datetime":"2026-05-20  18:00:00","code":"PH_WALK","status":"done","comment":"6500 шагов — компенсировал вчерашнее"},{"datetime":"2026-05-20  14:00:00","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-05-20  13:00:00","code":"FD_FIB","status":"done","comment":"Овощи с каждым приёмом"},{"datetime":"2026-05-20  07:15:00","code":"MN_BRTH","status":"done","comment":"Утром 5 мин. Вечером тоже успел"},{"datetime":"2026-05-20  23:00:00","code":"SL_BED","status":"undone","comment":"Лёг в 23:45 — подводил итоги недели"},{"datetime":"2026-05-20  08:00:00","code":"M_LAB01","status":"pending","comment":""},{"datetime":"2026-05-20  15:00:00","code":"FD_WATER","status":"done","comment":"2.2 л"}],"Z_score":37.3,"notes":"Стараюсь не ругать себя за срывы. Главное — вернуться в режим на следующий день."},
+    {"day":5,"date":"2026-05-21","adherence_pct":83,"tasks":[{"datetime":"2026-05-21  20:00:00","code":"FD_CAL","status":"done","comment":"Полностью соблюдён"},{"datetime":"2026-05-21  18:00:00","code":"PH_WALK","status":"done","comment":"8200 шагов — новый рекорд!"},{"datetime":"2026-05-21  14:00:00","code":"FD_SUG","status":"done","comment":"Ноль сахара"},{"datetime":"2026-05-21  13:00:00","code":"FD_FIB","status":"done","comment":"Овощи + ягоды"},{"datetime":"2026-05-21  07:15:00","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-05-21  23:00:00","code":"SL_BED","status":"done","comment":"Лёг в 22:55"},{"datetime":"2026-05-21  08:00:00","code":"M_LAB01","status":"pending","comment":""},{"datetime":"2026-05-21  15:00:00","code":"FD_WATER","status":"done","comment":"2.5 л — выполнил норму"}],"Z_score":82.8,"notes":"Лучший день! Все задачи выполнены. Вес снизился на 0.9 кг за 5 дней. Почувствовал, что могу."},
+    {"day":6,"date":"2026-05-22","adherence_pct":67,"tasks":[{"datetime":"2026-05-22","code":"FD_CAL","status":"undone","comment":""},{"datetime":"2026-05-22","code":"PH_WALK","status":"done","comment":"8206 шагов"},{"datetime":"2026-05-22","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-05-22","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-05-22","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-05-22","code":"SL_BED","status":"done","comment":"22:45"},{"datetime":"2026-05-22","code":"FD_WATER","status":"done","comment":"1.7 л"}],"Z_score":66.9,"notes":""},
+    {"day":7,"date":"2026-05-23","adherence_pct":74,"tasks":[{"datetime":"2026-05-23","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-05-23","code":"PH_WALK","status":"done","comment":"7064 шагов"},{"datetime":"2026-05-23","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-05-23","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-05-23","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-05-23","code":"SL_BED","status":"done","comment":"22:45"},{"datetime":"2026-05-23","code":"FD_WATER","status":"done","comment":"1.7 л"},{"datetime":"2026-05-23","code":"PR_06","status":"done","comment":"Челлендж 0 ультра-обработанных: день 1"}],"Z_score":52.5,"notes":"[CHAT] Объясни, что такое batch prep. Зачем тратить субботу на готовку? 🤖 Batch prep - приготовление 4-6 порций еды впрок в субботу. Вы готовите белок (курица, рыба), гарнир (гречка, киноа) и овощи. Раскладываете по контейнерам с маркировкой КБЖУ. В будни - только разогреть. Экономия ~1 ч/день. 👤 А не испортится еда за неделю? 🤖 3 дня в холодильнике (пн-ср), остальное - в морозилку. Размораживать вечером. Ваш план: курица запечённая (4 порции), гречка (4 порции), овощи тушёные (4 порции). Маркируйте: дата + КБЖУ."},
+    {"day":8,"date":"2026-05-24","adherence_pct":78,"tasks":[{"datetime":"2026-05-24","code":"FD_CAL","status":"pending","comment":""},{"datetime":"2026-05-24","code":"PH_WALK","status":"undone","comment":"Весь день в офисе"},{"datetime":"2026-05-24","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-05-24","code":"FD_FIB","status":"undone","comment":""},{"datetime":"2026-05-24","code":"MN_BRTH","status":"done","comment":"Перед сном"},{"datetime":"2026-05-24","code":"SL_BED","status":"pending","comment":"23:45 — отчёт"},{"datetime":"2026-05-24","code":"FD_WATER","status":"done","comment":"2.5 л"},{"datetime":"2026-05-24","code":"PR_04","status":"done","comment":""}],"Z_score":73.0,"notes":""},
+    {"day":9,"date":"2026-05-25","adherence_pct":74,"tasks":[{"datetime":"2026-05-25","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-05-25","code":"PH_WALK","status":"done","comment":"10561 шагов"},{"datetime":"2026-05-25","code":"FD_SUG","status":"undone","comment":"Сорвался на печенье"},{"datetime":"2026-05-25","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-05-25","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-05-25","code":"SL_BED","status":"done","comment":"23:00"},{"datetime":"2026-05-25","code":"FD_WATER","status":"done","comment":"1.8 л"},{"datetime":"2026-05-25","code":"PR_04","status":"done","comment":""}],"Z_score":52.7,"notes":""},
+    {"day":10,"date":"2026-05-26","adherence_pct":55,"tasks":[{"datetime":"2026-05-26","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-05-26","code":"PH_WALK","status":"pending","comment":"Не было времени"},{"datetime":"2026-05-26","code":"FD_SUG","status":"undone","comment":"Мороженое"},{"datetime":"2026-05-26","code":"FD_FIB","status":"undone","comment":""},{"datetime":"2026-05-26","code":"MN_BRTH","status":"pending","comment":"Забыл"},{"datetime":"2026-05-26","code":"SL_BED","status":"done","comment":"22:45"},{"datetime":"2026-05-26","code":"FD_WATER","status":"done","comment":"1.8 л"}],"Z_score":43.8,"notes":"Аврал на работе. Два совещания подряд, сорвался на обед в столовой.  [CHAT] Аврал. Два совещания, в столовой пицца. Сорвался. Как не срываться в стресс? 🤖 Стресс-дни - главный триггер срывов. План «Аврал»: 1. Утром кладите контейнер с обедом в портфель 2. На совещания берите воду - заполняет желудок 3. Если корпоратив - выбирайте белок+овощи, пропускайте хлеб 4. Дыхание 4-7-8 перед входом в переговорную (1 мин) Один срыв - не провал. Завтра вернётесь."},
+    {"day":11,"date":"2026-05-27","adherence_pct":80,"tasks":[{"datetime":"2026-05-27","code":"FD_CAL","status":"done","comment":"План выполнен"},{"datetime":"2026-05-27","code":"PH_WALK","status":"done","comment":"8009 шагов"},{"datetime":"2026-05-27","code":"FD_SUG","status":"done","comment":"Чай без сахара"},{"datetime":"2026-05-27","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-05-27","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-05-27","code":"SL_BED","status":"undone","comment":"23:30 — не уснуть"},{"datetime":"2026-05-27","code":"FD_WATER","status":"pending","comment":"2.1 л"}],"Z_score":72.1,"notes":""},
+    {"day":12,"date":"2026-05-28","adherence_pct":79,"tasks":[{"datetime":"2026-05-28","code":"FD_CAL","status":"done","comment":"Дефицит соблюдён"},{"datetime":"2026-05-28","code":"PH_WALK","status":"done","comment":"6666 шагов"},{"datetime":"2026-05-28","code":"FD_SUG","status":"done","comment":"Чай без сахара"},{"datetime":"2026-05-28","code":"FD_FIB","status":"pending","comment":""},{"datetime":"2026-05-28","code":"MN_BRTH","status":"pending","comment":"Забыл"},{"datetime":"2026-05-28","code":"SL_BED","status":"done","comment":"23:00"},{"datetime":"2026-05-28","code":"FD_WATER","status":"done","comment":"2.5 л"}],"Z_score":75.7,"notes":""},
+    {"day":13,"date":"2026-05-29","adherence_pct":76,"tasks":[{"datetime":"2026-05-29","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-05-29","code":"PH_WALK","status":"pending","comment":"Весь день в офисе"},{"datetime":"2026-05-29","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-05-29","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-05-29","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-05-29","code":"SL_BED","status":"undone","comment":"23:45 — отчёт"},{"datetime":"2026-05-29","code":"FD_WATER","status":"pending","comment":"2.1 л"}],"Z_score":76.1,"notes":""},
+    {"day":14,"date":"2026-05-30","adherence_pct":72,"tasks":[{"datetime":"2026-05-30","code":"FD_CAL","status":"done","comment":"Дефицит соблюдён"},{"datetime":"2026-05-30","code":"PH_WALK","status":"done","comment":"9563 шагов"},{"datetime":"2026-05-30","code":"FD_SUG","status":"pending","comment":"Сорвался на печенье"},{"datetime":"2026-05-30","code":"FD_FIB","status":"pending","comment":""},{"datetime":"2026-05-30","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-05-30","code":"SL_BED","status":"done","comment":"23:00"},{"datetime":"2026-05-30","code":"FD_WATER","status":"pending","comment":"1.6 л"},{"datetime":"2026-05-30","code":"M_LAB01","status":"done","comment":"Глюкоза 98, HbA1c 5.5 — улучшение!"},{"datetime":"2026-05-30","code":"PR_06","status":"done","comment":"Челлендж завершён — продержался 7 дней"}],"Z_score":51.9,"notes":"[CHAT] Результаты: глюкоза 98, HbA1c 5.5, холестерин 205. Это прогресс? 🤖 Отличная динамика! Сравнение 14 дней: - Глюкоза: 105 -> 98 (-7 мг/дл, норма!) - HbA1c: 5.7 -> 5.5 (-0.2%, преддиабет отступает) - Холестерин: 220 -> 205 (-15 мг/дл)  К концу месяца ожидаю глюкозу ~92-95. Следующий чек - день 42."},
+    {"day":15,"date":"2026-05-31","adherence_pct":83,"tasks":[{"datetime":"2026-05-31","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-05-31","code":"PH_WALK","status":"done","comment":"8768 шагов"},{"datetime":"2026-05-31","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-05-31","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-05-31","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-05-31","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-05-31","code":"FD_WATER","status":"undone","comment":"2.3 л"}],"Z_score":75.0,"notes":""},
+    {"day":16,"date":"2026-06-01","adherence_pct":79,"tasks":[{"datetime":"2026-06-01","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-06-01","code":"PH_WALK","status":"undone","comment":"Дождь"},{"datetime":"2026-06-01","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-01","code":"FD_FIB","status":"undone","comment":""},{"datetime":"2026-06-01","code":"MN_BRTH","status":"pending","comment":"Забыл"},{"datetime":"2026-06-01","code":"SL_BED","status":"undone","comment":"23:30 — не уснуть"},{"datetime":"2026-06-01","code":"FD_WATER","status":"done","comment":"1.6 л"}],"Z_score":73.6,"notes":""},
+    {"day":17,"date":"2026-06-02","adherence_pct":74,"tasks":[{"datetime":"2026-06-02","code":"FD_CAL","status":"done","comment":"План выполнен"},{"datetime":"2026-06-02","code":"PH_WALK","status":"done","comment":"9632 шагов"},{"datetime":"2026-06-02","code":"FD_SUG","status":"done","comment":"Чай без сахара"},{"datetime":"2026-06-02","code":"FD_FIB","status":"undone","comment":""},{"datetime":"2026-06-02","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-06-02","code":"SL_BED","status":"done","comment":"22:45"},{"datetime":"2026-06-02","code":"FD_WATER","status":"pending","comment":"1.9 л"}],"Z_score":53.3,"notes":""},
+    {"day":18,"date":"2026-06-03","adherence_pct":60,"tasks":[{"datetime":"2026-06-03","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-06-03","code":"PH_WALK","status":"done","comment":"9893 шагов"},{"datetime":"2026-06-03","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-06-03","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-03","code":"MN_BRTH","status":"pending","comment":"Забыл"},{"datetime":"2026-06-03","code":"SL_BED","status":"undone","comment":"00:15 — сериал"},{"datetime":"2026-06-03","code":"FD_WATER","status":"done","comment":"2.3 л"},{"datetime":"2026-06-03","code":"PR_04","status":"done","comment":""}],"Z_score":46.2,"notes":"Квартальный отчёт. Не спал, не ходил, ел что попало.  [CHAT] Квартальный отчёт, сплю по 5 часов. Кажется, всё летит к чёрту. 🤖 Месяц назад вы курили и ели всё подряд. Сейчас - 7000 шагов и контроль сахара даже в стресс. План «Минимум» на 3 дня: - Белок+овощи (не считайте калории) - Дыхание перед сном 2 мин - Вода 1.5 л - Сон хотя бы 6 ч  Через 3 дня пересмотрим. 👤 Ок, попробую воду и дыхание."},
+    {"day":19,"date":"2026-06-04","adherence_pct":76,"tasks":[{"datetime":"2026-06-04","code":"FD_CAL","status":"done","comment":"1900 ккал"},{"datetime":"2026-06-04","code":"PH_WALK","status":"done","comment":"6054 шагов"},{"datetime":"2026-06-04","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-04","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-04","code":"MN_BRTH","status":"done","comment":"Перед сном"},{"datetime":"2026-06-04","code":"SL_BED","status":"done","comment":"23:00"},{"datetime":"2026-06-04","code":"FD_WATER","status":"done","comment":"2.1 л"},{"datetime":"2026-06-04","code":"PR_04","status":"done","comment":""}],"Z_score":69.8,"notes":""},
+    {"day":20,"date":"2026-06-05","adherence_pct":75,"tasks":[{"datetime":"2026-06-05","code":"FD_CAL","status":"undone","comment":""},{"datetime":"2026-06-05","code":"PH_WALK","status":"done","comment":"8463 шагов"},{"datetime":"2026-06-05","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-06-05","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-05","code":"MN_BRTH","status":"done","comment":"Перед сном"},{"datetime":"2026-06-05","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-05","code":"FD_WATER","status":"done","comment":"2.4 л"}],"Z_score":72.1,"notes":""},
+    {"day":21,"date":"2026-06-06","adherence_pct":90,"tasks":[{"datetime":"2026-06-06","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-06-06","code":"PH_WALK","status":"done","comment":"11860 шагов"},{"datetime":"2026-06-06","code":"FD_SUG","status":"pending","comment":"Пирожное на совещании"},{"datetime":"2026-06-06","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-06","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-06-06","code":"SL_BED","status":"done","comment":"23:00"},{"datetime":"2026-06-06","code":"FD_WATER","status":"done","comment":"2.5 л"},{"datetime":"2026-06-06","code":"PR_04","status":"pending","comment":""}],"Z_score":79.9,"notes":""},
+    {"day":22,"date":"2026-06-07","adherence_pct":88,"tasks":[{"datetime":"2026-06-07","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-06-07","code":"PH_WALK","status":"undone","comment":"Не было времени"},{"datetime":"2026-06-07","code":"FD_SUG","status":"done","comment":"Чай без сахара"},{"datetime":"2026-06-07","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-07","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-06-07","code":"SL_BED","status":"done","comment":"22:45"},{"datetime":"2026-06-07","code":"FD_WATER","status":"done","comment":"2.0 л"}],"Z_score":79.7,"notes":"[CHAT] Привык к режиму. Пора увеличить интенсивность? 🤖 Согласен. За 3 недели: - Adherence > 75% (кроме стресс-дней) - Вес: -3.2 кг - Глюкоза в норме  Переход из Preparation в Action: - f_i: 0.75 -> 1.0 - Шаги: 8000 -> 10000/день - Силовые 2/нед (для начинающих 50+) 👤 Давай. С силовыми аккуратно - спина."},
+    {"day":23,"date":"2026-06-08","adherence_pct":89,"tasks":[{"datetime":"2026-06-08","code":"FD_CAL","status":"done","comment":"План выполнен"},{"datetime":"2026-06-08","code":"PH_WALK","status":"done","comment":"6188 шагов"},{"datetime":"2026-06-08","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-08","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-08","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-06-08","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-08","code":"FD_WATER","status":"done","comment":"1.9 л"}],"Z_score":78.4,"notes":""},
+    {"day":24,"date":"2026-06-09","adherence_pct":76,"tasks":[{"datetime":"2026-06-09","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-06-09","code":"PH_WALK","status":"done","comment":"6198 шагов"},{"datetime":"2026-06-09","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-09","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-09","code":"MN_BRTH","status":"done","comment":"Перед сном"},{"datetime":"2026-06-09","code":"SL_BED","status":"undone","comment":"00:15 — сериал"},{"datetime":"2026-06-09","code":"FD_WATER","status":"done","comment":"2.4 л"}],"Z_score":72.3,"notes":""},
+    {"day":25,"date":"2026-06-10","adherence_pct":77,"tasks":[{"datetime":"2026-06-10","code":"FD_CAL","status":"pending","comment":""},{"datetime":"2026-06-10","code":"PH_WALK","status":"done","comment":"6671 шагов"},{"datetime":"2026-06-10","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-10","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-10","code":"MN_BRTH","status":"pending","comment":"Забыл"},{"datetime":"2026-06-10","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-10","code":"FD_WATER","status":"undone","comment":"2.4 л"},{"datetime":"2026-06-10","code":"PR_04","status":"done","comment":""}],"Z_score":71.9,"notes":""},
+    {"day":26,"date":"2026-06-11","adherence_pct":93,"tasks":[{"datetime":"2026-06-11","code":"FD_CAL","status":"done","comment":"Дефицит соблюдён"},{"datetime":"2026-06-11","code":"PH_WALK","status":"done","comment":"11858 шагов"},{"datetime":"2026-06-11","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-06-11","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-11","code":"MN_BRTH","status":"done","comment":"Перед сном"},{"datetime":"2026-06-11","code":"SL_BED","status":"done","comment":"23:00"},{"datetime":"2026-06-11","code":"FD_WATER","status":"done","comment":"2.0 л"}],"Z_score":82.0,"notes":"[CHAT] План на последнюю неделю? 🤖 Финишная прямая: 1. Adherence > 85% 2. Силовая x2 (вт, чт) 3. Сон 7.5 ч 4. Дефицит за неделю: -3500 ккал  Цель: вес < 85.5 кг к дню 30. После - срез анализов и новый протокол."},
+    {"day":27,"date":"2026-06-12","adherence_pct":94,"tasks":[{"datetime":"2026-06-12","code":"FD_CAL","status":"done","comment":"КБЖУ в норме"},{"datetime":"2026-06-12","code":"PH_WALK","status":"done","comment":"11910 шагов"},{"datetime":"2026-06-12","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-12","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-12","code":"MN_BRTH","status":"done","comment":"Утром и вечером"},{"datetime":"2026-06-12","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-12","code":"FD_WATER","status":"done","comment":"1.8 л"}],"Z_score":88.6,"notes":""},
+    {"day":28,"date":"2026-06-13","adherence_pct":82,"tasks":[{"datetime":"2026-06-13","code":"FD_CAL","status":"pending","comment":""},{"datetime":"2026-06-13","code":"PH_WALK","status":"done","comment":"10495 шагов"},{"datetime":"2026-06-13","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-13","code":"FD_FIB","status":"pending","comment":""},{"datetime":"2026-06-13","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-06-13","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-13","code":"FD_WATER","status":"done","comment":"2.0 л"},{"datetime":"2026-06-13","code":"BEH_EAT","status":"done","comment":"Осознанно пообедал — заметил насыщение раньше"},{"datetime":"2026-06-13","code":"PR_04","status":"done","comment":""},{"datetime":"2026-06-13","code":"M_LAB01","status":"done","comment":"Глюкоза 98, HbA1c 5.5 — улучшение!"}],"Z_score":75.7,"notes":""},
+    {"day":29,"date":"2026-06-14","adherence_pct":90,"tasks":[{"datetime":"2026-06-14","code":"FD_CAL","status":"done","comment":"План выполнен"},{"datetime":"2026-06-14","code":"PH_WALK","status":"done","comment":"6959 шагов"},{"datetime":"2026-06-14","code":"FD_SUG","status":"done","comment":"Удержался"},{"datetime":"2026-06-14","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-14","code":"MN_BRTH","status":"done","comment":"Только утром"},{"datetime":"2026-06-14","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-14","code":"FD_WATER","status":"done","comment":"2.1 л"},{"datetime":"2026-06-14","code":"PR_01","status":"done","comment":"Спланировал меню на неделю по Гарвардской тарелке"},{"datetime":"2026-06-14","code":"PR_04","status":"pending","comment":""}],"Z_score":78.7,"notes":""},
+    {"day":30,"date":"2026-06-15","adherence_pct":88,"tasks":[{"datetime":"2026-06-15","code":"FD_CAL","status":"done","comment":"Дефицит соблюдён"},{"datetime":"2026-06-15","code":"PH_WALK","status":"done","comment":"6282 шагов"},{"datetime":"2026-06-15","code":"FD_SUG","status":"done","comment":"Без сахара"},{"datetime":"2026-06-15","code":"FD_FIB","status":"done","comment":""},{"datetime":"2026-06-15","code":"MN_BRTH","status":"pending","comment":"Забыл"},{"datetime":"2026-06-15","code":"SL_BED","status":"done","comment":"22:30"},{"datetime":"2026-06-15","code":"FD_WATER","status":"done","comment":"2.0 л"},{"datetime":"2026-06-15","code":"BEH_EAT","status":"done","comment":"Осознанный ужин — без телефона"}],"Z_score":81.7,"notes":"[CHAT] 30 дней позади. Что дальше? 🤖 Результаты: - Вес: 88.0 -> 84.8 кг (-3.2 кг) - Глюкоза: 105 -> 92 мг/дл - HbA1c: 5.7 -> 5.4% - Adherence средний: 71% - Сон: 6.5 -> 7.2 ч  План на следующие 30 дней: 1. Тот же протокол, f_i=1.0 (Action) 2. Цель: 84.8 -> 80.0 кг 3. Силовые 2/нед 4. Липидограмма на день 42 5. Интервальное голодание 14/10 👤 Поехали."},
   ],
-  "summary": {"total_days":10,"avg_adherence":81.8,"avg_calories":1998,"avg_diary_entries":2.6,"start_Z":42,"end_Z":60}
+  "summary": {"total_days":30,"avg_adherence":77,"start_Z":53.2,"end_Z":81.7}
 };
 
 const THERAPY_EXECUTION = {
@@ -32,6 +52,39 @@ const THERAPY_EXECUTION = {
   ],
   "stats_at_day5":{"total_days":5,"avg_adherence_pct":67.4,"weight_delta_kg":-0.9,"avg_steps":6440,"best_day":5,"worst_day":3,"tasks_total":40,"tasks_done":27,"tasks_undone":8,"tasks_pending":5}
 };
+
+const PTL_RAPID_WL_DAYS = [
+  {day:1, date:'2026-05-17', weight_kg:97, Z_score:53.2},
+  {day:2, date:'2026-05-18', weight_kg:96.6, Z_score:79.2},
+  {day:3, date:'2026-05-19', weight_kg:96.3, Z_score:62.8},
+  {day:4, date:'2026-05-20', weight_kg:96.5, Z_score:37.3},
+  {day:5, date:'2026-05-21', weight_kg:96.1, Z_score:82.8},
+  {day:6, date:'2026-05-22', weight_kg:96.0, Z_score:66.9},
+  {day:7, date:'2026-05-23', weight_kg:96.0, Z_score:52.5},
+  {day:8, date:'2026-05-24', weight_kg:95.9, Z_score:73.0},
+  {day:9, date:'2026-05-25', weight_kg:95.9, Z_score:52.7},
+  {day:10, date:'2026-05-26', weight_kg:95.9, Z_score:43.8},
+  {day:11, date:'2026-05-27', weight_kg:95.8, Z_score:72.1},
+  {day:12, date:'2026-05-28', weight_kg:95.7, Z_score:75.7},
+  {day:13, date:'2026-05-29', weight_kg:95.5, Z_score:76.1},
+  {day:14, date:'2026-05-30', weight_kg:95.5, Z_score:51.9},
+  {day:15, date:'2026-05-31', weight_kg:95.4, Z_score:75.0},
+  {day:16, date:'2026-06-01', weight_kg:95.3, Z_score:73.6},
+  {day:17, date:'2026-06-02', weight_kg:95.3, Z_score:53.3},
+  {day:18, date:'2026-06-03', weight_kg:95.3, Z_score:46.2},
+  {day:19, date:'2026-06-04', weight_kg:95.2, Z_score:69.8},
+  {day:20, date:'2026-06-05', weight_kg:95.1, Z_score:72.1},
+  {day:21, date:'2026-06-06', weight_kg:95.0, Z_score:79.9},
+  {day:22, date:'2026-06-07', weight_kg:94.9, Z_score:79.7},
+  {day:23, date:'2026-06-08', weight_kg:94.8, Z_score:78.4},
+  {day:24, date:'2026-06-09', weight_kg:94.7, Z_score:72.3},
+  {day:25, date:'2026-06-10', weight_kg:94.6, Z_score:71.9},
+  {day:26, date:'2026-06-11', weight_kg:94.5, Z_score:82.0},
+  {day:27, date:'2026-06-12', weight_kg:94.3, Z_score:88.6},
+  {day:28, date:'2026-06-13', weight_kg:94.2, Z_score:75.7},
+  {day:29, date:'2026-06-14', weight_kg:94.1, Z_score:78.7},
+  {day:30, date:'2026-06-15', weight_kg:93.9, Z_score:81.7},
+];
 
 function ChatBubble({ side, children, time, style, id }) {
   return (
@@ -57,15 +110,17 @@ function ChatBubble({ side, children, time, style, id }) {
 
 function InterventionBadge({ code, name, done, skipped, comment, description }) {
   const statusColor = done ? '#e8f5e9' : skipped ? '#ffebee' : '#fff3e0';
+  const statusBorder = done ? '#a5d6a7' : skipped ? '#ef9a9a' : '#ffe0b2';
+  const dotColor = done ? '#4caf50' : skipped ? '#f44336' : '#ff9800';
   const statusText = done ? '✅ Выполнено' : skipped ? '❌ Пропущено' : '⏳ Ожидает';
   return (
-    <div style={{display:'flex',alignItems:'center',gap:6,background:statusColor,borderRadius:8,padding:'6px 8px',marginBottom:4,border:'1px solid '+(done?'#a5d6a7':skipped?'#ef9a9a':'#ffe0b2')}}>
-      <div style={{width:6,height:6,borderRadius:'50%',background:done?'#4caf50':skipped?'#f44336':'#ff9800',flexShrink:0}}/>
-      <div style={{flex:1}}>
-        <div style={{fontSize:9,fontWeight:600,color:'#333'}}>{code}</div>
-        {description && <div style={{fontSize:8,color:'#666',marginTop:1}}>{description}</div>}
-        {comment && <div style={{fontSize:8,color:'#555',marginTop:0.5}}>{comment}</div>}
-        <div style={{fontSize:8,color:'#888',marginTop:1}}>{statusText}</div>
+    <div className="ibadge" style={{background:statusColor,border:'1px solid '+statusBorder}}>
+      <div className="ibadge-dot" style={{background:dotColor}}/>
+      <div className="ibadge-body">
+        <div className="ibadge-code">{code}</div>
+        {description && <div className="ibadge-desc">{description}</div>}
+        {comment && <div className="ibadge-comment">{comment}</div>}
+        <div className="ibadge-status">{statusText}</div>
       </div>
     </div>
   );
@@ -369,12 +424,17 @@ export default function PhoneSimulator({
           });
         });
         msgs.push({ id:`auto-note-${d.day}`, side:'left', time:`${d.date} · примечание`, type:'text',
-          text:`_${d.notes}_` });
+          text:`_${d.note || d.notes}_` });
         msgs.push({ id:`auto-q-${d.day}`, side:'left', time: `${d.date}  · вопрос`, type:'text',
           text: `🤔 ${questions[di % questions.length]}` });
       });
+      const lastSimDay = daysToShow[daysToShow.length-1].day;
+      const wCur = PTL_RAPID_WL_DAYS.find(d => d.day === lastSimDay)?.weight_kg;
+      const wPrev = PTL_RAPID_WL_DAYS.find(d => d.day === lastSimDay - 1)?.weight_kg;
+      const wDelta = wCur != null && wPrev != null ? (wCur - wPrev) : 0;
+      const wStr = wCur != null ? ` · Вес ${wCur} кг (${wDelta > 0 ? '+' : ''}${wDelta.toFixed(1)})` : '';
       msgs.push({ id:'auto-summary', side:'left', time:`Итог ${viewDay} дней`, type:'text',
-        text:`📊 **${viewDay} дней позади:** Z ${daysToShow[0].Z_score} → ${daysToShow[daysToShow.length-1].Z_score} (${daysToShow[daysToShow.length-1].Z_score - daysToShow[0].Z_score > 0 ? '+' : ''}${daysToShow[daysToShow.length-1].Z_score - daysToShow[0].Z_score}) · В среднем ${Math.round(daysToShow.reduce((s,d)=>s+d.adherence_pct,0)/daysToShow.length)}%` });
+        text:`📊 **${viewDay} дней позади:** Z ${daysToShow[0].Z_score} → ${daysToShow[daysToShow.length-1].Z_score} (${daysToShow[daysToShow.length-1].Z_score - daysToShow[0].Z_score > 0 ? '+' : ''}${daysToShow[daysToShow.length-1].Z_score - daysToShow[0].Z_score}) · В среднем ${Math.round(daysToShow.reduce((s,d)=>s+d.adherence_pct,0)/daysToShow.length)}%${wStr}` });
       setLocalMessages(prev => [...prev, ...msgs]);
     }
   }, [viewDay]);
@@ -481,17 +541,18 @@ ${planSection}
           id:`hist-badge-${d.day}-${t.code}`, side:'left', time: taskTime, type:'intervention-badge',
           code: t.code, name: '', comment: t.comment, description: getDesc(t.code),
           done: t.status === 'done',
-          skipped: t.status === 'missed',
+          skipped: t.status === 'missed' || t.status === 'undone',
         });
       });
       msgs.push({
         id:`hist-note-${d.day}`, side:'left', time:`${d.date} · примечание`, type:'text',
-        text:`_${d.notes}_`
+        text:`_${d.note || d.notes}_`
       });
     });
+    const last = SIMULATION_HISTORY.days.length - 1;
     msgs.push({
-      id:'hist-summary', side:'left', time:`Итог 10 дней`, type:'text',
-      text:`📊 **Итог:** Z ${SIMULATION_HISTORY.days[0].Z_score} → ${SIMULATION_HISTORY.days[9].Z_score} (+${SIMULATION_HISTORY.days[9].Z_score-SIMULATION_HISTORY.days[0].Z_score}) · Средний adherence: ${SIMULATION_HISTORY.summary.avg_adherence}%`
+      id:'hist-summary', side:'left', time:`Итог ${SIMULATION_HISTORY.days.length} дней`, type:'text',
+      text:`📊 **Итог:** Z ${SIMULATION_HISTORY.days[0].Z_score} → ${SIMULATION_HISTORY.days[last].Z_score} (+${(SIMULATION_HISTORY.days[last].Z_score - SIMULATION_HISTORY.days[0].Z_score).toFixed(1)}) · Средний adherence: ${SIMULATION_HISTORY.summary.avg_adherence}%`
     });
     setLocalMessages(prev => [...prev, ...msgs]);
   };
@@ -499,7 +560,7 @@ ${planSection}
   const [showZFormula, setShowZFormula] = useState(false);
   const [viewPrompt, setViewPrompt] = useState(null);
   const goals = [
-    { id:'g1', label:'Вес', current:profile?.anthropometrics?.weight_kg, target:70, unit:'кг', color:'#311b92', allowedLo:30, allowedHi:200, start:92 },
+    { id:'g1', label:'Вес', current:profile?.anthropometrics?.weight_kg, target:70, unit:'кг', color:'#311b92', allowedLo:30, allowedHi:200, start:97 },
     { id:'g2', label:'ИМТ', current:profile?.anthropometrics?.bmi, target:22, unit:'кг/м²', color:'#1976d2', allowedLo:14, allowedHi:45, start:29 },
     { id:'g3', label:'АД сист.', current:profile?.vitals?.systolic_bp_mmhg, target:120, unit:'мм рт.ст.', color:'#e53935', allowedLo:70, allowedHi:200, start:142 },
     { id:'g4', label:'АД диаст.', current:profile?.vitals?.diastolic_bp_mmhg, target:80, unit:'мм рт.ст.', color:'#e53935', allowedLo:40, allowedHi:130, start:92 },
@@ -634,7 +695,7 @@ ${planSection}
                   return (
                     <div key={msg.id} id={msg.id} onClick={() => { if (msg.prompt) setViewPrompt(msg); }} style={{cursor:msg.prompt?'pointer':'default'}}>
                       <ChatBubble side={msg.side} time={msg.time}>
-                        <span style={{whiteSpace:'pre-wrap'}} dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }} />
+                        <span className="chat-msg" dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }} />
                       </ChatBubble>
                     </div>
                   );
@@ -818,7 +879,7 @@ ${planSection}
                   <svg viewBox="0 0 280 60" width="100%" height="60">
                     {(() => {
                       const W=280, H=60, P=8;
-                      const days = SIMULATION_HISTORY.days;
+                      const days = PTL_RAPID_WL_DAYS;
                       const zVals = days.map(d => d.Z_score);
                       const zMin = Math.min(...zVals) - 5;
                       const zMax = Math.max(...zVals) + 5;
@@ -838,6 +899,39 @@ ${planSection}
                           <text x={x(days.indexOf(curDay))} y={y(curDay.Z_score)-5} fontSize="7" fill="#6b21c8" textAnchor="middle" fontWeight="bold">{curDay.Z_score}</text>
                           <text x={x(days.indexOf(curDay))} y={H-2} fontSize="6" fill="#999" textAnchor="middle">{curDay.day}д</text>
                         </>)}
+                      </>);
+                    })()}
+                  </svg>
+                </div>
+                <div className="z-chart-wrap" style={{marginTop:4}}>
+                  <div className="z-chart-title">Динамика веса (кг)</div>
+                  <svg viewBox="0 0 280 60" width="100%" height="60">
+                    {(() => {
+                      const W=280, H=60, P=8;
+                      const days = PTL_RAPID_WL_DAYS;
+                      const wVals = days.map(d => d.weight_kg);
+                      const wMin = Math.min(...wVals) - 1;
+                      const wMax = Math.max(...wVals) + 1;
+                      const wRng = wMax - wMin || 1;
+                      const target = 70;
+                      const x = i => P + (i / (days.length-1 || 1)) * (W-2*P);
+                      const y = v => H - P - ((v - wMin) / wRng) * (H-2*P);
+                      const pts = days.map((d,i) => `${x(i)},${y(d.weight_kg)}`).join(' ');
+                      const curDay = PTL_RAPID_WL_DAYS.find(d => d.day === viewDay) || days[days.length-1];
+                      const curIdx = days.indexOf(curDay);
+                      return (<>
+                        <line x1={P} y1={y(target)} x2={W-P} y2={y(target)} stroke="#e53935" strokeWidth="0.5" strokeDasharray="2,2"/>
+                        <line x1={P} y1={H-P} x2={W-P} y2={H-P} stroke="#e0e0e0" strokeWidth="0.5"/>
+                        <polyline points={pts} fill="none" stroke="#1976d2" strokeWidth="1.5" strokeLinejoin="round"/>
+                        {days.map((d,i) => (
+                          <circle key={i} cx={x(i)} cy={y(d.weight_kg)} r={d.day===viewDay?3:1.5}
+                            fill={d.day===viewDay?'#1976d2':'#90caf9'} stroke="#fff" strokeWidth="1"/>
+                        ))}
+                        {curIdx >= 0 && (<>
+                          <text x={x(curIdx)} y={y(curDay.weight_kg)-5} fontSize="7" fill="#1976d2" textAnchor="middle" fontWeight="bold">{curDay.weight_kg}</text>
+                          <text x={x(curIdx)} y={H-2} fontSize="6" fill="#999" textAnchor="middle">{curDay.day}д</text>
+                        </>)}
+                        <text x={W-2} y={y(target)-2} fontSize="5" fill="#e53935" textAnchor="end">цель 70</text>
                       </>);
                     })()}
                   </svg>

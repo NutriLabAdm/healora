@@ -7,28 +7,132 @@
   "goal_ru": "Сопровождение терапии GLP-1 агонистами (семаглутид/тирзепатид) для снижения веса с сохранением мышечной массы, управлением побочными эффектами и предотвращением отката",
   "type": "medical_protocol",
   "red_flags": [
-    { "metric": "Muscle loss rate", "threshold": ">1.5 kg muscle per month", "action": "Increase protein to 2.2g/kg + strength training intensity" },
-    { "metric": "Severe nausea/vomiting", "threshold": ">3 days unable to keep food down", "action": "Consult prescribing physician —可能需要 dose adjustment" },
-    { "metric": "Acute abdominal pain", "threshold": "Severe, right upper quadrant", "action": "Emergency: rule out pancreatitis or cholecystitis" },
-    { "metric": "Heart rate", "threshold": "Resting HR >100 bpm on GLP-1", "action": "Consult cardiologist, review medication" },
-    { "metric": "Dehydration signs", "threshold": "Dark urine, dizziness, <1L fluid intake", "action": "Immediate hydration protocol, electrolyte supplementation" },
-    { "metric": "Rapid weight loss", "threshold": ">2 kg/week for 2+ weeks", "action": "Increase caloric intake, preserve lean mass" },
-    { "metric": "Gallbladder symptoms", "threshold": "Pain after fatty meals", "action": "Ultrasound, consult gastroenterologist" },
-    { "metric": "Weight regain after stop", "threshold": ">50% of lost weight within 3 months", "action": "Activate rebound prevention protocol immediately" }
+    {
+      "metric": "Muscle loss rate",
+      "threshold": ">1.5 kg muscle per month",
+      "action": "Increase protein to 2.2g/kg + strength training intensity"
+    },
+    {
+      "metric": "Severe nausea/vomiting",
+      "threshold": ">3 days unable to keep food down",
+      "action": "Consult prescribing physician —可能需要 dose adjustment"
+    },
+    {
+      "metric": "Acute abdominal pain",
+      "threshold": "Severe, right upper quadrant",
+      "action": "Emergency: rule out pancreatitis or cholecystitis"
+    },
+    {
+      "metric": "Heart rate",
+      "threshold": "Resting HR >100 bpm on GLP-1",
+      "action": "Consult cardiologist, review medication"
+    },
+    {
+      "metric": "Dehydration signs",
+      "threshold": "Dark urine, dizziness, <1L fluid intake",
+      "action": "Immediate hydration protocol, electrolyte supplementation"
+    },
+    {
+      "metric": "Rapid weight loss",
+      "threshold": ">2 kg/week for 2+ weeks",
+      "action": "Increase caloric intake, preserve lean mass"
+    },
+    {
+      "metric": "Gallbladder symptoms",
+      "threshold": "Pain after fatty meals",
+      "action": "Ultrasound, consult gastroenterologist"
+    },
+    {
+      "metric": "Weight regain after stop",
+      "threshold": ">50% of lost weight within 3 months",
+      "action": "Activate rebound prevention protocol immediately"
+    }
   ],
   "interventions": [
-    { "id": "OZ_01", "name": "Protein Target: 1.6-2.2g/kg", "name_ru": "Цель по белку: 1.6-2.2 г/кг", "regularity": "daily", "data_collection": "Food log / protein tracking app" },
-    { "id": "OZ_02", "name": "Strength Training: 3-4x/week", "name_ru": "Силовые тренировки: 3-4 раза/нед", "regularity": "weekly", "data_collection": "Workout log, sets/reps" },
-    { "id": "OZ_03", "name": "Weekly Muscle Mass Tracking", "name_ru": "Еженедельный трекинг мышечной массы", "regularity": "weekly", "data_collection": "DEXA/BIA scan or smart scale" },
-    { "id": "OZ_04", "name": "Hydration Protocol: 2.5-3L/day", "name_ru": "Протокол гидратации: 2.5-3 л/день", "regularity": "daily", "data_collection": "Water intake log" },
-    { "id": "OZ_05", "name": "Electrolyte Supplementation", "name_ru": "Прием электролитов", "regularity": "daily", "data_collection": "Supplement log" },
-    { "id": "OZ_06", "name": "GI Side Effect Log", "name_ru": "Дневник ЖКТ побочных эффектов", "regularity": "daily", "data_collection": "Symptom diary (app)" },
-    { "id": "OZ_07", "name": "Small Frequent Meals", "name_ru": "Маленькие частые приемы пищи", "regularity": "daily", "data_collection": "Meal frequency log" },
-    { "id": "OZ_08", "name": "Micronutrient Blood Work (quarterly)", "name_ru": "Анализ микронутриентов (ежеквартально)", "regularity": "quarterly", "data_collection": "Lab results" },
-    { "id": "OZ_09", "name": "Rebound Prevention Plan", "name_ru": "План предотвращения отката", "regularity": "ongoing", "data_collection": "Compliance checklist" },
-    { "id": "OZ_10", "name": "Dosing Schedule Compliance", "name_ru": "Соблюдение графика дозирования", "regularity": "weekly", "data_collection": "Injection log" },
-    { "id": "OZ_11", "name": "Weekly Body Composition Scan", "name_ru": "Еженедельное сканирование композиции тела", "regularity": "weekly", "data_collection": "Smart scale / BIA" },
-    { "id": "OZ_12", "name": "Caloric Floor: Min 1400 kcal/day", "name_ru": "Минимальный калораж: 1400 ккал/день", "regularity": "daily", "data_collection": "Calorie tracking app" }
+    {
+      "id": "OZ_01",
+      "name": "Protein Target: 1.6-2.2g/kg",
+      "name_ru": "Цель по белку: 1.6-2.2 г/кг",
+      "regularity": "daily",
+      "data_collection": "Food log / protein tracking app"
+    },
+    {
+      "id": "OZ_02",
+      "name": "Strength Training: 3-4x/week",
+      "name_ru": "Силовые тренировки: 3-4 раза/нед",
+      "regularity": "weekly",
+      "data_collection": "Workout log, sets/reps"
+    },
+    {
+      "id": "OZ_03",
+      "name": "Weekly Muscle Mass Tracking",
+      "name_ru": "Еженедельный трекинг мышечной массы",
+      "regularity": "weekly",
+      "data_collection": "DEXA/BIA scan or smart scale"
+    },
+    {
+      "id": "OZ_04",
+      "name": "Hydration Protocol: 2.5-3L/day",
+      "name_ru": "Протокол гидратации: 2.5-3 л/день",
+      "regularity": "daily",
+      "data_collection": "Water intake log"
+    },
+    {
+      "id": "OZ_05",
+      "name": "Electrolyte Supplementation",
+      "name_ru": "Прием электролитов",
+      "regularity": "daily",
+      "data_collection": "Supplement log"
+    },
+    {
+      "id": "OZ_06",
+      "name": "GI Side Effect Log",
+      "name_ru": "Дневник ЖКТ побочных эффектов",
+      "regularity": "daily",
+      "data_collection": "Symptom diary (app)"
+    },
+    {
+      "id": "OZ_07",
+      "name": "Small Frequent Meals",
+      "name_ru": "Маленькие частые приемы пищи",
+      "regularity": "daily",
+      "data_collection": "Meal frequency log"
+    },
+    {
+      "id": "OZ_08",
+      "name": "Micronutrient Blood Work (quarterly)",
+      "name_ru": "Анализ микронутриентов (ежеквартально)",
+      "regularity": "quarterly",
+      "data_collection": "Lab results"
+    },
+    {
+      "id": "OZ_09",
+      "name": "Rebound Prevention Plan",
+      "name_ru": "План предотвращения отката",
+      "regularity": "ongoing",
+      "data_collection": "Compliance checklist"
+    },
+    {
+      "id": "OZ_10",
+      "name": "Dosing Schedule Compliance",
+      "name_ru": "Соблюдение графика дозирования",
+      "regularity": "weekly",
+      "data_collection": "Injection log"
+    },
+    {
+      "id": "OZ_11",
+      "name": "Weekly Body Composition Scan",
+      "name_ru": "Еженедельное сканирование композиции тела",
+      "regularity": "weekly",
+      "data_collection": "Smart scale / BIA"
+    },
+    {
+      "id": "OZ_12",
+      "name": "Caloric Floor: Min 1400 kcal/day",
+      "name_ru": "Минимальный калораж: 1400 ккал/день",
+      "regularity": "daily",
+      "data_collection": "Calorie tracking app"
+    }
   ],
   "phases": [
     {
@@ -116,5 +220,6 @@
     "DPP Trial — 5-7% weight loss → 58% diabetes risk reduction",
     "American Gastroenterological Association — GLP-1 management guidelines",
     "Wilding et al. (2021) — Once-Weekly Semaglutide in Adults with Overweight or Obesity (NEJM)"
-  ]
+  ],
+  "protocol_id": "PTL_OZEMPIC"
 }

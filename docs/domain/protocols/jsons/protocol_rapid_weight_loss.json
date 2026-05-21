@@ -7,16 +7,29 @@
   "goal_ru": "Выявление необъяснимой резкой потери веса",
   "type": "red_flag",
   "red_flags": [
-    { "metric": "Weight loss rate", "threshold": ">5% body weight per month without cause", "action": "Consult oncologist, gastroenterologist" }
+    {
+      "metric": "Weight loss rate",
+      "threshold": ">5% body weight per month without cause",
+      "action": "Consult oncologist, gastroenterologist"
+    }
   ],
   "interventions": [
-    { "id": "04_8", "name": "Protein Increase", "name_ru": "Увеличение белка" },
-    { "id": "03_8", "name": "Steps", "name_ru": "Шаги (умеренная активность)" }
+    {
+      "id": "04_8",
+      "name": "Protein Increase",
+      "name_ru": "Увеличение белка"
+    },
+    {
+      "id": "03_8",
+      "name": "Steps",
+      "name_ru": "Шаги (умеренная активность)"
+    }
   ],
   "recommendations": [
     "Track weight weekly at same time of day",
     "If unexplained loss >5% in one month, seek immediate medical evaluation",
     "Maintain protein intake to preserve muscle mass",
     "Keep moderate activity but avoid high-strain workouts"
-  ]
+  ],
+  "protocol_id": "PTL_RAPID_WL"
 }

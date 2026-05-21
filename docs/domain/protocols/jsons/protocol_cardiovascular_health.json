@@ -6,16 +6,37 @@
   "goal": "Maintain and improve cardiovascular function",
   "goal_ru": "Поддержание и улучшение сердечно-сосудистой функции",
   "interventions": [
-    { "id": "02_1", "name": "HIIT Training", "name_ru": "ВИИТ тренировки" },
-    { "id": "02_6", "name": "Zone 2 Training", "name_ru": "Зона 2" },
-    { "id": "01_1", "name": "Sleep: Bedtime", "name_ru": "Сон: время отхода ко сну" },
-    { "id": "04_1", "name": "Calorie Limit", "name_ru": "Ограничение калорий" },
-    { "id": "05_2", "name": "Omega-3", "name_ru": "Омега-3" }
+    {
+      "id": "02_1",
+      "name": "HIIT Training",
+      "name_ru": "ВИИТ тренировки"
+    },
+    {
+      "id": "02_6",
+      "name": "Zone 2 Training",
+      "name_ru": "Зона 2"
+    },
+    {
+      "id": "01_1",
+      "name": "Sleep: Bedtime",
+      "name_ru": "Сон: время отхода ко сну"
+    },
+    {
+      "id": "04_1",
+      "name": "Calorie Limit",
+      "name_ru": "Ограничение калорий"
+    },
+    {
+      "id": "05_2",
+      "name": "Omega-3",
+      "name_ru": "Омега-3"
+    }
   ],
   "recommendations": [
     "150+ min Zone 2 cardio per week",
     "2 HIIT sessions per week (after building base)",
     "Monitor blood pressure and HRV regularly",
     "Limit saturated fat, increase omega-3 intake"
-  ]
+  ],
+  "protocol_id": "PTL_CARDIO"
 }

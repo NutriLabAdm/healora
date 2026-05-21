@@ -6,11 +6,31 @@
   "goal": "Optimize recovery after physical and mental exertion",
   "goal_ru": "Оптимизация восстановления после физических и умственных нагрузок",
   "interventions": [
-    { "id": "01_1", "name": "Sleep: Bedtime", "name_ru": "Сон: время отхода ко сну" },
-    { "id": "01_3", "name": "Sleep: Quality", "name_ru": "Сон: качество" },
-    { "id": "03_1", "name": "Meditation", "name_ru": "Медитация" },
-    { "id": "02_5", "name": "Low Impact Training", "name_ru": "Низкоударные тренировки" },
-    { "id": "05_3", "name": "Magnesium", "name_ru": "Магний" }
+    {
+      "id": "01_1",
+      "name": "Sleep: Bedtime",
+      "name_ru": "Сон: время отхода ко сну"
+    },
+    {
+      "id": "01_3",
+      "name": "Sleep: Quality",
+      "name_ru": "Сон: качество"
+    },
+    {
+      "id": "03_1",
+      "name": "Meditation",
+      "name_ru": "Медитация"
+    },
+    {
+      "id": "02_5",
+      "name": "Low Impact Training",
+      "name_ru": "Низкоударные тренировки"
+    },
+    {
+      "id": "05_3",
+      "name": "Magnesium",
+      "name_ru": "Магний"
+    }
   ],
   "recommendations": [
     "Prioritize sleep (7-9h) as primary recovery tool",
@@ -19,5 +39,6 @@
     "HRV-guided training: skip intense workout if HRV low",
     "Contrast therapy (hot/cold) for inflammation management",
     "Massage or foam rolling 2-3x per week"
-  ]
+  ],
+  "protocol_id": "PTL_RECOVERY"
 }

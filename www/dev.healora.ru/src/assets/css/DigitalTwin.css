@@ -415,6 +415,16 @@
   font-size: 11px;
 }
 
+.protocol-card-id {
+  font-size: 8px;
+  font-family: monospace;
+  color: #7b1fa2;
+  background: #f3e5f5;
+  padding: 1px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
 .protocol-card-category {
   font-size: 9px;
   background: #e3f2fd;

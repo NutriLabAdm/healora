@@ -6,21 +6,54 @@
   "goal": "Correct micronutrient deficiencies",
   "goal_ru": "Восполнение дефицитов микронутриентов",
   "interventions": [
-    { "id": "05_1", "name": "Vitamin D3", "name_ru": "Витамин D3" },
-    { "id": "05_2", "name": "Omega-3", "name_ru": "Омега-3" },
-    { "id": "05_3", "name": "Magnesium", "name_ru": "Магний" },
-    { "id": "05_4", "name": "B-Complex", "name_ru": "В-комплекс" },
-    { "id": "07_1", "name": "Regular Checkup", "name_ru": "Регулярный чекап" }
+    {
+      "id": "05_1",
+      "name": "Vitamin D3",
+      "name_ru": "Витамин D3"
+    },
+    {
+      "id": "05_2",
+      "name": "Omega-3",
+      "name_ru": "Омега-3"
+    },
+    {
+      "id": "05_3",
+      "name": "Magnesium",
+      "name_ru": "Магний"
+    },
+    {
+      "id": "05_4",
+      "name": "B-Complex",
+      "name_ru": "В-комплекс"
+    },
+    {
+      "id": "07_1",
+      "name": "Regular Checkup",
+      "name_ru": "Регулярный чекап"
+    }
   ],
   "red_flags": [
-    { "metric": "Vitamin D (25-OH)", "threshold": "<30 ng/mL", "action": "Supplement 2000-5000 IU/day" },
-    { "metric": "Magnesium (serum)", "threshold": "<0.75 mmol/L", "action": "Supplement 400mg/day" },
-    { "metric": "Omega-3 Index", "threshold": "<4%", "action": "Supplement 2g EPA+DHA/day" }
+    {
+      "metric": "Vitamin D (25-OH)",
+      "threshold": "<30 ng/mL",
+      "action": "Supplement 2000-5000 IU/day"
+    },
+    {
+      "metric": "Magnesium (serum)",
+      "threshold": "<0.75 mmol/L",
+      "action": "Supplement 400mg/day"
+    },
+    {
+      "metric": "Omega-3 Index",
+      "threshold": "<4%",
+      "action": "Supplement 2g EPA+DHA/day"
+    }
   ],
   "recommendations": [
     "Get blood work before starting supplements",
     "Take Vitamin D with fat-containing meal",
     "Take magnesium in evening for sleep support",
     "Re-test after 3 months of supplementation"
-  ]
+  ],
+  "protocol_id": "PTL_NUTR_BASE"
 }

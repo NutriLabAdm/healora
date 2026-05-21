@@ -7,21 +7,54 @@
   "goal_ru": "Выявление и профилактика метаболических и сердечно-сосудистых рисков",
   "type": "red_flag",
   "red_flags": [
-    { "metric": "Fasting Glucose", "threshold": ">126 mg/dL", "action": "Consult endocrinologist" },
-    { "metric": "Total Cholesterol", "threshold": ">240 mg/dL", "action": "Consult cardiologist" },
-    { "metric": "Blood Pressure", "threshold": ">140/90 mmHg", "action": "Consult cardiologist" },
-    { "metric": "LDL Cholesterol", "threshold": ">160 mg/dL", "action": "Consult cardiologist" }
+    {
+      "metric": "Fasting Glucose",
+      "threshold": ">126 mg/dL",
+      "action": "Consult endocrinologist"
+    },
+    {
+      "metric": "Total Cholesterol",
+      "threshold": ">240 mg/dL",
+      "action": "Consult cardiologist"
+    },
+    {
+      "metric": "Blood Pressure",
+      "threshold": ">140/90 mmHg",
+      "action": "Consult cardiologist"
+    },
+    {
+      "metric": "LDL Cholesterol",
+      "threshold": ">160 mg/dL",
+      "action": "Consult cardiologist"
+    }
   ],
   "interventions": [
-    { "id": "02_1", "name": "HIIT Training", "name_ru": "ВИИТ тренировки" },
-    { "id": "02_2", "name": "Strength Training", "name_ru": "Силовые тренировки" },
-    { "id": "04_1", "name": "Calorie Limit", "name_ru": "Ограничение калорий" },
-    { "id": "07_2", "name": "Cardiology Referral", "name_ru": "Направление к кардиологу" }
+    {
+      "id": "02_1",
+      "name": "HIIT Training",
+      "name_ru": "ВИИТ тренировки"
+    },
+    {
+      "id": "02_2",
+      "name": "Strength Training",
+      "name_ru": "Силовые тренировки"
+    },
+    {
+      "id": "04_1",
+      "name": "Calorie Limit",
+      "name_ru": "Ограничение калорий"
+    },
+    {
+      "id": "07_2",
+      "name": "Cardiology Referral",
+      "name_ru": "Направление к кардиологу"
+    }
   ],
   "recommendations": [
     "Monitor blood pressure weekly",
     "Get lipid panel every 3-6 months",
     "Limit saturated fat to <10% of calories",
     "150+ min moderate aerobic activity per week"
-  ]
+  ],
+  "protocol_id": "PTL_METABOLIC"
 }

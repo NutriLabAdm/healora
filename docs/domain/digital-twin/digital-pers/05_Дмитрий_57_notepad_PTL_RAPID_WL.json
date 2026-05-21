@@ -1,0 +1,2826 @@
+{
+  "profile_id": "DMITRY_57",
+  "name": "Дмитрий",
+  "protocol_id": "PTL_RAPID_WL",
+  "protocol_name": "Быстрое снижение веса (30 дней)",
+  "therapy_plan": {
+    "protocol": "Средиземноморская диета + умеренная активность",
+    "duration_days": 30,
+    "daily_burden_min": 35,
+    "interventions": [
+      {
+        "code": "FD_CAL",
+        "label": "Дефицит калорий −500 ккал/день",
+        "category": "nutrition",
+        "w": 0.92,
+        "evidence": "A",
+        "goal_alignment": 0.95,
+        "twin_compatibility": 0.9,
+        "regression_score": 0.88,
+        "barrier_mitigation": 0.75,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "утро (планирование)",
+        "description": "Вечером планировать меню на следующий день с дефицитом −500 ккал. Использовать калькулятор КБЖУ."
+      },
+      {
+        "code": "PH_WALK",
+        "label": "Ходьба 8000 шагов/день",
+        "category": "physical",
+        "w": 0.88,
+        "evidence": "A",
+        "goal_alignment": 0.85,
+        "twin_compatibility": 0.95,
+        "regression_score": 0.8,
+        "barrier_mitigation": 0.65,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "обед 15 мин + вечер 15 мин",
+        "description": "Увеличить шаги с 5000 до 8000/день: парковаться дальше, подниматься пешком, прогулка после ужина."
+      },
+      {
+        "code": "FD_SUG",
+        "label": "Снизить простые углеводы и сахар",
+        "category": "nutrition",
+        "w": 0.85,
+        "evidence": "A",
+        "goal_alignment": 0.9,
+        "twin_compatibility": 0.85,
+        "regression_score": 0.82,
+        "barrier_mitigation": 0.6,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "все приёмы",
+        "description": "Исключить сладкие напитки, десерты, белый хлеб. Заменить на цельнозерновые, ягоды."
+      },
+      {
+        "code": "FD_FIB",
+        "label": "Клетчатка 30+ г/день + овощи с каждым приёмом",
+        "category": "nutrition",
+        "w": 0.78,
+        "evidence": "B",
+        "goal_alignment": 0.8,
+        "twin_compatibility": 0.9,
+        "regression_score": 0.72,
+        "barrier_mitigation": 0.55,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "завтрак, обед, ужин",
+        "description": "Добавить овощи к каждому приёму. Овсянка на завтрак, салат на обед, тушёные овощи на ужин."
+      },
+      {
+        "code": "MN_BRTH",
+        "label": "Дыхательная гимнастика 5 мин × 2/день",
+        "category": "mental",
+        "w": 0.76,
+        "evidence": "B",
+        "goal_alignment": 0.7,
+        "twin_compatibility": 0.88,
+        "regression_score": 0.68,
+        "barrier_mitigation": 0.8,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "утро после пробуждения + вечер перед сном",
+        "description": "5 минут диафрагмального дыхания (4-7-8). Снижает ЧСС, АД, кортизол."
+      },
+      {
+        "code": "SL_BED",
+        "label": "Режим сна: отбой до 23:00, подъём в 7:00",
+        "category": "sleep",
+        "w": 0.72,
+        "evidence": "A",
+        "goal_alignment": 0.75,
+        "twin_compatibility": 0.82,
+        "regression_score": 0.7,
+        "barrier_mitigation": 0.5,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "22:45 — подготовка, 23:00 — отбой",
+        "description": "Увеличить сон с 6.5 до 7.5 ч. Без телефона за 30 мин до сна. Тёплый душ."
+      },
+      {
+        "code": "M_LAB01",
+        "label": "Контроль глюкозы и липидов раз в 2 недели",
+        "category": "medical",
+        "w": 0.68,
+        "evidence": "A",
+        "goal_alignment": 0.85,
+        "twin_compatibility": 0.75,
+        "regression_score": 0.72,
+        "barrier_mitigation": 0.4,
+        "f": 1,
+        "ttm_modifier": "— (медицинская процедура)",
+        "r": "biweekly",
+        "time_slot": "утро натощак",
+        "description": "Сдать глюкозу, HbA1c, липидограмму через 2 недели. Сравнить с baseline."
+      },
+      {
+        "code": "PR_01",
+        "label": "Планирование закупок по Гарвардской тарелке",
+        "category": "nutrition",
+        "w": 0.85,
+        "evidence": "C",
+        "goal_alignment": 0.75,
+        "twin_compatibility": 0.8,
+        "regression_score": 0.7,
+        "barrier_mitigation": 0.9,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "weekly",
+        "time_slot": "воскресенье 19:00–20:00",
+        "description": "Составить меню на неделю по принципу Гарвардской тарелки: ½ овощи/фрукты, ¼ белок, ¼ цельнозерновые + полезные жиры. Список закупок — по отделам магазина. Правило корзины 70/30."
+      },
+      {
+        "code": "M_WGHT",
+        "label": "Ежедневное взвешивание утром натощак",
+        "category": "monitoring",
+        "w": 0.7,
+        "evidence": "B",
+        "goal_alignment": 0.9,
+        "twin_compatibility": 0.85,
+        "regression_score": 0.75,
+        "barrier_mitigation": 0.6,
+        "f": 0.5,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "утро после туалета",
+        "description": "Взвешиваться каждое утро после туалета, до завтрака, в лёгкой одежде. Записывать в дневник."
+      },
+      {
+        "code": "M_WAIST",
+        "label": "Измерение окружности талии еженедельно",
+        "category": "monitoring",
+        "w": 0.65,
+        "evidence": "B",
+        "goal_alignment": 0.85,
+        "twin_compatibility": 0.8,
+        "regression_score": 0.7,
+        "barrier_mitigation": 0.55,
+        "f": 0.5,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "weekly",
+        "time_slot": "утро понедельника",
+        "description": "Измерять окружность талии сантиметровой лентой на уровне пупка, на выдохе. Фиксировать в дневнике еженедельно."
+      },
+      {
+        "code": "BEH_EAT",
+        "label": "Контроль РПП: осознанное питание",
+        "category": "mental",
+        "w": 0.7,
+        "evidence": "B",
+        "goal_alignment": 0.6,
+        "twin_compatibility": 0.75,
+        "regression_score": 0.65,
+        "barrier_mitigation": 0.7,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "перед каждым приёмом пищи",
+        "description": "Осознанное питание: без телефона/ТВ, медленное пережёвывание, пауза в середине приёма для оценки насыщения. Признаки РПП: переедание >2 р/нед, пропуск приёмов >1 р/день."
+      }
+    ],
+    "daily_schedule": {
+      "07:00": {
+        "action": "Подъём, стакан воды 300 мл",
+        "codes": [
+          "FD_WATER"
+        ]
+      },
+      "07:15": {
+        "action": "Дыхательная гимнастика 5 мин",
+        "codes": [
+          "MN_BRTH"
+        ]
+      },
+      "07:30": {
+        "action": "Осознанный завтрак: овсянка + ягоды + орехи (без телефона)",
+        "codes": [
+          "FD_CAL",
+          "FD_FIB",
+          "BEH_EAT"
+        ]
+      },
+      "08:30": {
+        "action": "Планирование меню на день",
+        "codes": [
+          "FD_CAL"
+        ]
+      },
+      "10:00": {
+        "action": "Планирование меню по Гарвардской тарелке + список закупок",
+        "codes": [
+          "PR_01",
+          "PR_02"
+        ]
+      },
+      "13:00": {
+        "action": "Обед: салат + белок + цельнозерновой хлеб",
+        "codes": [
+          "FD_CAL",
+          "FD_FIB",
+          "FD_SUG"
+        ]
+      },
+      "13:30": {
+        "action": "Прогулка 10 мин после еды",
+        "codes": [
+          "PH_WALK"
+        ]
+      },
+      "16:00": {
+        "action": "Перекус: овощные палочки + хумус",
+        "codes": [
+          "FD_FIB"
+        ]
+      },
+      "20:00": {
+        "action": "Разложить по контейнерам, подписать (дата + КБЖУ)",
+        "codes": [
+          "PR_05"
+        ]
+      },
+      "22:30": {
+        "action": "Экранный детокс, подготовка ко сну",
+        "codes": [
+          "SL_BED"
+        ]
+      },
+      "22:45": {
+        "action": "Дыхательная гимнастика 5 мин",
+        "codes": [
+          "MN_BRTH"
+        ]
+      },
+      "23:00": {
+        "action": "Отбой",
+        "codes": [
+          "SL_BED"
+        ]
+      },
+      "19:00": {
+        "action": "Batch prep на неделю: запечь курицу, отварить гречку, нарезать овощи",
+        "codes": [
+          "PR_05"
+        ]
+      },
+      "11:00": {
+        "action": "Закупка продуктов по списку. Правило 70/30",
+        "codes": [
+          "PR_02",
+          "PR_04"
+        ]
+      },
+      "07:05": {
+        "action": "Взвешивание и запись в дневник",
+        "codes": [
+          "M_WGHT"
+        ]
+      },
+      "07:10": {
+        "action": "Измерение талии (по понедельникам)",
+        "codes": [
+          "M_WAIST"
+        ]
+      }
+    },
+    "weekly_goals": {
+      "week1": "Освоить режим: привыкнуть к новому графику, освоить дыхание, удержать шаги 6000+/день",
+      "week2": "Выход на 7000+ шагов/день, убрать сахар, овощи с каждым приёмом",
+      "week3": "8000+ шагов/день, сдать глюкозу + липиды, оценка динамики веса",
+      "week4": "Закрепление: все пункты выполняются без напоминаний",
+      "week0": "Освоить протокол закупок: планирование по Гарвардской тарелке + список по КБЖУ + правило корзины 70/30"
+    }
+  },
+  "execution_history": {
+    "plan_id": "DMITRY_57_30D_01",
+    "start_date": "2026-05-17",
+    "end_date": "2026-06-15",
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-05-17",
+        "weight_kg": 97,
+        "adherence_pct": 67,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Спланировал меню на день",
+            "datetime": "2026-05-17  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6200 шагов — чуть меньше цели, но прогресс",
+            "datetime": "2026-05-17  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Выпил чай без сахара, отказался от десерта на встрече",
+            "datetime": "2026-05-17  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи на обед и ужин",
+            "datetime": "2026-05-17  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром 5 мин, вечером пропустил — заснул сразу",
+            "datetime": "2026-05-17  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "Лёг в 23:30 — пришлось доделать отчёт",
+            "datetime": "2026-05-17  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "Запланировано на день 14",
+            "datetime": "2026-05-17  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "Выпил 1.8 л воды",
+            "datetime": "2026-05-17  15:00:00"
+          }
+        ],
+        "mood": "neutral",
+        "note": "Первый день — было непривычно планировать еду, но вечером почувствовал контроль",
+        "Z_score": 53.2,
+        "target_weight_kg": 96.1,
+        "weight_gap_kg": 0.9
+      },
+      {
+        "day": 2,
+        "date": "2026-05-18",
+        "weight_kg": 96.6,
+        "adherence_pct": 75,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Соблюдал дефицит",
+            "datetime": "2026-05-18  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "7800 шагов — почти достиг!",
+            "datetime": "2026-05-18  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара весь день",
+            "datetime": "2026-05-18  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи + овсянка",
+            "datetime": "2026-05-18  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером по 5 мин",
+            "datetime": "2026-05-18  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "Лёг в 23:00",
+            "datetime": "2026-05-18  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-18  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.0 л",
+            "datetime": "2026-05-18  15:00:00"
+          }
+        ],
+        "mood": "good",
+        "note": "Почувствовал прилив энергии к вечеру. Сон стал глубже.",
+        "Z_score": 79.2,
+        "target_weight_kg": 95.2,
+        "weight_gap_kg": 1.4
+      },
+      {
+        "day": 3,
+        "date": "2026-05-19",
+        "weight_kg": 96.3,
+        "adherence_pct": 50,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Дефицит соблюдён",
+            "datetime": "2026-05-19  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "undone",
+            "comment": "3500 шагов — весь день в совещаниях",
+            "datetime": "2026-05-19  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался, хотя в столовой был соблазн",
+            "datetime": "2026-05-19  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Салат на обед",
+            "datetime": "2026-05-19  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "undone",
+            "comment": "Забыл — накладка с дедлайном",
+            "datetime": "2026-05-19  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "Лёг в 23:00",
+            "datetime": "2026-05-19  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-19  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.5 л — маловато",
+            "datetime": "2026-05-19  15:00:00"
+          }
+        ],
+        "mood": "tired",
+        "note": "Рабочий день вымотал. Шаги и дыхание провалил из-за загруженности.",
+        "Z_score": 62.8,
+        "target_weight_kg": 94.3,
+        "weight_gap_kg": 2.0
+      },
+      {
+        "day": 4,
+        "date": "2026-05-20",
+        "weight_kg": 96.5,
+        "adherence_pct": 62,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Норма",
+            "datetime": "2026-05-20  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6500 шагов — компенсировал вчерашнее",
+            "datetime": "2026-05-20  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-05-20  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи с каждым приёмом",
+            "datetime": "2026-05-20  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром 5 мин. Вечером тоже успел",
+            "datetime": "2026-05-20  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "Лёг в 23:45 — подводил итоги недели",
+            "datetime": "2026-05-20  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-20  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.2 л",
+            "datetime": "2026-05-20  15:00:00"
+          }
+        ],
+        "mood": "neutral",
+        "note": "Стараюсь не ругать себя за срывы. Главное — вернуться в режим на следующий день.",
+        "Z_score": 37.3,
+        "target_weight_kg": 93.4,
+        "weight_gap_kg": 3.1
+      },
+      {
+        "day": 5,
+        "date": "2026-05-21",
+        "weight_kg": 96.1,
+        "adherence_pct": 83,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Полностью соблюдён",
+            "datetime": "2026-05-21  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "8200 шагов — новый рекорд!",
+            "datetime": "2026-05-21  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Ноль сахара",
+            "datetime": "2026-05-21  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи + ягоды",
+            "datetime": "2026-05-21  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-05-21  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "Лёг в 22:55",
+            "datetime": "2026-05-21  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-21  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.5 л — выполнил норму",
+            "datetime": "2026-05-21  15:00:00"
+          }
+        ],
+        "mood": "great",
+        "note": "Лучший день! Все задачи выполнены. Вес снизился на 0.9 кг за 5 дней. Почувствовал, что могу.",
+        "Z_score": 82.8,
+        "target_weight_kg": 92.5,
+        "weight_gap_kg": 3.6
+      },
+      {
+        "day": 6,
+        "date": "2026-05-22",
+        "weight_kg": 96.0,
+        "adherence_pct": 67,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "undone",
+            "comment": "",
+            "datetime": "2026-05-22"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "8206 шагов",
+            "datetime": "2026-05-22"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-05-22"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-22"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-05-22"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:45",
+            "datetime": "2026-05-22"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.7 л",
+            "datetime": "2026-05-22"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 66.9,
+        "target_weight_kg": 91.6,
+        "weight_gap_kg": 4.4
+      },
+      {
+        "day": 7,
+        "date": "2026-05-23",
+        "weight_kg": 96.0,
+        "adherence_pct": 74,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "7064 шагов",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:45",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.7 л",
+            "datetime": "2026-05-23"
+          },
+          {
+            "code": "PR_06",
+            "status": "done",
+            "comment": "Челлендж 0 ультра-обработанных: день 1",
+            "datetime": "2026-05-23"
+          }
+        ],
+        "mood": "good",
+        "note": "[CHAT] Объясни, что такое batch prep. Зачем тратить субботу на готовку?\n🤖 Batch prep - приготовление 4-6 порций еды впрок в субботу. Вы готовите белок (курица, рыба), гарнир (гречка, киноа) и овощи. Раскладываете по контейнерам с маркировкой КБЖУ. В будни - только разогреть. Экономия ~1 ч/день.\n👤 А не испортится еда за неделю?\n🤖 3 дня в холодильнике (пн-ср), остальное - в морозилку. Размораживать вечером. Ваш план: курица запечённая (4 порции), гречка (4 порции), овощи тушёные (4 порции). Маркируйте: дата + КБЖУ.",
+        "has_chat": true,
+        "Z_score": 52.5,
+        "target_weight_kg": 90.7,
+        "weight_gap_kg": 5.3
+      },
+      {
+        "day": 8,
+        "date": "2026-05-24",
+        "weight_kg": 95.9,
+        "adherence_pct": 78,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "undone",
+            "comment": "Весь день в офисе",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "undone",
+            "comment": "",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Перед сном",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "SL_BED",
+            "status": "pending",
+            "comment": "23:45 — отчёт",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.5 л",
+            "datetime": "2026-05-24"
+          },
+          {
+            "code": "PR_04",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-24"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 73.0,
+        "target_weight_kg": 89.8,
+        "weight_gap_kg": 6.1
+      },
+      {
+        "day": 9,
+        "date": "2026-05-25",
+        "weight_kg": 95.9,
+        "adherence_pct": 74,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "1900 ккал",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "10561 шагов",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "undone",
+            "comment": "Сорвался на печенье",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "23:00",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.8 л",
+            "datetime": "2026-05-25"
+          },
+          {
+            "code": "PR_04",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-25"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 52.7,
+        "target_weight_kg": 88.9,
+        "weight_gap_kg": 7.0
+      },
+      {
+        "day": 10,
+        "date": "2026-05-26",
+        "weight_kg": 95.9,
+        "adherence_pct": 55,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "1900 ккал",
+            "datetime": "2026-05-26"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "pending",
+            "comment": "Не было времени",
+            "datetime": "2026-05-26"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "undone",
+            "comment": "Мороженое",
+            "datetime": "2026-05-26"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "undone",
+            "comment": "",
+            "datetime": "2026-05-26"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "pending",
+            "comment": "Забыл",
+            "datetime": "2026-05-26"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:45",
+            "datetime": "2026-05-26"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.8 л",
+            "datetime": "2026-05-26"
+          }
+        ],
+        "mood": "neutral",
+        "note": "Аврал на работе. Два совещания подряд, сорвался на обед в столовой.\n\n[CHAT] Аврал. Два совещания, в столовой пицца. Сорвался. Как не срываться в стресс?\n🤖 Стресс-дни - главный триггер срывов. План «Аврал»:\n1. Утром кладите контейнер с обедом в портфель\n2. На совещания берите воду - заполняет желудок\n3. Если корпоратив - выбирайте белок+овощи, пропускайте хлеб\n4. Дыхание 4-7-8 перед входом в переговорную (1 мин)\nОдин срыв - не провал. Завтра вернётесь.",
+        "has_chat": true,
+        "Z_score": 43.8,
+        "target_weight_kg": 88.0,
+        "weight_gap_kg": 7.9
+      },
+      {
+        "day": 11,
+        "date": "2026-05-27",
+        "weight_kg": 95.8,
+        "adherence_pct": 80,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "План выполнен",
+            "datetime": "2026-05-27"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "8009 шагов",
+            "datetime": "2026-05-27"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Чай без сахара",
+            "datetime": "2026-05-27"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-27"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-05-27"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "23:30 — не уснуть",
+            "datetime": "2026-05-27"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "pending",
+            "comment": "2.1 л",
+            "datetime": "2026-05-27"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 72.1,
+        "target_weight_kg": 87.1,
+        "weight_gap_kg": 8.7
+      },
+      {
+        "day": 12,
+        "date": "2026-05-28",
+        "weight_kg": 95.7,
+        "adherence_pct": 79,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Дефицит соблюдён",
+            "datetime": "2026-05-28"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6666 шагов",
+            "datetime": "2026-05-28"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Чай без сахара",
+            "datetime": "2026-05-28"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-28"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "pending",
+            "comment": "Забыл",
+            "datetime": "2026-05-28"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "23:00",
+            "datetime": "2026-05-28"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.5 л",
+            "datetime": "2026-05-28"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 75.7,
+        "target_weight_kg": 86.2,
+        "weight_gap_kg": 9.5
+      },
+      {
+        "day": 13,
+        "date": "2026-05-29",
+        "weight_kg": 95.5,
+        "adherence_pct": 76,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "1900 ккал",
+            "datetime": "2026-05-29"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "pending",
+            "comment": "Весь день в офисе",
+            "datetime": "2026-05-29"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-05-29"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-29"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-05-29"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "23:45 — отчёт",
+            "datetime": "2026-05-29"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "pending",
+            "comment": "2.1 л",
+            "datetime": "2026-05-29"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 76.1,
+        "target_weight_kg": 85.3,
+        "weight_gap_kg": 10.2
+      },
+      {
+        "day": 14,
+        "date": "2026-05-30",
+        "weight_kg": 95.5,
+        "adherence_pct": 72,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Дефицит соблюдён",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "9563 шагов",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "pending",
+            "comment": "Сорвался на печенье",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "23:00",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "pending",
+            "comment": "1.6 л",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "done",
+            "comment": "Глюкоза 98, HbA1c 5.5 — улучшение!",
+            "datetime": "2026-05-30"
+          },
+          {
+            "code": "PR_06",
+            "status": "done",
+            "comment": "Челлендж завершён — продержался 7 дней",
+            "datetime": "2026-05-30"
+          }
+        ],
+        "mood": "good",
+        "note": "[CHAT] Результаты: глюкоза 98, HbA1c 5.5, холестерин 205. Это прогресс?\n🤖 Отличная динамика! Сравнение 14 дней:\n- Глюкоза: 105 -> 98 (-7 мг/дл, норма!)\n- HbA1c: 5.7 -> 5.5 (-0.2%, преддиабет отступает)\n- Холестерин: 220 -> 205 (-15 мг/дл)\n\nК концу месяца ожидаю глюкозу ~92-95. Следующий чек - день 42.",
+        "has_chat": true,
+        "Z_score": 51.9,
+        "target_weight_kg": 84.4,
+        "weight_gap_kg": 11.1
+      },
+      {
+        "day": 15,
+        "date": "2026-05-31",
+        "weight_kg": 95.4,
+        "adherence_pct": 83,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-05-31"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "8768 шагов",
+            "datetime": "2026-05-31"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-05-31"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-05-31"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-05-31"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-05-31"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "undone",
+            "comment": "2.3 л",
+            "datetime": "2026-05-31"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 75.0,
+        "target_weight_kg": 83.5,
+        "weight_gap_kg": 11.9
+      },
+      {
+        "day": 16,
+        "date": "2026-06-01",
+        "weight_kg": 95.3,
+        "adherence_pct": 79,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-06-01"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "undone",
+            "comment": "Дождь",
+            "datetime": "2026-06-01"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-01"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "undone",
+            "comment": "",
+            "datetime": "2026-06-01"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "pending",
+            "comment": "Забыл",
+            "datetime": "2026-06-01"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "23:30 — не уснуть",
+            "datetime": "2026-06-01"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.6 л",
+            "datetime": "2026-06-01"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 73.6,
+        "target_weight_kg": 82.6,
+        "weight_gap_kg": 12.7
+      },
+      {
+        "day": 17,
+        "date": "2026-06-02",
+        "weight_kg": 95.3,
+        "adherence_pct": 74,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "План выполнен",
+            "datetime": "2026-06-02"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "9632 шагов",
+            "datetime": "2026-06-02"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Чай без сахара",
+            "datetime": "2026-06-02"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "undone",
+            "comment": "",
+            "datetime": "2026-06-02"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-06-02"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:45",
+            "datetime": "2026-06-02"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "pending",
+            "comment": "1.9 л",
+            "datetime": "2026-06-02"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 53.3,
+        "target_weight_kg": 81.7,
+        "weight_gap_kg": 13.6
+      },
+      {
+        "day": 18,
+        "date": "2026-06-03",
+        "weight_kg": 95.3,
+        "adherence_pct": 60,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "1900 ккал",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "9893 шагов",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "pending",
+            "comment": "Забыл",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "00:15 — сериал",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.3 л",
+            "datetime": "2026-06-03"
+          },
+          {
+            "code": "PR_04",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-03"
+          }
+        ],
+        "mood": "good",
+        "note": "Квартальный отчёт. Не спал, не ходил, ел что попало.\n\n[CHAT] Квартальный отчёт, сплю по 5 часов. Кажется, всё летит к чёрту.\n🤖 Месяц назад вы курили и ели всё подряд. Сейчас - 7000 шагов и контроль сахара даже в стресс. План «Минимум» на 3 дня:\n- Белок+овощи (не считайте калории)\n- Дыхание перед сном 2 мин\n- Вода 1.5 л\n- Сон хотя бы 6 ч\n\nЧерез 3 дня пересмотрим.\n👤 Ок, попробую воду и дыхание.",
+        "has_chat": true,
+        "Z_score": 46.2,
+        "target_weight_kg": 80.8,
+        "weight_gap_kg": 14.5
+      },
+      {
+        "day": 19,
+        "date": "2026-06-04",
+        "weight_kg": 95.2,
+        "adherence_pct": 76,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "1900 ккал",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6054 шагов",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Перед сном",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "23:00",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.1 л",
+            "datetime": "2026-06-04"
+          },
+          {
+            "code": "PR_04",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-04"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 69.8,
+        "target_weight_kg": 79.9,
+        "weight_gap_kg": 15.3
+      },
+      {
+        "day": 20,
+        "date": "2026-06-05",
+        "weight_kg": 95.1,
+        "adherence_pct": 75,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "undone",
+            "comment": "",
+            "datetime": "2026-06-05"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "8463 шагов",
+            "datetime": "2026-06-05"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-06-05"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-05"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Перед сном",
+            "datetime": "2026-06-05"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-05"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.4 л",
+            "datetime": "2026-06-05"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 72.1,
+        "target_weight_kg": 79.0,
+        "weight_gap_kg": 16.1
+      },
+      {
+        "day": 21,
+        "date": "2026-06-06",
+        "weight_kg": 95.0,
+        "adherence_pct": 90,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "11860 шагов",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "pending",
+            "comment": "Пирожное на совещании",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "23:00",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.5 л",
+            "datetime": "2026-06-06"
+          },
+          {
+            "code": "PR_04",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-06-06"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 79.9,
+        "target_weight_kg": 78.1,
+        "weight_gap_kg": 16.9
+      },
+      {
+        "day": 22,
+        "date": "2026-06-07",
+        "weight_kg": 94.9,
+        "adherence_pct": 88,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-06-07"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "undone",
+            "comment": "Не было времени",
+            "datetime": "2026-06-07"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Чай без сахара",
+            "datetime": "2026-06-07"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-07"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-06-07"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:45",
+            "datetime": "2026-06-07"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.0 л",
+            "datetime": "2026-06-07"
+          }
+        ],
+        "mood": "great",
+        "note": "[CHAT] Привык к режиму. Пора увеличить интенсивность?\n🤖 Согласен. За 3 недели:\n- Adherence > 75% (кроме стресс-дней)\n- Вес: -3.2 кг\n- Глюкоза в норме\n\nПереход из Preparation в Action:\n- f_i: 0.75 -> 1.0\n- Шаги: 8000 -> 10000/день\n- Силовые 2/нед (для начинающих 50+)\n👤 Давай. С силовыми аккуратно - спина.",
+        "has_chat": true,
+        "Z_score": 79.7,
+        "target_weight_kg": 77.2,
+        "weight_gap_kg": 17.7
+      },
+      {
+        "day": 23,
+        "date": "2026-06-08",
+        "weight_kg": 94.8,
+        "adherence_pct": 89,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "План выполнен",
+            "datetime": "2026-06-08"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6188 шагов",
+            "datetime": "2026-06-08"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-08"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-08"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-06-08"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-08"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.9 л",
+            "datetime": "2026-06-08"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 78.4,
+        "target_weight_kg": 76.3,
+        "weight_gap_kg": 18.5
+      },
+      {
+        "day": 24,
+        "date": "2026-06-09",
+        "weight_kg": 94.7,
+        "adherence_pct": 76,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-06-09"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6198 шагов",
+            "datetime": "2026-06-09"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-09"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-09"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Перед сном",
+            "datetime": "2026-06-09"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "00:15 — сериал",
+            "datetime": "2026-06-09"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.4 л",
+            "datetime": "2026-06-09"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 72.3,
+        "target_weight_kg": 75.4,
+        "weight_gap_kg": 19.3
+      },
+      {
+        "day": 25,
+        "date": "2026-06-10",
+        "weight_kg": 94.6,
+        "adherence_pct": 77,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6671 шагов",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "pending",
+            "comment": "Забыл",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "undone",
+            "comment": "2.4 л",
+            "datetime": "2026-06-10"
+          },
+          {
+            "code": "PR_04",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-10"
+          }
+        ],
+        "mood": "good",
+        "note": "",
+        "Z_score": 71.9,
+        "target_weight_kg": 74.5,
+        "weight_gap_kg": 20.1
+      },
+      {
+        "day": 26,
+        "date": "2026-06-11",
+        "weight_kg": 94.5,
+        "adherence_pct": 93,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Дефицит соблюдён",
+            "datetime": "2026-06-11"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "11858 шагов",
+            "datetime": "2026-06-11"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-06-11"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-11"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Перед сном",
+            "datetime": "2026-06-11"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "23:00",
+            "datetime": "2026-06-11"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.0 л",
+            "datetime": "2026-06-11"
+          }
+        ],
+        "mood": "great",
+        "note": "[CHAT] План на последнюю неделю?\n🤖 Финишная прямая:\n1. Adherence > 85%\n2. Силовая x2 (вт, чт)\n3. Сон 7.5 ч\n4. Дефицит за неделю: -3500 ккал\n\nЦель: вес < 85.5 кг к дню 30. После - срез анализов и новый протокол.",
+        "has_chat": true,
+        "Z_score": 82.0,
+        "target_weight_kg": 73.6,
+        "weight_gap_kg": 20.9
+      },
+      {
+        "day": 27,
+        "date": "2026-06-12",
+        "weight_kg": 94.3,
+        "adherence_pct": 94,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "КБЖУ в норме",
+            "datetime": "2026-06-12"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "11910 шагов",
+            "datetime": "2026-06-12"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-12"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-12"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-06-12"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-12"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.8 л",
+            "datetime": "2026-06-12"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 88.6,
+        "target_weight_kg": 72.7,
+        "weight_gap_kg": 21.6
+      },
+      {
+        "day": 28,
+        "date": "2026-06-13",
+        "weight_kg": 94.2,
+        "adherence_pct": 82,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "10495 шагов",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.0 л",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "BEH_EAT",
+            "status": "done",
+            "comment": "Осознанно пообедал — заметил насыщение раньше",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "PR_04",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-13"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "done",
+            "comment": "Глюкоза 98, HbA1c 5.5 — улучшение!",
+            "datetime": "2026-06-13"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 75.7,
+        "target_weight_kg": 71.8,
+        "weight_gap_kg": 22.4
+      },
+      {
+        "day": 29,
+        "date": "2026-06-14",
+        "weight_kg": 94.1,
+        "adherence_pct": 90,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "План выполнен",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6959 шагов",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Только утром",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.1 л",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "PR_01",
+            "status": "done",
+            "comment": "Спланировал меню на неделю по Гарвардской тарелке",
+            "datetime": "2026-06-14"
+          },
+          {
+            "code": "PR_04",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-06-14"
+          }
+        ],
+        "mood": "great",
+        "note": "",
+        "Z_score": 78.7,
+        "target_weight_kg": 70.9,
+        "weight_gap_kg": 23.2
+      },
+      {
+        "day": 30,
+        "date": "2026-06-15",
+        "weight_kg": 93.9,
+        "adherence_pct": 88,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Дефицит соблюдён",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6282 шагов",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "pending",
+            "comment": "Забыл",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "22:30",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.0 л",
+            "datetime": "2026-06-15"
+          },
+          {
+            "code": "BEH_EAT",
+            "status": "done",
+            "comment": "Осознанный ужин — без телефона",
+            "datetime": "2026-06-15"
+          }
+        ],
+        "mood": "great",
+        "note": "[CHAT] 30 дней позади. Что дальше?\n🤖 Результаты:\n- Вес: 88.0 -> 84.8 кг (-3.2 кг)\n- Глюкоза: 105 -> 92 мг/дл\n- HbA1c: 5.7 -> 5.4%\n- Adherence средний: 71%\n- Сон: 6.5 -> 7.2 ч\n\nПлан на следующие 30 дней:\n1. Тот же протокол, f_i=1.0 (Action)\n2. Цель: 84.8 -> 80.0 кг\n3. Силовые 2/нед\n4. Липидограмма на день 42\n5. Интервальное голодание 14/10\n👤 Поехали.",
+        "has_chat": true,
+        "Z_score": 81.7,
+        "target_weight_kg": 70.0,
+        "weight_gap_kg": 23.9
+      }
+    ],
+    "stats_at_day5": {
+      "total_days": 5,
+      "avg_adherence_pct": 67.4,
+      "weight_delta_kg": -0.9,
+      "avg_steps": 6440,
+      "best_day": 5,
+      "worst_day": 3,
+      "streak_current": 2,
+      "tasks_total": 40,
+      "tasks_done": 27,
+      "tasks_undone": 8,
+      "tasks_pending": 5
+    },
+    "stats_at_day30": {
+      "total_days": 30,
+      "avg_adherence_pct": 76.9,
+      "weight_start_kg": 88.0,
+      "weight_end_kg": 84.9,
+      "weight_delta_kg": -3.1,
+      "avg_steps": 8200,
+      "best_day": 27,
+      "worst_day": 3,
+      "chat_sessions": 7,
+      "tasks_total": 230,
+      "tasks_done": 180,
+      "tasks_undone": 22,
+      "tasks_pending": 28,
+      "chats_on_days": [
+        7,
+        10,
+        14,
+        18,
+        22,
+        26,
+        30
+      ],
+      "avg_Z": 68.6,
+      "start_Z": 53.2,
+      "end_Z": 81.7,
+      "target_weight_day30": 84.8,
+      "weight_gap_day30": 0.2
+    },
+    "Z_trend": {
+      "start_Z": 53.2,
+      "end_Z": 81.7,
+      "min_Z": 37.3,
+      "max_Z": 88.6,
+      "avg_Z": 68.6,
+      "Z_delta": 28.5,
+      "Z_by_day": {
+        "1": 53.2,
+        "2": 79.2,
+        "3": 62.8,
+        "4": 37.3,
+        "5": 82.8,
+        "6": 66.9,
+        "7": 52.5,
+        "8": 73.0,
+        "9": 52.7,
+        "10": 43.8,
+        "11": 72.1,
+        "12": 75.7,
+        "13": 76.1,
+        "14": 51.9,
+        "15": 75.0,
+        "16": 73.6,
+        "17": 53.3,
+        "18": 46.2,
+        "19": 69.8,
+        "20": 72.1,
+        "21": 79.9,
+        "22": 79.7,
+        "23": 78.4,
+        "24": 72.3,
+        "25": 71.9,
+        "26": 82.0,
+        "27": 88.6,
+        "28": 75.7,
+        "29": 78.7,
+        "30": 81.7
+      }
+    }
+  },
+  "simulation_history": {
+    "description": "История симуляции дней 1–10 для профиля Дмитрий. Формат: день, выполненные интервенции с отметкой статуса (done/pending/missed), калории, заметки.",
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-05-01",
+        "adherence_pct": 70,
+        "calories_consumed": 2100,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-01  22:15:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — среднее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-01  08:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-01  12:30:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Водный режим"
+          },
+          {
+            "code": "PH_HIIT",
+            "status": "pending",
+            "datetime": "",
+            "comment": "ВИИТ-тренировка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 42,
+        "notes": "Первый день. Заполнил дневник, но пропустил воду. ВИИТ не сделал — не хватило времени.",
+        "target_weight_kg": 87.9,
+        "weight_gap_kg": -87.9
+      },
+      {
+        "day": 2,
+        "date": "2026-05-02",
+        "adherence_pct": 86,
+        "calories_consumed": 1850,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-02  22:30:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-02  07:45:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-02  18:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.6л"
+          },
+          {
+            "code": "PH_AER",
+            "status": "done",
+            "datetime": "2026-05-02  19:00:00",
+            "comment": "Аэробная нагрузка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 48,
+        "notes": "Выполнил почти всё. Прогулялся 30 мин — аэробика. Калории в норме.",
+        "target_weight_kg": 87.8,
+        "weight_gap_kg": -87.8
+      },
+      {
+        "day": 3,
+        "date": "2026-05-03",
+        "adherence_pct": 75,
+        "calories_consumed": 2200,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-03  23:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 6.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — среднее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-03  08:30:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.8л"
+          },
+          {
+            "code": "FD_CRB",
+            "status": "done",
+            "datetime": "",
+            "comment": "Ограничение углеводов"
+          }
+        ],
+        "diary_entries": 2,
+        "Z_score": 45,
+        "notes": "Сложный день на работе. Перебор по калориям — ужин вне дома. Дыхательные пропустил.",
+        "target_weight_kg": 87.7,
+        "weight_gap_kg": -87.7
+      },
+      {
+        "day": 4,
+        "date": "2026-05-04",
+        "adherence_pct": 88,
+        "calories_consumed": 1950,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-04  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 8ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-04  07:30:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-04  13:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.0л"
+          },
+          {
+            "code": "PH_HIIT",
+            "status": "done",
+            "datetime": "2026-05-04  07:00:00",
+            "comment": "ВИИТ-тренировка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 52,
+        "notes": "Отличный день! ВИИТ утром, хороший сон, водный режим. Z вырос.",
+        "target_weight_kg": 87.6,
+        "weight_gap_kg": -87.6
+      },
+      {
+        "day": 5,
+        "date": "2026-05-05",
+        "adherence_pct": 78,
+        "calories_consumed": 2050,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-05  22:45:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 6.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — среднее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-05  09:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-05  15:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Водный режим"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Ограничение сахара"
+          }
+        ],
+        "diary_entries": 2,
+        "Z_score": 47,
+        "notes": "Снова недосып. Сорвался на сладкое на совещании. Дневник заполнен не полностью.",
+        "target_weight_kg": 87.5,
+        "weight_gap_kg": -87.5
+      },
+      {
+        "day": 6,
+        "date": "2026-05-06",
+        "adherence_pct": 90,
+        "calories_consumed": 1780,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-06  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 8ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — отличное"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-06  07:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-06  12:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.2л"
+          },
+          {
+            "code": "PH_AER",
+            "status": "done",
+            "datetime": "2026-05-06  18:30:00",
+            "comment": "Аэробная нагрузка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 56,
+        "notes": "Выходной. Отлично выспался, прогулка в парке, дневник полный. Z растёт.",
+        "target_weight_kg": 87.3,
+        "weight_gap_kg": -87.3
+      },
+      {
+        "day": 7,
+        "date": "2026-05-07",
+        "adherence_pct": 82,
+        "calories_consumed": 2000,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-07  22:30:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-07  08:15:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.8л"
+          },
+          {
+            "code": "FD_IF",
+            "status": "done",
+            "datetime": "",
+            "comment": "Интервальное голодание — 16/8"
+          },
+          {
+            "code": "M_GAS01",
+            "status": "pending",
+            "datetime": "",
+            "comment": "Гастроскопия (назначена)"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 51,
+        "notes": "Начал интервальное голодание 16/8. Запись на гастроскопию на следующую неделю.",
+        "target_weight_kg": 87.2,
+        "weight_gap_kg": -87.2
+      },
+      {
+        "day": 8,
+        "date": "2026-05-08",
+        "adherence_pct": 85,
+        "calories_consumed": 1900,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-08  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-08  07:45:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-08  11:30:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.0л"
+          },
+          {
+            "code": "PH_HIIT",
+            "status": "done",
+            "datetime": "2026-05-08  06:45:00",
+            "comment": "ВИИТ-тренировка"
+          },
+          {
+            "code": "BEH_EAT",
+            "status": "done",
+            "datetime": "2026-05-08  19:00:00",
+            "comment": "Осознанный приём пищи — без отвлечений, медленное пережёвывание"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 55,
+        "notes": "ВИИТ прошёл хорошо. Освоил практику осознанного питания — заметил сигналы насыщения. Дневник в порядке.",
+        "target_weight_kg": 87.1,
+        "weight_gap_kg": -87.1
+      },
+      {
+        "day": 9,
+        "date": "2026-05-09",
+        "adherence_pct": 72,
+        "calories_consumed": 2300,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-09  23:30:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 6ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Сон: качество"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.2л"
+          },
+          {
+            "code": "MN_STR",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Стресс-менеджмент"
+          }
+        ],
+        "diary_entries": 1,
+        "Z_score": 38,
+        "notes": "Аврал на работе. Лёг после полуночи, пропустил все практики. Переел за ужином. Z упал.",
+        "target_weight_kg": 87.0,
+        "weight_gap_kg": -87.0
+      },
+      {
+        "day": 10,
+        "date": "2026-05-10",
+        "adherence_pct": 92,
+        "calories_consumed": 1850,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-10  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 8ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — отличное"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-10  07:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-10  12:30:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.0л"
+          },
+          {
+            "code": "PH_AER",
+            "status": "done",
+            "datetime": "2026-05-10  17:00:00",
+            "comment": "Аэробная нагрузка"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-10  19:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "PR_01",
+            "status": "done",
+            "datetime": "2026-05-10  20:00:00",
+            "comment": "Спланировал меню на неделю по принципу Гарвардской тарелки"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 60,
+        "notes": "Компенсировал вчерашний провал. Составил меню на неделю по Гарвардской тарелке. Z достиг 60.",
+        "target_weight_kg": 86.9,
+        "weight_gap_kg": -86.9
+      }
+    ],
+    "summary": {
+      "total_days": 10,
+      "avg_adherence": 81.8,
+      "avg_calories": 1998,
+      "avg_diary_entries": 2.6,
+      "start_Z": 42,
+      "end_Z": 60,
+      "best_day": 10,
+      "worst_day": 9,
+      "target_weight_day10": 86.9
+    }
+  }
+}

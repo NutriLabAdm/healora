@@ -6,19 +6,44 @@
   "goal": "Synchronize meals with biological rhythms",
   "goal_ru": "Синхронизация приемов пищи с биологическими ритмами",
   "interventions": [
-    { "id": "04_4", "name": "Time-Restricted Eating", "name_ru": "Ограничение по времени" },
-    { "id": "04_5", "name": "Early Meals", "name_ru": "Ранние приемы пищи" },
-    { "id": "01_1", "name": "Sleep: Bedtime", "name_ru": "Сон: время отхода ко сну" },
-    { "id": "03_5", "name": "Sleep", "name_ru": "Сон" }
+    {
+      "id": "04_4",
+      "name": "Time-Restricted Eating",
+      "name_ru": "Ограничение по времени"
+    },
+    {
+      "id": "04_5",
+      "name": "Early Meals",
+      "name_ru": "Ранние приемы пищи"
+    },
+    {
+      "id": "01_1",
+      "name": "Sleep: Bedtime",
+      "name_ru": "Сон: время отхода ко сну"
+    },
+    {
+      "id": "03_5",
+      "name": "Sleep",
+      "name_ru": "Сон"
+    }
   ],
   "red_flags": [
-    { "metric": "Last meal time", "threshold": "<3 hours before bedtime", "action": "Move dinner earlier" },
-    { "metric": "Eating window", "threshold": ">12 hours", "action": "Reduce eating window gradually" }
+    {
+      "metric": "Last meal time",
+      "threshold": "<3 hours before bedtime",
+      "action": "Move dinner earlier"
+    },
+    {
+      "metric": "Eating window",
+      "threshold": ">12 hours",
+      "action": "Reduce eating window gradually"
+    }
   ],
   "recommendations": [
     "Eat largest meals earlier in the day",
     "Finish last meal 3+ hours before bed",
     "Maintain consistent meal times daily",
     "Limit eating window to 8-10 hours"
-  ]
+  ],
+  "protocol_id": "PTL_CIRCAD"
 }
