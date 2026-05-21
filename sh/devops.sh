@@ -41,26 +41,43 @@ sync_files() {
         fi
     else
         log_info "Using tar over SSH..."
+        local tar_ok
         if [ -n "$exclude_pattern" ]; then
-            tar cf - --exclude="$exclude_pattern" -C "$src_dir" . 2>/dev/null | \
-            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite 2>/dev/null"
+            tar cf - --exclude="$exclude_pattern" -C "$src_dir" . && tar_ok=1 || tar_ok=0
         else
-            tar cf - -C "$src_dir" . 2>/dev/null | \
-            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite 2>/dev/null"
+            tar cf - -C "$src_dir" . && tar_ok=1 || tar_ok=0
         fi
+        if [ "$tar_ok" -eq 0 ]; then
+            log_error "tar failed for $src_dir"
+            return 1
+        fi
+        # pipe tar to ssh
+        if [ -n "$exclude_pattern" ]; then
+            tar cf - --exclude="$exclude_pattern" -C "$src_dir" . | \
+            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite"
+        else
+            tar cf - -C "$src_dir" . | \
+            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite"
+        fi
+        local rc=${PIPESTATUS[0]}
+        if [ "$rc" -ne 0 ]; then
+            log_error "Sync failed (exit code $rc)"
+            return 1
+        fi
+        log_info "Sync complete"
     fi
 }
 
 set_perms() {
     local dir="$1"
     local user="${2:-www-data}"
-    ssh $REMOTE_USER@$REMOTE_HOST "chown -R $user:$user $dir && find $dir -type f -exec chmod 644 {} \; && find $dir -type d -exec chmod 755 {} \; 2>/dev/null"
+    ssh $REMOTE_USER@$REMOTE_HOST "chown -R $user:$user $dir 2>/dev/null; find $dir -type f -exec chmod 644 {} \; 2>/dev/null; find $dir -type d -exec chmod 755 {} \; 2>/dev/null; true"
 }
 
 backup_remote() {
     local dir="$1"
     local ts=$(date +%Y%m%d_%H%M%S)
-    ssh $REMOTE_USER@$REMOTE_HOST "mkdir -p $dir/backups/$ts && cp -r $dir/* $dir/backups/$ts/ 2>/dev/null; rm -rf $dir/backups/$ts/backups 2>/dev/null; true"
+    ssh $REMOTE_USER@$REMOTE_HOST "mkdir -p $dir/backups/$ts 2>/dev/null; cp -r $dir/* $dir/backups/$ts/ 2>/dev/null; rm -rf $dir/backups/$ts/backups 2>/dev/null; true"
 }
 
 show_menu() {
@@ -216,12 +233,12 @@ build_and_sync_digital_twin() {
     fi
 
     log_info "Syncing dist to production digital-twin source..."
-    rm -rf "$DT_DEST"/*
-    cp -r "$DEV_BUILD/"* "$DT_DEST/"
+    rm -rf "$DT_DEST" 2>/dev/null; mkdir -p "$DT_DEST"
+    cp -r "$DEV_BUILD/"* "$DT_DEST/" 2>/dev/null || true
     log_info "Digital twin source updated"
 
     # Copy built index.html to production root so / serves the same SPA
-    cp "$DEV_BUILD/index.html" "$PROJECT_ROOT/www/healora.ru/index.html"
+    cp "$DEV_BUILD/index.html" "$PROJECT_ROOT/www/healora.ru/index.html" 2>/dev/null || true
     log_info "Root index.html updated"
 
     # Copy images from public/ to www/healora.ru/images/
@@ -229,7 +246,7 @@ build_and_sync_digital_twin() {
     if [ -d "$DEV_PUBLIC/images" ]; then
         log_info "Copying public images to production root..."
         mkdir -p "$PROD_IMAGES"
-        cp -r "$DEV_PUBLIC/images/"* "$PROD_IMAGES/"
+        cp -r "$DEV_PUBLIC/images/"* "$PROD_IMAGES/" 2>/dev/null || true
         log_info "Production images updated"
     fi
 
@@ -237,7 +254,7 @@ build_and_sync_digital_twin() {
     if [ -d "$DT_DEST/images/pers/32_32" ]; then
         log_info "Copying pers thumbnails to production root images..."
         mkdir -p "$PROD_IMAGES/pers/32_32"
-        cp -r "$DT_DEST/images/pers/32_32/"* "$PROD_IMAGES/pers/32_32/"
+        cp -r "$DT_DEST/images/pers/32_32/"* "$PROD_IMAGES/pers/32_32/" 2>/dev/null || true
     fi
 }
 
@@ -332,7 +349,10 @@ deploy_dev() {
     local DEV_SRC="$PROJECT_ROOT/www/dev.healora.ru"
     local DEV_BUILD="$DEV_SRC/dist"
 
-    build_and_sync_digital_twin
+    # Если передан аргумент --skip-build, пропускаем сборку (используем уже собранное)
+    if [ "${1:-}" != "--skip-build" ]; then
+        build_and_sync_digital_twin
+    fi
 
     log_info "Deploying digital-twin SPA to $DEV_REMOTE_DIR..."
     backup_remote "$DEV_REMOTE_DIR"
@@ -356,7 +376,7 @@ deploy_all() {
     log_info "Deploying to both prod and dev..."
     build_and_sync_digital_twin
     deploy
-    deploy_dev
+    deploy_dev --skip-build
     log_info "Full deploy complete: https://healora.ru + http://dev.healora.ru"
 }
 
