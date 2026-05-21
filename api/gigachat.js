@@ -21,7 +21,7 @@ async function getToken() {
     throw new Error('GIGACHAT_CREDENTIALS not set in .env');
   }
 
-  const res = await fetch(GIGACHAT_AUTH_URL, {
+    const res = await fetch(GIGACHAT_AUTH_URL, {
     method: 'POST',
     headers: {
       'Authorization': `Basic ${credentials}`,
@@ -39,7 +39,7 @@ async function getToken() {
 
   const data = await res.json();
   cachedToken = data.access_token;
-  tokenExpiresAt = Date.now() + (data.expires_at || 3600) * 1000;
+  tokenExpiresAt = (data.expires_at || 3600) * 1000;
   return cachedToken;
 }
 

@@ -4318,6 +4318,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
           planTemplates={planTemplates}
           getTemplateById={getTemplateById}
           savePlan={savePlan}
+          onCreatePlan={createPlanByCategories}
         />
       )}
     </div>

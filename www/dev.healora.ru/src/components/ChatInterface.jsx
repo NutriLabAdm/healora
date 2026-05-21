@@ -14,11 +14,26 @@ const ChatInterface = () => {
   const [answers, setAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [qIndex, setQIndex] = useState(0);
+  const [provider, setProvider] = useState('gigachat');
 
   useEffect(() => {
     const saved = localStorage.getItem('healoraBasket');
     if (saved) setBasket(JSON.parse(saved));
+    fetch('/api/provider').then(r => r.json()).then(d => {
+      if (d.provider) setProvider(d.provider);
+    }).catch(() => {});
   }, []);
+
+  const toggleProvider = () => {
+    const next = provider === 'gigachat' ? 'openai' : 'gigachat';
+    fetch('/api/provider', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ provider: next })
+    }).then(r => r.json()).then(d => {
+      if (d.provider) setProvider(d.provider);
+    }).catch(() => {});
+  };
 
   useEffect(() => {
     localStorage.setItem('healoraBasket', JSON.stringify(basket));
@@ -72,11 +87,19 @@ const ChatInterface = () => {
     }));
   };
 
-  const send = async (e) => {
+  const sendQuick = (text) => {
+    setInput(text);
+    setTimeout(() => {
+      const fakeEvent = { preventDefault: () => {} };
+      send(fakeEvent, text);
+    }, 0);
+  };
+
+  const send = async (e, overrideMsg) => {
     e.preventDefault();
-    if (!input.trim()) return;    
+    const msg = overrideMsg || input;
+    if (!msg.trim()) return;
     
-    const msg = input;
     setInput('');
     addMessage(msg, true);
     setLoading(true);
@@ -219,6 +242,13 @@ const ChatInterface = () => {
     <div className="chat-container">
       <div className="chat-header">
         <h2>Healora AI Ассистент</h2>
+        <button
+          className={`provider-toggle ${provider}`}
+          onClick={toggleProvider}
+          title={provider === 'gigachat' ? 'GigaChat' : 'OpenAI'}
+        >
+          {provider === 'gigachat' ? '⚡Giga' : '🤖GPT'}
+        </button>
         <button className="chat-menu-badge" onClick={() => navigate('/diary')}>
           <span className="chat-menu-badge-num">6</span>
           <span className="chat-menu-badge-name">Дневник питания</span>
@@ -254,6 +284,17 @@ const ChatInterface = () => {
         )}
       </div>
       
+      <div className="chat-quick-actions">
+        <button className="quick-badge" onClick={() => sendQuick('Покажи задания на день')} disabled={loading}>
+          📋 Задания на день
+        </button>
+        <button className="quick-badge" onClick={() => sendQuick('Дай совет')} disabled={loading}>
+          💡 Совет
+        </button>
+        <button className="quick-badge" onClick={() => sendQuick('Рандомный факт о здоровье')} disabled={loading}>
+          🎲 Рандом
+        </button>
+      </div>
       <form onSubmit={send} className="chat-form">
         <input
           type="text"

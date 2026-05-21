@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
@@ -11,10 +13,10 @@ dotenv.config({ path: path.join(__dirname, 'gigachat.env') });
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 
 // AI provider config
-const AI_PROVIDER = process.env.AI_PROVIDER || 'openai'; // 'openai' | 'gigachat'
+let AI_PROVIDER = process.env.AI_PROVIDER || 'openai'; // 'openai' | 'gigachat'
 
 // Initialize OpenAI only if API key is available
 let openai = null;
@@ -199,13 +201,32 @@ app.delete('/api/profiles/:id', (req, res) => {
     }
 });
 
-function buildSystemPrompt(found) {
+// Get/set AI provider at runtime
+app.get('/api/provider', (req, res) => {
+    res.json({ provider: AI_PROVIDER });
+});
+
+app.post('/api/provider', (req, res) => {
+    const { provider } = req.body;
+    if (provider !== 'openai' && provider !== 'gigachat') {
+        return res.status(400).json({ error: 'Provider must be "openai" or "gigachat"' });
+    }
+    AI_PROVIDER = provider;
+    console.log(`AI provider switched to ${provider}`);
+    res.json({ provider: AI_PROVIDER });
+});
+
+function buildSystemPrompt(found, tasks) {
     if (!found) return 'Ты — Healora AI, персональный ассистент здоровья. Отвечай на русском языке, будь краток (2-4 предложения).';
     const d = found.demographics || {};
     const a = found.anthropometrics || {};
     const v = found.vitals || {};
     const l = found.labs || {};
     const ls = found.lifestyle || {};
+    const planSection = (tasks && tasks.length > 0)
+      ? `\nПлан терапии на сегодня (день ${tasks[0]?.day || '?'}):
+${tasks.map(t => `  ${t.done ? '✅ [ВЫПОЛНЕНО]' : t.alert ? '🔴 [ПРОПУЩЕНО]' : '⬜ [ОЖИДАЕТСЯ]'} ${t.name} (${t.code})`).join('\n')}`
+      : '\nПлан терапии: данные не загружены.';
     return `Ты — Healora AI, персональный ассистент здоровья.
 
 Информация о пользователе:
@@ -236,20 +257,23 @@ function buildSystemPrompt(found) {
 - Вода: ${ls.water_ml_per_day || '?'} мл/день
 - Курение: ${ls.smoking || '?'}
 - Алкоголь: ${ls.alcohol || '?'}
-
+${planSection}
 Правила:
 1. Отвечай на русском языке.
 2. Будь кратким (2-4 предложения).
 3. Используй данные пользователя для персонализации ответов.
-4. Если вопрос касается здоровья — ссылайся на показатели пользователя.
-5. Будь поддерживающим и мотивирующим.
-6. НЕ ставь медицинских диагнозов — рекомендую проконсультироваться с врачом.
-7. Если спрашивают про питание — предложи конкретные продукты с учётом КБЖУ.`;
+4. Если вопрос касается здоровья — ссылайся на показатели пользователя и план терапии.
+5. Если какое-то задание из плана отмечено 🔴 [ПРОПУЩЕНО] — мягко напомни о нём и предложи выполнить.
+6. Если все задания выполнены — похвали пользователя.
+7. Задавай 1 уточняющий вопрос в конце каждого ответа: спроси о самочувствии, выполнении задания или потребностях на завтра.
+8. Будь поддерживающим и мотивирующим.
+9. НЕ ставь медицинских диагнозов — рекомендую проконсультироваться с врачом.
+10. Если спрашивают про питание — предложи конкретные продукты с учётом КБЖУ.`;
 }
 
 app.post('/api/chat', async (req, res) => {
     try {
-        const { message, profile, history } = req.body;
+        const { message, profile, history, provider, tasks } = req.body;
 
         if (!message) {
             return res.status(400).json({ error: 'Message required' });
@@ -260,7 +284,7 @@ app.post('/api/chat', async (req, res) => {
             found = profiles.find(p => p.profile_id === profile);
         }
 
-        const systemMsg = { role: 'system', content: buildSystemPrompt(found) };
+        const systemMsg = { role: 'system', content: buildSystemPrompt(found, tasks) };
         const historyMsgs = (history || []).map(m => ({ role: m.role, content: m.content }));
         const userMsg = { role: 'user', content: message };
         const messages = [systemMsg, ...historyMsgs, userMsg];
@@ -268,7 +292,9 @@ app.post('/api/chat', async (req, res) => {
         let reply;
         let source = 'fallback';
 
-        if (AI_PROVIDER === 'gigachat') {
+        const useProvider = provider || AI_PROVIDER;
+
+        if (useProvider === 'gigachat') {
             try {
                 const response = await gigachat.chatCompletion({
                     model: 'GigaChat-Max',
@@ -281,7 +307,7 @@ app.post('/api/chat', async (req, res) => {
             } catch (apiError) {
                 console.error('GigaChat API error:', apiError.message);
             }
-        } else if (openai) {
+        } else if (useProvider === 'openai' && openai) {
             try {
                 const response = await openai.chat.completions.create({
                     model: 'gpt-3.5-turbo',

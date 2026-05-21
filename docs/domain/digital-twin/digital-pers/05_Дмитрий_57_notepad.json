@@ -20,82 +20,1799 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["очки", "деловая одежда"],
-    "suggested_biomarkers_attention": ["артериальное давление", "холестерин", "сахар в крови"],
-    "risk_factors_visible": ["сидячая работа", "возрастные риски сердечно-сосудистых заболеваний"]
+    "notable_features": [
+      "очки",
+      "деловая одежда"
+    ],
+    "suggested_biomarkers_attention": [
+      "артериальное давление",
+      "холестерин",
+      "сахар в крови"
+    ],
+    "risk_factors_visible": [
+      "сидячая работа",
+      "возрастные риски сердечно-сосудистых заболеваний"
+    ]
   },
   "narrative_summary": "Дмитрий — 57-летний руководитель с высоким уровнем ответственности. Много работает, ведёт малоподвижный образ жизни. Приоритетные цели — контроль сердечно-сосудистой системы, снижение веса и стресса. Повышенные глюкоза и холестерин требуют комплексного подхода.",
+  "goals": [
+    {
+      "id": "G01",
+      "label": "Снизить вес с 88 до 75 кг",
+      "type": "weight",
+      "unit": "кг",
+      "current": 88,
+      "target": 75,
+      "deadline_days": 120
+    },
+    {
+      "id": "G02",
+      "label": "Нормализовать АД до 125/80",
+      "type": "bp",
+      "unit": "мм рт.ст.",
+      "current": "135/88",
+      "target": "125/80",
+      "deadline_days": 60
+    },
+    {
+      "id": "G03",
+      "label": "Снизить глюкозу до < 100 мг/дл",
+      "type": "glucose",
+      "unit": "мг/дл",
+      "current": 105,
+      "target": 95,
+      "deadline_days": 60
+    }
+  ],
+  "ttm_stage": "Preparation",
+  "therapy_plan": {
+    "protocol": "Средиземноморская диета + умеренная активность",
+    "duration_days": 30,
+    "daily_burden_min": 35,
+    "interventions": [
+      {
+        "code": "FD_CAL",
+        "label": "Дефицит калорий −500 ккал/день",
+        "category": "nutrition",
+        "w": 0.92,
+        "evidence": "A",
+        "goal_alignment": 0.95,
+        "twin_compatibility": 0.9,
+        "regression_score": 0.88,
+        "barrier_mitigation": 0.75,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "утро (планирование)",
+        "description": "Вечером планировать меню на следующий день с дефицитом −500 ккал. Использовать калькулятор КБЖУ."
+      },
+      {
+        "code": "PH_WALK",
+        "label": "Ходьба 8000 шагов/день",
+        "category": "physical",
+        "w": 0.88,
+        "evidence": "A",
+        "goal_alignment": 0.85,
+        "twin_compatibility": 0.95,
+        "regression_score": 0.8,
+        "barrier_mitigation": 0.65,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "обед 15 мин + вечер 15 мин",
+        "description": "Увеличить шаги с 5000 до 8000/день: парковаться дальше, подниматься пешком, прогулка после ужина."
+      },
+      {
+        "code": "FD_SUG",
+        "label": "Снизить простые углеводы и сахар",
+        "category": "nutrition",
+        "w": 0.85,
+        "evidence": "A",
+        "goal_alignment": 0.9,
+        "twin_compatibility": 0.85,
+        "regression_score": 0.82,
+        "barrier_mitigation": 0.6,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "все приёмы",
+        "description": "Исключить сладкие напитки, десерты, белый хлеб. Заменить на цельнозерновые, ягоды."
+      },
+      {
+        "code": "FD_FIB",
+        "label": "Клетчатка 30+ г/день + овощи с каждым приёмом",
+        "category": "nutrition",
+        "w": 0.78,
+        "evidence": "B",
+        "goal_alignment": 0.8,
+        "twin_compatibility": 0.9,
+        "regression_score": 0.72,
+        "barrier_mitigation": 0.55,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "завтрак, обед, ужин",
+        "description": "Добавить овощи к каждому приёму. Овсянка на завтрак, салат на обед, тушёные овощи на ужин."
+      },
+      {
+        "code": "MN_BRTH",
+        "label": "Дыхательная гимнастика 5 мин × 2/день",
+        "category": "mental",
+        "w": 0.76,
+        "evidence": "B",
+        "goal_alignment": 0.7,
+        "twin_compatibility": 0.88,
+        "regression_score": 0.68,
+        "barrier_mitigation": 0.8,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "утро после пробуждения + вечер перед сном",
+        "description": "5 минут диафрагмального дыхания (4-7-8). Снижает ЧСС, АД, кортизол."
+      },
+      {
+        "code": "SL_BED",
+        "label": "Режим сна: отбой до 23:00, подъём в 7:00",
+        "category": "sleep",
+        "w": 0.72,
+        "evidence": "A",
+        "goal_alignment": 0.75,
+        "twin_compatibility": 0.82,
+        "regression_score": 0.7,
+        "barrier_mitigation": 0.5,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "22:45 — подготовка, 23:00 — отбой",
+        "description": "Увеличить сон с 6.5 до 7.5 ч. Без телефона за 30 мин до сна. Тёплый душ."
+      },
+      {
+        "code": "M_LAB01",
+        "label": "Контроль глюкозы и липидов раз в 2 недели",
+        "category": "medical",
+        "w": 0.68,
+        "evidence": "A",
+        "goal_alignment": 0.85,
+        "twin_compatibility": 0.75,
+        "regression_score": 0.72,
+        "barrier_mitigation": 0.4,
+        "f": 1,
+        "ttm_modifier": "— (медицинская процедура)",
+        "r": "biweekly",
+        "time_slot": "утро натощак",
+        "description": "Сдать глюкозу, HbA1c, липидограмму через 2 недели. Сравнить с baseline."
+      },
+      {
+        "code": "PR_01",
+        "label": "Планирование меню и закупок на неделю",
+        "category": "nutrition",
+        "w": 0.85,
+        "evidence": "C",
+        "goal_alignment": 0.75,
+        "twin_compatibility": 0.8,
+        "regression_score": 0.7,
+        "barrier_mitigation": 0.9,
+        "f": 0.75,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "weekly",
+        "time_slot": "воскресенье 19:00–20:00",
+        "description": "Составить меню на неделю по шаблону КБЖУ. Список закупок — по отделам магазина. Правило корзины 70/30."
+      },
+      {
+        "code": "M_WGHT",
+        "label": "Ежедневное взвешивание утром натощак",
+        "category": "monitoring",
+        "w": 0.7,
+        "evidence": "B",
+        "goal_alignment": 0.9,
+        "twin_compatibility": 0.85,
+        "regression_score": 0.75,
+        "barrier_mitigation": 0.6,
+        "f": 0.5,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "daily",
+        "time_slot": "утро после туалета",
+        "description": "Взвешиваться каждое утро после туалета, до завтрака, в лёгкой одежде. Записывать в дневник."
+      },
+      {
+        "code": "M_WAIST",
+        "label": "Измерение окружности талии еженедельно",
+        "category": "monitoring",
+        "w": 0.65,
+        "evidence": "B",
+        "goal_alignment": 0.85,
+        "twin_compatibility": 0.8,
+        "regression_score": 0.7,
+        "barrier_mitigation": 0.55,
+        "f": 0.5,
+        "ttm_modifier": "Preparation ×0.75",
+        "r": "weekly",
+        "time_slot": "утро понедельника",
+        "description": "Измерять окружность талии сантиметровой лентой на уровне пупка, на выдохе. Фиксировать в дневнике еженедельно."
+      }
+    ],
+    "daily_schedule": {
+      "07:00": {
+        "action": "Подъём, стакан воды 300 мл",
+        "codes": [
+          "FD_WATER"
+        ]
+      },
+      "07:15": {
+        "action": "Дыхательная гимнастика 5 мин",
+        "codes": [
+          "MN_BRTH"
+        ]
+      },
+      "07:30": {
+        "action": "Завтрак: овсянка + ягоды + орехи",
+        "codes": [
+          "FD_CAL",
+          "FD_FIB"
+        ]
+      },
+      "08:30": {
+        "action": "Планирование меню на день",
+        "codes": [
+          "FD_CAL"
+        ]
+      },
+      "10:00": {
+        "action": "Планирование меню на неделю + список закупок",
+        "codes": [
+          "PR_01",
+          "PR_02"
+        ]
+      },
+      "13:00": {
+        "action": "Обед: салат + белок + цельнозерновой хлеб",
+        "codes": [
+          "FD_CAL",
+          "FD_FIB",
+          "FD_SUG"
+        ]
+      },
+      "13:30": {
+        "action": "Прогулка 10 мин после еды",
+        "codes": [
+          "PH_WALK"
+        ]
+      },
+      "16:00": {
+        "action": "Перекус: овощные палочки + хумус",
+        "codes": [
+          "FD_FIB"
+        ]
+      },
+      "20:00": {
+        "action": "Разложить по контейнерам, подписать (дата + КБЖУ)",
+        "codes": [
+          "PR_05"
+        ]
+      },
+      "22:30": {
+        "action": "Экранный детокс, подготовка ко сну",
+        "codes": [
+          "SL_BED"
+        ]
+      },
+      "22:45": {
+        "action": "Дыхательная гимнастика 5 мин",
+        "codes": [
+          "MN_BRTH"
+        ]
+      },
+      "23:00": {
+        "action": "Отбой",
+        "codes": [
+          "SL_BED"
+        ]
+      },
+      "19:00": {
+        "action": "Batch prep на неделю: запечь курицу, отварить гречку, нарезать овощи",
+        "codes": [
+          "PR_05"
+        ]
+      },
+      "11:00": {
+        "action": "Закупка продуктов по списку. Правило 70/30",
+        "codes": [
+          "PR_02",
+          "PR_04"
+        ]
+      },
+      "07:05": {
+        "action": "Взвешивание и запись в дневник",
+        "codes": [
+          "M_WGHT"
+        ]
+      },
+      "07:10": {
+        "action": "Измерение талии (по понедельникам)",
+        "codes": [
+          "M_WAIST"
+        ]
+      }
+    },
+    "weekly_goals": {
+      "week1": "Освоить режим: привыкнуть к новому графику, освоить дыхание, удержать шаги 6000+/день",
+      "week2": "Выход на 7000+ шагов/день, убрать сахар, овощи с каждым приёмом",
+      "week3": "8000+ шагов/день, сдать глюкозу + липиды, оценка динамики веса",
+      "week4": "Закрепление: все пункты выполняются без напоминаний",
+      "week0": "Освоить протокол закупок: планирование меню + список по КБЖУ + правило корзины 70/30"
+    }
+  },
+  "execution_history": {
+    "plan_id": "DMITRY_57_30D_01",
+    "start_date": "2026-05-17",
+    "end_date": "2026-06-15",
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-05-17",
+        "weight_kg": 88,
+        "adherence_pct": 67,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Спланировал меню на день",
+            "datetime": "2026-05-17  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6200 шагов — чуть меньше цели, но прогресс",
+            "datetime": "2026-05-17  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Выпил чай без сахара, отказался от десерта на встрече",
+            "datetime": "2026-05-17  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи на обед и ужин",
+            "datetime": "2026-05-17  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром 5 мин, вечером пропустил — заснул сразу",
+            "datetime": "2026-05-17  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "Лёг в 23:30 — пришлось доделать отчёт",
+            "datetime": "2026-05-17  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "Запланировано на день 14",
+            "datetime": "2026-05-17  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "Выпил 1.8 л воды",
+            "datetime": "2026-05-17  15:00:00"
+          }
+        ],
+        "mood": "neutral",
+        "note": "Первый день — было непривычно планировать еду, но вечером почувствовал контроль"
+      },
+      {
+        "day": 2,
+        "date": "2026-05-18",
+        "weight_kg": 87.6,
+        "adherence_pct": 75,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Соблюдал дефицит",
+            "datetime": "2026-05-18  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "7800 шагов — почти достиг!",
+            "datetime": "2026-05-18  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара весь день",
+            "datetime": "2026-05-18  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи + овсянка",
+            "datetime": "2026-05-18  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером по 5 мин",
+            "datetime": "2026-05-18  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "Лёг в 23:00",
+            "datetime": "2026-05-18  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-18  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.0 л",
+            "datetime": "2026-05-18  15:00:00"
+          }
+        ],
+        "mood": "good",
+        "note": "Почувствовал прилив энергии к вечеру. Сон стал глубже."
+      },
+      {
+        "day": 3,
+        "date": "2026-05-19",
+        "weight_kg": 87.3,
+        "adherence_pct": 50,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Дефицит соблюдён",
+            "datetime": "2026-05-19  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "undone",
+            "comment": "3500 шагов — весь день в совещаниях",
+            "datetime": "2026-05-19  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Удержался, хотя в столовой был соблазн",
+            "datetime": "2026-05-19  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Салат на обед",
+            "datetime": "2026-05-19  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "undone",
+            "comment": "Забыл — накладка с дедлайном",
+            "datetime": "2026-05-19  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "Лёг в 23:00",
+            "datetime": "2026-05-19  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-19  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "1.5 л — маловато",
+            "datetime": "2026-05-19  15:00:00"
+          }
+        ],
+        "mood": "tired",
+        "note": "Рабочий день вымотал. Шаги и дыхание провалил из-за загруженности."
+      },
+      {
+        "day": 4,
+        "date": "2026-05-20",
+        "weight_kg": 87.5,
+        "adherence_pct": 62,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Норма",
+            "datetime": "2026-05-20  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "6500 шагов — компенсировал вчерашнее",
+            "datetime": "2026-05-20  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Без сахара",
+            "datetime": "2026-05-20  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи с каждым приёмом",
+            "datetime": "2026-05-20  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром 5 мин. Вечером тоже успел",
+            "datetime": "2026-05-20  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "undone",
+            "comment": "Лёг в 23:45 — подводил итоги недели",
+            "datetime": "2026-05-20  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-20  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.2 л",
+            "datetime": "2026-05-20  15:00:00"
+          }
+        ],
+        "mood": "neutral",
+        "note": "Стараюсь не ругать себя за срывы. Главное — вернуться в режим на следующий день."
+      },
+      {
+        "day": 5,
+        "date": "2026-05-21",
+        "weight_kg": 87.1,
+        "adherence_pct": 83,
+        "tasks": [
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "comment": "Полностью соблюдён",
+            "datetime": "2026-05-21  20:00:00"
+          },
+          {
+            "code": "PH_WALK",
+            "status": "done",
+            "comment": "8200 шагов — новый рекорд!",
+            "datetime": "2026-05-21  18:00:00"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "done",
+            "comment": "Ноль сахара",
+            "datetime": "2026-05-21  14:00:00"
+          },
+          {
+            "code": "FD_FIB",
+            "status": "done",
+            "comment": "Овощи + ягоды",
+            "datetime": "2026-05-21  13:00:00"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "comment": "Утром и вечером",
+            "datetime": "2026-05-21  07:15:00"
+          },
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "comment": "Лёг в 22:55",
+            "datetime": "2026-05-21  23:00:00"
+          },
+          {
+            "code": "M_LAB01",
+            "status": "pending",
+            "comment": "",
+            "datetime": "2026-05-21  08:00:00"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "comment": "2.5 л — выполнил норму",
+            "datetime": "2026-05-21  15:00:00"
+          }
+        ],
+        "mood": "great",
+        "note": "Лучший день! Все задачи выполнены. Вес снизился на 0.9 кг за 5 дней. Почувствовал, что могу."
+      }
+    ],
+    "stats_at_day5": {
+      "total_days": 5,
+      "avg_adherence_pct": 67.4,
+      "weight_delta_kg": -0.9,
+      "avg_steps": 6440,
+      "best_day": 5,
+      "worst_day": 3,
+      "streak_current": 2,
+      "tasks_total": 40,
+      "tasks_done": 27,
+      "tasks_undone": 8,
+      "tasks_pending": 5
+    }
+  },
   "parameters": {
     "demographics": {
       "title": "01 Демография",
       "rows": [
-        { "code": "01_1_DEMO_AGE", "unit": "лет", "parameter": "Возраст", "was": "57", "current": "57", "goal": "", "norm": "18-65", "range_allowed": "0-120", "range_optimal": "25-55", "interventions": "-" },
-        { "code": "01_2_DEMO_GENDER", "unit": "", "parameter": "Пол", "was": "-", "current": "male", "goal": "", "norm": "M/F", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "01_3_DEMO_HEIGHT", "unit": "см", "parameter": "Рост", "was": "178", "current": "178", "goal": "", "norm": "150-200", "range_allowed": "100-250", "range_optimal": "160-190", "interventions": "-" },
-        { "code": "01_4_DEMO_WEIGHT", "unit": "кг", "parameter": "Вес", "was": "88", "current": "88", "goal": "70", "norm": "50-120", "range_allowed": "30-200", "range_optimal": "60-85", "interventions": "3 (PH_HIIT, PH_STR, FD_CAL)" },
-        { "code": "01_19_BIO_BMI", "unit": "кг/м²", "parameter": "ИМТ", "was": "-", "current": "27.8", "goal": "22", "norm": "18.5-25", "range_allowed": "14-45", "range_optimal": "20-23", "interventions": "-" },
-        { "code": "01_20_BIO_WAIST", "unit": "см", "parameter": "Талия", "was": "-", "current": "98", "goal": "80", "norm": "60-100", "range_allowed": "40-150", "range_optimal": "70-90", "interventions": "-" },
-        { "code": "01_5_DEMO_ETHNICITY", "unit": "", "parameter": "Этническая принадлежность", "was": "-", "current": "европеоидная", "goal": "", "norm": "-", "range_allowed": "-", "range_optimal": "-", "interventions": "-" }
+        {
+          "code": "01_1_DEMO_AGE",
+          "unit": "лет",
+          "parameter": "Возраст",
+          "was": "57",
+          "current": "57",
+          "goal": "",
+          "norm": "18-65",
+          "range_allowed": "0-120",
+          "range_optimal": "25-55",
+          "interventions": "-"
+        },
+        {
+          "code": "01_2_DEMO_GENDER",
+          "unit": "",
+          "parameter": "Пол",
+          "was": "-",
+          "current": "male",
+          "goal": "",
+          "norm": "M/F",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "01_3_DEMO_HEIGHT",
+          "unit": "см",
+          "parameter": "Рост",
+          "was": "178",
+          "current": "178",
+          "goal": "",
+          "norm": "150-200",
+          "range_allowed": "100-250",
+          "range_optimal": "160-190",
+          "interventions": "-"
+        },
+        {
+          "code": "01_4_DEMO_WEIGHT",
+          "unit": "кг",
+          "parameter": "Вес",
+          "was": "88",
+          "current": "88",
+          "goal": "70",
+          "norm": "50-120",
+          "range_allowed": "30-200",
+          "range_optimal": "60-85",
+          "interventions": "3 (PH_HIIT, PH_STR, FD_CAL)"
+        },
+        {
+          "code": "01_19_BIO_BMI",
+          "unit": "кг/м²",
+          "parameter": "ИМТ",
+          "was": "-",
+          "current": "27.8",
+          "goal": "22",
+          "norm": "18.5-25",
+          "range_allowed": "14-45",
+          "range_optimal": "20-23",
+          "interventions": "-"
+        },
+        {
+          "code": "01_20_BIO_WAIST",
+          "unit": "см",
+          "parameter": "Талия",
+          "was": "-",
+          "current": "98",
+          "goal": "80",
+          "norm": "60-100",
+          "range_allowed": "40-150",
+          "range_optimal": "70-90",
+          "interventions": "-"
+        },
+        {
+          "code": "01_5_DEMO_ETHNICITY",
+          "unit": "",
+          "parameter": "Этническая принадлежность",
+          "was": "-",
+          "current": "европеоидная",
+          "goal": "",
+          "norm": "-",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
       ]
     },
     "vitals": {
       "title": "02 Витальные",
       "rows": [
-        { "code": "02_1_BIO_BP_SYST", "unit": "мм рт.ст.", "parameter": "АД систолическое", "was": "135", "current": "135", "goal": "120", "norm": "90-130", "range_allowed": "70-200", "range_optimal": "110-120", "interventions": "-" },
-        { "code": "02_2_BIO_BP_DIAST", "unit": "мм рт.ст.", "parameter": "АД диастолическое", "was": "88", "current": "88", "goal": "80", "norm": "60-85", "range_allowed": "40-130", "range_optimal": "70-80", "interventions": "2 (M_GAS01, M_LAB01)" },
-        { "code": "02_3_BIO_HR", "unit": "уд/мин", "parameter": "ЧСС покоя", "was": "72", "current": "72", "goal": "72", "norm": "60-80", "range_allowed": "40-120", "range_optimal": "55-70", "interventions": "8 (PH_HIIT, PH_AER, PH_Z2, MN_MDT, MN_BRTH, FD_CAF, PH_HRV, M_CAR03)" },
-        { "code": "02_3_BIO_HRV", "unit": "мс", "parameter": "HRV", "was": "-", "current": "35", "goal": "60", "norm": "40-100", "range_allowed": "10-200", "range_optimal": "50-80", "interventions": "3 (MN_MDT, PH_HRV, M_CAR03)" },
-        { "code": "02_3_BIO_SPO2", "unit": "%", "parameter": "SpO2", "was": "96", "current": "96", "goal": "98", "norm": "95-100", "range_allowed": "85-100", "range_optimal": "97-100", "interventions": "-" }
+        {
+          "code": "02_1_BIO_BP_SYST",
+          "unit": "мм рт.ст.",
+          "parameter": "АД систолическое",
+          "was": "135",
+          "current": "135",
+          "goal": "120",
+          "norm": "90-130",
+          "range_allowed": "70-200",
+          "range_optimal": "110-120",
+          "interventions": "-"
+        },
+        {
+          "code": "02_2_BIO_BP_DIAST",
+          "unit": "мм рт.ст.",
+          "parameter": "АД диастолическое",
+          "was": "88",
+          "current": "88",
+          "goal": "80",
+          "norm": "60-85",
+          "range_allowed": "40-130",
+          "range_optimal": "70-80",
+          "interventions": "2 (M_GAS01, M_LAB01)"
+        },
+        {
+          "code": "02_3_BIO_HR",
+          "unit": "уд/мин",
+          "parameter": "ЧСС покоя",
+          "was": "72",
+          "current": "72",
+          "goal": "72",
+          "norm": "60-80",
+          "range_allowed": "40-120",
+          "range_optimal": "55-70",
+          "interventions": "8 (PH_HIIT, PH_AER, PH_Z2, MN_MDT, MN_BRTH, FD_CAF, PH_HRV, M_CAR03)"
+        },
+        {
+          "code": "02_3_BIO_HRV",
+          "unit": "мс",
+          "parameter": "HRV",
+          "was": "-",
+          "current": "35",
+          "goal": "60",
+          "norm": "40-100",
+          "range_allowed": "10-200",
+          "range_optimal": "50-80",
+          "interventions": "3 (MN_MDT, PH_HRV, M_CAR03)"
+        },
+        {
+          "code": "02_3_BIO_SPO2",
+          "unit": "%",
+          "parameter": "SpO2",
+          "was": "96",
+          "current": "96",
+          "goal": "98",
+          "norm": "95-100",
+          "range_allowed": "85-100",
+          "range_optimal": "97-100",
+          "interventions": "-"
+        }
       ]
     },
     "labs": {
       "title": "03 Лаборатории",
       "rows": [
-        { "code": "02_4_BIO_GLUCOSE", "unit": "мг/дл", "parameter": "Глюкоза", "was": "105", "current": "105", "goal": "100", "norm": "70-100", "range_allowed": "40-300", "range_optimal": "75-95", "interventions": "12 (PH_AER, FD_CAL, FD_CRB, FD_SUG, FD_IF, FD_EAT, FD_FIB, M_END01, M_END02, M_LAB01, M_LAB02, ED_SCH)" },
-        { "code": "02_4_BIO_HBA1C", "unit": "%", "parameter": "HbA1c", "was": "5.7", "current": "5.7", "goal": "5.5", "norm": "4.0-5.6", "range_allowed": "3.0-10.0", "range_optimal": "4.5-5.4", "interventions": "2 (M_END02, M_LAB01)" },
-        { "code": "02_5_BIO_TCHOL", "unit": "мг/дл", "parameter": "Холестерин общий", "was": "220", "current": "220", "goal": "200", "norm": "<200", "range_allowed": "100-350", "range_optimal": "150-180", "interventions": "-" },
-        { "code": "02_6_BIO_HDL", "unit": "мг/дл", "parameter": "ЛПВП", "was": "42", "current": "42", "goal": "60", "norm": ">40", "range_allowed": "20-100", "range_optimal": "50-70", "interventions": "-" },
-        { "code": "02_7_BIO_LDL", "unit": "мг/дл", "parameter": "ЛПНП", "was": "140", "current": "140", "goal": "100", "norm": "<100", "range_allowed": "30-250", "range_optimal": "70-100", "interventions": "2 (M_CAR02, M_LAB01)" },
-        { "code": "02_8_BIO_TG", "unit": "мг/дл", "parameter": "Триглицериды", "was": "180", "current": "180", "goal": "150", "norm": "<150", "range_allowed": "30-500", "range_optimal": "70-130", "interventions": "-" },
-        { "code": "02_9_BIO_CRP", "unit": "мг/л", "parameter": "CRP", "was": "2.1", "current": "2.1", "goal": "1", "norm": "<3", "range_allowed": "0-20", "range_optimal": "0-1", "interventions": "3 (FD_ANTI, M_GAS01, M_LAB01)" },
-        { "code": "02_16_BIO_VITD", "unit": "нг/мл", "parameter": "Витамин D", "was": "20", "current": "20", "goal": "40", "norm": "30-100", "range_allowed": "5-150", "range_optimal": "40-80", "interventions": "-" },
-        { "code": "02_18_BIO_FERRITIN", "unit": "нг/мл", "parameter": "Ферритин", "was": "130", "current": "130", "goal": "80", "norm": "20-200", "range_allowed": "5-500", "range_optimal": "50-150", "interventions": "4 (DG_CHK, M_GAS02, M_GAS03, M_LAB01)" },
-        { "code": "02_15_BIO_TSH", "unit": "мМЕ/л", "parameter": "ТТГ", "was": "2.8", "current": "2.8", "goal": "2.5", "norm": "0.4-4.0", "range_allowed": "0.1-10.0", "range_optimal": "0.5-2.5", "interventions": "4 (DG_CHK, M_END01, M_END03, M_LAB02)" }
+        {
+          "code": "02_4_BIO_GLUCOSE",
+          "unit": "мг/дл",
+          "parameter": "Глюкоза",
+          "was": "105",
+          "current": "105",
+          "goal": "100",
+          "norm": "70-100",
+          "range_allowed": "40-300",
+          "range_optimal": "75-95",
+          "interventions": "12 (PH_AER, FD_CAL, FD_CRB, FD_SUG, FD_IF, FD_EAT, FD_FIB, M_END01, M_END02, M_LAB01, M_LAB02, ED_SCH)"
+        },
+        {
+          "code": "02_4_BIO_HBA1C",
+          "unit": "%",
+          "parameter": "HbA1c",
+          "was": "5.7",
+          "current": "5.7",
+          "goal": "5.5",
+          "norm": "4.0-5.6",
+          "range_allowed": "3.0-10.0",
+          "range_optimal": "4.5-5.4",
+          "interventions": "2 (M_END02, M_LAB01)"
+        },
+        {
+          "code": "02_5_BIO_TCHOL",
+          "unit": "мг/дл",
+          "parameter": "Холестерин общий",
+          "was": "220",
+          "current": "220",
+          "goal": "200",
+          "norm": "<200",
+          "range_allowed": "100-350",
+          "range_optimal": "150-180",
+          "interventions": "-"
+        },
+        {
+          "code": "02_6_BIO_HDL",
+          "unit": "мг/дл",
+          "parameter": "ЛПВП",
+          "was": "42",
+          "current": "42",
+          "goal": "60",
+          "norm": ">40",
+          "range_allowed": "20-100",
+          "range_optimal": "50-70",
+          "interventions": "-"
+        },
+        {
+          "code": "02_7_BIO_LDL",
+          "unit": "мг/дл",
+          "parameter": "ЛПНП",
+          "was": "140",
+          "current": "140",
+          "goal": "100",
+          "norm": "<100",
+          "range_allowed": "30-250",
+          "range_optimal": "70-100",
+          "interventions": "2 (M_CAR02, M_LAB01)"
+        },
+        {
+          "code": "02_8_BIO_TG",
+          "unit": "мг/дл",
+          "parameter": "Триглицериды",
+          "was": "180",
+          "current": "180",
+          "goal": "150",
+          "norm": "<150",
+          "range_allowed": "30-500",
+          "range_optimal": "70-130",
+          "interventions": "-"
+        },
+        {
+          "code": "02_9_BIO_CRP",
+          "unit": "мг/л",
+          "parameter": "CRP",
+          "was": "2.1",
+          "current": "2.1",
+          "goal": "1",
+          "norm": "<3",
+          "range_allowed": "0-20",
+          "range_optimal": "0-1",
+          "interventions": "3 (FD_ANTI, M_GAS01, M_LAB01)"
+        },
+        {
+          "code": "02_16_BIO_VITD",
+          "unit": "нг/мл",
+          "parameter": "Витамин D",
+          "was": "20",
+          "current": "20",
+          "goal": "40",
+          "norm": "30-100",
+          "range_allowed": "5-150",
+          "range_optimal": "40-80",
+          "interventions": "-"
+        },
+        {
+          "code": "02_18_BIO_FERRITIN",
+          "unit": "нг/мл",
+          "parameter": "Ферритин",
+          "was": "130",
+          "current": "130",
+          "goal": "80",
+          "norm": "20-200",
+          "range_allowed": "5-500",
+          "range_optimal": "50-150",
+          "interventions": "4 (DG_CHK, M_GAS02, M_GAS03, M_LAB01)"
+        },
+        {
+          "code": "02_15_BIO_TSH",
+          "unit": "мМЕ/л",
+          "parameter": "ТТГ",
+          "was": "2.8",
+          "current": "2.8",
+          "goal": "2.5",
+          "norm": "0.4-4.0",
+          "range_allowed": "0.1-10.0",
+          "range_optimal": "0.5-2.5",
+          "interventions": "4 (DG_CHK, M_END01, M_END03, M_LAB02)"
+        }
       ]
     },
     "lifestyle": {
       "title": "04 Образ жизни",
       "rows": [
-        { "code": "03_5_LIFE_SLEEP", "unit": "ч", "parameter": "Сон", "was": "6.5", "current": "6.5", "goal": "7.5", "norm": "7-9", "range_allowed": "3-14", "range_optimal": "7.5-8.5", "interventions": "9 (SL_BED, SL_DUR, SL_QLT, MN_MDT, SL_HYG, MN_DTOX, FD_CAF, SP_MG, M_NEU01)" },
-        { "code": "03_6_LIFE_STRESS", "unit": "/10", "parameter": "Стресс", "was": "6", "current": "6", "goal": "3", "norm": "<5", "range_allowed": "0-10", "range_optimal": "0-3", "interventions": "10 (MN_MDT, MN_BRTH, MN_STR, SP_MG, SP_ADP, M_NEU01, ED_MA, ED_BODY, ED_EMO, ED_SUP)" },
-        { "code": "03_8_LIFE_STEPS", "unit": "/день", "parameter": "Шаги", "was": "5000", "current": "5000", "goal": "10000", "norm": "8000-12000", "range_allowed": "0-30000", "range_optimal": "10000-15000", "interventions": "-" },
-        { "code": "03_9_LIFE_WATER", "unit": "л/день", "parameter": "Вода", "was": "1.4", "current": "1.4", "goal": "2.5", "norm": "2-3", "range_allowed": "0-5", "range_optimal": "2-2.5", "interventions": "-" },
-        { "code": "03_1_LIFE_SMOKE", "unit": "", "parameter": "Курение", "was": "Курил", "current": "Бросил", "goal": "", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "03_2_LIFE_ALCOHOL", "unit": "", "parameter": "Алкоголь", "was": "1-2/нед", "current": "1-2/нед", "goal": "", "norm": "Редко", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "03_3_LIFE_EXERC_FREQ", "unit": "", "parameter": "Тренировки", "was": "1-2/нед", "current": "1-2/нед", "goal": "", "norm": "3-5/нед", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "03_4_LIFE_EXERC_TYPE", "unit": "", "parameter": "Тип активности", "was": "-", "current": "—", "goal": "", "norm": "-", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "03_7_LIFE_DIET", "unit": "", "parameter": "Питание", "was": "смешанная", "current": "смешанная", "goal": "", "norm": "Сбалансир.", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "03_10_LIFE_RPP", "unit": "", "parameter": "РПП", "was": "-", "current": "Нет", "goal": "Нет", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" }
+        {
+          "code": "03_5_LIFE_SLEEP",
+          "unit": "ч",
+          "parameter": "Сон",
+          "was": "6.5",
+          "current": "6.5",
+          "goal": "7.5",
+          "norm": "7-9",
+          "range_allowed": "3-14",
+          "range_optimal": "7.5-8.5",
+          "interventions": "9 (SL_BED, SL_DUR, SL_QLT, MN_MDT, SL_HYG, MN_DTOX, FD_CAF, SP_MG, M_NEU01)"
+        },
+        {
+          "code": "03_6_LIFE_STRESS",
+          "unit": "/10",
+          "parameter": "Стресс",
+          "was": "6",
+          "current": "6",
+          "goal": "3",
+          "norm": "<5",
+          "range_allowed": "0-10",
+          "range_optimal": "0-3",
+          "interventions": "10 (MN_MDT, MN_BRTH, MN_STR, SP_MG, SP_ADP, M_NEU01, ED_MA, ED_BODY, ED_EMO, ED_SUP)"
+        },
+        {
+          "code": "03_8_LIFE_STEPS",
+          "unit": "/день",
+          "parameter": "Шаги",
+          "was": "5000",
+          "current": "5000",
+          "goal": "10000",
+          "norm": "8000-12000",
+          "range_allowed": "0-30000",
+          "range_optimal": "10000-15000",
+          "interventions": "-"
+        },
+        {
+          "code": "03_9_LIFE_WATER",
+          "unit": "л/день",
+          "parameter": "Вода",
+          "was": "1.4",
+          "current": "1.4",
+          "goal": "2.5",
+          "norm": "2-3",
+          "range_allowed": "0-5",
+          "range_optimal": "2-2.5",
+          "interventions": "-"
+        },
+        {
+          "code": "03_1_LIFE_SMOKE",
+          "unit": "",
+          "parameter": "Курение",
+          "was": "Курил",
+          "current": "Бросил",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_2_LIFE_ALCOHOL",
+          "unit": "",
+          "parameter": "Алкоголь",
+          "was": "1-2/нед",
+          "current": "1-2/нед",
+          "goal": "",
+          "norm": "Редко",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_3_LIFE_EXERC_FREQ",
+          "unit": "",
+          "parameter": "Тренировки",
+          "was": "1-2/нед",
+          "current": "1-2/нед",
+          "goal": "",
+          "norm": "3-5/нед",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_4_LIFE_EXERC_TYPE",
+          "unit": "",
+          "parameter": "Тип активности",
+          "was": "-",
+          "current": "—",
+          "goal": "",
+          "norm": "-",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_7_LIFE_DIET",
+          "unit": "",
+          "parameter": "Питание",
+          "was": "смешанная",
+          "current": "смешанная",
+          "goal": "",
+          "norm": "Сбалансир.",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "03_10_LIFE_RPP",
+          "unit": "",
+          "parameter": "РПП",
+          "was": "-",
+          "current": "Нет",
+          "goal": "Нет",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
       ]
     },
     "genetics": {
       "title": "05 Генетика",
       "rows": [
-        { "code": "04_1_GENE_APOE", "unit": "", "parameter": "APOE", "was": "-", "current": "e3/e3", "goal": "", "norm": "e3/e3", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "04_2_GENE_MTHFR", "unit": "", "parameter": "MTHFR", "was": "-", "current": "Гетерозигота", "goal": "", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "04_3_GENE_LACTASE", "unit": "", "parameter": "Лактаза", "was": "-", "current": "Нет", "goal": "", "norm": "Да", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "04_4_GENE_BRCA", "unit": "", "parameter": "BRCA1/2", "was": "-", "current": "Neg", "goal": "", "norm": "Neg", "range_allowed": "-", "range_optimal": "-", "interventions": "-" }
+        {
+          "code": "04_1_GENE_APOE",
+          "unit": "",
+          "parameter": "APOE",
+          "was": "-",
+          "current": "e3/e3",
+          "goal": "",
+          "norm": "e3/e3",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "04_2_GENE_MTHFR",
+          "unit": "",
+          "parameter": "MTHFR",
+          "was": "-",
+          "current": "Гетерозигота",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "04_3_GENE_LACTASE",
+          "unit": "",
+          "parameter": "Лактаза",
+          "was": "-",
+          "current": "Нет",
+          "goal": "",
+          "norm": "Да",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "04_4_GENE_BRCA",
+          "unit": "",
+          "parameter": "BRCA1/2",
+          "was": "-",
+          "current": "Neg",
+          "goal": "",
+          "norm": "Neg",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
       ]
     },
     "medical": {
       "title": "06 Медицина",
       "rows": [
-        { "code": "06_3_MED_MED", "unit": "", "parameter": "Препараты", "was": "-", "current": "гипотензивные", "goal": "", "norm": "-", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "06_4_MED_ALLR", "unit": "", "parameter": "Аллергии", "was": "-", "current": "Нет", "goal": "", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "05_1_FAM_CVD", "unit": "", "parameter": "ССЗ в семье", "was": "-", "current": "Есть", "goal": "", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "05_2_FAM_DM", "unit": "", "parameter": "Диабет в семье", "was": "-", "current": "Нет", "goal": "", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" },
-        { "code": "05_3_FAM_CA", "unit": "", "parameter": "Онкология в семье", "was": "-", "current": "Гипертония", "goal": "", "norm": "Нет", "range_allowed": "-", "range_optimal": "-", "interventions": "-" }
+        {
+          "code": "06_3_MED_MED",
+          "unit": "",
+          "parameter": "Препараты",
+          "was": "-",
+          "current": "гипотензивные",
+          "goal": "",
+          "norm": "-",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "06_4_MED_ALLR",
+          "unit": "",
+          "parameter": "Аллергии",
+          "was": "-",
+          "current": "Нет",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "05_1_FAM_CVD",
+          "unit": "",
+          "parameter": "ССЗ в семье",
+          "was": "-",
+          "current": "Есть",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "05_2_FAM_DM",
+          "unit": "",
+          "parameter": "Диабет в семье",
+          "was": "-",
+          "current": "Нет",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        },
+        {
+          "code": "05_3_FAM_CA",
+          "unit": "",
+          "parameter": "Онкология в семье",
+          "was": "-",
+          "current": "Гипертония",
+          "goal": "",
+          "norm": "Нет",
+          "range_allowed": "-",
+          "range_optimal": "-",
+          "interventions": "-"
+        }
       ]
+    }
+  },
+  "simulation_history": {
+    "description": "История симуляции дней 1–10 для профиля Дмитрий. Формат: день, выполненные интервенции с отметкой статуса (done/pending/missed), калории, заметки.",
+    "days": [
+      {
+        "day": 1,
+        "date": "2026-05-01",
+        "adherence_pct": 70,
+        "calories_consumed": 2100,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-01  22:15:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — среднее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-01  08:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-01  12:30:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Водный режим"
+          },
+          {
+            "code": "PH_HIIT",
+            "status": "pending",
+            "datetime": "",
+            "comment": "ВИИТ-тренировка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 42,
+        "notes": "Первый день. Заполнил дневник, но пропустил воду. ВИИТ не сделал — не хватило времени."
+      },
+      {
+        "day": 2,
+        "date": "2026-05-02",
+        "adherence_pct": 86,
+        "calories_consumed": 1850,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-02  22:30:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-02  07:45:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-02  18:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.6л"
+          },
+          {
+            "code": "PH_AER",
+            "status": "done",
+            "datetime": "2026-05-02  19:00:00",
+            "comment": "Аэробная нагрузка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 48,
+        "notes": "Выполнил почти всё. Прогулялся 30 мин — аэробика. Калории в норме."
+      },
+      {
+        "day": 3,
+        "date": "2026-05-03",
+        "adherence_pct": 75,
+        "calories_consumed": 2200,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-03  23:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 6.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — среднее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-03  08:30:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.8л"
+          },
+          {
+            "code": "FD_CRB",
+            "status": "done",
+            "datetime": "",
+            "comment": "Ограничение углеводов"
+          }
+        ],
+        "diary_entries": 2,
+        "Z_score": 45,
+        "notes": "Сложный день на работе. Перебор по калориям — ужин вне дома. Дыхательные пропустил."
+      },
+      {
+        "day": 4,
+        "date": "2026-05-04",
+        "adherence_pct": 88,
+        "calories_consumed": 1950,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-04  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 8ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-04  07:30:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-04  13:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.0л"
+          },
+          {
+            "code": "PH_HIIT",
+            "status": "done",
+            "datetime": "2026-05-04  07:00:00",
+            "comment": "ВИИТ-тренировка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 52,
+        "notes": "Отличный день! ВИИТ утром, хороший сон, водный режим. Z вырос."
+      },
+      {
+        "day": 5,
+        "date": "2026-05-05",
+        "adherence_pct": 78,
+        "calories_consumed": 2050,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-05  22:45:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 6.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — среднее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-05  09:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-05  15:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Водный режим"
+          },
+          {
+            "code": "FD_SUG",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Ограничение сахара"
+          }
+        ],
+        "diary_entries": 2,
+        "Z_score": 47,
+        "notes": "Снова недосып. Сорвался на сладкое на совещании. Дневник заполнен не полностью."
+      },
+      {
+        "day": 6,
+        "date": "2026-05-06",
+        "adherence_pct": 90,
+        "calories_consumed": 1780,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-06  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 8ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — отличное"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-06  07:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-06  12:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.2л"
+          },
+          {
+            "code": "PH_AER",
+            "status": "done",
+            "datetime": "2026-05-06  18:30:00",
+            "comment": "Аэробная нагрузка"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 56,
+        "notes": "Выходной. Отлично выспался, прогулка в парке, дневник полный. Z растёт."
+      },
+      {
+        "day": 7,
+        "date": "2026-05-07",
+        "adherence_pct": 82,
+        "calories_consumed": 2000,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-07  22:30:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-07  08:15:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.8л"
+          },
+          {
+            "code": "FD_IF",
+            "status": "done",
+            "datetime": "",
+            "comment": "Интервальное голодание — 16/8"
+          },
+          {
+            "code": "M_GAS01",
+            "status": "pending",
+            "datetime": "",
+            "comment": "Гастроскопия (назначена)"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 51,
+        "notes": "Начал интервальное голодание 16/8. Запись на гастроскопию на следующую неделю."
+      },
+      {
+        "day": 8,
+        "date": "2026-05-08",
+        "adherence_pct": 85,
+        "calories_consumed": 1900,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-08  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 7.5ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — хорошее"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-08  07:45:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-08  11:30:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.0л"
+          },
+          {
+            "code": "PH_HIIT",
+            "status": "done",
+            "datetime": "2026-05-08  06:45:00",
+            "comment": "ВИИТ-тренировка"
+          },
+          {
+            "code": "SP_MG",
+            "status": "done",
+            "datetime": "2026-05-08  21:00:00",
+            "comment": "Магний"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 55,
+        "notes": "Добавил магний перед сном. ВИИТ прошёл хорошо. Дневник в порядке."
+      },
+      {
+        "day": 9,
+        "date": "2026-05-09",
+        "adherence_pct": 72,
+        "calories_consumed": 2300,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-09  23:30:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 6ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Сон: качество"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 1.2л"
+          },
+          {
+            "code": "MN_STR",
+            "status": "missed",
+            "datetime": "",
+            "comment": "Стресс-менеджмент"
+          }
+        ],
+        "diary_entries": 1,
+        "Z_score": 38,
+        "notes": "Аврал на работе. Лёг после полуночи, пропустил все практики. Переел за ужином. Z упал."
+      },
+      {
+        "day": 10,
+        "date": "2026-05-10",
+        "adherence_pct": 92,
+        "calories_consumed": 1850,
+        "calories_goal": 2000,
+        "tasks": [
+          {
+            "code": "SL_BED",
+            "status": "done",
+            "datetime": "2026-05-10  22:00:00",
+            "comment": "Сон: время отхода"
+          },
+          {
+            "code": "SL_DUR",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: продолжительность — 8ч"
+          },
+          {
+            "code": "SL_QLT",
+            "status": "done",
+            "datetime": "",
+            "comment": "Сон: качество — отличное"
+          },
+          {
+            "code": "MN_MDT",
+            "status": "done",
+            "datetime": "2026-05-10  07:00:00",
+            "comment": "Медитация"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-10  12:30:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "FD_CAL",
+            "status": "done",
+            "datetime": "",
+            "comment": "Контроль калорий"
+          },
+          {
+            "code": "FD_WATER",
+            "status": "done",
+            "datetime": "",
+            "comment": "Водный режим — 2.0л"
+          },
+          {
+            "code": "PH_AER",
+            "status": "done",
+            "datetime": "2026-05-10  17:00:00",
+            "comment": "Аэробная нагрузка"
+          },
+          {
+            "code": "MN_BRTH",
+            "status": "done",
+            "datetime": "2026-05-10  19:00:00",
+            "comment": "Дыхательные упражнения"
+          },
+          {
+            "code": "SP_MG",
+            "status": "done",
+            "datetime": "2026-05-10  21:30:00",
+            "comment": "Магний"
+          }
+        ],
+        "diary_entries": 3,
+        "Z_score": 60,
+        "notes": "Компенсировал вчерашний провал. Ранний отход, тренировка, полный дневник. Z достиг 60."
+      }
+    ],
+    "summary": {
+      "total_days": 10,
+      "avg_adherence": 81.8,
+      "avg_calories": 1998,
+      "avg_diary_entries": 2.6,
+      "start_Z": 42,
+      "end_Z": 60,
+      "best_day": 10,
+      "worst_day": 9
     }
   }
 }

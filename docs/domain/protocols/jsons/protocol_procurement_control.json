@@ -1,0 +1,37 @@
+{
+  "id": "PROCUREMENT_CONTROL",
+  "name": "Procurement Control for KBZHU Balance",
+  "name_ru": "Контроль закупок (КБЖУ-баланс)",
+  "category": "nutrition",
+  "goal": "Ensure balanced macronutrient intake through structured grocery procurement",
+  "goal_ru": "Обеспечение сбалансированного набора КБЖУ через структурированные закупки",
+  "interventions": [
+    { "id": "PR_01", "name": "Weekly Menu Planning", "name_ru": "Планирование меню на неделю", "periodicity": "weekly", "w": 0.92, "f": 1.0, "r": "weekly" },
+    { "id": "PR_02", "name": "KBZHU Grocery List", "name_ru": "Составление списка закупок по КБЖУ", "periodicity": "weekly", "w": 0.88, "f": 1.0, "r": "weekly" },
+    { "id": "PR_03", "name": "Label Reading: PFC", "name_ru": "Чтение этикеток: белки/жиры/углеводы", "periodicity": "each purchase", "w": 0.78, "f": 1.0, "r": "on-demand" },
+    { "id": "PR_04", "name": "70/30 Basket Rule", "name_ru": "Правило корзины: 70% периметр, 30% центр", "periodicity": "each purchase", "w": 0.72, "f": 1.0, "r": "on-demand" },
+    { "id": "PR_05", "name": "Batch Prep & Freeze", "name_ru": "Заморозка порций (batch prep)", "periodicity": "weekly", "w": 0.68, "f": 0.75, "r": "weekly" },
+    { "id": "PR_06", "name": "Zero Ultra-Processed Challenge", "name_ru": "Челлендж «0 ультра-обработанных»", "periodicity": "monthly", "w": 0.55, "f": 0.5, "r": "monthly" },
+    { "id": "PR_07", "name": "Fridge Audit", "name_ru": "Аудит холодильника + списание просрочки", "periodicity": "weekly", "w": 0.60, "f": 1.0, "r": "weekly" }
+  ],
+  "red_flags": [
+    { "metric": "Импульсивные покупки", "threshold": "> 2/неделя", "action": "Подключить PR_01 + PR_02" },
+    { "metric": "Пустой холодильник на утро", "threshold": "≥ 3 раз/нед", "action": "Подключить PR_05 (batch prep)" },
+    { "metric": "Расход на доставку > бюджета", "threshold": "> 3 раза/нед", "action": "План закупок на 2 недели" },
+    { "metric": "«Я не знаю, что есть» в чате", "threshold": "> 2 раз/нед", "action": "Открыть список меню из PR_01" }
+  ],
+  "recommendations": [
+    "Планировать меню на неделю каждый воскресный вечер (20–30 мин)",
+    "Хранить список закупок в заметках телефона — добавлять в течение недели",
+    "Не ходить в магазин голодным — риск импульсивных покупок выше в 2.7×",
+    "Batch prep в субботу — экономит 5–7 ч в неделю",
+    "При доставке продуктов — проверять корзину по правилу 70/30 перед заказом"
+  ],
+  "kbzhu_targets": {
+    "mediterranean": { "protein_pct": "20–25", "fat_pct": "30–35", "carbs_pct": "45–50", "kcal": "1800–2200" },
+    "keto": { "protein_pct": "20–25", "fat_pct": "60–70", "carbs_pct": "5–10", "kcal": "1600–2000" },
+    "dash": { "protein_pct": "18–22", "fat_pct": "25–30", "carbs_pct": "50–55", "kcal": "1800–2100" },
+    "glp1_support": { "protein_pct": "30–35", "fat_pct": "25–30", "carbs_pct": "35–40", "kcal": "1500–1800" },
+    "intermittent_fasting": { "protein_pct": "25–30", "fat_pct": "25–30", "carbs_pct": "40–45", "kcal": "1800–2100" }
+  }
+}
