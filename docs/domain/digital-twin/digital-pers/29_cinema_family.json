@@ -1,5 +1,5 @@
 {
-  "profile_id": "P030",
+  "profile_id": "SEMYA_35",
   "source_photo": "29_cinema_family.png",
   "name": "Семья",
   "age": 35,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["кинозал", "попкорн", "семья с детьми"],
-    "suggested_biomarkers_attention": ["зрение", "физическая активность семьи"],
-    "risk_factors_visible": ["малоподвижный досуг", "перекусы в кино"]
+    "notable_features": [
+      "кинозал",
+      "попкорн",
+      "семья с детьми"
+    ],
+    "suggested_biomarkers_attention": [
+      "зрение",
+      "физическая активность семьи"
+    ],
+    "risk_factors_visible": [
+      "малоподвижный досуг",
+      "перекусы в кино"
+    ]
   },
   "narrative_summary": "Семья в кинотеатре — это типичный семейный досуг современных родителей с детьми. Они ценят совместное времяпрепровождение. В приоритете — увеличение активного семейного досуга и контроль перекусов вне дома."
 }

@@ -1,5 +1,5 @@
 {
-  "profile_id": "P022",
+  "profile_id": "VARIA_30",
   "source_photo": "22_Varya_30_yoga.png",
   "name": "Varya",
   "age": 30,
@@ -20,9 +20,17 @@
     "body_type": "athletic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["коврик для йоги", "гибкая поза"],
-    "suggested_biomarkers_attention": ["суставы", "уровень кортизола"],
-    "risk_factors_visible": ["возможны растяжения при неправильной технике"]
+    "notable_features": [
+      "коврик для йоги",
+      "гибкая поза"
+    ],
+    "suggested_biomarkers_attention": [
+      "суставы",
+      "уровень кортизола"
+    ],
+    "risk_factors_visible": [
+      "возможны растяжения при неправильной технике"
+    ]
   },
   "narrative_summary": "Варя — 30-летняя женщина, регулярно практикующая йогу. Она ценит баланс тела и духа, следит за осанкой и здоровьем. Ключевая задача — поддержание гибкости и профилактика стресса."
 }

@@ -1,0 +1,128 @@
+@startuml
+title Health Platform — Modular Architecture
+
+left to right direction
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 15
+skinparam ranksep 20
+
+package "Clients" {
+  [Web]
+  [Mobile]
+  [Admin]
+}
+
+package "Platform" {
+
+  component "API Gateway" as API
+
+  package "FR-001 Auth" {
+    component "Auth" as AUTH
+  }
+
+  package "FR-002 Digital Twin" {
+    component "Profile" as PROFILE
+    component "Vitals" as VITALS
+    component "Goals" as GOALS
+    component "Diary" as DIARY
+    component "Habits" as HABITS
+    database "Profile DB" as DB
+  }
+
+  package "FR-003 Recommendations" {
+    component "Recommendation Engine" as RECO
+  }
+
+  package "FR-004 Nutrition" {
+    component "Meal Tracker" as MEALS
+    component "Food DB" as FOODDB
+  }
+
+  package "FR-005 AI Chat" {
+    component "Prompt Composer" as PROMPT
+    component "LLM + RAG" as LLM
+    database "Knowledge Base" as KB
+  }
+
+  package "FR-012 Billing" {
+    component "Billing" as BILLING
+  }
+
+  package "FR-018 Integrations" {
+    component "Device Sync" as DEVICES
+  }
+
+  package "FR-019-021 Security" {
+    component "Compliance & Audit" as SEC
+  }
+}
+
+cloud "LLM APIs" as EXTLLM
+cloud "Payments" as BANK
+cloud "Medical APIs" as DEVICEAPI
+
+' ======================
+' Main Flow
+' ======================
+
+[Web] --> API
+[Mobile] --> API
+[Admin] --> API
+
+API --> AUTH
+API --> PROFILE
+API --> RECO
+API --> MEALS
+API --> PROMPT
+API --> LLM
+API --> BILLING
+API --> DEVICES
+
+PROFILE --> DB
+PROFILE --> VITALS
+PROFILE --> GOALS
+PROFILE --> DIARY
+PROFILE --> HABITS
+
+RECO --> PROFILE
+RECO --> MEALS
+
+MEALS --> FOODDB
+
+PROMPT --> PROFILE
+PROMPT --> RECO
+PROMPT --> KB
+PROMPT --> LLM
+
+LLM --> KB
+LLM --> PROFILE
+LLM --> RECO
+LLM --> EXTLLM
+
+BILLING --> BANK
+
+DEVICES --> PROFILE
+DEVICES --> DEVICEAPI
+
+SEC ..> API
+SEC ..> PROFILE
+SEC ..> RECO
+SEC ..> PROMPT
+SEC ..> LLM
+
+' ======================
+' Layout
+' ======================
+
+AUTH -[hidden]r-> PROFILE
+PROFILE -[hidden]r-> RECO
+RECO -[hidden]r-> MEALS
+MEALS -[hidden]r-> PROMPT
+PROMPT -[hidden]r-> LLM
+LLM -[hidden]r-> BILLING
+BILLING -[hidden]r-> DEVICES
+DEVICES -[hidden]r-> SEC
+
+@enduml

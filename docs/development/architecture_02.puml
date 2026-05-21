@@ -1,0 +1,102 @@
+@startuml
+title Конвейер клинических рекомендаций — AI-верификация
+
+top to bottom direction
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+
+actor "Врач / Пользователь" as USER
+
+package "Слой доказательной базы" {
+
+  component "Источники исследований\n(PubMed, гайдлайны, RCT)" as SOURCES
+
+  component "Фильтр доказательств\nТолько валидные исследования" as FILTER
+
+  component "Движок клинических правил" as RULES
+
+  database "Структурированное хранилище\nJSON / Vector DB / Ontology" as STORE
+}
+
+package "Фоновые AI-агенты" {
+
+  component "Агент мониторинга\nновых исследований" as MONITOR
+
+  component "Агент извлечения\nклинических данных" as EXTRACT
+
+  component "Генератор задач\nна верификацию" as TASKS
+
+  component "Очередь клинической\nпроверки" as QUEUE
+
+  component "Интерфейс эксперта\nдля ревью" as REVIEW
+}
+
+package "Слой контекста" {
+
+  component "Цифровой двойник\nанализы, симптомы,\nцели, ограничения" as CONTEXT
+
+  component "Композер промптов" as PROMPT
+}
+
+package "AI-слой" {
+
+  component "LLM + RAG" as LLM
+
+  component "Валидатор\nрекомендаций" as VALIDATOR
+
+  component "Проверка безопасности\nи compliance" as SAFETY
+}
+
+component "Итоговая \nрекомендация" as RESULT
+
+' =====================
+' Поток данных
+' =====================
+
+SOURCES --> FILTER : поиск публикаций
+FILTER --> RULES : извлечение правил
+RULES --> STORE : сохранение структуры
+
+' =====================
+' Фоновые агенты
+' =====================
+
+SOURCES --> MONITOR : мониторинг обновлений
+MONITOR --> EXTRACT : новые исследования
+EXTRACT --> TASKS : выделение фактов
+TASKS --> QUEUE : создание задач
+QUEUE --> REVIEW : назначение эксперту
+
+REVIEW --> RULES : подтверждение правил
+REVIEW --> STORE : обновление базы знаний
+
+' =====================
+' Формирование контекста
+' =====================
+
+STORE --> PROMPT : clinical context
+CONTEXT --> PROMPT : данные пациента
+
+PROMPT --> LLM : обогащённый промпт
+
+' =====================
+' Проверка ответа
+' =====================
+
+LLM --> VALIDATOR : генерация ответа
+VALIDATOR --> SAFETY : проверка ссылок
+SAFETY --> RESULT : безопасная рекомендация
+
+USER --> CONTEXT : ввод данных
+RESULT --> USER : выдача результата
+
+' =====================
+' Обратная связь
+' =====================
+
+VALIDATOR ..> TASKS : повторная проверка
+SAFETY ..> QUEUE : флаг риска
+MONITOR ..> STORE : обновление индекса
+
+@enduml

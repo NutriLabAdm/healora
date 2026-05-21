@@ -1,5 +1,5 @@
 {
-  "profile_id": "P028",
+  "profile_id": "KATYA_29",
   "source_photo": "25_Katya_29_office.png",
   "name": "Katya",
   "age": 29,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["ноутбук", "офисная одежда"],
-    "suggested_biomarkers_attention": ["осанка", "зрение", "шея"],
-    "risk_factors_visible": ["сидячая работа", "экранная нагрузка"]
+    "notable_features": [
+      "ноутбук",
+      "офисная одежда"
+    ],
+    "suggested_biomarkers_attention": [
+      "осанка",
+      "зрение",
+      "шея"
+    ],
+    "risk_factors_visible": [
+      "сидячая работа",
+      "экранная нагрузка"
+    ]
   },
   "narrative_summary": "Катя — 29-летняя офисная сотрудница, которая большую часть дня проводит за ноутбуком. Она строит карьеру и много работает. Основные цели — профилактика офисного синдрома, забота о спине и глазах."
 }

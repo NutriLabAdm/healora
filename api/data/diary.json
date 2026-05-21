@@ -93,69 +93,69 @@
     "meals": [
       {
         "type": "breakfast",
-        "photo": "/images/food/02. обед с фруктами и мантами.jpg",
-        "description": "Манты с фруктами и овощами",
+        "photo": "/images/food/09. авокадо шпинат горошек.jpg",
+        "description": "Авокадо со шпинатом и зелёным горошком",
         "time": "08:00",
         "duration": 20,
-        "calories": 580,
-        "protein": 28,
-        "fat": 20,
-        "carbs": 65,
-        "ndi": 7,
-        "recommendations": "Уменьшить количество мантов до 3-4 штук; Добавить больше овощей вместо фруктов для снижения сахара; Выбрать манты из цельзернового теста"
+        "calories": 340,
+        "protein": 10,
+        "fat": 26,
+        "carbs": 18,
+        "ndi": 8.8,
+        "recommendations": "Добавить киноа или нут для полноценного белка; Подавать с яйцом пашот; Посыпать семенами чиа для омега-3"
       },
       {
         "type": "lunch",
-        "photo": null,
-        "description": "",
+        "photo": "/images/food/10. котлеты макароны лук томат.jpg",
+        "description": "Котлеты с макаронами и томатным соусом",
         "time": "13:00",
         "duration": 30,
-        "calories": null,
-        "protein": null,
-        "fat": null,
-        "carbs": null,
-        "ndi": null,
-        "recommendations": null
+        "calories": 580,
+        "protein": 30,
+        "fat": 24,
+        "carbs": 54,
+        "ndi": 6,
+        "recommendations": "Уменьшить порцию макарон, увеличить овощи; Добавить свежий салат из помидоров и огурцов; Использовать макароны из твёрдых сортов пшеницы; Котлеты запекать, а не жарить"
       },
       {
         "type": "dinner",
-        "photo": null,
-        "description": "",
+        "photo": "/images/food/12. 20260219_204535.jpg",
+        "description": "Куриное филе с овощами и рисом",
         "time": "19:00",
         "duration": 30,
-        "calories": null,
-        "protein": null,
-        "fat": null,
-        "carbs": null,
-        "ndi": null,
-        "recommendations": null
+        "calories": 420,
+        "protein": 34,
+        "fat": 10,
+        "carbs": 40,
+        "ndi": 8.5,
+        "recommendations": "Добавить овощи разных цветов для большего спектра антиоксидантов; Уменьшить порцию риса для вечернего приёма; Использовать минимальное количество масла"
       },
       {
         "type": "snack",
-        "photo": null,
-        "description": "",
+        "photo": "/images/food/11. ряженка яблоко хлеб.jpg",
+        "description": "Ряженка с яблоком и хлебом",
         "time": "16:00",
         "duration": 10,
-        "calories": null,
-        "protein": null,
-        "fat": null,
-        "carbs": null,
-        "ndi": null,
-        "recommendations": null
+        "calories": 290,
+        "protein": 12,
+        "fat": 10,
+        "carbs": 38,
+        "ndi": 7.5,
+        "recommendations": "Добавить горсть орехов или семян; Выбрать хлеб с семечками и злаками; Заменить мёд на ягоды для снижения сахара"
       }
     ],
     "water_ml": 0,
     "mood": {
-      "energy": "",
-      "mood": "",
-      "sleep": "",
+      "energy": "yellow",
+      "mood": "yellow",
+      "sleep": "yellow",
       "stress": "",
       "digestion": ""
     },
     "voice_note": null,
     "audio": null,
     "comment": null,
-    "updated_at": "2026-05-12T09:37:49.732Z",
+    "updated_at": "2026-05-15T11:22:48.202Z",
     "created_at": "2026-05-12T09:37:49.732Z"
   },
   "TEST_003_0": {
@@ -299,5 +299,147 @@
     "comment": null,
     "updated_at": "2026-05-12T11:12:26.561Z",
     "created_at": "2026-05-12T11:12:26.561Z"
+  },
+  "ANNA_28_55_0": {
+    "profile_id": "ANNA_28_55",
+    "day": 0,
+    "meals": [
+      {
+        "type": "breakfast",
+        "photo": "/images/food/05. гречка с котлетой.jpg",
+        "description": "Гречка с котлетой",
+        "time": "08:00",
+        "duration": 20,
+        "calories": 490,
+        "protein": 30,
+        "fat": 16,
+        "carbs": 48,
+        "ndi": 8.2,
+        "recommendations": "Добавить порцию свежих овощей (салат, помидоры); Приготовить котлету на пару или запечь; Добавить квашеную капусту для пробиотиков"
+      },
+      {
+        "type": "lunch",
+        "photo": null,
+        "description": "",
+        "time": "13:00",
+        "duration": 30,
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "ndi": null,
+        "recommendations": null
+      },
+      {
+        "type": "dinner",
+        "photo": null,
+        "description": "",
+        "time": "19:00",
+        "duration": 30,
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "ndi": null,
+        "recommendations": null
+      },
+      {
+        "type": "snack",
+        "photo": null,
+        "description": "",
+        "time": "16:00",
+        "duration": 10,
+        "calories": null,
+        "protein": null,
+        "fat": null,
+        "carbs": null,
+        "ndi": null,
+        "recommendations": null
+      }
+    ],
+    "water_ml": 0,
+    "mood": {
+      "energy": "",
+      "mood": "",
+      "sleep": "",
+      "stress": "",
+      "digestion": ""
+    },
+    "voice_note": null,
+    "audio": null,
+    "comment": null,
+    "updated_at": "2026-05-20T19:11:50.770Z",
+    "created_at": "2026-05-20T19:11:50.770Z"
+  },
+  "DMITRY_57_88_0": {
+    "profile_id": "DMITRY_57_88",
+    "day": 0,
+    "meals": [
+      {
+        "type": "breakfast",
+        "photo": "/images/food/05. гречка с котлетой.jpg",
+        "description": "Гречка с котлетой",
+        "time": "08:00",
+        "duration": 20,
+        "calories": 490,
+        "protein": 30,
+        "fat": 16,
+        "carbs": 48,
+        "ndi": 8.2,
+        "recommendations": "Добавить порцию свежих овощей (салат, помидоры); Приготовить котлету на пару или запечь; Добавить квашеную капусту для пробиотиков"
+      },
+      {
+        "type": "lunch",
+        "photo": "/images/food/20. Борщ.png",
+        "description": "Борщ",
+        "time": "13:00",
+        "duration": 30,
+        "calories": 320,
+        "protein": 22,
+        "fat": 12,
+        "carbs": 28,
+        "ndi": 7.5,
+        "recommendations": null
+      },
+      {
+        "type": "dinner",
+        "photo": "/images/food/22. Гамбургер.png",
+        "description": "Гамбургер",
+        "time": "19:00",
+        "duration": 30,
+        "calories": 650,
+        "protein": 32,
+        "fat": 36,
+        "carbs": 42,
+        "ndi": 4.5,
+        "recommendations": null
+      },
+      {
+        "type": "snack",
+        "photo": "/images/food/09. авокадо шпинат горошек.jpg",
+        "description": "Авокадо со шпинатом и зелёным горошком",
+        "time": "16:00",
+        "duration": 10,
+        "calories": 340,
+        "protein": 10,
+        "fat": 26,
+        "carbs": 18,
+        "ndi": 8.8,
+        "recommendations": "Добавить киноа или нут для полноценного белка; Подавать с яйцом пашот; Посыпать семенами чиа для омега-3"
+      }
+    ],
+    "water_ml": 0,
+    "mood": {
+      "energy": "",
+      "mood": "",
+      "sleep": "",
+      "stress": "",
+      "digestion": ""
+    },
+    "voice_note": null,
+    "audio": null,
+    "comment": null,
+    "updated_at": "2026-05-21T04:39:03.601Z",
+    "created_at": "2026-05-21T03:57:33.623Z"
   }
 }

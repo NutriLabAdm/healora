@@ -1,0 +1,50 @@
+@startuml
+!define RECTANGLE class
+
+skinparam rectangle {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+  FontSize 12
+  RoundCorner 8
+}
+
+skinparam package {
+  BackgroundColor #FFF8E1
+  BorderColor #F57F17
+  FontStyle bold
+  FontSize 14
+}
+
+skinparam arrow {
+  Color #666666
+  Thickness 2
+}
+
+title **Цифровой двойник Healora**
+
+package "ЦИФРОВОЙ ДВОЙНИК" as DT {
+  rectangle "Демография\n7 парам." as Dem
+  rectangle "Витальные\n5 парам." as Vit
+  rectangle "Лаборатории\n10 парам." as Lab
+  rectangle "Образ жизни\n9 парам." as Life
+
+  rectangle "Генетика\n4 парам." as Gen
+  rectangle "Медицина\n5 парам." as Med
+
+  rectangle "LLM-ядро\n(GigaChat / MedGemma)" as LLM
+  rectangle "RAG + Граф знаний" as RAG
+  rectangle "Четырёхслойный\nпромптинг" as Prompt
+}
+
+Dem --> LLM
+Vit --> LLM
+Lab --> LLM
+Life --> LLM
+Gen --> LLM
+Med --> LLM
+LLM --> RAG
+LLM --> Prompt
+RAG --> LLM
+Prompt --> LLM
+
+@enduml

@@ -1,5 +1,5 @@
 {
-  "profile_id": "P014",
+  "profile_id": "POLINA_21",
   "source_photo": "15_Polina_21_coffie.png",
   "name": "Polina",
   "age": 21,
@@ -20,9 +20,19 @@
     "body_type": "thin",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["чашка кофе в руках", "ухоженный вид"],
-    "suggested_biomarkers_attention": ["уровень стресса", "кальций", "гидратация"],
-    "risk_factors_visible": ["избыток кофеина", "недосып"]
+    "notable_features": [
+      "чашка кофе в руках",
+      "ухоженный вид"
+    ],
+    "suggested_biomarkers_attention": [
+      "уровень стресса",
+      "кальций",
+      "гидратация"
+    ],
+    "risk_factors_visible": [
+      "избыток кофеина",
+      "недосып"
+    ]
   },
   "narrative_summary": "Полина — 21-летняя девушка с активной социальной жизнью, предпочитающая проводить время в кафе за чашкой кофе. Она следит за внешностью, но режим сна может быть нерегулярным. В фокусе — снижение кофеина и нормализация сна."
 }

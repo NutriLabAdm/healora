@@ -1,0 +1,79 @@
+@startuml
+!define RECTANGLE class
+
+skinparam rectangle {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+  FontSize 12
+  RoundCorner 8
+}
+
+skinparam database {
+  BackgroundColor #E8F0FE
+  BorderColor #1967D2
+}
+
+skinparam agent {
+  BackgroundColor #E6F4EA
+  BorderColor #34A853
+}
+
+skinparam boundary {
+  BackgroundColor #FCE8E6
+  BorderColor #C5221F
+}
+
+skinparam arrow {
+  Color #666666
+  Thickness 2
+}
+
+title **Healora - Замкнутый контур on-premise**
+
+rectangle "ЗАМКНУТЫЙ КОНТУР ON-PREMISE" as Boundary #FEF7E0 {
+  rectangle "Пользователь (UI)" as User
+  rectangle "Цифровой двойник\n(данные пациента)" as DT
+  rectangle "LLM-ядро\n(GigaChat / MedGemma /\nAntAngelMed / TxAgent)" as LLM
+
+  database "Граф знаний\n(протоколы + МКБ-10 +\nпищевые взаимодействия)" as KG
+  database "Векторная БД\n(эмбеддинги)" as VDB
+  database "Кэш внешних\nзапросов\n(PubMed, Cochrane)" as Cache
+
+  rectangle "RAG-агент\nретрива" as RAG
+  rectangle "LLM-парсинг\nпротоколов" as Parser
+  rectangle "Эксперт\n(Human-in-the-loop)" as Expert
+}
+
+boundary "Внешние источники\n(PubMed, Cochrane,\nNIH, Минздрав)" as Sources #D3E3FD
+
+User --> DT : "Передача данных"
+DT --> LLM : "Запрос рекомендации"
+LLM --> KG : "Поиск протоколов"
+LLM --> VDB : "Поиск по эмбеддингам"
+LLM --> Cache : "Проверка кэша"
+LLM --> User : "Рекомендация"
+
+RAG --> Sources : "Периодический запрос" (down)
+Sources --> RAG : "Новые статьи / руководства" (down)
+RAG --> Parser : "Сырые данные"
+Parser --> Expert : "Структурированный\nпротокол"
+Expert --> KG : "Утверждённый протокол"
+Expert --> VDB : "Утверждённый протокол"
+
+note right of LLM
+  Инференс без внешних
+  сетевых зависимостей
+end note
+
+note left of Sources
+  Доступны периодически,
+  не требуются в рантайме
+end note
+
+note bottom of KG
+  24k+ сущностей,
+  версионирование,
+  deprecated-метки
+end note
+
+@enduml

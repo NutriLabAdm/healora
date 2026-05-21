@@ -1,5 +1,5 @@
 {
-  "profile_id": "P006",
+  "profile_id": "MARIA_43",
   "source_photo": "06_Maria_43_kitchen_apron.png",
   "name": "Maria",
   "age": 43,
@@ -20,9 +20,17 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["фартук", "кухонная утварь в руках"],
-    "suggested_biomarkers_attention": ["уровень сахара", "витамин D"],
-    "risk_factors_visible": ["длительное стояние у плиты"]
+    "notable_features": [
+      "фартук",
+      "кухонная утварь в руках"
+    ],
+    "suggested_biomarkers_attention": [
+      "уровень сахара",
+      "витамин D"
+    ],
+    "risk_factors_visible": [
+      "длительное стояние у плиты"
+    ]
   },
   "narrative_summary": "Мария — 43-летняя женщина, которая заботится о семье и любит готовить. Она проводит много времени на кухне и следит за качеством домашней еды. Важные цели — поддержание активности и профилактика варикоза."
 }

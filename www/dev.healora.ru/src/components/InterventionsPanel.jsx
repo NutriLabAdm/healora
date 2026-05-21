@@ -305,7 +305,13 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
             const isExpanded = expandedProtocol === p.id;
             const toggle = () => setExpandedProtocol(isExpanded ? null : p.id);
             return (
-              <div key={p.id} className={`protocol-card ${p.id === 'OZEMPIC_JUMPERS' ? 'protocol-danger' : ''} ${isExpanded ? 'expanded' : ''}`} onClick={toggle}>
+              <div key={p.id} className={`protocol-card ${p.id === 'OZEMPIC_JUMPERS' ? 'protocol-danger' : ''} ${isExpanded ? 'expanded' : ''}`}
+                draggable="true"
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('text/plain', p.id);
+                  e.dataTransfer.effectAllowed = 'copy';
+                }}
+                onClick={toggle}>
                 <div className="protocol-card-header">
                   <span className="protocol-card-name">{p.name}</span>
                   <span className={`protocol-card-cat ${p.category}`}>{p.category === 'nutritional' ? 'Питание' : p.category === 'medical' ? 'Медицина' : p.category === 'mental' ? 'Ментальный' : 'Физический'}</span>

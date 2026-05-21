@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import '../assets/css/DigitalTwin.css';
 import '../assets/css/ActionButtons.css';
@@ -7,9 +8,14 @@ import protocolData from '../assets/data/protocol_mappings.json';
 import foodCatalog from '../assets/data/food_catalog.json';
 import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js';
 import { usePlans } from '../context/PlansProvider';
+import icon from '../utils/icons';
 import protocolTypes from '../assets/data/protocols_type.json';
 import dietPrefsData from '../assets/data/diet_preferences.json';
 import dietRestrictionsData from '../assets/data/diet_restrictions.json';
+import ProfileView from './ProfileView';
+import DiaryView from './DiaryView';
+import PlanView from './PlanView';
+import PhoneSimulator from './PhoneSimulator';
 
 const practiceMdModules = import.meta.glob('../../../../docs/domain/med_traditional_practices/practice_*.md', { as: 'raw', eager: true });
 const practiceContentByKey = Object.fromEntries(
@@ -35,9 +41,32 @@ const dietRestrictionContentByKey = Object.fromEntries(
   }).filter(Boolean)
 );
 
+const useCaseLabels = {
+  1: 'Заполнение ЦД', 2: 'AI-рекомендация', 3: 'Планирование', 4: 'Трекинг питания', 5: 'Подбор протокола',
+};
+const cjmLabels = {
+  1: 'Новый пользователь', 2: 'Активный пользователь', 3: 'Пациент клиники', 4: 'Врач', 5: 'Пользователь на пилоте',
+};
+
+const prototypeScreens = [
+  { num: 1, name: 'Мой профиль', file: 'screen_02_dashboard.png', desc: 'Цифровой двойник с 50+ параметрами в 6 разделах. Inline-редактирование, целевые кнопки, голосовой ввод, интервенционные бейджи, алерты при отклонении от цели.', useCases: [1], cjms: [1, 2, 3, 4] },
+  { num: 2, name: 'Дашборд DT', file: 'screen_02_dashboard.png', desc: 'Таблица с 50+ параметрами, сгруппированными в 6 разделов. Inline-редактирование, целевые кнопки, интервенционные бейджи, 7-дневная история, алерты при отклонении >15%.', useCases: [1], cjms: [1, 2, 3, 4] },
+  { num: 3, name: 'Таймлайн', file: 'screen_03_timeline.png', desc: 'DAW-инспирированный плеер. Протоколы и интервенции на треках с красным playhead. Управление: Start/Stop, Speed, 1д/1н/Фазы. Drag-and-drop из каталога.', useCases: [3], cjms: [1, 5] },
+  { num: 4, name: 'Голосовой редактор', file: 'screen_04_voice_popup.png', desc: 'Модальное окно для диктовки параметров. Web Speech API (8 языков). Пульсирующая анимация записи, транскрипт в реальном времени, по-полевой микрофон.', useCases: [1], cjms: [1] },
+  { num: 5, name: 'AI-Чат', file: 'screen_05_chat.png', desc: 'Полноэкранный чат с GigaChat. Контекст профиля, боковая панель источников данных, карточки-задачи, викторина для проверки знаний.', useCases: [2], cjms: [2] },
+  { num: 6, name: 'Дневник питания', file: 'screen_06_diary.png', desc: 'Модальное окно трекинга на выбранный день. 4 приёма пищи с КБЖУ, селектор продуктов (1000+ записей), фото, голосовой ввод, самочувствие.', useCases: [4], cjms: [2, 3] },
+  { num: 7, name: 'Каталог интервенций', file: 'screen_07_interventions.png', desc: 'Библиотека 300+ протоколов с evidence-level A–D. Фильтры по категориям, карточки с бейджами кодов, drag-and-drop на таймлайн.', useCases: [3], cjms: [4, 5] },
+  { num: 8, name: 'Рецепт / План', file: 'screen_08_prescription.png', desc: 'HEALORA Prescription: шапка с пациентом/врачом, таблица назначений, QR-код, заметка врача, статус, печать.', useCases: [3], cjms: [1, 4] },
+  { num: 9, name: 'Путь здоровья', file: 'screen_09_progress_path.png', desc: 'Экран путешествия: прогресс (68%), селектор профилей, статистика, рекомендации, DeviceDropZone, 5 индикаторов DT.', useCases: [2], cjms: [2, 5] },
+  { num: 10, name: 'Decision Flow', file: 'screen_10_decision_flow.png', desc: 'Интерактивный подбор протокола: pSuccess ранжирование, Top-3, запрос недостающих данных, системный лог.', useCases: [5], cjms: [5] },
+];
+
 const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart }) => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [phoneOverlayTab, setPhoneOverlayTab] = useState('profile');
+  // flow rendered inside screen as tab
   const [simulationDay, setSimulationDay] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -68,6 +97,8 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [selectedInterventionForPopup, setSelectedInterventionForPopup] = useState(null);
   const [showHistoryPopup, setShowHistoryPopup] = useState(false);
   const [showPlanPopup, setShowPlanPopup] = useState(false);
+  const [expandedAttr, setExpandedAttr] = useState(null);
+  const [rppFormData, setRppFormData] = useState(null); // { types: [], frequency: 'Ежедневно', triggers: '', notes: '' }
   const [planTemplateId, setPlanTemplateId] = useState('custom');
   const [planStatus, setPlanStatus] = useState('active'); // 'active' | 'stopped' | 'archived'
   const [planDoctorNote, setPlanDoctorNote] = useState('');
@@ -80,7 +111,35 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [chatDiaryDay, setChatDiaryDay] = useState(null);
   const [chatDiaryData, setChatDiaryData] = useState(null);
   const [chatInlineMode, setChatInlineMode] = useState('none'); // 'none' | 'profile' | 'plan' | 'diary' | 'food'
+  const [chatScreenPreview, setChatScreenPreview] = useState(null); // null | screen index (0-9) for lightbox
+  const [showMenuPopup, setShowMenuPopup] = useState(false);
+  const [chatActiveScreen, setChatActiveScreen] = useState(null); // null | prototypeScreens entry
+  const [chatSectionCollapsed, setChatSectionCollapsed] = useState({});
+  const [chatProtoMsgs, setChatProtoMsgs] = useState([]);
+  const [chatProtoInput, setChatProtoInput] = useState('');
+  const [chatProtoLoading, setChatProtoLoading] = useState(false);
+  const chatProtoEndRef = useRef(null);
   const [chatPhotoPreview, setChatPhotoPreview] = useState(null);
+
+  // ── Goal selection state ──
+  const GOAL_OPTIONS = [
+    { id: 'weight', name: 'Снизить вес', icon: icon.scale, attrId: 'weight' },
+    { id: 'bmi', name: 'Нормализовать ИМТ', icon: icon.ruler, attrId: 'bmi' },
+    { id: 'sleep', name: 'Улучшить сон', icon: icon.sleep, attrId: 'sleep' },
+    { id: 'stress', name: 'Снизить стресс', icon: icon.meditate, attrId: 'stress' },
+    { id: 'steps', name: 'Увеличить шаги', icon: icon.walk, attrId: 'steps' },
+    { id: 'glucose', name: 'Контроль глюкозы', icon: icon.blood, attrId: 'glucose' },
+    { id: 'hba1c', name: 'Снизить HbA1c', icon: icon.syringe, attrId: 'hba1c' },
+    { id: 'ldl', name: 'Снизить ЛПНП', icon: icon.heart, attrId: 'ldl' },
+    { id: 'hdl', name: 'Повысить ЛПВП', icon: icon.greenHeart, attrId: 'hdl' },
+    { id: 'vitd', name: 'Нормализовать D', icon: icon.sun, attrId: 'vitd' },
+    { id: 'water', name: 'Пить больше воды', icon: icon.water, attrId: 'water' },
+    { id: 'waist', name: 'Уменьшить талию', icon: icon.tape, attrId: 'waist' },
+  ];
+  const [showGoalChat, setShowGoalChat] = useState(false);
+  const [chatGoals, setChatGoals] = useState([]);
+  const [goalChatStep, setGoalChatStep] = useState(0); // 0=greeting, 1=selecting, 2=confirm, 3=done
+  const [goalChatLog, setGoalChatLog] = useState([]);
   const [showFoodSelector, setShowFoodSelector] = useState(false);
   const [selectedFoodMealIdx, setSelectedFoodMealIdx] = useState(null);
   const [selectedFoodItem, setSelectedFoodItem] = useState(null);
@@ -183,6 +242,51 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const startVoiceWithMic = (recognition) => {
     try { recognition.start(); } catch (e) { setVoiceError('Ошибка запуска микрофона: ' + e.message); }
   };
+
+  const handleStartRecording = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) { setVoiceError('Голосовой ввод не поддерживается в этом браузере'); return; }
+    setVoiceError('');
+    setVoiceTranscript('');
+    setVoiceParsedValues([]);
+    setVoiceStatus('recording');
+    const sr = new SpeechRecognition();
+    sr.lang = voiceLang;
+    sr.continuous = true;
+    sr.interimResults = true;
+    sr.onresult = (ev) => {
+      let text = '';
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        text += ev.results[i][0].transcript;
+      }
+      setVoiceTranscript(text);
+      const parsed = parseVoiceTranscript(text, voiceSection);
+      setVoiceParsedValues(parsed);
+      setVoiceFormValues(prev => {
+        const updated = { ...prev };
+        parsed.forEach(pv => { updated[pv.attrId] = pv.value; });
+        return updated;
+      });
+    };
+    sr.onerror = (ev) => {
+      setVoiceError('Ошибка: ' + ev.error);
+      setVoiceStatus('idle');
+    };
+    sr.onend = () => {
+      setVoiceStatus(prev => prev === 'recording' ? 'done' : prev);
+    };
+    voiceRecognitionRef.current = sr;
+    startVoiceWithMic(sr);
+  };
+
+  const handleStopRecording = () => {
+    if (voiceRecognitionRef.current) {
+      voiceRecognitionRef.current.stop();
+      voiceRecognitionRef.current = null;
+    }
+    setVoiceStatus('done');
+  };
+
   const [showParamHistory, setShowParamHistory] = useState(null);
   const [paramHistory, setParamHistory] = useState({});
   const [profileOverrides, setProfileOverrides] = useState({});
@@ -306,6 +410,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         { id: 'exercise_freq', code: '03_3_LIFE_EXERC_FREQ', name: 'Тренировки', current: profile?.lifestyle?.physical_activity, target: null, unit: '', norm: '3-5/нед', editable: true },
         { id: 'exercise_type', code: '03_4_LIFE_EXERC_TYPE', name: 'Тип активности', current: profile?.lifestyle?.exercise_type, target: null, unit: '', norm: '-', editable: true },
         { id: 'diet', code: '03_7_LIFE_DIET', name: 'Питание', current: profile?.lifestyle?.diet, target: null, unit: '', norm: 'Сбалансир.', editable: true },
+        { id: 'rpp', code: '03_10_LIFE_RPP', name: 'РПП', current: profile?.lifestyle?.rpp || 'Нет', target: 'Нет', unit: '', norm: 'Нет', editable: true, options: ['Нет','Анорексия','Булимия','Компульсивное переедание','Орторексия'] },
       ]
     },
     genetics: {
@@ -331,6 +436,214 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         { id: 'family_history', code: '05_3_FAM_CA', name: 'Онкология в семье', current: profile?.medical_history?.family_history, target: null, unit: '', norm: 'Нет', editable: true },
       ]
     }
+  };
+
+  const paramDetailData = {
+    bmi: {
+      description: 'Индекс массы тела — показатель, позволяющий оценить соответствие массы тела человека его росту.',
+      medical: '18.5–24.9 кг/м²',
+      nutritional: '18.5–24.9 кг/м²',
+      tips: 'Поддерживайте ИМТ в пределах нормы через сбалансированное питание и регулярную физическую активность.',
+    },
+    weight: {
+      description: 'Масса тела — один из важнейших антропометрических показателей.',
+      medical: 'Индивидуально в зависимости от роста и возраста',
+      nutritional: 'В пределах 5% от идеальной массы тела',
+    },
+    height: {
+      description: 'Рост — фундаментальный антропометрический показатель.',
+      medical: 'Генетически обусловлен',
+      nutritional: '—',
+    },
+    waist: {
+      description: 'Окружность талии — маркер абдоминального ожирения и риска метаболических нарушений.',
+      medical: '< 94 см (муж) / < 80 см (жен)',
+      nutritional: '< 90 см (муж) / < 80 см (жен)',
+      tips: 'Уменьшение окружности талии на 5 см снижает риск сердечно-сосудистых заболеваний на 15%.',
+    },
+    glucose: {
+      description: 'Уровень глюкозы в крови натощак — ключевой показатель углеводного обмена.',
+      medical: '3.9–5.6 ммоль/л',
+      nutritional: '4.0–5.5 ммоль/л',
+      tips: 'Стабильный уровень глюкозы поддерживается регулярным питанием с низким гликемическим индексом.',
+    },
+    hba1c: {
+      description: 'Гликированный гемоглобин — средний уровень глюкозы за последние 2-3 месяца.',
+      medical: '< 5.7%',
+      nutritional: '< 5.5%',
+      tips: 'Снижение HbA1c на 1% уменьшает риск микрососудистых осложнений на 37%.',
+    },
+    insulin: {
+      description: 'Уровень инсулина натощак — маркер инсулинорезистентности.',
+      medical: '2–17 мкМЕ/мл',
+      nutritional: '5–12 мкМЕ/мл',
+    },
+    homa: {
+      description: 'HOMA-IR — индекс инсулинорезистентности, рассчитываемый по уровню глюкозы и инсулина натощак.',
+      medical: '< 2.5',
+      nutritional: '< 1.8',
+    },
+    cholesterol: {
+      description: 'Общий холестерин — сумма всех фракций липопротеинов в крови.',
+      medical: '< 5.0 ммоль/л',
+      nutritional: '< 4.5 ммоль/л',
+    },
+    ldl: {
+      description: 'Липопротеины низкой плотности — «плохой» холестерин, способствующий атеросклерозу.',
+      medical: '< 3.0 ммоль/л',
+      nutritional: '< 2.6 ммоль/л',
+      tips: 'Снижение ЛПНП на 1 ммоль/л уменьшает риск инфаркта на 25%.',
+    },
+    hdl: {
+      description: 'Липопротеины высокой плотности — «хороший» холестерин, защищающий сосуды.',
+      medical: '> 1.0 ммоль/л (муж) / > 1.3 ммоль/л (жен)',
+      nutritional: '> 1.2 ммоль/л (муж) / > 1.4 ммоль/л (жен)',
+    },
+    triglycerides: {
+      description: 'Триглицериды — основной источник энергии, избыток указывает на метаболические нарушения.',
+      medical: '< 1.7 ммоль/л',
+      nutritional: '< 1.5 ммоль/л',
+    },
+    sbp: {
+      description: 'Систолическое артериальное давление — давление в артериях в момент сокращения сердца.',
+      medical: '< 130 мм рт.ст.',
+      nutritional: '< 120 мм рт.ст.',
+      tips: 'Снижение САД на 10 мм рт.ст. уменьшает риск инсульта на 30%.',
+    },
+    dbp: {
+      description: 'Диастолическое артериальное давление — давление в артериях в момент расслабления сердца.',
+      medical: '< 85 мм рт.ст.',
+      nutritional: '< 80 мм рт.ст.',
+    },
+    heartrate: {
+      description: 'Частота сердечных сокращений в покое — маркер кардиореспираторной выносливости.',
+      medical: '60–100 уд/мин',
+      nutritional: '55–80 уд/мин',
+      tips: 'Регулярные аэробные нагрузки снижают ЧСС в покое, улучшая экономичность работы сердца.',
+    },
+    vitd: {
+      description: 'Витамин D (25-гидроксикальциферол) — жирорастворимый витамин, критически важный для иммунитета и костей.',
+      medical: '30–100 нг/мл',
+      nutritional: '40–80 нг/мл',
+      tips: 'Оптимальный уровень витамина D снижает риск острых респираторных инфекций на 50%.',
+    },
+    ferritin: {
+      description: 'Ферритин — белок, отражающий запасы железа в организме.',
+      medical: '30–200 нг/мл',
+      nutritional: '50–150 нг/мл',
+    },
+    hemoglobin: {
+      description: 'Гемоглобин — белок эритроцитов, отвечающий за транспорт кислорода.',
+      medical: '130–160 г/л (муж) / 120–140 г/л (жен)',
+      nutritional: '135–155 г/л (муж) / 125–145 г/л (жен)',
+    },
+    cortisol: {
+      description: 'Кортизол — главный гормон стресса, вырабатываемый корой надпочечников.',
+      medical: '5–25 мкг/дл (утром)',
+      nutritional: '5–20 мкг/дл (утром)',
+      tips: 'Хронически повышенный кортизол нарушает сон, иммунитет и когнитивные функции.',
+    },
+    tsh: {
+      description: 'Тиреотропный гормон — основной регулятор функции щитовидной железы.',
+      medical: '0.4–4.0 мМЕ/л',
+      nutritional: '0.5–2.5 мМЕ/л',
+    },
+    t4: {
+      description: 'Свободный тироксин (Т4) — основной гормон щитовидной железы.',
+      medical: '0.8–1.8 нг/дл',
+      nutritional: '1.0–1.6 нг/дл',
+    },
+    crp: {
+      description: 'С-реактивный белок — маркер воспаления в организме.',
+      medical: '< 5 мг/л',
+      nutritional: '< 1 мг/л',
+      tips: 'Высокочувствительный СРБ > 2 мг/л указывает на повышенный сердечно-сосудистый риск.',
+    },
+    homocysteine: {
+      description: 'Гомоцистеин — аминокислота, избыток которой повреждает сосуды.',
+      medical: '5–15 мкмоль/л',
+      nutritional: '7–10 мкмоль/л',
+    },
+    alt: {
+      description: 'Аланинаминотрансфераза — маркер функции печени.',
+      medical: '< 40 Ед/л',
+      nutritional: '< 30 Ед/л',
+    },
+    ast: {
+      description: 'Аспартатаминотрансфераза — маркер функции печени и сердца.',
+      medical: '< 40 Ед/л',
+      nutritional: '< 30 Ед/л',
+    },
+    creatinine: {
+      description: 'Креатинин — показатель функции почек.',
+      medical: '60–110 мкмоль/л (муж) / 45–90 мкмоль/л (жен)',
+      nutritional: '70–100 мкмоль/л (муж) / 50–85 мкмоль/л (жен)',
+    },
+    egfr: {
+      description: 'Расчетная скорость клубочковой фильтрации — интегральный показатель функции почек.',
+      medical: '> 90 мл/мин/1.73м²',
+      nutritional: '> 90 мл/мин/1.73м²',
+    },
+    bilirubin: {
+      description: 'Билирубин — продукт распада гемоглобина, маркер функции печени.',
+      medical: '< 21 мкмоль/л',
+      nutritional: '< 17 мкмоль/л',
+    },
+    albumin: {
+      description: 'Альбумин — основной белок плазмы крови, маркер нутритивного статуса.',
+      medical: '35–50 г/л',
+      nutritional: '38–48 г/л',
+    },
+    sleep_hours: {
+      description: 'Средняя продолжительность сна за ночь.',
+      medical: '7–9 часов',
+      nutritional: '7.5–8.5 часов',
+      tips: 'Регулярный сон 7-9 часов снижает риск ожирения на 30% и диабета 2 типа на 40%.',
+    },
+    sleep_quality: {
+      description: 'Субъективная оценка качества сна по шкале 1-10.',
+      medical: '≥ 7/10',
+      nutritional: '≥ 8/10',
+    },
+    stress: {
+      description: 'Субъективная оценка уровня стресса по шкале 1-10.',
+      medical: '≤ 4/10',
+      nutritional: '≤ 3/10',
+      tips: 'Хронический стресс (≥ 7/10) связан с 50% повышением риска сердечно-сосудистых заболеваний.',
+    },
+    anxiety: {
+      description: 'Уровень тревожности — субъективная оценка эмоционального состояния.',
+      medical: '≤ 4/10',
+      nutritional: '≤ 3/10',
+    },
+    water: {
+      description: 'Среднесуточное потребление чистой воды.',
+      medical: '1.5–2.5 л',
+      nutritional: '30 мл/кг массы тела',
+      tips: 'Недостаточное потребление воды снижает когнитивные функции и физическую работоспособность.',
+    },
+    steps: {
+      description: 'Среднесуточное количество шагов — маркер общей физической активности.',
+      medical: '≥ 5000 шагов',
+      nutritional: '≥ 8000 шагов',
+      tips: 'Увеличение шагов до 10000 в день снижает смертность от всех причин на 31%.',
+    },
+    vo2max: {
+      description: 'Максимальное потребление кислорода — показатель аэробной выносливости.',
+      medical: '> 30 мл/кг/мин',
+      nutritional: '> 40 мл/кг/мин',
+    },
+    inflammation: {
+      description: 'Интегральный показатель воспалительной активности в организме.',
+      medical: 'Низкий',
+      nutritional: 'Низкий',
+    },
+    rpp: {
+      description: 'Расстройство пищевого поведения — комплексное нарушение пищевого поведения и эмоционального состояния.',
+      medical: 'Требуется консультация специалиста при любых признаках',
+      nutritional: 'Нормализация пищевого поведения является приоритетом',
+      tips: 'При первых признаках РПП рекомендуется обратиться к психотерапевту или психиатру, специализирующемуся на пищевых расстройствах.',
+    },
   };
 
   // Get interventions affecting this attribute
@@ -497,16 +810,16 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   };
 
   const fallbackProfiles = {
-    'TEST_001': { profile_id: 'TEST_001', name: 'Анна', photo: '03_Natalia_42_salad.png', demographics: { sex: 'female', age: 28, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 58, height_cm: 168, bmi: 20.2, waist_cm: 72 }, vitals: { systolic_bp_mmhg: 105, diastolic_bp_mmhg: 68, resting_hr_bpm: 64, hrv_ms: 72, spo2_percent: 98 }, labs: { glucose_mg_dl: 88, total_cholesterol_mg_dl: 175, hdl_mg_dl: 55, ldl_mg_dl: 100, triglycerides_mg_dl: 120, hba1c_percent: 5.2, crp_mg_l: 0.8, vitamin_d: 32, ferritin: 65, tsh: 2.1 }, lifestyle: { sleep_hours: 7.5, stress_level_0_10: 3, daily_steps: 8200, water_l_day: 1.8, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-5/нед', exercise_type: 'бег', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 840, health_risk_score: 18, risk_level: 'low' } },
-    'TEST_002': { profile_id: 'TEST_002', name: 'Михаил', photo: '10_Alex_48_soup.png', demographics: { sex: 'male', age: 42, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 96, height_cm: 182, bmi: 31.2, waist_cm: 104 }, vitals: { systolic_bp_mmhg: 142, diastolic_bp_mmhg: 91, resting_hr_bpm: 78, hrv_ms: 38, spo2_percent: 96 }, labs: { glucose_mg_dl: 112, total_cholesterol_mg_dl: 245, hdl_mg_dl: 38, ldl_mg_dl: 160, triglycerides_mg_dl: 210, hba1c_percent: 5.9, crp_mg_l: 3.2, vitamin_d: 18, ferritin: 140, tsh: 3.8 }, lifestyle: { sleep_hours: 6, stress_level_0_10: 7, daily_steps: 4200, water_l_day: 1.2, smoking: 'Курит', alcohol: 'Регулярно', physical_activity: '0-1/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e4', mthfr: 'Гетерозигота', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: ['статины'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'ИБС у отца' }, digital_twin_scores: { current_stars: 210, health_risk_score: 52, risk_level: 'high' } },
-    'TEST_003': { profile_id: 'TEST_003', name: 'Елена', photo: '16_Anastasia_37_street.png', demographics: { sex: 'female', age: 34, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 64, height_cm: 170, bmi: 22.1, waist_cm: 76 }, vitals: { systolic_bp_mmhg: 118, diastolic_bp_mmhg: 76, resting_hr_bpm: 70, hrv_ms: 55, spo2_percent: 98 }, labs: { glucose_mg_dl: 95, total_cholesterol_mg_dl: 200, hdl_mg_dl: 52, ldl_mg_dl: 120, triglycerides_mg_dl: 140, hba1c_percent: 5.4, crp_mg_l: 1.2, vitamin_d: 24, ferritin: 80, tsh: 2.8 }, lifestyle: { sleep_hours: 7, stress_level_0_10: 5, daily_steps: 6500, water_l_day: 1.5, smoking: 'Нет', alcohol: 'По праздникам', physical_activity: '2-3/нед', exercise_type: 'йога', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 650, health_risk_score: 28, risk_level: 'medium' } },
-    'P005': { profile_id: 'P005', name: 'Дмитрий', photo: '05_Дмитрий_55_notepad.png', demographics: { sex: 'male', age: 57, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 88, height_cm: 178, bmi: 27.8, waist_cm: 98 }, vitals: { systolic_bp_mmhg: 135, diastolic_bp_mmhg: 88, resting_hr_bpm: 72, hrv_ms: 35, spo2_percent: 96 }, labs: { glucose_mg_dl: 105, total_cholesterol_mg_dl: 220, hdl_mg_dl: 42, ldl_mg_dl: 140, triglycerides_mg_dl: 180, hba1c_percent: 5.7, crp_mg_l: 2.1, vitamin_d: 20, ferritin: 130, tsh: 2.8 }, lifestyle: { sleep_hours: 6.5, stress_level_0_10: 6, daily_steps: 5000, water_l_day: 1.4, smoking: 'Бросил', alcohol: '1-2/нед', physical_activity: '1-2/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e3', mthfr: 'Гетерозигота', lactase_persistence: 'Нет', brca_status: 'Neg' }, medical_history: { current_medications: ['гипотензивные'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'Гипертония' }, digital_twin_scores: { current_stars: 450, health_risk_score: 42, risk_level: 'medium' } },
-    'P007': { profile_id: 'P007', name: 'Иван', photo: '07_Ivan_13_chips.png', demographics: { sex: 'male', age: 13, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 48, height_cm: 158, bmi: 19.2, waist_cm: 65 }, vitals: { systolic_bp_mmhg: 108, diastolic_bp_mmhg: 68, resting_hr_bpm: 78, hrv_ms: 58, spo2_percent: 99 }, labs: { glucose_mg_dl: 82, total_cholesterol_mg_dl: 140, hdl_mg_dl: 48, ldl_mg_dl: 80, triglycerides_mg_dl: 90, hba1c_percent: 4.8, crp_mg_l: 0.5, vitamin_d: 30, ferritin: 50, tsh: 1.9 }, lifestyle: { sleep_hours: 9, stress_level_0_10: 2, daily_steps: 10000, water_l_day: 1.0, smoking: 'Нет', alcohol: 'Нет', physical_activity: '5-7/нед', diet: 'домашняя' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 950, health_risk_score: 10, risk_level: 'low' } },
-    'P014': { profile_id: 'P014', name: 'Екатерина', photo: '14_Ekaterina_39_wearable.png', demographics: { sex: 'female', age: 39, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 60, height_cm: 170, bmi: 20.8, waist_cm: 72 }, vitals: { systolic_bp_mmhg: 115, diastolic_bp_mmhg: 74, resting_hr_bpm: 66, hrv_ms: 58, spo2_percent: 98 }, labs: { glucose_mg_dl: 90, total_cholesterol_mg_dl: 180, hdl_mg_dl: 58, ldl_mg_dl: 105, triglycerides_mg_dl: 115, hba1c_percent: 5.1, crp_mg_l: 0.9, vitamin_d: 30, ferritin: 70, tsh: 2.2 }, lifestyle: { sleep_hours: 7.8, stress_level_0_10: 4, daily_steps: 8000, water_l_day: 1.7, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-4/нед', exercise_type: 'бег', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 780, health_risk_score: 22, risk_level: 'low' } },
-    'P019b': { profile_id: 'P019b', name: 'Стас', photo: '19_Stas_35_dog_bike.png', demographics: { sex: 'male', age: 35, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 82, height_cm: 178, bmi: 24.8, waist_cm: 84 }, vitals: { systolic_bp_mmhg: 125, diastolic_bp_mmhg: 80, resting_hr_bpm: 68, hrv_ms: 50, spo2_percent: 98 }, labs: { glucose_mg_dl: 92, total_cholesterol_mg_dl: 190, hdl_mg_dl: 48, ldl_mg_dl: 115, triglycerides_mg_dl: 135, hba1c_percent: 5.3, crp_mg_l: 1.0, vitamin_d: 28, ferritin: 90, tsh: 2.4 }, lifestyle: { sleep_hours: 7.2, stress_level_0_10: 4, daily_steps: 7500, water_l_day: 1.8, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-4/нед', exercise_type: 'велосипед', diet: 'сбалансированная' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 680, health_risk_score: 26, risk_level: 'low' } },
-    'P022': { profile_id: 'P022', name: 'Варя', photo: '22_Varya_30_yoga.png', demographics: { sex: 'female', age: 30, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 57, height_cm: 166, bmi: 20.2, waist_cm: 70 }, vitals: { systolic_bp_mmhg: 110, diastolic_bp_mmhg: 70, resting_hr_bpm: 65, hrv_ms: 62, spo2_percent: 99 }, labs: { glucose_mg_dl: 86, total_cholesterol_mg_dl: 165, hdl_mg_dl: 62, ldl_mg_dl: 95, triglycerides_mg_dl: 100, hba1c_percent: 5.0, crp_mg_l: 0.6, vitamin_d: 35, ferritin: 60, tsh: 2.0 }, lifestyle: { sleep_hours: 8, stress_level_0_10: 3, daily_steps: 9000, water_l_day: 2.0, smoking: 'Нет', alcohol: 'Редко', physical_activity: '4-5/нед', exercise_type: 'йога', diet: 'вегетарианская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 900, health_risk_score: 14, risk_level: 'low' } },
-    'P025': { profile_id: 'P025', name: 'Катя', photo: '25_Katya_29_office.png', demographics: { sex: 'female', age: 29, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 59, height_cm: 167, bmi: 20.7, waist_cm: 71 }, vitals: { systolic_bp_mmhg: 110, diastolic_bp_mmhg: 70, resting_hr_bpm: 66, hrv_ms: 60, spo2_percent: 99 }, labs: { glucose_mg_dl: 88, total_cholesterol_mg_dl: 170, hdl_mg_dl: 60, ldl_mg_dl: 98, triglycerides_mg_dl: 105, hba1c_percent: 5.1, crp_mg_l: 0.7, vitamin_d: 32, ferritin: 62, tsh: 2.1 }, lifestyle: { sleep_hours: 7.5, stress_level_0_10: 4, daily_steps: 7000, water_l_day: 1.6, smoking: 'Нет', alcohol: 'Редко', physical_activity: '2-3/нед', exercise_type: 'фитнес', diet: 'сбалансированная' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 640, health_risk_score: 24, risk_level: 'low' } },
-    'P008': { profile_id: 'P008', name: 'Галина', photo: '08_Galina_75_Vika_9_balcony.png', demographics: { sex: 'female', age: 75, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 68, height_cm: 160, bmi: 26.6, waist_cm: 86 }, vitals: { systolic_bp_mmhg: 148, diastolic_bp_mmhg: 88, resting_hr_bpm: 74, hrv_ms: 28, spo2_percent: 94 }, labs: { glucose_mg_dl: 110, total_cholesterol_mg_dl: 235, hdl_mg_dl: 40, ldl_mg_dl: 155, triglycerides_mg_dl: 195, hba1c_percent: 6.0, crp_mg_l: 3.5, vitamin_d: 14, ferritin: 105, tsh: 3.5 }, lifestyle: { sleep_hours: 6, stress_level_0_10: 3, daily_steps: 3500, water_l_day: 1.2, smoking: 'Нет', alcohol: 'Нет', physical_activity: '1/нед', diet: 'домашняя' }, genetics: { apoe: 'e3/e4', mthfr: 'Гетерозигота', lactase_persistence: 'Нет', brca_status: 'Neg' }, medical_history: { current_medications: ['гипотензивные', 'статины'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'yes', family_history: 'ИБС, СД 2 типа' }, digital_twin_scores: { current_stars: 320, health_risk_score: 55, risk_level: 'high' } },
+    'ANNA_28_55': { profile_id: 'ANNA_28_55', name: 'Анна', photo: '03_Natalia_42_salad.png', demographics: { sex: 'female', age: 28, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 58, height_cm: 168, bmi: 20.2, waist_cm: 72 }, vitals: { systolic_bp_mmhg: 105, diastolic_bp_mmhg: 68, resting_hr_bpm: 64, hrv_ms: 72, spo2_percent: 98 }, labs: { glucose_mg_dl: 88, total_cholesterol_mg_dl: 175, hdl_mg_dl: 55, ldl_mg_dl: 100, triglycerides_mg_dl: 120, hba1c_percent: 5.2, crp_mg_l: 0.8, vitamin_d: 32, ferritin: 65, tsh: 2.1 }, lifestyle: { sleep_hours: 7.5, stress_level_0_10: 3, daily_steps: 8200, water_l_day: 1.8, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-5/нед', exercise_type: 'бег', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 840, health_risk_score: 18, risk_level: 'low' } },
+    'MIKHAIL_42_96': { profile_id: 'MIKHAIL_42_96', name: 'Михаил', photo: '10_Alex_48_soup.png', demographics: { sex: 'male', age: 42, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 96, height_cm: 182, bmi: 31.2, waist_cm: 104 }, vitals: { systolic_bp_mmhg: 142, diastolic_bp_mmhg: 91, resting_hr_bpm: 78, hrv_ms: 38, spo2_percent: 96 }, labs: { glucose_mg_dl: 112, total_cholesterol_mg_dl: 245, hdl_mg_dl: 38, ldl_mg_dl: 160, triglycerides_mg_dl: 210, hba1c_percent: 5.9, crp_mg_l: 3.2, vitamin_d: 18, ferritin: 140, tsh: 3.8 }, lifestyle: { sleep_hours: 6, stress_level_0_10: 7, daily_steps: 4200, water_l_day: 1.2, smoking: 'Курит', alcohol: 'Регулярно', physical_activity: '0-1/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e4', mthfr: 'Гетерозигота', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: ['статины'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'ИБС у отца' }, digital_twin_scores: { current_stars: 210, health_risk_score: 52, risk_level: 'high' } },
+    'ELENA_34_64': { profile_id: 'ELENA_34_64', name: 'Елена', photo: '16_Anastasia_37_street.png', demographics: { sex: 'female', age: 34, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 64, height_cm: 170, bmi: 22.1, waist_cm: 76 }, vitals: { systolic_bp_mmhg: 118, diastolic_bp_mmhg: 76, resting_hr_bpm: 70, hrv_ms: 55, spo2_percent: 98 }, labs: { glucose_mg_dl: 95, total_cholesterol_mg_dl: 200, hdl_mg_dl: 52, ldl_mg_dl: 120, triglycerides_mg_dl: 140, hba1c_percent: 5.4, crp_mg_l: 1.2, vitamin_d: 24, ferritin: 80, tsh: 2.8 }, lifestyle: { sleep_hours: 7, stress_level_0_10: 5, daily_steps: 6500, water_l_day: 1.5, smoking: 'Нет', alcohol: 'По праздникам', physical_activity: '2-3/нед', exercise_type: 'йога', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 650, health_risk_score: 28, risk_level: 'medium' } },
+    'DMITRY_57_88': { profile_id: 'DMITRY_57_88', name: 'Дмитрий', photo: '05_Дмитрий_55_notepad.png', demographics: { sex: 'male', age: 57, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 88, height_cm: 178, bmi: 27.8, waist_cm: 98 }, vitals: { systolic_bp_mmhg: 135, diastolic_bp_mmhg: 88, resting_hr_bpm: 72, hrv_ms: 35, spo2_percent: 96 }, labs: { glucose_mg_dl: 105, total_cholesterol_mg_dl: 220, hdl_mg_dl: 42, ldl_mg_dl: 140, triglycerides_mg_dl: 180, hba1c_percent: 5.7, crp_mg_l: 2.1, vitamin_d: 20, ferritin: 130, tsh: 2.8 }, lifestyle: { sleep_hours: 6.5, stress_level_0_10: 6, daily_steps: 5000, water_l_day: 1.4, smoking: 'Бросил', alcohol: '1-2/нед', physical_activity: '1-2/нед', diet: 'смешанная' }, genetics: { apoe: 'e3/e3', mthfr: 'Гетерозигота', lactase_persistence: 'Нет', brca_status: 'Neg' }, medical_history: { current_medications: ['гипотензивные'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'no', family_history: 'Гипертония' }, digital_twin_scores: { current_stars: 450, health_risk_score: 42, risk_level: 'medium' } },
+    'IVAN_13_48': { profile_id: 'IVAN_13_48', name: 'Иван', photo: '07_Ivan_13_chips.png', demographics: { sex: 'male', age: 13, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 48, height_cm: 158, bmi: 19.2, waist_cm: 65 }, vitals: { systolic_bp_mmhg: 108, diastolic_bp_mmhg: 68, resting_hr_bpm: 78, hrv_ms: 58, spo2_percent: 99 }, labs: { glucose_mg_dl: 82, total_cholesterol_mg_dl: 140, hdl_mg_dl: 48, ldl_mg_dl: 80, triglycerides_mg_dl: 90, hba1c_percent: 4.8, crp_mg_l: 0.5, vitamin_d: 30, ferritin: 50, tsh: 1.9 }, lifestyle: { sleep_hours: 9, stress_level_0_10: 2, daily_steps: 10000, water_l_day: 1.0, smoking: 'Нет', alcohol: 'Нет', physical_activity: '5-7/нед', diet: 'домашняя' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 950, health_risk_score: 10, risk_level: 'low' } },
+    'EKATERINA_39_60': { profile_id: 'EKATERINA_39_60', name: 'Екатерина', photo: '14_Ekaterina_39_wearable.png', demographics: { sex: 'female', age: 39, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 60, height_cm: 170, bmi: 20.8, waist_cm: 72 }, vitals: { systolic_bp_mmhg: 115, diastolic_bp_mmhg: 74, resting_hr_bpm: 66, hrv_ms: 58, spo2_percent: 98 }, labs: { glucose_mg_dl: 90, total_cholesterol_mg_dl: 180, hdl_mg_dl: 58, ldl_mg_dl: 105, triglycerides_mg_dl: 115, hba1c_percent: 5.1, crp_mg_l: 0.9, vitamin_d: 30, ferritin: 70, tsh: 2.2 }, lifestyle: { sleep_hours: 7.8, stress_level_0_10: 4, daily_steps: 8000, water_l_day: 1.7, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-4/нед', exercise_type: 'бег', diet: 'средиземноморская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 780, health_risk_score: 22, risk_level: 'low' } },
+    'STAS_35_82': { profile_id: 'STAS_35_82', name: 'Стас', photo: '19_Stas_35_dog_bike.png', demographics: { sex: 'male', age: 35, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 82, height_cm: 178, bmi: 24.8, waist_cm: 84 }, vitals: { systolic_bp_mmhg: 125, diastolic_bp_mmhg: 80, resting_hr_bpm: 68, hrv_ms: 50, spo2_percent: 98 }, labs: { glucose_mg_dl: 92, total_cholesterol_mg_dl: 190, hdl_mg_dl: 48, ldl_mg_dl: 115, triglycerides_mg_dl: 135, hba1c_percent: 5.3, crp_mg_l: 1.0, vitamin_d: 28, ferritin: 90, tsh: 2.4 }, lifestyle: { sleep_hours: 7.2, stress_level_0_10: 4, daily_steps: 7500, water_l_day: 1.8, smoking: 'Нет', alcohol: 'Редко', physical_activity: '3-4/нед', exercise_type: 'велосипед', diet: 'сбалансированная' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 680, health_risk_score: 26, risk_level: 'low' } },
+    'VARIA_30_57': { profile_id: 'VARIA_30_57', name: 'Варя', photo: '22_Varya_30_yoga.png', demographics: { sex: 'female', age: 30, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 57, height_cm: 166, bmi: 20.2, waist_cm: 70 }, vitals: { systolic_bp_mmhg: 110, diastolic_bp_mmhg: 70, resting_hr_bpm: 65, hrv_ms: 62, spo2_percent: 99 }, labs: { glucose_mg_dl: 86, total_cholesterol_mg_dl: 165, hdl_mg_dl: 62, ldl_mg_dl: 95, triglycerides_mg_dl: 100, hba1c_percent: 5.0, crp_mg_l: 0.6, vitamin_d: 35, ferritin: 60, tsh: 2.0 }, lifestyle: { sleep_hours: 8, stress_level_0_10: 3, daily_steps: 9000, water_l_day: 2.0, smoking: 'Нет', alcohol: 'Редко', physical_activity: '4-5/нед', exercise_type: 'йога', diet: 'вегетарианская' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 900, health_risk_score: 14, risk_level: 'low' } },
+    'KATYA_29_59': { profile_id: 'KATYA_29_59', name: 'Катя', photo: '25_Katya_29_office.png', demographics: { sex: 'female', age: 29, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 59, height_cm: 167, bmi: 20.7, waist_cm: 71 }, vitals: { systolic_bp_mmhg: 110, diastolic_bp_mmhg: 70, resting_hr_bpm: 66, hrv_ms: 60, spo2_percent: 99 }, labs: { glucose_mg_dl: 88, total_cholesterol_mg_dl: 170, hdl_mg_dl: 60, ldl_mg_dl: 98, triglycerides_mg_dl: 105, hba1c_percent: 5.1, crp_mg_l: 0.7, vitamin_d: 32, ferritin: 62, tsh: 2.1 }, lifestyle: { sleep_hours: 7.5, stress_level_0_10: 4, daily_steps: 7000, water_l_day: 1.6, smoking: 'Нет', alcohol: 'Редко', physical_activity: '2-3/нед', exercise_type: 'фитнес', diet: 'сбалансированная' }, genetics: { apoe: 'e3/e3', mthfr: 'Нет', lactase_persistence: 'Да', brca_status: 'Neg' }, medical_history: { current_medications: [], allergies: 'Нет', cardiovascular_disease: 'no', diabetes: 'no', family_history: 'Нет' }, digital_twin_scores: { current_stars: 640, health_risk_score: 24, risk_level: 'low' } },
+    'GALINA_75_68': { profile_id: 'GALINA_75_68', name: 'Галина', photo: '08_Galina_75_Vika_9_balcony.png', demographics: { sex: 'female', age: 75, ethnicity_or_background: 'европеоидная' }, anthropometrics: { weight_kg: 68, height_cm: 160, bmi: 26.6, waist_cm: 86 }, vitals: { systolic_bp_mmhg: 148, diastolic_bp_mmhg: 88, resting_hr_bpm: 74, hrv_ms: 28, spo2_percent: 94 }, labs: { glucose_mg_dl: 110, total_cholesterol_mg_dl: 235, hdl_mg_dl: 40, ldl_mg_dl: 155, triglycerides_mg_dl: 195, hba1c_percent: 6.0, crp_mg_l: 3.5, vitamin_d: 14, ferritin: 105, tsh: 3.5 }, lifestyle: { sleep_hours: 6, stress_level_0_10: 3, daily_steps: 3500, water_l_day: 1.2, smoking: 'Нет', alcohol: 'Нет', physical_activity: '1/нед', diet: 'домашняя' }, genetics: { apoe: 'e3/e4', mthfr: 'Гетерозигота', lactase_persistence: 'Нет', brca_status: 'Neg' }, medical_history: { current_medications: ['гипотензивные', 'статины'], allergies: 'Нет', cardiovascular_disease: 'yes', diabetes: 'yes', family_history: 'ИБС, СД 2 типа' }, digital_twin_scores: { current_stars: 320, health_risk_score: 55, risk_level: 'high' } },
   };
 
   useEffect(() => {
@@ -523,6 +836,15 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         setProfile(data.profile || null);
         setStars(data.profile?.digital_twin_scores?.current_stars || 0);
         setParamHistory(data.profile?.history || {});
+        const profileRpp = data.profile?.lifestyle?.rpp;
+        if (profileRpp) {
+          setRppFormData({
+            types: profileRpp.types || [],
+            frequency: profileRpp.frequency || 'Ежедневно',
+            triggers: profileRpp.triggers || '',
+            notes: profileRpp.notes || '',
+          });
+        }
         setLoading(false);
       })
       .catch(() => {
@@ -804,6 +1126,76 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         });
       }, 500);
     }
+  };
+
+  const protoReplies = [
+    'На основе вашего профиля рекомендую увеличить потребление воды до 2.5 л/день и добавить 30 мин ходьбы ежедневно.',
+    'Ваш уровень стресса 7/10 — попробуйте дыхательную практику 4-7-8 перед сном. Это улучшит HRV на 15-20% за 2 недели.',
+    'По данным дневника, ваш средний белок — 45г/день. Рекомендуемая норма — 1.2 г/кг веса (≈70г/день). Добавьте яйца, рыбу или тофу.',
+    'Ваш ИМТ 27.8 — зона избыточной массы. Целевой ИМТ 24.0. Снижение на 0.3/нед — здоровый темп.',
+    'Отличный прогресс! 5 дней подряд — это формирует привычку. Через 21 день войдёте в автоматический режим.',
+  ];
+
+  const handleChatProtoSend = () => {
+    const text = chatProtoInput.trim();
+    if (!text) return;
+    setChatProtoInput('');
+    setChatProtoMsgs(prev => [...prev, { id: Date.now(), text, user: true, time: new Date().toLocaleTimeString() }]);
+    setChatProtoLoading(true);
+    setTimeout(() => {
+      const reply = protoReplies[Math.floor(Math.random() * protoReplies.length)];
+      setChatProtoMsgs(prev => [...prev, { id: Date.now() + 1, text: reply, user: false, time: new Date().toLocaleTimeString() }]);
+      setChatProtoLoading(false);
+    }, 800 + Math.random() * 600);
+  };
+
+  useEffect(() => {
+    if (chatProtoEndRef.current) {
+      chatProtoEndRef.current.scrollTop = chatProtoEndRef.current.scrollHeight;
+    }
+  }, [chatProtoMsgs, chatProtoLoading]);
+
+  useEffect(() => {
+    if (chatActiveScreen?.num === 5) {
+      setChatProtoMsgs([
+        { id: 's0', type: 'system', text: 'Добро пожаловать в **Healora AI Ассистент**!\n\nЯ — ваш персональный цифровой ассистент здоровья на базе GigaChat. Вот что я умею:\n\n• 🧬 **Анализировать** — оцениваю 50+ параметров вашего цифрового двойника\n• 🎯 **Рекомендовать** — подбираю протоколы питания, тренировок и образа жизни\n• 📋 **Планировать** — помогаю составить расписание и отслеживать прогресс\n• ❓ **Отвечать** — консультирую по вопросам здоровья, нутрициологии и долголетия\n• 📊 **Обучать** — провожу опросы и викторины для повышения грамотности в области здоровья\n\n_Задайте любой вопрос или выберите один из примеров ниже!_', time: '09:00' },
+        { id: 's1', type: 'tip', text: '💡 **Совет дня**\n\nДобавьте в рацион **ферментированные продукты** (кефир, квашеную капусту, комбучу). Они богаты пробиотиками, которые улучшают микробиом кишечника — а это напрямую влияет на иммунитет, настроение и усвоение нутриентов.\n\n_Источник: Nature Reviews Gastroenterology & Hepatology, 2023_', time: '09:05' },
+        { id: 's2', type: 'task', text: '📋 **Задание**\nЗаполните дневник питания за сегодня', code: 'EAT_01', deadline: '23:59', done: false, category: 'food' },
+        { id: 's3', type: 'task', text: '🚶 **Задание**\nПройдите 8000 шагов', code: 'PHY_01', deadline: '22:00', done: false, category: 'physical' },
+        { id: 's4', type: 'poll', text: '🔬 **Мини-опрос**\n\nКакой фактор, по вашему мнению, наиболее важен для долгосрочного здоровья?', options: ['🏋️ Физическая активность', '🥗 Питание', '😴 Качество сна', '🧠 Психоэмоциональное состояние'], voted: false, selectedOption: null, time: '09:10' },
+        { id: 's5', type: 'user', text: 'Расскажи подробнее о моём профиле', time: '09:15' },
+        { id: 's6', type: 'bot', text: 'Вот сводка по вашему цифровому двойнику:\n\n**Антропометрия:** рост 170 см, вес 64 кг, ИМТ 22.1 ✅\n**Витальные:** АД 118/76 ✅, ЧСС 70 уд/мин ✅, SpO₂ 98% ✅\n**Лаборатории:** глюкоза 95 мг/дл ✅, HbA1c 5.4% ✅, холестерин 200 мг/дл ⚠️\n**Образ жизни:** сон 7 ч ⚠️, стресс 5/10 🟡, шаги 6500 🟡\n\nРекомендую:\n1. Увеличить шаги до 10000/день\n2. Добавить 30 мин кардио 3 раза в неделю\n3. Пить 2+ литра воды', time: '09:16' },
+      ]);
+    } else if (!chatActiveScreen) {
+      setChatProtoMsgs([]);
+    }
+  }, [chatActiveScreen]);
+
+  const emojiSvgs = {
+    '🧬': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6b21c8" stroke-width="2" stroke-linecap="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4 6a8 8 0 0 1 16 0"/><path d="M4 18a8 8 0 0 0 16 0"/><path d="M5 8.4A9 9 0 0 0 5 15.6"/><path d="M19 8.4a9 9 0 0 1 0 7.2"/></svg>',
+    '🎯': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#e53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>',
+    '📋': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#5c6bc0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h3v18H5V3h3"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="13" y2="14"/></svg>',
+    '❓': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#ff7043" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    '📊': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#43a047" stroke-width="2" stroke-linecap="round"><line x1="4" y1="20" x2="20" y2="20"/><line x1="6" y1="16" x2="6" y2="10"/><line x1="12" y1="16" x2="12" y2="6"/><line x1="18" y1="16" x2="18" y2="2"/></svg>',
+    '💡': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#ffb300" stroke-width="2" stroke-linecap="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A6 6 0 0 0 6 12c0 4 3 5 3 5h6s1-.37 1.09-1z"/></svg>',
+    '🚶': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M13 17v5"/><path d="M11 12l-3 5h5l2 5"/><path d="M8 10l-2 4"/></svg>',
+    '🔬': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#0288d1" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="6" y1="10" x2="14" y2="10"/><line x1="10" y1="6" x2="10" y2="14"/></svg>',
+    '🏋️': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#ff7043" stroke-width="2" stroke-linecap="round"><path d="M6 8l-2 2v4l2 2"/><path d="M18 8l2 2v4l-2 2"/><rect x="6" y="5" width="12" height="14" rx="2"/></svg>',
+    '🥗': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#43a047" stroke-width="2" stroke-linecap="round"><path d="M6 13c0 5 3 8 6 8s6-3 6-8"/><path d="M3 13h18"/><path d="M12 3v10"/><path d="M8 3l4 4 4-4"/></svg>',
+    '😴': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#5c6bc0" stroke-width="2" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M20 12a8 8 0 0 1-8 8"/><line x1="8" y1="8" x2="11" y2="8"/><line x1="13" y1="8" x2="14" y2="8"/><line x1="8" y1="13" x2="16" y2="13"/></svg>',
+    '🧠': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#ab47bc" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/><path d="M9 12h6"/><path d="M9 8h6"/></svg>',
+    '⚠️': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#ff6f00" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    '✅': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="#2e7d32" stroke="none"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    '🟡': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="10" fill="#ffb300" stroke="none"/></svg>',
+    '⏰': '<svg class="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  };
+
+  const renderMsgText = (text) => {
+    let html = text.replace(/\n/g, '<br/>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    for (const [emoji, svg] of Object.entries(emojiSvgs)) {
+      html = html.replaceAll(emoji, svg);
+    }
+    return html;
   };
 
   const getStatusColor = (status) => {
@@ -1158,6 +1550,18 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         physical_activity: profileOverrides.exercise_freq ?? profile.lifestyle.physical_activity,
         exercise_type: profileOverrides.exercise_type ?? profile.lifestyle.exercise_type,
         diet: profileOverrides.diet ?? profile.lifestyle.diet,
+        rpp: (() => {
+          const rppVal = profileOverrides.rpp;
+          if (rppVal || rppFormData) {
+            return {
+              types: rppVal ? rppVal.split(', ').filter(Boolean) : (rppFormData?.types || []),
+              frequency: rppFormData?.frequency || 'Ежедневно',
+              triggers: rppFormData?.triggers || '',
+              notes: rppFormData?.notes || '',
+            };
+          }
+          return profile.lifestyle.rpp || undefined;
+        })(),
       } : undefined,
       demographics: profile.demographics ? {
         ...profile.demographics,
@@ -1280,8 +1684,14 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                   </div>
                 </div>
                 <div className="protocols-list">
-                  {recommendedProtocols.length > 0 ? recommendedProtocols.map((protocol) => (
-                    <div key={protocol.protocolKey || protocol.key} className="protocol-card" onClick={() => { setSelectedProtocolForPopup(protocol); setShowProtocolPopup(true); }}>
+                   {recommendedProtocols.length > 0 ? recommendedProtocols.map((protocol) => (
+                    <div key={protocol.protocolKey || protocol.key} className="protocol-card"
+                      draggable="true"
+                      onDragStart={(e) => {
+                        e.dataTransfer.setData('text/plain', protocol.protocolKey || protocol.key);
+                        e.dataTransfer.effectAllowed = 'copy';
+                      }}
+                      onClick={() => { setSelectedProtocolForPopup(protocol); setShowProtocolPopup(true); }}>
                       <div className="protocol-card-header">
                         <span className="protocol-card-name">{protocol.name}</span>
                         <button className="daw-btn" title="Добавить на таймлайн" onClick={(e) => { e.stopPropagation(); addProtocolToTimeline(protocol.protocolKey || protocol.key); }}>
@@ -1299,7 +1709,13 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </div>
                   )) : (
                     Object.entries(protocols).slice(0, 6).map(([key, proto]) => (
-                      <div key={key} className="protocol-card" onClick={() => { setSelectedProtocolForPopup(proto); setShowProtocolPopup(true); }}>
+                      <div key={key} className="protocol-card"
+                        draggable="true"
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData('text/plain', key);
+                          e.dataTransfer.effectAllowed = 'copy';
+                        }}
+                        onClick={() => { setSelectedProtocolForPopup(proto); setShowProtocolPopup(true); }}>
                         <div className="protocol-card-header">
                           <span className="protocol-card-name">{proto.name}</span>
                           <button className="daw-btn" title="Добавить на таймлайн" onClick={(e) => { e.stopPropagation(); addProtocolToTimeline(key); }}>
@@ -1624,16 +2040,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
 
 {/* Full Attribute Catalog Table - 2 columns per section */}
           {/* Profile Header with Photo + Targets */}
-          {profile && (
-            <div className="profile-header-card">
-              {profile.photo && (
-                <img
-                  src={`/images/pers/150_150/${profile.photo}`}
-                  alt={profile.name || 'Profile'}
-                  className="profile-header-photo"
-                  onError={(ev) => { ev.target.style.display = 'none'; }}
-                />
-              )}
               <div className="profile-header-content">
                 <div className="profile-header-top">
                   <div className="profile-header-info">
@@ -1675,16 +2081,29 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <h2 className="profile-header-name">{profile.name || (() => { try { const p = profile.photo?.replace(/\.\w+$/, '').split('_'); return p?.slice(1).find(s => !/^\d+$/.test(s)) || '—'; } catch(e) { return '—'; } })()}</h2>
                       {(() => { const codes = [...new Set(timelineInterventions.map(i => i.code))]; const has = codes.length > 0; return (
                         <div className={`plan-status-bar${has ? ' has-plan' : ''}`}>
-                          <button className="plan-status-btn" onClick={() => setShowPlanPopup(true)} title="План интервенций">
+                          <div className="plan-drop-zone"
+                            onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }}
+                            onDragLeave={(e) => { e.currentTarget.classList.remove('drag-over'); }}
+                            onDrop={(e) => {
+                              e.preventDefault();
+                              e.currentTarget.classList.remove('drag-over');
+                              const key = e.dataTransfer.getData('text/plain');
+                              if (key) {
+                                addProtocolToTimeline(key);
+                                setTimeout(() => setShowPlanPopup(true), 150);
+                              }
+                            }}
+                            onClick={() => setShowPlanPopup(true)}
+                            title="Перетащите протокол сюда или нажмите для просмотра плана">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                            План
+                            <span className="plan-drop-label">{has ? 'План' : 'Перетащите протокол'}</span>
                             {has && (
                               <span className="plan-status-dots">
                                 <span className="plan-status-dot dot-protocols" title={`${codes.length} протоколов`}>{codes.length}</span>
                                 <span className="plan-status-dot dot-interventions" title={`${timelineInterventions.length} интервенций`}>{timelineInterventions.length}</span>
                               </span>
                             )}
-                          </button>
+                          </div>
                         </div>
                       );})()}
                       <div className="profile-header-meta">
@@ -1730,7 +2149,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     }));
                     msgs.sort((a, b) => a.day - b.day);
                     setChatMessages(msgs);
-                    setShowChat(true);
+                    setPhoneOverlayTab('chat');
                   }}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -1941,28 +2360,19 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     )}
                   </span>
                 </div>
-                <div className="profile-targets">
+                <div className="profile-targets" onClick={() => { setShowGoalChat(true); setGoalChatStep(0); }} style={{ cursor: 'pointer' }}>
                   <span className="targets-label">Цели:</span>
                   <div className="targets-badges">
-                    {Object.entries(attributeCatalog).flatMap(([sectionKey, section]) =>
-                      section.attributes
-                        .filter(attr => attr.target !== null && attr.target !== undefined && (targetValues[attr.id] ?? attr.target) !== null)
-                        .slice(0, 4)
-                        .map(attr => {
-                          const alert = parameterAlerts[attr.id] || parameterAlerts[attr.name];
-                          return (
-                            <span
-                              key={`target_${attr.id}`}
-                              className={`target-badge ${alert ? 'alert' : ''}`}
-                              title={`${attr.name}: текущее ${getAttrCurrent(attr)} → цель ${targetValues[attr.id] ?? attr.target} ${attr.unit}`}
-                            >
-                              <span className="target-badge-dot" style={{ backgroundColor: attributeCatalog[sectionKey].color }}></span>
-                              <span className="target-badge-name">{attr.name}</span>
-                              <span className="target-badge-value">{targetValues[attr.id] ?? attr.target}{attr.unit}</span>
-                            </span>
-                          );
-                        })
-                    ).slice(0, 6)}
+                    {chatGoals.length === 0 ? (
+                      <span className="targets-empty">не выбраны — нажмите, чтобы задать</span>
+                    ) : (
+                      chatGoals.slice(0, 3).map(g => (
+                        <span key={g.id} className="target-badge" title={g.name}>
+                          <span className="target-badge-dot" style={{ backgroundColor: '#6b21c8' }}></span>
+                          <span className="target-badge-name">{g.icon} {g.name}</span>
+                        </span>
+                      ))
+                    )}
                   </div>
                 </div>
                 {recommendedProtocols.length > 0 && (
@@ -1982,13 +2392,25 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     </div>
                   </div>
                 )}
-              </div>
             </div>
-          )}
+          </div>
 
           <div className="data-panel">
+            {(() => {
+              const allAttrs = Object.values(attributeCatalog).flatMap(s => s.attributes);
+              const totalAll = allAttrs.length;
+              const filledAll = allAttrs.filter(a => { const v = getAttrCurrent(a); return v !== null && v !== undefined && v !== ''; }).length;
+              return (
+                <div className="data-panel-summary" style={{ padding: '6px 12px', fontSize: '12px', color: '#666', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Всего параметров: <strong>{totalAll}</strong></span>
+                  <span>Заполнено: <strong>{filledAll}</strong> из <strong>{totalAll}</strong> ({Math.round(filledAll / totalAll * 100)}%)</span>
+                </div>
+              );
+            })()}
             {Object.entries(attributeCatalog).map(([key, section]) => {
               const isCollapsed = collapsedSections[key];
+              const sectionFilled = section.attributes.filter(a => { const v = getAttrCurrent(a); return v !== null && v !== undefined && v !== ''; }).length;
+              const sectionTotal = section.attributes.length;
               return (
                 <div key={key} className="data-section" style={{ borderLeft: `3px solid ${section.color}` }}>
                   <div className="section-header" onClick={() => setCollapsedSections(prev => ({ ...prev, [key]: !prev[key] }))}>
@@ -1999,6 +2421,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         </svg>
                       </button>
                       <h4 style={{ color: section.color }}>{section.title}</h4>
+                      <span style={{ marginLeft: '8px', fontSize: '11px', color: '#999', fontWeight: 'normal' }}>{sectionFilled}/{sectionTotal}</span>
                     </div>
                     <button className="collapse-btn" title={isCollapsed ? 'Развернуть' : 'Свернуть'}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
@@ -2035,13 +2458,16 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         const alert = parameterAlerts[attr.id] || parameterAlerts[attr.name];
                         const interventions = getInterventionsForAttribute(attr.id);
                         const isEditing = editingField === `${key}_${attr.id}`;
+                        const isExpanded = expandedAttr === attr.id;
                         return (
+                          <React.Fragment key={attr.id}>
                           <div
-                            key={attr.id}
-                            className={`attr-row ${isAttributeAffected(attr.name) || isAttributeAffected(attr.id) ? 'highlighted' : ''} ${alert ? 'alert' : ''}`}
+                            className={`attr-row ${isAttributeAffected(attr.name) || isAttributeAffected(attr.id) ? 'highlighted' : ''} ${alert ? 'alert' : ''} ${isExpanded ? 'expanded' : ''}`}
+                            onClick={() => setExpandedAttr(isExpanded ? null : attr.id)}
+                            style={{ cursor: 'pointer' }}
                           >
                             <span className="attr-code">{attr.code}</span>
-                            <span className="attr-name">{attr.name}</span>
+                            <span className="attr-name">{attr.name}{attr.unit ? <span className="unit" style={{marginLeft:2}}>{attr.unit}</span> : ''}</span>
                             <div className={`attr-cell orig ${attr.id in profileOverrides && attr.current != null ? 'has-orig' : ''}`}>
                               {attr.id in profileOverrides && attr.current != null ? formatAttrValue(attr.current) : '—'}
                             </div>
@@ -2061,7 +2487,12 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                   onDoubleClick={() => attr.editable && startEdit(key, attr.id, getAttrCurrent(attr))}
                                   title={attr.editable ? 'Двойной клик для редактирования' : ''}
                                 >
-                                  {formatAttrValue(getAttrCurrent(attr))}
+                                  {attr.id === 'rpp' ? (() => {
+                                    const cur = getAttrCurrent(attr);
+                                    const types = cur && cur !== 'Нет' ? String(cur).split(', ') : [];
+                                    const cnt = types.length;
+                                    return cnt > 0 ? <span style={{ fontWeight: 600, color: '#6b21c8' }}>{cnt} {cnt === 1 ? 'тип' : 'типа'}</span> : <span>Нет</span>;
+                                  })() : formatAttrValue(getAttrCurrent(attr))}
                                   {alert && (
                                     <span className="alert-badge" title={alert.message}>
                                       {alert.direction === 'up' ? (
@@ -2075,7 +2506,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                                   )}
                                 </span>
                               )}
-                              {attr.unit && <span className="unit">{attr.unit}</span>}
                             </div>
                             <div className="attr-cell target">
                               <button className="target-btn" onClick={() => decrementTarget(attr.id, targetValues[attr.id] ?? attr.target)}>-</button>
@@ -2132,16 +2562,119 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                               }
                               return cells;
                             })()}
-                          </div>
+                            </div>
+                          {isExpanded && (
+                            <div className="attr-detail" onClick={e => e.stopPropagation()}>
+                              {(() => {
+                                if (attr.id === 'rpp') {
+                                  if (!rppFormData && profile) {
+                                    const initialTypes = profileOverrides.rpp ? profileOverrides.rpp.split(', ') : (profile?.lifestyle?.rpp && profile.lifestyle.rpp !== 'Нет' ? [profile.lifestyle.rpp] : []);
+                                    setTimeout(() => setRppFormData({
+                                      types: initialTypes,
+                                      frequency: 'Ежедневно',
+                                      triggers: '',
+                                      notes: '',
+                                    }), 0);
+                                  }
+                                  const form = rppFormData || {
+                                    types: profileOverrides.rpp ? profileOverrides.rpp.split(', ') : (profile?.lifestyle?.rpp && profile.lifestyle.rpp !== 'Нет' ? [profile.lifestyle.rpp] : []),
+                                    frequency: 'Ежедневно',
+                                    triggers: '',
+                                    notes: '',
+                                  };
+                                  const rppOptions = (attr.options || ['Нет','Анорексия','Булимия','Компульсивное переедание','Орторексия']);
+                                  const handleRppCheck = (opt, checked) => {
+                                    const nextTypes = checked ? [...form.types, opt] : form.types.filter(t => t !== opt);
+                                    const newOverrides = { ...profileOverrides, rpp: nextTypes.join(', ') || 'Нет' };
+                                    setProfileOverrides(newOverrides);
+                                    setRppFormData({ ...form, types: nextTypes });
+                                  };
+                                  const handleRppField = (field, value) => {
+                                    const next = { ...form, [field]: value };
+                                    setRppFormData(next);
+                                    if (field === 'frequency') {
+                                      localStorage.setItem('healora_rpp_frequency', value);
+                                    }
+                                    if (field === 'triggers') {
+                                      localStorage.setItem('healora_rpp_triggers', value);
+                                    }
+                                    if (field === 'notes') {
+                                      localStorage.setItem('healora_rpp_notes', value);
+                                    }
+                                  };
+                                  return (
+                                    <div className="rpp-checklist">
+                                      <div className="attr-detail-title">Оценка РПП</div>
+                                      <div className="rpp-check-row">
+                                        <span className="rpp-check-label">Текущий статус:</span>
+                                        <span className="rpp-check-value">{form.types.length > 0 ? `${form.types.length} типа: ${form.types.join(', ')}` : 'Нет'}</span>
+                                      </div>
+                                      <div className="rpp-check-row">
+                                        <span className="rpp-check-label">Типы расстройств:</span>
+                                      </div>
+                                      {rppOptions.filter(o => o !== 'Нет').map(opt => (
+                                        <label key={opt} className="rpp-check-item">
+                                          <input type="checkbox" checked={form.types.includes(opt)} onChange={e => handleRppCheck(opt, e.target.checked)} />
+                                          <span>{opt}</span>
+                                        </label>
+                                      ))}
+                                      <div className="rpp-check-row" style={{ marginTop: 8 }}>
+                                        <span className="rpp-check-label">Частота:</span>
+                                        <select className="rpp-select" value={form.frequency} onChange={e => handleRppField('frequency', e.target.value)}>
+                                          <option>Ежедневно</option>
+                                          <option>Несколько раз в неделю</option>
+                                          <option>Раз в неделю</option>
+                                          <option>Реже</option>
+                                        </select>
+                                      </div>
+                                      <div className="rpp-check-row">
+                                        <span className="rpp-check-label">Триггеры:</span>
+                                        <textarea className="rpp-textarea" rows={2} placeholder="Опишите триггеры..." value={form.triggers} onChange={e => handleRppField('triggers', e.target.value)} />
+                                      </div>
+                                      <div className="rpp-check-row">
+                                        <span className="rpp-check-label">Заметки:</span>
+                                        <textarea className="rpp-textarea" rows={2} placeholder="Дополнительные заметки..." value={form.notes} onChange={e => handleRppField('notes', e.target.value)} />
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                                const meta = paramDetailData[attr.id] || paramDetailData[attr.name];
+                                if (!meta || (!meta.description && !meta.medical && !meta.nutritional && !meta.tips)) {
+                                  return <div className="attr-detail-empty">Нет дополнительных данных</div>;
+                                }
+                                return (
+                                  <div className="param-detail">
+                                    <div className="attr-detail-title">{attr.name}</div>
+                                    {meta.description && <div className="attr-detail-desc">{meta.description}</div>}
+                                    {meta.medical && (
+                                      <div className="attr-detail-range medical">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                        <span className="range-label">Медицинская норма:</span>
+                                        <span className="range-value">{meta.medical}</span>
+                                      </div>
+                                    )}
+                                    {meta.nutritional && (
+                                      <div className="attr-detail-range nutritional">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                                        <span className="range-label">Нутрициологическая норма:</span>
+                                        <span className="range-value">{meta.nutritional}</span>
+                                      </div>
+                                    )}
+                                    {meta.tips && <div className="attr-detail-tips">{meta.tips}</div>}
+                                  </div>
+                                );
+                              })()}
+                            </div>
+                          )}
+                          </React.Fragment>
                         );
-                      })}
-                    </div>
+                        })}
+                      </div>
                   )}
                 </div>
               );
             })}
           </div>
-           </div>
           {showInterventionPopup && selectedInterventionForPopup && (
             <div className="intervention-popup-overlay" onClick={() => setShowInterventionPopup(false)}>
               <div className="intervention-popup" onClick={(e) => e.stopPropagation()}>
@@ -2319,6 +2852,118 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
             </div>
           )}
 
+          {/* Goal Chat Popup */}
+          {showGoalChat && (
+            <div className="goal-chat-overlay" onClick={() => setShowGoalChat(false)}>
+              <div className="goal-chat-popup" onClick={(e) => e.stopPropagation()}>
+                <div className="goal-chat-header">
+                  <span>{icon.target} Выбор целей</span>
+                  <button className="goal-chat-close" onClick={() => setShowGoalChat(false)}>×</button>
+                </div>
+                <div className="goal-chat-body">
+                  {/* Step 0: greeting */}
+                  {goalChatStep === 0 && (
+                    <div className="goal-chat-message">
+                      <div className="goal-msg-avatar">🤖</div>
+                      <div className="goal-msg-bubble">
+                        <div className="goal-msg-text">Привет! Давайте выберем ваши цели на ближайшее время. Какие показатели вы хотите улучшить? Можно выбрать <b>до 3</b>.</div>
+                        <div className="goal-msg-options">
+                          {GOAL_OPTIONS.filter(g => !chatGoals.find(c => c.id === g.id)).map(g => (
+                            <button key={g.id} className="goal-option-btn"
+                              onClick={() => {
+                                if (chatGoals.length >= 3) return;
+                                const newGoals = [...chatGoals, g];
+                                setChatGoals(newGoals);
+                                setGoalChatLog(prev => [...prev, { type: 'user', icon: g.icon, name: g.name }]);
+                                if (newGoals.length >= 3) {
+                                  setGoalChatStep(2);
+                                }
+                              }}>
+                              {g.icon} {g.name}
+                            </button>
+                          ))}
+                          {chatGoals.length > 0 && goalChatStep === 0 && (
+                            <button className="goal-option-btn goal-option-done"
+                              onClick={() => setGoalChatStep(2)}>
+                              ✅ Готово ({chatGoals.length}/3)
+                            </button>
+                          )}
+                        </div>
+                        {chatGoals.length === 0 && (
+                          <div className="goal-msg-hint">Выберите одну или несколько целей из списка выше</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Logged selections */}
+                  {goalChatLog.map((entry, i) => (
+                    <div key={i} className={`goal-chat-message ${entry.type === 'user' ? 'goal-msg-user' : ''}`}>
+                      <div className="goal-msg-avatar">{entry.type === 'user' ? icon.person : icon.robot}</div>
+                      <div className="goal-msg-bubble"><div className="goal-msg-text">{entry.icon} {entry.name}</div></div>
+                    </div>
+                  ))}
+
+                  {/* Step 2: confirm */}
+                  {goalChatStep === 2 && (
+                    <div className="goal-chat-message">
+                      <div className="goal-msg-avatar">🤖</div>
+                      <div className="goal-msg-bubble">
+                        <div className="goal-msg-text">
+                          <b>Ваши цели ({chatGoals.length}/3):</b>
+                          <div className="goal-confirm-list">
+                            {chatGoals.map(g => (
+                              <div key={g.id} className="goal-confirm-item">{g.icon} {g.name}</div>
+                            ))}
+                          </div>
+                          Подтверждаем?
+                        </div>
+                        <div className="goal-msg-options">
+                          <button className="goal-option-btn goal-option-yes" onClick={() => { setGoalChatStep(3); }}>
+                            ✅ Да, подтвердить
+                          </button>
+                          <button className="goal-option-btn goal-option-no" onClick={() => {
+                            setChatGoals([]);
+                            setGoalChatLog([]);
+                            setGoalChatStep(0);
+                          }}>
+                            🔄 Выбрать заново
+                          </button>
+                          {chatGoals.length < 3 && (
+                            <button className="goal-option-btn" onClick={() => setGoalChatStep(0)}>
+                              ➕ Добавить ещё
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3: done */}
+                  {goalChatStep === 3 && (
+                    <div className="goal-chat-message">
+                      <div className="goal-msg-avatar">🤖</div>
+                      <div className="goal-msg-bubble">
+                        <div className="goal-msg-text">
+                          ✅ <b>Цели сохранены!</b>
+                          <div className="goal-confirm-list">
+                            {chatGoals.map(g => (
+                              <div key={g.id} className="goal-confirm-item">{g.icon} {g.name}</div>
+                            ))}
+                          </div>
+                          Я буду отслеживать прогресс по этим показателям.
+                        </div>
+                        <button className="goal-option-btn goal-option-yes" onClick={() => setShowGoalChat(false)} style={{ marginTop: 10 }}>
+                          🎯 К целям
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* History Popup (Full Report) */}
           {showHistoryPopup && (
             <div className="history-popup-overlay" onClick={() => setShowHistoryPopup(false)}>
@@ -2448,264 +3093,15 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
           {/* Plan Popup */}
           {showPlanPopup && (
             <div className="plan-popup-overlay" onClick={() => setShowPlanPopup(false)}>
-              <div className="plan-popup plan-prescription" onClick={(e) => e.stopPropagation()}>
-                <div className="plan-popup-header">
-                  <div className="plan-popup-header-left">
-                    <div className="plan-popup-badge">🏥 НАЗНАЧЕНИЕ HEALORA</div>
-                    {(() => {
-                      const allPlans = Object.entries(plans || {}).filter(([, p]) => p.interventions?.length > 0);
-                      const currentProfileId = profileId;
-                      const filtered = allPlans.filter(([pid, p]) => {
-                        if (!planSearchQuery) return true;
-                        const q = planSearchQuery.toLowerCase();
-                        const profileData = fallbackProfiles[pid];
-                        const name = (profileData?.name || pid).toLowerCase();
-                        return name.includes(q) || pid.toLowerCase().includes(q) || p.status?.includes(q);
-                      });
-                      const currentProfileData = fallbackProfiles[currentProfileId];
-                      const currentName = currentProfileData?.name || currentProfileId || '—';
-                      const currentCount = currentProfileId && plans[currentProfileId]?.interventions ? new Set(plans[currentProfileId].interventions.map(i => i.code)).size : 0;
-                      const currentTotal = plans[currentProfileId]?.interventions?.length || 0;
-                      const currentDone = plans[currentProfileId]?.interventions?.filter(i => i.day <= simulationDay).length || 0;
-                      const currentPct = currentTotal > 0 ? Math.round(currentDone / currentTotal * 100) : 0;
-                      return (
-                        <div className="plan-search-dropdown">
-                          <div className="plan-search-current" onClick={() => setPlanSearchOpen(v => !v)}>
-                            <span className="plan-search-label">{currentName}</span>
-                            <span className="plan-search-summary">{currentCount} протоколов · {currentPct}%</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"
-                              style={{ transform: planSearchOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
-                              <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                          </div>
-                          {planSearchOpen && (
-                            <div className="plan-search-panel">
-                              <div className="plan-search-input-wrap">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                                <input className="plan-search-input" type="text" placeholder="Поиск клиента..." value={planSearchQuery} onChange={e => setPlanSearchQuery(e.target.value)} autoFocus />
-                              </div>
-                              <div className="plan-search-results">
-                                {filtered.length === 0 ? (
-                                  <div className="plan-search-empty">Ничего не найдено</div>
-                                ) : (
-                                  filtered.map(([pid, p]) => {
-                                    const profileData = fallbackProfiles[pid];
-                                    const name = profileData?.name || pid;
-                                    const count = new Set(p.interventions.map(i => i.code)).size;
-                                    const total = p.interventions.length;
-                                    const done = p.interventions.filter(i => i.day <= (profileId === pid ? simulationDay : 0)).length;
-                                    const pct = total > 0 ? Math.round(done / total * 100) : 0;
-                                    const isActive = pid === currentProfileId;
-                                    return (
-                                      <div key={pid} className={`plan-search-result ${isActive ? 'active' : ''}`} onClick={() => {
-                                        if (pid !== currentProfileId) {
-                                          const saved = getPlan(pid);
-                                          setTimelineInterventions(saved.interventions);
-                                          setPlanDoctorNote(saved.note || '');
-                                          setPlanStatus(saved.status || 'active');
-                                          setPlanTemplateId(saved.templateId || 'custom');
-                                        }
-                                        setPlanSearchOpen(false);
-                                        setPlanSearchQuery('');
-                                      }}>
-                                        <span className="plan-search-result-name">{name}</span>
-                                        <span className="plan-search-result-meta">
-                                          {count} протоколов · {p.status === 'active' ? '▶ Активен' : p.status === 'stopped' ? '⏹ Остановлен' : '📦 Архив'} · {pct}%
-                                        </span>
-                                      </div>
-                                    );
-                                  })
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })()}
-                  </div>
-                  <div className="plan-popup-header-actions">
-                    <select className="plan-template-select" value={planTemplateId} onChange={e => setPlanTemplateId(e.target.value)}>
-                      {planTemplates.map(t => (
-                        <option key={t.id} value={t.id}>{t.name}</option>
-                      ))}
-                    </select>
-                    <button className="daw-btn" onClick={() => window.print()}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
-                      </svg>
-                      Скачать PDF
-                    </button>
-                    <button className="plan-popup-close" onClick={() => setShowPlanPopup(false)}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                        <line x1="18" y1="6" x2="6" y2="18"/>
-                        <line x1="6" y1="6" x2="18" y2="18"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="plan-popup-body">
-                  {(() => {
-                    const template = getTemplateById(planTemplateId);
-                    const uniqueCodes = [...new Set(timelineInterventions.map(i => i.code))];
-                    const hasPlan = uniqueCodes.length > 0;
-                    const items = hasPlan
-                      ? uniqueCodes.map(code => timelineInterventions.find(i => i.code === code))
-                      : template.interventions;
-                    return (
-                      <>
-                        <div className="plan-doctor-block">
-                          <div className="plan-doctor-info">
-                            <div className="plan-info-row"><span className="plan-info-label">Пациент:</span><span className="plan-info-value">{profile?.name || profileId || '—'}</span></div>
-                            <div className="plan-info-row"><span className="plan-info-label">Врач:</span><span className="plan-info-value">{template.doctor}</span></div>
-                            <div className="plan-info-row"><span className="plan-info-label">Дата:</span><span className="plan-info-value">{new Date().toLocaleDateString('ru-RU')}</span></div>
-                            <div className="plan-info-row"><span className="plan-info-label">Срок:</span><span className="plan-info-value">30 дней</span></div>
-                          </div>
-                        </div>
-
-                        <div className="plan-summary-block">
-                          <h4 className="plan-section-title">Заключение</h4>
-                          <p className="plan-summary-text">{template.summary}</p>
-                          <div className="plan-highlight">{template.highlight}</div>
-                        </div>
-
-                        {hasPlan && (
-                          <div className="plan-badges-section">
-                            <h4 className="plan-section-title">Назначенные интервенции</h4>
-                            <div className="plan-badges-list">
-                              {uniqueCodes.map(code => {
-                                const item = timelineInterventions.find(i => i.code === code);
-                                if (!item) return null;
-                                return (
-                                  <span key={code} className="plan-badge" title={item.name}>
-                                    <span className="plan-badge-name">{item.name}</span>
-                                    <span className="plan-badge-code">{code}</span>
-                                    <button className="plan-badge-remove" onClick={() => removeIntervention(code)} title="Убрать">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="10" height="10"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                                    </button>
-                                  </span>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="plan-interventions-section">
-                          <h4 className="plan-section-title">План назначений</h4>
-                          {items.length === 0 ? (
-                            <div className="plan-empty-guide">
-                              <div className="plan-empty-wishes">
-                                <p>🌟 Ваш путь к здоровью начинается здесь!</p>
-                                <p>HEALORA поможет вам выработать полезные привычки, улучшить сон, питание и физическую активность. Каждый маленький шаг приближает вас к большой цели.</p>
-                              </div>
-                              <div className="plan-empty-steps">
-                                <h4>Как начать:</h4>
-                                <ol>
-                                  <li><strong>Оцените здоровье</strong> — нажмите кнопку «Оценить здоровье» в панели профиля. Система проанализирует ваши текущие показатели и предложит цели.</li>
-                                  <li><strong>Выберите цели</strong> — отметьте атрибуты, которые хотите улучшить (вес, сон, активность, стресс и др.).</li>
-                                  <li><strong>Назначьте интервенции</strong> — перетащите протоколы из каталога на таймлайн или выберите готовый протокол из селектора шаблонов выше.</li>
-                                  <li><strong>Следуйте плану</strong> — после создания плана вы сможете отмечать выполненные интервенции в чате и отслеживать прогресс.</li>
-                                </ol>
-                              </div>
-                              <button className="plan-create-btn" onClick={() => { createPlanByCategories(); setPlanStatus('active'); }}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-                                Создать план
-                              </button>
-                            </div>
-                          ) : (
-                            <table className="plan-table plan-table-prescription">
-                              <thead>
-                                <tr><th>№</th><th>Интервенция</th><th>Код</th><th>Per</th><th>Расписание</th></tr>
-                              </thead>
-                              <tbody>
-                                {items.map((item, i) => {
-                                  const sched = item.schedule || (interventionCatalog[item.code] && interventionCatalog[item.code].schedule);
-                                  const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-                                  const schedStr = sched ? (sched.days.map(d => dayNames[d]).join(',') + (sched.time ? ' ' + sched.time : '')) : '';
-                                  return (
-                                  <tr key={item.code || i}>
-                                    <td className="plan-num">{i + 1}</td>
-                                    <td>{item.name}</td>
-                                    <td className="plan-code">{item.code}</td>
-                                    <td className="plan-reg">{item.regularity === 'D' ? 'Д' : item.regularity === 'W' ? 'Н' : item.regularity === 'M' ? 'М' : item.regularity === 'Y' ? 'Г' : item.regularity || 'Д'}</td>
-                                    <td className="plan-sched">{schedStr}</td>
-                                  </tr>
-                                );})}
-                              </tbody>
-                            </table>
-                          )}
-                        </div>
-
-                        {hasPlan && (
-                          <div className="plan-doctor-note-block">
-                            <h4 className="plan-section-title">Рекомендации врача / нутрициолога</h4>
-                            <textarea
-                              className="plan-doctor-note"
-                              placeholder="Добавьте рекомендации, пояснения к назначениям, режим приёма, особые указания..."
-                              value={planDoctorNote}
-                              onChange={e => setPlanDoctorNote(e.target.value)}
-                              rows={3}
-                            />
-                          </div>
-                        )}
-
-                        {hasPlan && (
-                          <div className="plan-actions-section">
-                            <div className="plan-status-info">
-                              Статус: <span className={`plan-status-tag plan-status-${planStatus}`}>
-                                {planStatus === 'active' ? 'Активен' : planStatus === 'stopped' ? 'Остановлен' : 'Архивирован'}
-                              </span>
-                            </div>
-                            <div className="plan-action-buttons">
-                              <button className="btn-plan-action btn-plan-save" onClick={() => { savePlan(profileId, { interventions: timelineInterventions, note: planDoctorNote, status: planStatus, templateId: planTemplateId }); setShowPlanPopup(false); }}>💾 Сохранить</button>
-                              <button className="btn-plan-action btn-plan-stop" onClick={() => setPlanStatus(prev => prev === 'stopped' ? 'active' : 'stopped')}>
-                                {planStatus === 'stopped' ? '▶ Возобновить' : '⏹ Остановить'}
-                              </button>
-                              <button className="btn-plan-action btn-plan-archive" onClick={() => setPlanStatus('archived')}>📦 Архивировать</button>
-                              <button className="btn-plan-action btn-plan-send">📤 Отправить</button>
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="plan-footer-block">
-                          <div className="plan-qr-block">
-                            <QRCodeSVG value={`https://healora.ru/digital-twin/?plan=${template.id}&profile=${profileId || 'anon'}`} size={100} fgColor="#1a1a2e" />
-                          </div>
-                          <div className="plan-app-mockup">
-                            <svg viewBox="0 0 120 220" width="100%" style={{ maxWidth: 90 }}>
-                              <rect x="10" y="0" width="100" height="210" rx="18" fill="#1a1a2e" stroke="#333" strokeWidth="1"/>
-                              <rect x="14" y="3" width="92" height="18" rx="4" fill="#2d2d5e"/>
-                              <text x="55" y="15" textAnchor="middle" fontSize="6" fill="#fff" fontFamily="sans-serif" fontWeight="bold">HEALORA</text>
-                              <circle cx="55" cy="40" r="12" fill="#613CF5" opacity="0.3"/>
-                              <circle cx="45" cy="36" r="8" fill="#613CF5" opacity="0.5"/>
-                              <circle cx="65" cy="36" r="8" fill="#022374" opacity="0.5"/>
-                              <circle cx="55" cy="36" r="2.5" fill="#fff"/>
-                              <text x="55" y="70" textAnchor="middle" fontSize="4" fill="#aaa" fontFamily="sans-serif">Цифровой двойник</text>
-                              <rect x="20" y="80" width="80" height="4" rx="2" fill="#FEAAE6"/>
-                              <rect x="20" y="80" width="50" height="4" rx="2" fill="#613CF5"/>
-                              <text x="55" y="95" textAnchor="middle" fontSize="4" fill="#666" fontFamily="sans-serif">25/30 · 15/45</text>
-                              <rect x="20" y="105" width="80" height="12" rx="4" fill="#2d2d5e"/>
-                              <text x="24" y="113" fontSize="3.5" fill="#fff" fontFamily="sans-serif">Сон: время отхода</text>
-                              <text x="85" y="113" fontSize="3.5" fill="#4caf50" fontFamily="sans-serif">✓</text>
-                              <rect x="20" y="120" width="80" height="12" rx="4" fill="#2d2d5e"/>
-                              <text x="24" y="128" fontSize="3.5" fill="#fff" fontFamily="sans-serif">Прогулка 30 мин</text>
-                              <rect x="84" y="122" width="14" height="8" rx="2" fill="#333"/>
-                              <circle cx="62" cy="155" r="16" fill="none" stroke="#FEAAE6" strokeWidth="2"/>
-                              <circle cx="62" cy="155" r="16" fill="none" stroke="#613CF5" strokeWidth="2" strokeDasharray="50 50" strokeDashoffset="0" transform="rotate(-90 62 155)"/>
-                              <text x="62" y="159" textAnchor="middle" fontSize="5" fill="#fff" fontFamily="sans-serif">32</text>
-                              <rect x="35" y="190" width="55" height="8" rx="4" fill="#FEAAE6"/>
-                              <text x="62" y="196" textAnchor="middle" fontSize="3.5" fill="#1a1a2e" fontFamily="sans-serif">Напишите сообщение...</text>
-                            </svg>
-                          </div>
-                          <div className="plan-app-caption">
-                            Установите HEALORA для повышения эффективности выполнения рекомендаций
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })()}
-                </div>
+              <div className="plan-popup plan-prescription" onClick={(e) => e.stopPropagation()} style={{ maxHeight: '90vh', overflow: 'hidden' }}>
+                <PlanView profile={profile} profileId={profileId} plans={plans} fallbackProfiles={fallbackProfiles}
+                  planTemplateId={planTemplateId} planDoctorNote={planDoctorNote} planStatus={planStatus}
+                  timelineInterventions={timelineInterventions} interventionCatalog={interventionCatalog}
+                  planTemplates={planTemplates} getTemplateById={getTemplateById} simulationDay={simulationDay}
+                  onSetPlanTemplateId={setPlanTemplateId} onSetPlanDoctorNote={setPlanDoctorNote}
+                  onSetPlanStatus={setPlanStatus} onRemoveIntervention={removeIntervention}
+                  onSavePlan={() => { savePlan(profileId, { interventions: timelineInterventions, note: planDoctorNote, status: planStatus, templateId: planTemplateId }); setShowPlanPopup(false); }}
+                  onClose={() => setShowPlanPopup(false)} />
               </div>
             </div>
           )}
@@ -3083,43 +3479,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       <span className="chat-day-counter">
                         {simulationDay}/30 · {chatMessages.filter(m => m.done || m.skipped).length}/{chatMessages.length}
                       </span>
-                    )}
-                  <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                    {chatMode === 'simulation' && timelineInterventions.length > 0 && !isSimulating && (
-                      <button className="chat-start-btn" onClick={startSimulation}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                          <polygon points="5 3 19 12 5 21 5 3"/>
-                        </svg>
-                        Запустить
-                      </button>
-                    )}
-                    {isSimulating && (
-                      <>
-                        <span className="chat-sim-badge">Симуляция...</span>
-                        <button className="chat-start-btn stop" onClick={stopSimulation}>
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                            <rect x="6" y="6" width="12" height="12"/>
-                          </svg>
-                          Стоп
-                        </button>
-                      </>
-                    )}
-                    <button className={`chat-gigachat-btn ${chatMode === 'gigachat' ? 'active' : ''}`} onClick={() => setChatMode(m => m === 'gigachat' ? 'simulation' : 'gigachat')} title={chatMode === 'gigachat' ? 'Симуляция' : 'GigaChat'}>
-                      {chatMode === 'gigachat' ? (
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                      ) : (
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                       )}
-                    </button>
-                    <button className="chat-close-btn" onClick={() => setShowChat(false)}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                      </svg>
-                    </button>
                   </div>
                 </div>
-              </div>
-                <div className="chat-messages" ref={chatRef}>
+                  <div className="chat-messages" ref={chatRef}>
                   {chatMode === 'gigachat' ? (
                     <>
                       {gigachatMessages.length === 0 && (
@@ -3223,6 +3586,193 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       );
                     })
                   })()}
+                  {chatActiveScreen && (
+                    <div className="chat-screen-viewer">
+                      <div className="chat-screen-viewer-header">
+                        <span className="chat-diary-title">📱 Экран {chatActiveScreen.num}. {chatActiveScreen.name}</span>
+                        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                          {chatActiveScreen.num === 4 && (
+                            <button className="chat-action-btn" onClick={() => { setShowVoicePopup(true); }} style={{ padding: '3px 8px', fontSize: 10, background: '#f8f4ff', color: '#6b21c8', border: '1px solid #e8e0f0', borderRadius: 6, cursor: 'pointer' }} title="Голосовой ввод">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> 🎤
+                            </button>
+                          )}
+                          <button className="chat-diag-close" onClick={() => setChatActiveScreen(null)}>×</button>
+                        </div>
+                      </div>
+                      <div className="chat-screen-viewer-body" onClick={chatActiveScreen.num !== 1 && chatActiveScreen.num !== 5 ? () => setChatScreenPreview(prototypeScreens.indexOf(chatActiveScreen)) : undefined}>
+                        {chatActiveScreen.num === 1 ? (
+                          <div className="chat-profile-sections" onClick={e => e.stopPropagation()}>
+                            <div className="chat-profile-summary">
+                              <span className="chat-profile-summary-name">{profile?.name || '—'}</span>
+                              <span className="chat-profile-summary-score">{profile?.digital_twin_scores?.current_stars || 0} ⭐</span>
+                            </div>
+                            {Object.entries(attributeCatalog).map(([key, section]) => {
+                              const isCollapsed = chatSectionCollapsed[key];
+                              const filled = section.attributes.filter(a => { const v = getAttrCurrent(a); return v !== null && v !== undefined && v !== ''; }).length;
+                              return (
+                                <div key={key} className="chat-profile-section" style={{ borderLeftColor: section.color }}>
+                                  <div className="chat-profile-section-header" onClick={() => setChatSectionCollapsed(prev => ({ ...prev, [key]: !prev[key] }))}>
+                                    <div className="chat-profile-section-title">
+                                      <button className="mic-btn" title="Голосовой ввод" onClick={(e) => { e.stopPropagation(); setVoiceSection(key); setShowVoicePopup(true); const form = {}; attributeCatalog[key]?.attributes.forEach(a => { const v = getAttrCurrent(a); if (v !== null && v !== undefined && v !== '—') form[a.id] = v; }); setVoiceFormValues(form); setVoiceTranscript(''); setVoiceParsedValues([]); setVoiceStatus('idle'); }}>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke={section.color} strokeWidth="2" width="12" height="12"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                      </button>
+                                      <span style={{ color: section.color, fontWeight: 600, fontSize: 11 }}>{section.title}</span>
+                                      <span className="chat-profile-section-count">{filled}/{section.attributes.length}</span>
+                                    </div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" width="12" height="12" style={{ transform: isCollapsed ? 'rotate(0deg)' : 'rotate(90deg)', transition: 'transform 0.15s' }}>
+                                      <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                  </div>
+                                  {!isCollapsed && (
+                                    <div className="chat-profile-section-body">
+                                      {section.attributes.map(attr => (
+                                        <div key={attr.id} className="chat-profile-attr-row">
+                                          <span className="chat-profile-attr-name">{attr.name}{attr.unit ? <span className="chat-profile-attr-unit" style={{marginLeft:2}}>{attr.unit}</span> : ''}</span>
+                                          <span className="chat-profile-attr-code">{attr.code}</span>
+                                          <div className="chat-profile-attr-values">
+                                            <span className="chat-profile-attr-current">{formatAttrValue(getAttrCurrent(attr))}</span>
+                                            {attr.target != null && <span className="chat-profile-attr-target">→ {attr.target}</span>}
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : chatActiveScreen.num === 5 ? (
+                          <div className="chat-proto-chat" onClick={e => e.stopPropagation()}>
+                            <div className="chat-proto-msgs" ref={chatProtoEndRef}>
+                              {chatProtoMsgs.length === 0 ? (
+                                <div className="chat-proto-empty">
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="1.5" width="32" height="32"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                  <span>Спросите у GigaChat о здоровье, питании, тренировках</span>
+                                </div>
+                              ) : (
+                                chatProtoMsgs.map(m => {
+                                  if (m.type === 'system') {
+                                    return (
+                                      <div key={m.id} className="chat-proto-card system">
+                                        <div className="chat-proto-card-body">
+                                          <div className="chat-proto-text" dangerouslySetInnerHTML={{ __html: renderMsgText(m.text) }} />
+                                        </div>
+                                        <span className="chat-interv-time">{m.time}</span>
+                                      </div>
+                                    );
+                                  }
+                                  if (m.type === 'tip') {
+                                    return (
+                                      <div key={m.id} className="chat-proto-card tip">
+                                        <div className="chat-proto-card-body">
+                                          <div className="chat-proto-text" dangerouslySetInnerHTML={{ __html: renderMsgText(m.text) }} />
+                                        </div>
+                                        <span className="chat-interv-time">{m.time}</span>
+                                      </div>
+                                    );
+                                  }
+                                  if (m.type === 'task') {
+                                    const catColors = { sleep: '#2196f3', physical: '#4caf50', mental: '#9c27b0', food: '#ff9800', medical: '#f44336', supplement: '#795548' };
+                                    const color = catColors[m.category] || '#6b21c8';
+                                    return (
+                                      <div key={m.id} className="chat-proto-card task" style={{ borderLeftColor: color }}>
+                                        <div className="chat-proto-card-body">
+                                          <div className="chat-proto-text" dangerouslySetInnerHTML={{ __html: renderMsgText(m.text) }} />
+                                          <div className="chat-proto-task-actions">
+                                            <span className="chat-deadline-label"><svg className="ei" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#c62828" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> до {m.deadline}</span>
+                                            <div style={{ display: 'flex', gap: 6 }}>
+                                              <button className="chat-btn-done" onClick={() => setChatProtoMsgs(prev => prev.map(x => x.id === m.id ? { ...x, done: true } : x))}><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" width="14" height="14" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
+                                              <button className="chat-btn-skip" onClick={() => setChatProtoMsgs(prev => prev.map(x => x.id === m.id ? { ...x, skipped: true } : x))}><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" width="14" height="14" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                                            </div>
+                                          </div>
+                                          {m.done && <div className="chat-proto-task-status done"><svg viewBox="0 0 24 24" fill="#2e7d32" width="12" height="12" style={{verticalAlign: 'middle', marginRight: 2}}><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Выполнено</div>}
+                                          {m.skipped && <div className="chat-proto-task-status skipped"><svg viewBox="0 0 24 24" fill="none" stroke="#c62828" width="12" height="12" stroke-width="3" style={{verticalAlign: 'middle', marginRight: 2}} stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Пропущено</div>}
+                                        </div>
+                                        <span className="chat-interv-time">{m.time}</span>
+                                      </div>
+                                    );
+                                  }
+                                  if (m.type === 'poll') {
+                                    return (
+                                      <div key={m.id} className="chat-proto-card poll">
+                                        <div className="chat-proto-card-body">
+                                          <div className="chat-proto-text" dangerouslySetInnerHTML={{ __html: renderMsgText(m.text) }} />
+                                          <div className="chat-proto-poll-options">
+                                            {m.options.map((opt, i) => (
+                                              <button key={i} className={`chat-proto-poll-opt ${m.voted ? 'disabled' : ''} ${m.selectedOption === i ? 'selected' : ''}`}
+                                                onClick={() => !m.voted && setChatProtoMsgs(prev => prev.map(x => x.id === m.id ? { ...x, voted: true, selectedOption: i } : x))}
+                                                disabled={m.voted}
+                                                dangerouslySetInnerHTML={{ __html: renderMsgText(opt) }}
+                                              />
+                                            ))}
+                                          </div>
+                                          {m.voted && <div className="chat-proto-poll-result"><svg viewBox="0 0 24 24" fill="#2e7d32" width="12" height="12" style={{verticalAlign: 'middle', marginRight: 2}}><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Спасибо, ваш ответ учтён</div>}
+                                        </div>
+                                        <span className="chat-interv-time">{m.time}</span>
+                                      </div>
+                                    );
+                                  }
+                                  if (m.type === 'user') {
+                                    return (
+                                      <div key={m.id} className="chat-proto-msg user">
+                                        <div className="chat-proto-bubble">
+                                          <span className="chat-proto-text">{m.text}</span>
+                                          <span className="chat-interv-time">{m.time}</span>
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+                                  return (
+                                    <div key={m.id} className="chat-proto-msg bot">
+                                      <div className="chat-proto-bubble">
+                                        <span className="chat-proto-text" dangerouslySetInnerHTML={{ __html: renderMsgText(m.text) }} />
+                                        <span className="chat-interv-time">{m.time}</span>
+                                      </div>
+                                    </div>
+                                  );
+                                })
+                              )}
+                              {chatProtoLoading && (
+                                <div className="chat-proto-msg bot">
+                                  <div className="chat-proto-bubble"><span className="chat-proto-text">...</span></div>
+                                </div>
+                              )}
+                            </div>
+                            <div className="chat-proto-input-row">
+                              <input
+                                type="text"
+                                className="chat-proto-input"
+                                placeholder="Напишите сообщение..."
+                                value={chatProtoInput}
+                                onChange={e => setChatProtoInput(e.target.value)}
+                                onKeyDown={e => { if (e.key === 'Enter') handleChatProtoSend(); }}
+                              />
+                              <button className="chat-proto-send" onClick={handleChatProtoSend} disabled={!chatProtoInput.trim()}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <img src={`/screens/${chatActiveScreen.file}`} alt={chatActiveScreen.name} className="chat-screen-viewer-img" />
+                            <div className="chat-screen-viewer-desc">{chatActiveScreen.desc}</div>
+                            {chatActiveScreen.useCases && chatActiveScreen.useCases.length > 0 && (
+                              <div className="chat-screen-msg-tags">
+                                <span className="chat-screen-tag-group usecase">UC</span>
+                                {chatActiveScreen.useCases.map(u => <span key={u} className="chat-screen-tag usecase" title={useCaseLabels[u]}>UC-0{u}</span>)}
+                              </div>
+                            )}
+                            {chatActiveScreen.cjms && chatActiveScreen.cjms.length > 0 && (
+                              <div className="chat-screen-msg-tags">
+                                <span className="chat-screen-tag-group cjm">CJM</span>
+                                {chatActiveScreen.cjms.map(c => <span key={c} className="chat-screen-tag cjm" title={cjmLabels[c]}>CJM-0{c}</span>)}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   {chatInlineMode === 'profile' && (
                     <div className="chat-diary-form" key="chat-profile">
                       <div className="chat-diary-header">
@@ -3403,6 +3953,60 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       </div>
                     </div>
                   )}
+                  {chatScreenPreview !== null && (() => {
+                    const s = prototypeScreens[chatScreenPreview];
+                    return (
+                      <div className="chat-screen-overlay" onClick={() => setChatScreenPreview(null)}>
+                        <div className="chat-screen-lightbox" onClick={e => e.stopPropagation()}>
+                          <button className="chat-screen-lb-close" onClick={() => setChatScreenPreview(null)}>×</button>
+                          <div className="chat-screen-lb-header">Экран {s.num}. {s.name}</div>
+                          <div className="chat-screen-lb-desc">{s.desc}</div>
+                          {s.useCases && s.useCases.length > 0 && (
+                            <div className="chat-screen-lb-tags">
+                              <span className="chat-screen-tag-group usecase">UC</span>
+                              {s.useCases.map(u => <span key={u} className="chat-screen-tag usecase" title={useCaseLabels[u]}>UC-0{u} {useCaseLabels[u]}</span>)}
+                            </div>
+                          )}
+                          {s.cjms && s.cjms.length > 0 && (
+                            <div className="chat-screen-lb-tags">
+                              <span className="chat-screen-tag-group cjm">CJM</span>
+                              {s.cjms.map(c => <span key={c} className="chat-screen-tag cjm" title={cjmLabels[c]}>CJM-0{c} {cjmLabels[c]}</span>)}
+                            </div>
+                          )}
+                          <img src={`/screens/${s.file}`} alt={s.name} className="chat-screen-lb-img" />
+                          <div className="chat-screen-lb-nav">
+                            <button className="chat-screen-lb-btn" disabled={chatScreenPreview === 0} onClick={() => setChatScreenPreview(chatScreenPreview - 1)}>← Пред.</button>
+                            <span className="chat-screen-lb-counter">{chatScreenPreview + 1} / {prototypeScreens.length}</span>
+                            <button className="chat-screen-lb-btn" disabled={chatScreenPreview === prototypeScreens.length - 1} onClick={() => setChatScreenPreview(chatScreenPreview + 1)}>След. →</button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  {showMenuPopup && (() => {
+                    const handleSelect = s => {
+                      if (s.num === 1) { navigate('/profile'); setShowMenuPopup(false); return; }
+                      if (s.num === 6) { navigate('/diary'); setShowMenuPopup(false); return; }
+                      setChatActiveScreen(s);
+                      setShowMenuPopup(false);
+                    };
+                    return (
+                      <div className="chat-screen-overlay menu-popup" onClick={() => setShowMenuPopup(false)}>
+                        <div className="chat-menu-popup" onClick={e => e.stopPropagation()}>
+                          <button className="chat-screen-lb-close" onClick={() => setShowMenuPopup(false)}>×</button>
+                          <div className="chat-menu-header">📱 Меню прототипов экранов</div>
+                          <div className="chat-menu-grid">
+                            {prototypeScreens.map((s, i) => (
+                              <button key={s.num} className="chat-menu-badge" onClick={() => handleSelect(s)}>
+                                <span className="chat-menu-badge-num">{s.num}</span>
+                                <span className="chat-menu-badge-name">{s.name}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
                   {isSimulating && (
                     <div className="chat-typing">
                       <span className="typing-dot"></span>
@@ -3423,6 +4027,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     setChatDiaryData(defaultDiaryData(chatDiaryDay ?? simulationDay));
                   }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Дневник</button>
                   <button className="chat-action-btn" onClick={() => setChatInlineMode(chatInlineMode === 'food' ? 'none' : 'food')}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Фото еды</button>
+                  <button className="chat-action-btn" onClick={() => setShowMenuPopup(true)} style={{ borderLeftColor: '#6b21c8' }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="12" cy="12" r="2"/><path d="M7 3h10l2 4-2 4H7l-2-4 2-4z"/></svg> Меню</button>
                 </div>
                 <div className="chat-input-bar">
                   <input type="text" className="chat-input" ref={chatInputRef} placeholder="Напишите сообщение..." defaultValue="" onKeyDown={e => { if (e.key === 'Enter') handleChatSend(); }} />
@@ -3535,6 +4140,39 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       rows={2}
                       placeholder=""
                     />
+                  </div>
+                )}
+
+                {voiceStatus === 'idle' && (
+                  <div className="voice-idle">
+                    <button className="voice-record-big" onClick={handleStartRecording}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                      </svg>
+                      <span>Начать запись</span>
+                    </button>
+                    <p className="voice-hint">Нажмите кнопку и продиктуйте значения параметров раздела</p>
+                  </div>
+                )}
+
+                {voiceStatus === 'recording' && (
+                  <div className="voice-recording">
+                    <div className="voice-pulse">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#6b21c8" strokeWidth="2" width="32" height="32">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                      </svg>
+                    </div>
+                    <span className="voice-rec-label">Запись...</span>
+                    <button className="voice-stop-btn" onClick={handleStopRecording}>
+                      <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                      Остановить
+                    </button>
                   </div>
                 )}
 
@@ -3659,6 +4297,28 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
           )}
         </>
 
+      )}
+
+      {profile && phoneOverlayTab !== 'none' && (
+        <PhoneSimulator
+          profile={profile}
+          profileId={profileId}
+          phoneOverlayTab={phoneOverlayTab}
+          setPhoneOverlayTab={setPhoneOverlayTab}
+          chatMessages={chatMessages}
+          simulationDay={simulationDay}
+          plans={plans}
+          fallbackProfiles={fallbackProfiles}
+          planTemplateId={planTemplateId} setPlanTemplateId={setPlanTemplateId}
+          planDoctorNote={planDoctorNote} setPlanDoctorNote={setPlanDoctorNote}
+          planStatus={planStatus} setPlanStatus={setPlanStatus}
+          timelineInterventions={timelineInterventions}
+          removeIntervention={removeIntervention}
+          interventionCatalog={interventionCatalog}
+          planTemplates={planTemplates}
+          getTemplateById={getTemplateById}
+          savePlan={savePlan}
+        />
       )}
     </div>
   );

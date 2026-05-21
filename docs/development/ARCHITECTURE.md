@@ -1,154 +1,46 @@
-# Healora — Архитектура данных и компонентов
+# Healora Digital Twin — Architecture
 
-## Data Architecture
+## Deployment
 
-### JSON Catalogs (`www/dev.healora.ru/src/assets/data/`)
+| Site | URL | Root | Build |
+|------|-----|------|-------|
+| Production | `https://healora.ru/digital-twin/` | `/var/www/healora.ru/digital-twin/` | `VITE_BASE_PATH=/digital-twin/` |
+| Development | `https://dev.healora.ru/` | `/var/www/dev.healora.ru/` | no env var |
+| Local dev | `http://localhost:3001/` | Vite dev server | source files |
 
-| Файл | Назначение | Ключевые поля |
-|------|-----------|---------------|
-| `interventions_catalog.json` | 46 интервенций: sleep, physical, mental, food, medical | `code` (≤7 символов: SL_, PH_, MN_, FD_, M_), `category`, `impact` (1-10), `evidence` (A-D), `regularity` (D/W/M/Y/P) |
-| `supplements_catalog.json` | 40 добавок с группировкой | `group` (vitamins/vitamin_like/minerals), `classification` (нутрицевтик/медицинский) |
-| `diets_catalog.json` | 19 диет и пищевых привычек | `foodGroup` (diet/habit) |
-| `food_catalog.json` | Каталог блюд с фото и нутриентами | `nutrition.calories`, `.ndi` |
-| `protocol_mappings.json` | Связи интервенций в протоколы | `interventions[]` (массив кодов) |
+## Backend
 
-### Flow данных
+| Component | Port | Tech |
+|-----------|------|------|
+| Node.js API | 3000 | Express | 
+| Python API | 3051 | FastAPI (legacy) |
 
-```
-JSON → import → React Components
-  interventions_catalog.json → DigitalTwin.jsx, InterventionsPanel.jsx
-  supplements_catalog.json   → InterventionsPanel.jsx  
-  diets_catalog.json          → InterventionsPanel.jsx
-  food_catalog.json           → DigitalTwin.jsx (diary food selector)
-  protocol_mappings.json      → DigitalTwin.jsx, InterventionsPanel.jsx
-```
+## Proxy
 
-### API endpoints
+- **Dev:** Vite proxy (`vite.config.js`) → `localhost:3051`
+- **Prod:** nginx `location /api/` → `127.0.0.1:3000`
 
-| Маршрут | Метод | Назначение |
-|---------|-------|------------|
-| `/api/profiles/:id` | GET | Загрузка профиля (демография, витальные, лабы, образ жизни, генетика) |
-| `/api/diary/:profileId/:day` | GET | Загрузка дневника за день |
-| `/api/diary` | POST | Сохранение дневника (meals, water, mood) |
-| `/api/meal-photo` | POST | Загрузка фото еды |
+## Profiles Storage
 
-### Profile Data Model
+- File: `docs/healora_mvp_testing_json_pack/healora_10_synthetic_digital_twin_profiles.json`
+- Key: `healora_test_profiles[]` — array of profile objects
+- Each profile has `profile_id`, `photo`, demographics, anthropometrics, vitals, labs, lifestyle, genetics, medical_history, digital_twin_scores, `history` (param edit history)
+- State reset on profile switch: `profileOverrides = {}`, `paramHistory = {}`, `hasUnsavedEdits = false`
 
-```
-profile: {
-  profile_id, name, photo,
-  demographics: { sex, age, ethnicity_or_background },
-  anthropometrics: { weight_kg, height_cm, bmi, waist_cm },
-  vitals: { systolic_bp_mmhg, diastolic_bp_mmhg, resting_hr_bpm, hrv_ms, spo2_percent },
-  labs: { glucose_mg_dl, hba1c_percent, total_cholesterol_mg_dl, hdl_mg_dl, ldl_mg_dl, 
-          triglycerides_mg_dl, crp_mg_l, vitamin_d, ferritin, tsh },
-  lifestyle: { sleep_hours, stress_level_0_10, daily_steps, water_l_day, 
-               smoking, alcohol, physical_activity, diet },
-  genetics: { apoe, mthfr, lactase_persistence, brca_status },
-  medical_history: { current_medications[], allergies, cardiovascular_disease, diabetes },
-  digital_twin_scores: { current_stars, health_risk_score, risk_level }
-}
-```
+## URL Anchors
 
-### Diary Data Model
+- Profile ID stored in URL hash: `/digital-twin/#TEST_002`
+- Read on mount via `window.location.hash`
+- Synced via `hashchange` event
 
-```
-diary: {
-  day: number, waterMl: number,
-  mood: { energy, mood, sleep, stress, digestion } (1-5),
-  comment: string, voiceNote: string,
-  meals: [{ type, label, photo (base64), description,
-            calories, protein, fat, carbs, ndi, time, duration }]
-}
-```
+## Key Decisions
 
-### Mnemonic Code System
+1. **No localStorage for param state** — `profileOverrides` and `paramHistory` are in-memory only; persisted via API
+2. **Save triggers PUT** — falls back to POST on 404/405; POST upserts (creates or updates)
+3. **BMI auto-calc** — on weight/height change (manual + voice)
+4. **Router basename** — from `VITE_BASE_PATH` env var; `/digital-twin/` on production, empty on dev
+5. **Catch-all route** — `path="*"` redirects to root
 
-| Префикс | Домен | Примеры |
-|---------|-------|---------|
-| `SL_` | Sleep | SL_BED, SL_DUR, SL_QLT, SL_HYG |
-| `PH_` | Physical | PH_HIIT, PH_STR, PH_AER, PH_FLEX, PH_Z2, PH_HRV |
-| `MN_` | Mental | MN_MDT, MN_BRTH, MN_STR, MN_DTOX |
-| `FD_` | Food | FD_WATER, FD_ELEC, FD_CAL, FD_CRB, FD_SUG, FD_IF |
-| `SP_` | Supplement | SP_D3, SP_O3, SP_MG, SP_BC, SP_ADP, SP_NTRP |
-| `DG_` | Diagnostic | DG_CHK, DG_CARD |
-| `M_` | Medical | M_END01-M_END03, M_CAR01-M_CAR03, M_GAS01-M_GAS03 |
-| `OZ_` | GLP-1 Protocol | OZ_01-OZ_10 |
+## Diagrams
 
-Regularity: `D` (daily), `W` (weekly), `M` (monthly), `Y` (yearly), `P` (on demand)
-
----
-
-## Component Architecture
-
-```
-App.jsx
-├── UserAvatarPanel    — Выбор профиля (P005, P008, etc.)
-├── ProgressPath       — Путь долголетия
-├── InterventionsPanel — Каталог интервенций + протоколы + беклог
-│   ├── Категории (сон/физический/ментальный/питание/медицинский/добавки)
-│   ├── Подгруппы добавок (витамины/витаминоподобные/минералы)
-│   ├── Подгруппы еды (диеты/привычки)
-│   ├── Таблица: Код | Название | I | E | Per
-│   │   └── Клик → попап с описанием и протоколами
-│   ├── Вкладка "Протоколы" (17 протоколов с expand/collapse)
-│   └── Беклог (список реализованного и планов)
-└── DigitalTwin       — Основной экран
-    ├── Шапка (профиль, звёзды, цели)
-    ├── Таймлайн (Gantt-диаграмма на 90 дней)
-    ├── Панель данных (атрибуты с целями)
-    ├── d3.js графики (8 визуализаций)
-    ├── Diary Modal (дневник питания с фото)
-    ├── Food Selector (выбор блюд из каталога)
-    └── Chat Modal (HEALORA)
-        ├── Шапка: имя, звёзды, прогресс-бар, счётчик дня
-        ├── Сообщения-интервенции с кнопками ✓/✗ и дедлайном
-        ├── Inline-формы: Профиль, План, Дневник, Фото еды
-        └── Панель быстрых действий
-```
-
-### Chat Modal Features
-
-- **Day counter**: `25/90 · 15/45` (текущий день / выполнено+скипнуто)
-- **Stars progress bar**: `840 ⭐` + мини-бар к цели 2000
-- **Inline forms** (Telegram-style, появляются в переписке):
-  - Профиль: имя, возраст, пол, вес, рост, ИМТ, Healora Score, риск
-  - План: список интервенций с днями выполнения (подсветка пройденных)
-  - Дневник: 4 приёма пищи (описание, ккал, БЖУ, фото), вода, mood
-  - Фото еды: upload с превью, отправка в чат + сохранение в дневник
-
----
-
-## CJM (Customer Journey Map)
-
-См. `docs/domain/cjm/DIGITAL_TWIN_PLANNING.md` — полное описание карты пути пользователя.
-
-### Текущий flow (chat-first):
-
-```
-Профиль → [Чат] → План интервенций → Симуляция
-                ↓                         ↓
-          Inline-формы              Интерактивные
-          (Профиль/План/            карточки с ✓/✗
-           Дневник/Фото)            и дедлайнами
-```
-
-### Tariff models
-
-| Тариф | Планирование | Правка | AI |
-|-------|--------------|--------|-----|
-| Free | Протокол → автоплан | Нет | Нет |
-| Basic+ | Цели → AI → план | ✓ | ✓ |
-| Premium | + история → AI+эксперт | ✓ | ✓+эксперт |
-
----
-
-## Build & Deploy
-
-- **Dev**: `npm run dev` (Vite, порт 3001, proxy :3051)
-- **Build**: `npm run build` → `dist/`
-- **CI/CD**: `docs/sh/devops.sh`, `deploy-dev.sh`
-- **Server**: Beget (217.114.8.5), Nginx + SSL (Let's Encrypt)
-- **Base path**: `/digital-twin` (env: `VITE_BASE_PATH`)
-
-*v.2026.05 | Healora.ru*
+See `architecture.puml`, `flows.puml`, `components.puml` in this directory.

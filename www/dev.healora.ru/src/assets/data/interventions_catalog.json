@@ -1850,6 +1850,161 @@
         "omega_3_index"
       ],
       "probability": 0.75
+    },
+    "ED_MA": {
+      "code": "ED_MA",
+      "name": "Осознанное питание",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Практика осознанного приёма пищи",
+      "full_description": "Развитие навыка осознанного отношения к еде: различение физического и эмоционального голода, замедление темпа еды, работа с триггерами переедания.",
+      "benefits": [
+        "Снижение частоты эпизодов переедания",
+        "Улучшение отношения к еде",
+        "Снижение тревоги вокруг приёмов пищи"
+      ],
+      "affects": [
+        "stress",
+        "gut_health",
+        "weight"
+      ],
+      "color": "#e91e63",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.8,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      }
+    },
+    "ED_BODY": {
+      "code": "ED_BODY",
+      "name": "Работа с образом тела",
+      "category": "mental",
+      "impact": 7,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Позитивное восприятие тела",
+      "full_description": "Формирование здорового образа тела через когнитивные техники: дневник благодарности телу, работа с искажениями восприятия, снижение критики внешности.",
+      "benefits": [
+        "Улучшение образа тела",
+        "Снижение самокритики",
+        "Повышение самооценки"
+      ],
+      "affects": [
+        "stress",
+        "anxiety"
+      ],
+      "color": "#e91e63",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.75
+    },
+    "ED_SCH": {
+      "code": "ED_SCH",
+      "name": "Структура питания",
+      "category": "food",
+      "impact": 9,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Регулярный режим питания",
+      "full_description": "Восстановление регулярного режима питания: 3 основных приёма + 1–2 перекуса, фиксированные интервалы, отмена пропусков. Стабилизация пищевого поведения.",
+      "benefits": [
+        "Нормализация пищевого поведения",
+        "Стабилизация уровня глюкозы",
+        "Снижение риска срывов"
+      ],
+      "affects": [
+        "glucose",
+        "weight",
+        "gut_health"
+      ],
+      "color": "#4caf50",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "glucose"
+      ],
+      "probability": 0.85
+    },
+    "ED_EMO": {
+      "code": "ED_EMO",
+      "name": "Эмоциональная регуляция",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Управление эмоциональными триггерами",
+      "full_description": "Обучение навыкам эмоциональной регуляции: распознавание триггеров, альтернативные стратегии совладания, дневник эмоций и пищевого поведения.",
+      "benefits": [
+        "Снижение эмоционального переедания",
+        "Улучшение распознавания эмоций",
+        "Формирование здоровых копинг-стратегий"
+      ],
+      "affects": [
+        "stress",
+        "anxiety",
+        "sleep"
+      ],
+      "color": "#e91e63",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.8
+    },
+    "ED_SUP": {
+      "code": "ED_SUP",
+      "name": "Поддержка и рефлексия",
+      "category": "mental",
+      "impact": 6,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Групповая поддержка и рефлексия",
+      "full_description": "Регулярная рефлексия прогресса, поддержка в сложные моменты, работа с устойчивыми убеждениями о питании и теле. Ведение дневника успехов и трудностей.",
+      "benefits": [
+        "Устойчивость изменений",
+        "Снижение изоляции",
+        "Повышение мотивации"
+      ],
+      "affects": [
+        "stress",
+        "anxiety"
+      ],
+      "color": "#e91e63",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.7
     }
   }
 }

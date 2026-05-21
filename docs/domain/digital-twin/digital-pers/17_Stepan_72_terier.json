@@ -1,5 +1,5 @@
 {
-  "profile_id": "P016",
+  "profile_id": "STEPAN_72",
   "source_photo": "17_Stepan_72_terier.png",
   "name": "Stepan",
   "age": 72,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["кепка", "собака на поводке"],
-    "suggested_biomarkers_attention": ["суставы", "артериальное давление", "холестерин"],
-    "risk_factors_visible": ["возраст", "снижение подвижности"]
+    "notable_features": [
+      "кепка",
+      "собака на поводке"
+    ],
+    "suggested_biomarkers_attention": [
+      "суставы",
+      "артериальное давление",
+      "холестерин"
+    ],
+    "risk_factors_visible": [
+      "возраст",
+      "снижение подвижности"
+    ]
   },
   "narrative_summary": "Степан — 72-летний пенсионер, ежедневно выгуливающий своего терьера. Прогулки поддерживают его в тонусе. Ключевая задача — сохранение подвижности суставов и контроль возрастных заболеваний."
 }

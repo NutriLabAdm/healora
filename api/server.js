@@ -199,24 +199,71 @@ app.delete('/api/profiles/:id', (req, res) => {
     }
 });
 
+function buildSystemPrompt(found) {
+    if (!found) return 'Ты — Healora AI, персональный ассистент здоровья. Отвечай на русском языке, будь краток (2-4 предложения).';
+    const d = found.demographics || {};
+    const a = found.anthropometrics || {};
+    const v = found.vitals || {};
+    const l = found.labs || {};
+    const ls = found.lifestyle || {};
+    return `Ты — Healora AI, персональный ассистент здоровья.
+
+Информация о пользователе:
+- Имя: ${d.name || 'Пользователь'}
+- Возраст: ${d.age || '?'} лет
+- Пол: ${d.sex === 'male' ? 'Мужской' : d.sex === 'female' ? 'Женский' : d.sex || '?'}
+- Рост: ${a.height_cm || '?'} см
+- Вес: ${a.weight_kg || '?'} кг
+- ИМТ: ${a.bmi || '?'}
+- Давление: ${v.systolic_bp_mmhg || '?'}/${v.diastolic_bp_mmhg || '?'} мм рт.ст.
+- Пульс: ${v.resting_hr_bpm || '?'} уд/мин
+
+Лабораторные показатели:
+- Глюкоза: ${l.glucose_mg_dl || '?'} мг/дл
+- HbA1c: ${l.hba1c_percent || '?'} %
+- Холестерин общий: ${l.total_cholesterol_mg_dl || '?'} мг/дл
+- HDL: ${l.hdl_mg_dl || '?'} мг/дл
+- LDL: ${l.ldl_mg_dl || '?'} мг/дл
+- Триглицериды: ${l.triglycerides_mg_dl || '?'} мг/дл
+- Витамин D: ${l.vitamin_d_ng_ml || '?'} нг/мл
+- Железо: ${l.iron_mcg_dl || '?'} мкг/дл
+- Ферритин: ${l.ferritin_ng_ml || '?'} нг/мл
+
+Образ жизни:
+- Сон: ${ls.sleep_hours || '?'} ч/сут
+- Стресс: ${ls.stress_level || '?'}/10
+- Шаги: ${ls.steps_per_day || '?'} шагов/день
+- Вода: ${ls.water_ml_per_day || '?'} мл/день
+- Курение: ${ls.smoking || '?'}
+- Алкоголь: ${ls.alcohol || '?'}
+
+Правила:
+1. Отвечай на русском языке.
+2. Будь кратким (2-4 предложения).
+3. Используй данные пользователя для персонализации ответов.
+4. Если вопрос касается здоровья — ссылайся на показатели пользователя.
+5. Будь поддерживающим и мотивирующим.
+6. НЕ ставь медицинских диагнозов — рекомендую проконсультироваться с врачом.
+7. Если спрашивают про питание — предложи конкретные продукты с учётом КБЖУ.`;
+}
+
 app.post('/api/chat', async (req, res) => {
     try {
-        const { message, profile } = req.body;
+        const { message, profile, history } = req.body;
 
         if (!message) {
             return res.status(400).json({ error: 'Message required' });
         }
 
-        let profileText = '28 years, female, BMI 20.2';
+        let found = null;
         if (profile && profiles.length > 0) {
-            const found = profiles.find(p => p.profile_id === profile);
-            if (found) {
-                profileText = `${found.demographics.age} years, ${found.demographics.sex}, BMI ${found.anthropometrics.bmi}`;
-                if (found.labs) {
-                    profileText += `, glucose ${found.labs.glucose_mg_dl} mg/dL, cholesterol ${found.labs.total_cholesterol_mg_dl}`;
-                }
-            }
+            found = profiles.find(p => p.profile_id === profile);
         }
+
+        const systemMsg = { role: 'system', content: buildSystemPrompt(found) };
+        const historyMsgs = (history || []).map(m => ({ role: m.role, content: m.content }));
+        const userMsg = { role: 'user', content: message };
+        const messages = [systemMsg, ...historyMsgs, userMsg];
 
         let reply;
         let source = 'fallback';
@@ -225,11 +272,9 @@ app.post('/api/chat', async (req, res) => {
             try {
                 const response = await gigachat.chatCompletion({
                     model: 'GigaChat-Max',
-                    messages: [
-                        { role: 'system', content: `You are Healora AI Coach. Profile: ${profileText}. Be positive, brief.` },
-                        { role: 'user', content: message }
-                    ],
-                    max_tokens: 200
+                    messages,
+                    max_tokens: 300,
+                    temperature: 0.7
                 });
                 reply = response.choices?.[0]?.message?.content?.trim();
                 source = 'gigachat';
@@ -240,11 +285,8 @@ app.post('/api/chat', async (req, res) => {
             try {
                 const response = await openai.chat.completions.create({
                     model: 'gpt-3.5-turbo',
-                    messages: [
-                        { role: 'system', content: `You are Healora AI Coach. Profile: ${profileText}. Be positive, brief.` },
-                        { role: 'user', content: message }
-                    ],
-                    max_tokens: 200
+                    messages,
+                    max_tokens: 300
                 });
                 reply = response.choices[0].message.content.trim();
                 source = 'openai';
@@ -255,13 +297,13 @@ app.post('/api/chat', async (req, res) => {
 
         if (!reply) {
             const fallbacks = {
-                'water': 'Great! Drinking water is key to health. We recommend 8 glasses a day.',
-                'sleep': 'Sleep is important for recovery. Try to sleep 7-9 hours a day.',
-                'food': 'Nutrition is the foundation of longevity. Watch your macros and drink water.',
-                'training': 'Activity extends life! Even 15 minutes of exercise helps.',
-                'stress': '4-7-8 breathing will help reduce stress. Try it right now.'
+                'water': 'Отличная привычка! Рекомендую выпивать 8 стаканов воды в день.',
+                'sleep': 'Сон важен для восстановления. Старайтесь спать 7–9 часов в сутки.',
+                'еда': 'Питание — основа долголетия. Следите за КБЖУ и пейте воду.',
+                'тренировк': 'Движение продлевает жизнь! Даже 15 минут зарядки помогают.',
+                'стресс': 'Дыхание 4-7-8 помогает снизить стресс. Попробуйте прямо сейчас.'
             };
-            reply = 'Thanks for the question! I am here to help.';
+            reply = 'Спасибо за ваш вопрос! Я здесь, чтобы помочь.';
             const msg = message.toLowerCase();
             for (const [key, value] of Object.entries(fallbacks)) {
                 if (msg.includes(key)) {
@@ -401,7 +443,7 @@ app.get('/api/diary/:profile_id/:day', (req, res) => {
         if (diary[key]) {
             res.json(diary[key]);
         } else {
-            res.status(404).json({ error: 'Diary entry not found' });
+            res.json({ profile_id, day: parseInt(day), meals: [], water_ml: 0, mood: {}, voice_note: null, audio: null, comment: null });
         }
     } catch (err) {
         console.error('Error loading diary:', err.message);

@@ -1,5 +1,5 @@
 {
-  "profile_id": "P027",
+  "profile_id": "SEMYA_35",
   "source_photo": "24_fam_white_kitchen.png",
   "name": "Семья",
   "age": 35,
@@ -20,9 +20,17 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["белая кухня", "семья с детьми"],
-    "suggested_biomarkers_attention": ["общее здоровье семьи", "питание детей"],
-    "risk_factors_visible": ["нагрузка на родителей"]
+    "notable_features": [
+      "белая кухня",
+      "семья с детьми"
+    ],
+    "suggested_biomarkers_attention": [
+      "общее здоровье семьи",
+      "питание детей"
+    ],
+    "risk_factors_visible": [
+      "нагрузка на родителей"
+    ]
   },
   "narrative_summary": "Семья на белой кухне — типичная современная семья с детьми. Они ценят домашний уют и совместные приёмы пищи. Ключевая цель — поддержание здоровья всех членов семьи и гармоничный баланс между работой и домом."
 }

@@ -1011,9 +1011,9 @@
         "ethnicity_or_background": "европеоидная"
       },
       "anthropometrics": {
-        "weight_kg": 88,
-        "height_cm": 178,
-        "bmi": 27.8,
+        "weight_kg": 99,
+        "height_cm": 186,
+        "bmi": 28.6,
         "waist_cm": 95
       },
       "vitals": {
@@ -1064,6 +1064,38 @@
         "current_stars": 450,
         "health_risk_score": 42,
         "risk_level": "medium"
+      },
+      "history": {
+        "weight": [
+          {
+            "value": 99,
+            "timestamp": "2026-05-19T18:17:31.808Z"
+          }
+        ],
+        "bmi": [
+          {
+            "value": 31.2,
+            "timestamp": "2026-05-19T18:17:31.808Z"
+          },
+          {
+            "value": 0,
+            "timestamp": "2026-05-19T18:18:15.973Z"
+          },
+          {
+            "value": 28.6,
+            "timestamp": "2026-05-19T18:18:28.268Z"
+          }
+        ],
+        "height": [
+          {
+            "value": 178186,
+            "timestamp": "2026-05-19T18:18:15.973Z"
+          },
+          {
+            "value": 186,
+            "timestamp": "2026-05-19T18:18:28.268Z"
+          }
+        ]
       }
     },
     {
@@ -1448,6 +1480,143 @@
       "digital_twin_scores": {
         "current_stars": 320,
         "health_risk_score": 55,
+        "risk_level": "high"
+      }
+    },
+    {
+      "profile_id": "ANNA_28_55",
+      "photo": "03_Natalia_42_salad.png",
+      "scenario_name": "Healthy active female, maintenance",
+      "demographics": {
+        "age": 28,
+        "sex": "female",
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 58,
+        "height_cm": 168,
+        "bmi": 20.2,
+        "waist_cm": 73
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 105,
+        "diastolic_bp_mmhg": 68,
+        "resting_hr_bpm": 64,
+        "hrv_ms": 72,
+        "spo2_percent": 98
+      },
+      "labs": {
+        "glucose_mg_dl": 88,
+        "total_cholesterol_mg_dl": 175,
+        "hdl_mg_dl": 55,
+        "ldl_mg_dl": 100,
+        "triglycerides_mg_dl": 120,
+        "hba1c_percent": 5.2,
+        "crp_mg_l": 0.8,
+        "vitamin_d": 32,
+        "ferritin": 65,
+        "tsh": 2.1
+      },
+      "lifestyle": {
+        "sleep_hours": 7.5,
+        "stress_level_0_10": 3,
+        "daily_steps": 8200,
+        "water_l_day": 1.8,
+        "smoking": "Нет",
+        "alcohol": "Редко",
+        "physical_activity": "3-5/нед",
+        "exercise_type": "бег",
+        "diet": "средиземноморская"
+      },
+      "genetics": {
+        "apoe": "e3/e3",
+        "mthfr": "Нет",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [],
+        "allergies": "Нет",
+        "cardiovascular_disease": "no",
+        "diabetes": "no",
+        "family_history": "Нет"
+      },
+      "digital_twin_scores": {
+        "current_stars": 840,
+        "health_risk_score": 18,
+        "risk_level": "low"
+      },
+      "history": {
+        "waist": [
+          {
+            "value": 73,
+            "timestamp": "2026-05-20T20:18:49.249Z"
+          }
+        ]
+      }
+    },
+    {
+      "profile_id": "MIKHAIL_42_96",
+      "photo": "10_Alex_48_soup.png",
+      "name": "Михаил",
+      "demographics": {
+        "sex": "male",
+        "age": 42,
+        "ethnicity_or_background": "европеоидная"
+      },
+      "anthropometrics": {
+        "weight_kg": 96,
+        "height_cm": 182,
+        "bmi": 31.2,
+        "waist_cm": 104
+      },
+      "vitals": {
+        "systolic_bp_mmhg": 142,
+        "diastolic_bp_mmhg": 91,
+        "resting_hr_bpm": 78,
+        "hrv_ms": 38,
+        "spo2_percent": 96
+      },
+      "labs": {
+        "glucose_mg_dl": 112,
+        "total_cholesterol_mg_dl": 245,
+        "hdl_mg_dl": 38,
+        "ldl_mg_dl": 160,
+        "triglycerides_mg_dl": 210,
+        "hba1c_percent": 5.9,
+        "crp_mg_l": 3.2,
+        "vitamin_d": 18,
+        "ferritin": 140,
+        "tsh": 3.8
+      },
+      "lifestyle": {
+        "sleep_hours": 6,
+        "stress_level_0_10": 7,
+        "daily_steps": 4200,
+        "water_l_day": 1.2,
+        "smoking": "Курит",
+        "alcohol": "Регулярно",
+        "physical_activity": "0-1/нед",
+        "diet": "смешанная"
+      },
+      "genetics": {
+        "apoe": "e3/e4",
+        "mthfr": "Гетерозигота",
+        "lactase_persistence": "Да",
+        "brca_status": "Neg"
+      },
+      "medical_history": {
+        "current_medications": [
+          "статины"
+        ],
+        "allergies": "Нет",
+        "cardiovascular_disease": "yes",
+        "diabetes": "no",
+        "family_history": "ИБС у отца"
+      },
+      "digital_twin_scores": {
+        "current_stars": 210,
+        "health_risk_score": 52,
         "risk_level": "high"
       }
     }

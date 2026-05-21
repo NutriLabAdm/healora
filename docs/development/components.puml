@@ -1,0 +1,61 @@
+@startuml Healora Component Tree
+!theme plain
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam rectangle {
+  roundCorner 10
+}
+
+title Healora Digital Twin — React Component Tree
+
+rectangle "<size:18><b>App.jsx</b></size>\nstate: selectedProfile, draggedIntervention, cartInterventions\nreads hash → profileId" as app {
+  rectangle "<size:14><b>PlansProvider</b></size>\ncontext: plans per twin" as plans
+
+  rectangle "<size:14><b>BrowserRouter</b></size>\nbasename = VITE_BASE_PATH" as router {
+
+    rectangle "<size:14><b>UserAvatarPanel</b></size>\nprops: selectedProfile, onSelectProfile\nfetches GET /api/profiles on mount\nmerges API + fallbackProfiles()" as avatar
+
+    rectangle "<size:14><b>Routes</b></size>" as routes {
+      rectangle "Route /" as r1
+      rectangle "Route /digital-twin" as r2
+      rectangle "Route /chat" as r3
+      rectangle "Route /path" as r4
+      rectangle "Route /profile" as r5
+      rectangle "Route /goals" as r6
+      rectangle "Route *" as r7
+    }
+
+    rectangle "<size:14><b>DigitalTwin</b></size>\nprops: profileId, cartItems\nstate: profile, profileOverrides,\nparamHistory, hasUnsavedEdits\nuseEffect: fetch profile by id\nsaveToServer: PUT/POST with history" as dt {
+      rectangle "<size:12><b>attributeCatalog</b></size>\nsections: demographics, vitals,\nlabs, lifestyle, genetics, medical\ncurrent values from profile state" as catalog
+      rectangle "<size:12><b>Weekday History Table</b></size>\n7 columns: today-6\nreads paramHistory[attrId]" as table
+      rectangle "<size:12><b>Voice Popup</b></size>\nparseVoiceTranscript\napplyVoiceValues" as voice
+    }
+
+    rectangle "<size:14><b>InterventionsPanel</b></size>\nprops: profileId, cartItems" as interv
+    rectangle "<size:14><b>SourcesFooter</b></size>" as footer
+  }
+}
+
+rectangle "Route /chat → <size:12><b>ChatInterface</b></size>\nGigaChat AI, intervention chat" as chat
+rectangle "Route /path → <size:12><b>ProgressPath</b></size>\ndrag-drop interventions" as path
+rectangle "Route /profile → <size:12><b>Profile</b></size>" as prof
+rectangle "Route /goals → <size:12><b>Goals</b></size>" as goals
+
+app --> plans
+app --> router
+router --> avatar
+router --> routes
+r1 --> dt
+r2 --> dt
+r3 --> chat
+r4 --> path
+r5 --> prof
+r6 --> goals
+r7 --> r1 : redirect
+router --> interv
+router --> footer
+dt --> catalog
+dt --> table
+dt --> voice
+
+@enduml

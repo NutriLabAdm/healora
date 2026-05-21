@@ -1,0 +1,114 @@
+@startuml Healora FR Modules
+!theme plain
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam packageBorderColor #2e7d32
+skinparam rectangle {
+  roundCorner 8
+}
+
+title <size:20>Healora — Functional Requirements</size>
+
+' ==================== M1: Auth ====================
+package "<size:14><b>M1. Auth</b></size>\n<size:10>FR-001</size>" as auth #E8F5E9 {
+  rectangle "FR-001.01\nEmail/телефон + OAuth" as auth01
+  rectangle "FR-001.02\nСессии, refresh/access токены" as auth02
+  rectangle "FR-001.03\nБезопасность (2FA, сброс)" as auth03
+}
+
+' ==================== M2: Profile ====================
+package "<size:14><b>M2. Профиль / Цифровой двойник</b></size>\n<size:10>FR-002</size>" as profile #FFF3E0 {
+  rectangle "FR-002.01\nБазовый профиль\nаватар, имя, тариф, возраст, звёзды" as p01
+  rectangle "FR-002.02\nДемография и антропометрия\nвозраст/пол/рост/вес/ИМТ/талия" as p02
+  rectangle "FR-002.03\nВитальные показатели\nАД, ЧСС, HRV, SpO2\nколонки: было/текущее/цель/норма/7д" as p03
+  rectangle "FR-002.04\nПредпочтения и цели\nвкусы/ограничения/практики\nцелевые метрики" as p04
+  rectangle "FR-002.05\nПротоколы и таблицы\nпрофили, нормативные таблицы" as p05
+  rectangle "FR-002.06\nUI-действия\nсохранить, оценить, дневник, чат" as p06
+}
+
+' ==================== M3: Recommendations ====================
+package "<size:14><b>M3. Рекомендации</b></size>\n<size:10>FR-003</size>" as reco #E3F2FD {
+  rectangle "FR-003.01\nРасчёт КБЖУ\nи микронутриентов" as r01
+  rectangle "FR-003.02\nАдаптация под\nпрогресс и цели" as r02
+  rectangle "FR-003.03\nПоведенческие интервенции\nTTM + CBT" as r03
+}
+
+' ==================== M4: Nutrition Tracking ====================
+package "<size:14><b>M4. Трекинг питания</b></size>\n<size:10>FR-004</size>" as nutrition #FCE4EC {
+  rectangle "FR-004.01\nВвод приёмов пищи\nручной / поиск" as n01
+  rectangle "FR-004.02\nБаза продуктов" as n02
+  rectangle "FR-004.03\nФото-распознавание\nеды (CV)" as n03
+}
+
+' ==================== M5: AI Chat ====================
+package "<size:14><b>M5. AI-чат-бот</b></size>\n<size:10>FR-005</size>" as chat #EDE7F6 {
+  rectangle "FR-005.01\nКонтекстный диалог\nпо здоровью" as c01
+  rectangle "FR-005.02\nИнтеграция с профилем\nи БД знаний (RAG)" as c02
+}
+
+' ==================== M6: Diary ====================
+package "<size:14><b>M6. Дневник</b></size>\n<size:10>FR-006</size>" as diary #FFF8E1 {
+  rectangle "FR-006.01\nКалендарь приёмов\nзаметки, самочувствие" as d01
+}
+
+' ==================== M7: Goals ====================
+package "<size:14><b>M7. Цели</b></size>\n<size:10>FR-007</size>" as goals #E0F2F1 {
+  rectangle "FR-007.01\nSMART-цели\nпрогресс, корректировка" as g01
+}
+
+' ==================== M8: Habits ====================
+package "<size:14><b>M8. Привычки</b></size>\n<size:10>FR-010</size>" as habits #F3E5F5 {
+  rectangle "FR-010.01\nНастройка привычек\npush-движок, напоминания" as h01
+}
+
+' ==================== M9: Billing ====================
+package "<size:14><b>M9. Биллинг</b></size>\n<size:10>FR-012</size>" as billing #FFEBEE {
+  rectangle "FR-012.01\nТарифы, оплата, чеки" as b01
+  rectangle "FR-012.02\nУправление подпиской\nапгрейд/даунгрейд" as b02
+}
+
+' ==================== M10: Integrations ====================
+package "<size:14><b>M10. Интеграции</b></size>\n<size:10>FR-018</size>" as integ #E8EAF6 {
+  rectangle "FR-018.01\nСинхронизация данных\nглюкоза / датчики" as i01
+}
+
+' ==================== M11: Compliance ====================
+package "<size:14><b>M11. Клиническая валидация</b></size>\n<size:10>FR-019 — FR-021</size>" as compliance #F9FBE7 {
+  rectangle "FR-019.01\nКомплаенс\nФЗ-152, мед. стандарты" as comp01
+  rectangle "FR-020.01\nЛогирование\nрекомендаций и аудит" as comp02
+  rectangle "FR-021.01\nОтказоустойчивость\nи безопасность данных" as comp03
+}
+
+' ==================== Cross-module dependencies ====================
+auth02 --> p01 : токен доступа
+p02 --> r01 : антропометрия → КБЖУ
+p03 --> r02 : витальные → адаптация
+p04 --> r03 : предпочтения → интервенции
+r01 --> n01 : КБЖУ → план питания
+n01 --> d01 : приёмы → дневник
+r03 --> h01 : привычки → напоминания
+c01 --> p03 : чат → профиль
+c02 --> r01 : RAG → рекомендации
+p04 --> r03 : цели → интервенции
+g01 --> r02 : прогресс → адаптация
+i01 --> p02 : датчики → демография
+comp01 --> b01 : ФЗ-152 → оплата
+comp02 --> r01 : аудит → рекомендации
+
+' ==================== Legend ====================
+legend right
+  <size:11><b>Модули (M1-M11)</b></size>
+  <color:#2e7d32>■</color>  M1  Auth
+  <color:#FF8F00>■</color>  M2  Profile
+  <color:#1565C0>■</color>  M3  Recommendations
+  <color:#C62828>■</color>  M4  Nutrition Tracking
+  <color:#6A1B9A>■</color>  M5  AI Chat
+  <color:#F9A825>■</color>  M6  Diary
+  <color:#00695C>■</color>  M7  Goals
+  <color:#8E24AA>■</color>  M8  Habits
+  <color:#D32F2F>■</color>  M9  Billing
+  <color:#283593>■</color>  M10 Integrations
+  <color:#827717>■</color>  M11 Compliance
+end legend
+
+@enduml

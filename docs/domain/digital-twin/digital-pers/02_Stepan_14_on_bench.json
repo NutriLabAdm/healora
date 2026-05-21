@@ -1,5 +1,5 @@
 {
-  "profile_id": "P002",
+  "profile_id": "STEPAN_14",
   "source_photo": "02_Stepan_14_on_bench.png",
   "name": "Stepan",
   "age": 14,
@@ -20,9 +20,18 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["носит рюкзак", "спортивная обувь"],
-    "suggested_biomarkers_attention": ["осанка", "зрение"],
-    "risk_factors_visible": ["длительное сидение", "использование гаджетов"]
+    "notable_features": [
+      "носит рюкзак",
+      "спортивная обувь"
+    ],
+    "suggested_biomarkers_attention": [
+      "осанка",
+      "зрение"
+    ],
+    "risk_factors_visible": [
+      "длительное сидение",
+      "использование гаджетов"
+    ]
   },
   "narrative_summary": "Степан — 14-летний школьник, активный, но проводящий много времени за учебой. Увлекается спортом, но нуждается в контроле осанки и режима сна. Его здоровье в переходном возрасте требует внимания к опорно-двигательному аппарату."
 }

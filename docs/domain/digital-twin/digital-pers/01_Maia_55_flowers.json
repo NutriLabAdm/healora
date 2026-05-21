@@ -1,5 +1,5 @@
 {
-  "profile_id": "P001",
+  "profile_id": "MAIA_55",
   "source_photo": "01_Maia_55_flowers.png",
   "name": "Maia",
   "age": 55,
@@ -20,9 +20,17 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["ухоженные руки", "лёгкая походка"],
-    "suggested_biomarkers_attention": ["витамин D", "артериальное давление"],
-    "risk_factors_visible": ["возрастные изменения кожи"]
+    "notable_features": [
+      "ухоженные руки",
+      "лёгкая походка"
+    ],
+    "suggested_biomarkers_attention": [
+      "витамин D",
+      "артериальное давление"
+    ],
+    "risk_factors_visible": [
+      "возрастные изменения кожи"
+    ]
   },
   "narrative_summary": "Майя — 55-летняя женщина, ведущая размеренный образ жизни. Она проводит много времени на природе, увлекается садоводством. Главная цель — поддержание активности и гормонального здоровья в предклимактерический период."
 }

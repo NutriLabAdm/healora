@@ -1,5 +1,5 @@
 {
-  "profile_id": "P017",
+  "profile_id": "STEPAN_72",
   "source_photo": "17_Stepan_72_terier_2.png",
   "name": "Stepan",
   "age": 72,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["кепка", "терьер рядом"],
-    "suggested_biomarkers_attention": ["суставы", ["артериальное давление"]],
-    "risk_factors_visible": ["возраст"]
+    "notable_features": [
+      "кепка",
+      "терьер рядом"
+    ],
+    "suggested_biomarkers_attention": [
+      "суставы",
+      [
+        "артериальное давление"
+      ]
+    ],
+    "risk_factors_visible": [
+      "возраст"
+    ]
   },
   "narrative_summary": "Степан — 72-летний пенсионер, который много времени проводит с собачкой на прогулках. Он наслаждается пенсией и общением с питомцем. В приоритете — профилактика возрастной саркопении и сохранение подвижности."
 }

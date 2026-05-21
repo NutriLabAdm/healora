@@ -1,0 +1,119 @@
+@startuml Healora Architecture
+!theme plain
+skinparam backgroundColor white
+skinparam componentStyle rectangle
+skinparam defaultFontName Arial
+
+title Healora Digital Twin — Architecture Overview
+
+' ==================== LAYER 1: Deployment ====================
+package "Production Servers (217.114.8.5)" {
+  node "nginx :80/:443" as nginx {
+    [healora.ru] as site_prod
+    [dev.healora.ru] as site_dev
+  }
+
+  node "Node.js :3000" as node_backend {
+    [Express API] as api
+    database "profiles.json" as json_db
+  }
+
+  node "Python :3051" as python_backend {
+    [FastAPI] as fastapi
+  }
+
+  nginx --> node_backend : /api/ proxy_pass
+  nginx --> site_prod : /var/www/healora.ru
+  nginx --> site_dev : /var/www/dev.healora.ru
+  api --> json_db : read/write
+}
+
+' ==================== LAYER 2: Frontend Application ====================
+package "Frontend (React SPA)" {
+  [BrowserRouter] as router
+  [App.jsx] as app
+
+  package "Routes" {
+    [Route /] as r_root
+    [Route /digital-twin] as r_dt
+    [Route /chat] as r_chat
+    [Route /path] as r_path
+    [Route /profile] as r_profile
+    [Route /goals] as r_goals
+    [Route *] as r_catchall
+  }
+
+  package "Components" {
+    [UserAvatarPanel] as avatar
+    [DigitalTwin] as dt
+    [InfoPanel] as info
+    [SourcesFooter] as sources
+    [SourcesPanel] as src_panel
+    [InterventionsPanel] as interv
+  }
+
+  package "DigitalTwin internals" {
+    [attributeCatalog] as catalog
+    [saveToServer] as save
+    [saveEdit] as edit
+    [applyVoiceValues] as voice
+    [getAttrCurrent] as current
+    [profileOverrides] as overrides
+    [paramHistory] as history
+    [profile] as profile
+  }
+
+  package "Context / State" {
+    [PlansProvider] as plans
+  }
+}
+
+' ==================== LAYER 3: API ====================
+package "API" {
+  [Profiles: GET /, GET /:id, POST /, PUT /:id, DELETE /:id] as profiles_api
+  [Chat: POST /chat] as chat_api
+  [Diary: POST /diary] as diary_api
+  [Quiz: POST /generate-quiz] as quiz_api
+}
+
+' ==================== Connections ====================
+app --> router : BrowserRouter basename = VITE_BASE_PATH
+router --> r_root : /
+router --> r_dt : /digital-twin (dev only)
+router --> r_chat : /chat
+router --> r_path : /path
+router --> r_profile : /profile
+router --> r_goals : /goals
+router --> r_catchall : * → /
+
+r_root --> dt : profileId={selectedProfile}
+r_dt --> dt : profileId={selectedProfile}
+dt --> catalog : reads
+dt --> save : onClick
+dt --> edit : onBlur / Enter
+dt --> voice : mic
+dt --> current : display value
+save --> overrides : reads
+save --> history : reads
+edit --> overrides : writes
+edit --> history : writes
+voice --> overrides : writes
+voice --> history : writes
+
+avatar --> profiles_api : on mount (GET /)
+dt --> profiles_api : on profileId change (GET /:id)
+save --> profiles_api : create/update (POST /, PUT /:id)
+
+' ==================== Legend ====================
+legend right
+  <b>Build:</b> Vite (v4)
+  <b>Backend:</b> Node.js Express
+  <b>Dev proxy:</b> vite.config → :3051
+  <b>Prod proxy:</b> nginx → :3000
+  <b>Profiles DB:</b> JSON file
+  <b>Per-profile state:</b> API only (no localStorage)
+  <b>URL anchor:</b> #profileId
+end legend
+
+
+@enduml

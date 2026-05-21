@@ -1,0 +1,54 @@
+@startuml Healora Flows
+!theme plain
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+
+title Healora Digital Twin — Key Data Flows
+
+' ==================== Edit & Save Flow ====================
+actor User as user
+participant "DigitalTwin" as dt
+participant "API :3000" as api
+database "profiles.json" as db
+
+== Edit Parameter ==
+user -> dt : double-click value
+dt -> dt : saveEdit()
+note right: writes to profileOverrides + paramHistory (in-memory)
+dt -> dt : setHasUnsavedEdits(true)
+note right: Save button becomes active (opacity 1)
+
+== Save to Server ==
+user -> dt : click "Сохранить"
+dt -> dt : saveToServer()
+note right: merges profile + overrides + paramHistory
+dt -> api : PUT /api/profiles/:id {merged}
+alt 404 or 405
+  dt -> api : POST /api/profiles {merged}
+  api -> db : upsert (create or update)
+else 200
+  api -> db : write
+end
+api -> dt : { success, profile }
+dt -> dt : setHasUnsavedEdits(false)
+note right: Save button becomes inactive (opacity 0.1)
+
+== Page Reload ==
+user -> browser : Ctrl+F5
+browser -> dt : mount
+dt -> api : GET /api/profiles/:id
+api -> db : read
+api -> dt : { profile: { ..., history } }
+dt -> dt : setProfile(data.profile)
+dt -> dt : setParamHistory(data.profile?.history || {})
+note right: weekday columns populated from API history
+
+== Switch Profile ==
+user -> dt : click profile card
+dt -> dt : window.location.hash = profileId
+dt -> api : GET /api/profiles/:newId
+dt -> dt : reset profileOverrides({}), paramHistory({})
+api -> dt : { profile: { ..., history } }
+dt -> dt : setParamHistory(data.profile?.history)
+
+@enduml

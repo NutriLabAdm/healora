@@ -1,5 +1,5 @@
 {
-  "profile_id": "P024",
+  "profile_id": "KEN_38",
   "source_photo": "23_Ken_38_vegitables.png",
   "name": "Ken",
   "age": 38,
@@ -20,9 +20,16 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["овощи в руках"],
-    "suggested_biomarkers_attention": ["пищеварение", "клетчатка"],
-    "risk_factors_visible": ["недостаток белка в рационе"]
+    "notable_features": [
+      "овощи в руках"
+    ],
+    "suggested_biomarkers_attention": [
+      "пищеварение",
+      "клетчатка"
+    ],
+    "risk_factors_visible": [
+      "недостаток белка в рационе"
+    ]
   },
   "narrative_summary": "Кен — 38-летний мужчина, который следит за своим рационом и предпочитает свежие овощи. Он ведёт размеренный образ жизни, совмещая работу с заботой о здоровье. В фокусе — сбалансированное питание и профилактика авитаминоза."
 }

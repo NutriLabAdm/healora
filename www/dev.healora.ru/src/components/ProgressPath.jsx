@@ -69,9 +69,9 @@ const ProgressPath = () => {
         console.error('Error loading profiles:', error);
         // Fallback mock data
         const mockProfiles = [
-          { profile_id: 'TEST_001', demographics: { age: 34, sex: 'Male', bmi: 22.1 } },
-          { profile_id: 'TEST_002', demographics: { age: 28, sex: 'Female', bmi: 20.5 } },
-          { profile_id: 'TEST_003', demographics: { age: 45, sex: 'Male', bmi: 28.3 } },
+          { profile_id: 'ANNA_28_55', demographics: { age: 34, sex: 'Male', bmi: 22.1 } },
+          { profile_id: 'MIKHAIL_42_96', demographics: { age: 28, sex: 'Female', bmi: 20.5 } },
+          { profile_id: 'ELENA_34_64', demographics: { age: 45, sex: 'Male', bmi: 28.3 } },
           { profile_id: 'TEST_004', demographics: { age: 32, sex: 'Female', bmi: 24.7 } },
           { profile_id: 'TEST_005', demographics: { age: 29, sex: 'Male', bmi: 26.1 } }
         ];
@@ -123,39 +123,14 @@ const ProgressPath = () => {
 
   if (loading) {
     return (
-      <div className="progress-container">
-        <div className="progress-header">
-          <div className="phone-header" onClick={() => navigate('/chat')}>
-            <img src="/images/healora.png" alt="Healora" className="logo" />
-            <div>
-              <div className="score">
-                <span id="total-stars">840</span> звёзд
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="progress-content">
         <div style={{ padding: '20px', textAlign: 'center' }}>Загрузка данных...</div>
       </div>
     );
   }
 
   return (
-    <div className="progress-container">
-      <div className="progress-header">
-        <div className="phone-header" onClick={() => navigate('/chat')}>
-          <img src="/images/healora.png" alt="Healora" className="logo" />
-          <div>
-            <div className="score">
-              <span id="total-stars">840</span> звёзд
-            </div>
-            <div className="progress">68% плана | 5 дней подряд</div>
-            <div className="streak">Уровень: Functional Application (41-60)</div>
-          </div>
-        </div>
-        <h2>Ваш Путь к Здоровью</h2>
-      </div>
-
-      <div className="progress-content">
+    <div className="progress-content">
         {/* Profile selector */}
         <div className="profile-section">
           <h3>Выберите свой профиль Digital Twin:</h3>
@@ -246,7 +221,6 @@ const ProgressPath = () => {
             ))}
           </div>
         </div>
-      </div>
     </div>
   );
 };

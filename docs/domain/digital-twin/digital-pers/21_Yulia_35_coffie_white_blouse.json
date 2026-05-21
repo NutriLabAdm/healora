@@ -1,5 +1,5 @@
 {
-  "profile_id": "P021",
+  "profile_id": "YULIA_35",
   "source_photo": "21_Yulia_35_coffie_white_blouse.png",
   "name": "Yulia",
   "age": 35,
@@ -20,9 +20,18 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["белая блузка", "чашка кофе"],
-    "suggested_biomarkers_attention": ["стресс", "надпочечники"],
-    "risk_factors_visible": ["избыток кофеина", "сидячая работа"]
+    "notable_features": [
+      "белая блузка",
+      "чашка кофе"
+    ],
+    "suggested_biomarkers_attention": [
+      "стресс",
+      "надпочечники"
+    ],
+    "risk_factors_visible": [
+      "избыток кофеина",
+      "сидячая работа"
+    ]
   },
   "narrative_summary": "Юлия — 35-летняя деловая женщина, следящая за стилем и имиджем. Она предпочитает классический офисный стиль и кофе в перерывах. В приоритете — управление стрессом и снижение потребления кофеина."
 }

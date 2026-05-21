@@ -1,5 +1,5 @@
 {
-  "profile_id": "P011",
+  "profile_id": "NIKOLAY_23",
   "source_photo": "11_Nilolay_23_chocolate_bar.png",
   "name": "Николай",
   "age": 23,
@@ -20,9 +20,16 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["молодой, спортивный вид"],
-    "suggested_biomarkers_attention": ["уровень сахара", "инсулин"],
-    "risk_factors_visible": ["склонность к сладким перекусам"]
+    "notable_features": [
+      "молодой, спортивный вид"
+    ],
+    "suggested_biomarkers_attention": [
+      "уровень сахара",
+      "инсулин"
+    ],
+    "risk_factors_visible": [
+      "склонность к сладким перекусам"
+    ]
   },
   "narrative_summary": "Николай — 23-летний молодой человек с активной социальной жизнью. Он часто перекусывает на ходу шоколадом и сладостями. В приоритете — формирование здоровых пищевых привычек и профилактика метаболических нарушений."
 }

@@ -1,5 +1,5 @@
 {
-  "profile_id": "P003",
+  "profile_id": "NATALIA_42",
   "source_photo": "03_Natalia_42_salad.png",
   "name": "Natalia",
   "age": 42,
@@ -20,9 +20,17 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["аккуратная прическа", "ухоженные руки"],
-    "suggested_biomarkers_attention": ["уровень сахара", "холестерин"],
-    "risk_factors_visible": ["малоподвижный образ жизни"]
+    "notable_features": [
+      "аккуратная прическа",
+      "ухоженные руки"
+    ],
+    "suggested_biomarkers_attention": [
+      "уровень сахара",
+      "холестерин"
+    ],
+    "risk_factors_visible": [
+      "малоподвижный образ жизни"
+    ]
   },
   "narrative_summary": "Наталья — 42-летняя женщина, которая следит за питанием и предпочитает здоровую пищу. Она ведёт размеренный образ жизни, совмещая работу и домашние дела. Основные цели — поддержание веса и профилактика возрастных изменений."
 }

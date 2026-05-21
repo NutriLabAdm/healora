@@ -219,6 +219,10 @@ const ChatInterface = () => {
     <div className="chat-container">
       <div className="chat-header">
         <h2>Healora AI Ассистент</h2>
+        <button className="chat-menu-badge" onClick={() => navigate('/diary')}>
+          <span className="chat-menu-badge-num">6</span>
+          <span className="chat-menu-badge-name">Дневник питания</span>
+        </button>
       </div>
       
       <div className="chat-messages">

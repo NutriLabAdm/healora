@@ -1,0 +1,89 @@
+@startuml
+!define RECTANGLE class
+!define DECISION class
+
+skinparam rectangle {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+  FontSize 12
+  RoundCorner 8
+}
+
+skinparam decision {
+  BackgroundColor #FFF8E1
+  BorderColor #F57F17
+  FontSize 12
+}
+
+skinparam database {
+  BackgroundColor #E8F0FE
+  BorderColor #1967D2
+}
+
+skinparam arrow {
+  Color #666666
+  Thickness 2
+}
+
+title **Healora Decision Flow — Адаптивный подбор протокола**
+
+rectangle "Цифровой двойник\n(заполненные параметры)" as DT
+database "Каталог протоколов\n+ _relevance_table.md" as CATALOG
+
+rectangle "Шаг 1\nРасчёт P_success\nпо каждому протоколу" as CALC {
+  rectangle "M(p) — Match quality\n0.35" as M
+  rectangle "E(p) — Effect size\n0.25" as E
+  rectangle "A(p) — Adherence\n0.20" as A
+  rectangle "L(p) — Evidence\n0.20" as L
+  M -[hidden]-> E
+  E -[hidden]-> A
+  A -[hidden]-> L
+}
+
+rectangle "Шаг 2\nРанжирование\n+ Personalization" as RANK
+
+rectangle "Шаг 3\nПоказ топ-3\nпользователю" as TOP3
+
+decision "Пользователь\nвыбрал?" as CHOOSE
+
+rectangle "Шаг 4\nИтеративный запрос\nданных" as ITER {
+  rectangle "ΔU(q) — снижение\nнеопределённости" as DU
+  rectangle "Effort(q) — время/\nстоимость/доступ" as EFF
+  rectangle "Ratio(q) = ΔU/Effort\nзапрос 1 параметра" as RATIO
+  DU -[hidden]-> EFF
+  EFF -[hidden]-> RATIO
+}
+
+decision "max(ΔU) < 5%\nили лимит усилий?" as STOP
+
+rectangle "Шаг 5\nАктивация протокола\n+ план + BEH-коды" as ACTIVATE
+
+rectangle "Дашборд\nмониторинга" as DASHBOARD
+
+DT --> CALC : Параметры
+CATALOG --> CALC : Индикационные карты
+CALC --> RANK : P_success(p)
+RANK --> TOP3 : Топ-3 протокола
+TOP3 --> CHOOSE
+
+CHOOSE --> ITER : Нет (уточнить)
+CHOOSE --> ACTIVATE : Да (выбран протокол)
+
+ITER --> DU : Незаполненные\nпараметры q
+CATALOG --> DU : Пороги протоколов
+DU --> EFF
+EFF --> RATIO
+RATIO --> DT : Запрос 1 параметра\n(наибольший Ratio)
+DT --> CALC : Пересчёт
+
+ITER --> STOP
+STOP --> TOP3 : Нет (есть ещё вопросы)
+STOP --> CHOOSE : Да (точность достаточна)
+
+ACTIVATE --> DASHBOARD : План + метрики
+
+note right of CALC : P_success = 0.35·M + 0.25·E + 0.20·A + 0.20·L
+note right of DU : ΔU = |P_current - P_if_filled|
+note right of EFF : Effort = 0.3·time + 0.4·money + 0.3·access
+
+@enduml

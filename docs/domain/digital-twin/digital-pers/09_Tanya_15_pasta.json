@@ -1,5 +1,5 @@
 {
-  "profile_id": "P009",
+  "profile_id": "TANYA_15",
   "source_photo": "09_Tanya_15_pasta.png",
   "name": "Tanya",
   "age": 15,
@@ -20,9 +20,16 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["длинные волосы"],
-    "suggested_biomarkers_attention": ["железо", "витамины группы B"],
-    "risk_factors_visible": ["склонность к углеводному рациону"]
+    "notable_features": [
+      "длинные волосы"
+    ],
+    "suggested_biomarkers_attention": [
+      "железо",
+      "витамины группы B"
+    ],
+    "risk_factors_visible": [
+      "склонность к углеводному рациону"
+    ]
   },
   "narrative_summary": "Таня — 15-летняя старшеклассница, сочетающая учёбу с домашними делами. Она предпочитает пасту и сытную еду. В приоритете — сбалансированное питание и профилактика анемии в подростковый период."
 }

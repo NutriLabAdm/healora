@@ -1,5 +1,5 @@
 {
-  "profile_id": "P015",
+  "profile_id": "ANASTASIA_37",
   "source_photo": "16_Anastasia_37_street.png",
   "name": "Anastasia",
   "age": 37,
@@ -20,9 +20,17 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["пальто", "развевающиеся волосы"],
-    "suggested_biomarkers_attention": ["витамин D", "щитовидная железа"],
-    "risk_factors_visible": ["возможен дефицит витамина D"]
+    "notable_features": [
+      "пальто",
+      "развевающиеся волосы"
+    ],
+    "suggested_biomarkers_attention": [
+      "витамин D",
+      "щитовидная железа"
+    ],
+    "risk_factors_visible": [
+      "возможен дефицит витамина D"
+    ]
   },
   "narrative_summary": "Анастасия — 37-летняя женщина, которая любит пешие прогулки по городу. Она ведёт умеренно активный образ жизни и ценит время наедине с собой. Основные задачи — поддержание иммунитета и восполнение дефицита витамина D."
 }

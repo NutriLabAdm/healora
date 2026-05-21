@@ -74,37 +74,14 @@ const Goals = () => {
 
   if (loading) {
     return (
-      <div className="progress-container">
-        <div className="progress-header">
-          <div className="phone-header" onClick={() => navigate('/chat')}>
-            <img src="/images/healora.png" alt="Healora" className="logo" />
-            <div>
-              <div className="score">
-                <span id="total-stars">840</span> звёзд
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="progress-content">
         <div style={{ padding: '20px', textAlign: 'center' }}>Загрузка...</div>
       </div>
     );
   }
 
   return (
-    <div className="progress-container">
-      <div className="progress-header">
-        <div className="phone-header" onClick={() => navigate('/chat')}>
-          <img src="/images/healora.png" alt="Healora" className="logo" />
-          <div>
-            <div className="score">
-              <span id="total-stars">840</span> звёзд
-            </div>
-          </div>
-        </div>
-        <h2>Ваши Цели</h2>
-      </div>
-
-      <div className="progress-content">
+    <div className="progress-content">
         <div className="profile-section">
           <h3>Текущие цели:</h3>
           <div className="goals-list">
@@ -154,7 +131,6 @@ const Goals = () => {
             })}
           </div>
         </div>
-      </div>
     </div>
   );
 };

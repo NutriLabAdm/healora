@@ -1,5 +1,5 @@
 {
-  "profile_id": "P010",
+  "profile_id": "ALEX_48",
   "source_photo": "10_Alex_48_soup.png",
   "name": "Alex",
   "age": 48,
@@ -20,9 +20,18 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["короткая стрижка", "деловой стиль"],
-    "suggested_biomarkers_attention": ["холестерин", "сахар в крови"],
-    "risk_factors_visible": ["сидячая работа", "возраст"]
+    "notable_features": [
+      "короткая стрижка",
+      "деловой стиль"
+    ],
+    "suggested_biomarkers_attention": [
+      "холестерин",
+      "сахар в крови"
+    ],
+    "risk_factors_visible": [
+      "сидячая работа",
+      "возраст"
+    ]
   },
   "narrative_summary": "Алекс — 48-летний офисный работник, ценящий домашнюю еду, особенно супы. Он ведёт стабильный, но малоподвижный образ жизни. Основные цели — профилактика сердечно-сосудистых заболеваний и поддержание активности."
 }

@@ -1,5 +1,5 @@
 {
-  "profile_id": "P018",
+  "profile_id": "DANIL_29",
   "source_photo": "19_Danil_29_sofa_blue_jeanse.png",
   "name": "Danil",
   "age": 29,
@@ -20,9 +20,17 @@
     "body_type": "normosthenic",
     "posture": "moderate",
     "visible_skin_tone": "светлый",
-    "notable_features": ["синие джинсы", "домашняя обстановка"],
-    "suggested_biomarkers_attention": ["осанка", "уровень активности"],
-    "risk_factors_visible": ["малоподвижный вечерний досуг"]
+    "notable_features": [
+      "синие джинсы",
+      "домашняя обстановка"
+    ],
+    "suggested_biomarkers_attention": [
+      "осанка",
+      "уровень активности"
+    ],
+    "risk_factors_visible": [
+      "малоподвижный вечерний досуг"
+    ]
   },
   "narrative_summary": "Данил — 29-летний молодой специалист, который после работы предпочитает отдых на диване. Он ведёт стандартный городской образ жизни. Цель — увеличение физической активности и профилактика гиподинамии."
 }

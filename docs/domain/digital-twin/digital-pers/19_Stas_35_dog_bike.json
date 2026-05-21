@@ -1,5 +1,5 @@
 {
-  "profile_id": "P019",
+  "profile_id": "STAS_35",
   "source_photo": "19_Stas_35_dog_bike.png",
   "name": "Stas",
   "age": 35,
@@ -20,9 +20,18 @@
     "body_type": "athletic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["велосипед", "собака", "спортивная одежда"],
-    "suggested_biomarkers_attention": ["ЧСС", "суставы ног"],
-    "risk_factors_visible": ["возможны травмы коленей"]
+    "notable_features": [
+      "велосипед",
+      "собака",
+      "спортивная одежда"
+    ],
+    "suggested_biomarkers_attention": [
+      "ЧСС",
+      "суставы ног"
+    ],
+    "risk_factors_visible": [
+      "возможны травмы коленей"
+    ]
   },
   "narrative_summary": "Стас — 35-летний активный мужчина, который регулярно катается на велосипеде с собакой. Он ведёт здоровый образ жизни и получает удовольствие от движения. В фокусе — профилактика суставных травм и поддержание формы."
 }

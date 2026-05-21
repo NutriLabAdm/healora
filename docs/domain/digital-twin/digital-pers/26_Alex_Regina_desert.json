@@ -1,5 +1,5 @@
 {
-  "profile_id": "P029",
+  "profile_id": "ALEX_REGINA_30",
   "source_photo": "26_Alex_Regina_desert.png",
   "name": "Алекс и Регина",
   "age": 30,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["десерт", "пара", "кафе"],
-    "suggested_biomarkers_attention": ["уровень сахара", "контроль веса"],
-    "risk_factors_visible": ["избыток сахара", "редкая физическая активность"]
+    "notable_features": [
+      "десерт",
+      "пара",
+      "кафе"
+    ],
+    "suggested_biomarkers_attention": [
+      "уровень сахара",
+      "контроль веса"
+    ],
+    "risk_factors_visible": [
+      "избыток сахара",
+      "редкая физическая активность"
+    ]
   },
   "narrative_summary": "Алекс и Регина — пара, которая любит проводить время в кафе за десертами. Они наслаждаются жизнью и обществом друг друга. В фокусе — умеренность в сладком и добавление физической активности в совместный досуг."
 }

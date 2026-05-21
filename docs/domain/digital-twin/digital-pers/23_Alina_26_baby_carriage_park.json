@@ -1,5 +1,5 @@
 {
-  "profile_id": "P023",
+  "profile_id": "ALINA_26",
   "source_photo": "23_Alina_26_baby_carriage_park.png",
   "name": "Alina",
   "age": 26,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["детская коляска", "парк"],
-    "suggested_biomarkers_attention": ["послеродовое восстановление", "витамин D", "железо"],
-    "risk_factors_visible": ["недосып", "снижение физической активности"]
+    "notable_features": [
+      "детская коляска",
+      "парк"
+    ],
+    "suggested_biomarkers_attention": [
+      "послеродовое восстановление",
+      "витамин D",
+      "железо"
+    ],
+    "risk_factors_visible": [
+      "недосып",
+      "снижение физической активности"
+    ]
   },
   "narrative_summary": "Алина — 26-летняя молодая мама, которая много времени проводит с ребёнком на прогулках в парке. Она восстанавливается после родов. В фокусе — послеродовое здоровье, восполнение дефицитов и нормализация сна."
 }

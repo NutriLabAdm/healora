@@ -38,12 +38,12 @@ const SourcesPanel = () => {
         <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '5px' }}>Digital Twin profiles (multi-select):</div>
         <div id="profile-checkboxes" style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '10px' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px', background: 'var(--bg-chat)', borderRadius: '6px', cursor: 'pointer', fontSize: '11px' }}>
-            <input type="checkbox" value="TEST_001" style={{ cursor: 'pointer' }} />
-            <span>Anna 28 y.o., 55 kg, 165 cm</span>
+            <input type="checkbox" value="ANNA_28_55" style={{ cursor: 'pointer' }} />
+            <span>Анна 28 y.o., 55 kg, 165 cm</span>
           </label>
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px', background: 'var(--bg-chat)', borderRadius: '6px', cursor: 'pointer', fontSize: '11px' }}>
-            <input type="checkbox" value="TEST_002" style={{ cursor: 'pointer' }} />
-            <span>Nikolay 34 y.o., 78 kg, 180 cm</span>
+            <input type="checkbox" value="MIKHAIL_42_96" style={{ cursor: 'pointer' }} />
+            <span>Михаил 42 y.o., 96 kg, 182 cm</span>
           </label>
         </div>
       </div>

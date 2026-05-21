@@ -1,5 +1,5 @@
 {
-  "profile_id": "P020",
+  "profile_id": "IRINA_31",
   "source_photo": "20_Irina_31_box_openspace.png",
   "name": "Irina",
   "age": 31,
@@ -20,9 +20,18 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["коробка в руках", "деловая одежда"],
-    "suggested_biomarkers_attention": ["зрение", "осанка"],
-    "risk_factors_visible": ["офисная работа", "длительное сидение"]
+    "notable_features": [
+      "коробка в руках",
+      "деловая одежда"
+    ],
+    "suggested_biomarkers_attention": [
+      "зрение",
+      "осанка"
+    ],
+    "risk_factors_visible": [
+      "офисная работа",
+      "длительное сидение"
+    ]
   },
   "narrative_summary": "Ирина — 31-летняя офисная сотрудница, работающая в опенспейсе. Она активно взаимодействует с коллегами и занимается организационными задачами. Основные цели — профилактика офисного синдрома и забота о зрении."
 }

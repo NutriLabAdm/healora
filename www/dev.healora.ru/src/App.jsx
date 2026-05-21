@@ -5,6 +5,8 @@ import ProgressPath from './components/ProgressPath';
 import Profile from './components/Profile';
 import DigitalTwin from './components/DigitalTwin';
 import Goals from './components/Goals';
+import DecisionFlowSimulation from './components/DecisionFlowSimulation';
+import NutritionDiary from './components/NutritionDiary';
 import PhoneContainer from './components/PhoneContainer';
 import UserAvatarPanel from './components/UserAvatarPanel';
 import InterventionsPanel from './components/InterventionsPanel';
@@ -123,11 +125,7 @@ function App() {
                 <ProgressPath />
               </PhoneContainer>
             } />
-            <Route path="/profile" element={
-              <PhoneContainer title="Профиль" onBack={() => window.history.back()}>
-                <Profile />
-              </PhoneContainer>
-            } />
+            <Route path="/profile" element={<Navigate replace to="/digital-twin" />} />
             {!basePath && <Route path="/digital-twin" element={
               <DigitalTwin
                 profileId={selectedProfile}
@@ -139,6 +137,16 @@ function App() {
             <Route path="/goals" element={
               <PhoneContainer title="Ваши Цели" onBack={() => window.history.back()}>
                 <Goals />
+              </PhoneContainer>
+            } />
+            <Route path="/diary" element={
+              <PhoneContainer title="Дневник питания">
+                <NutritionDiary />
+              </PhoneContainer>
+            } />
+            <Route path="/flow" element={
+              <PhoneContainer title="Подбор протокола">
+                <DecisionFlowSimulation />
               </PhoneContainer>
             } />
             <Route path="*" element={<Navigate replace to={basePath ? '/' : '/digital-twin'} />} />

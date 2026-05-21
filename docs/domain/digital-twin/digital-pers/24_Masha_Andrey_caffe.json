@@ -1,5 +1,5 @@
 {
-  "profile_id": "P026",
+  "profile_id": "MASHA_ANDREY_30",
   "source_photo": "24_Masha_Andrey_caffe.png",
   "name": "Маша и Андрей",
   "age": 30,
@@ -20,9 +20,18 @@
     "body_type": "normosthenic",
     "posture": "good",
     "visible_skin_tone": "светлый",
-    "notable_features": ["двое", "кафе", "чашки"],
-    "suggested_biomarkers_attention": ["социальное здоровье", "уровень стресса"],
-    "risk_factors_visible": ["возможен избыток кофеина"]
+    "notable_features": [
+      "двое",
+      "кафе",
+      "чашки"
+    ],
+    "suggested_biomarkers_attention": [
+      "социальное здоровье",
+      "уровень стресса"
+    ],
+    "risk_factors_visible": [
+      "возможен избыток кофеина"
+    ]
   },
   "narrative_summary": "Маша и Андрей — пара людей, которые наслаждаются общением в кафе. Они ведут активную социальную жизнь. В фокусе — поддержание здоровых отношений и баланса между работой и отдыхом."
 }

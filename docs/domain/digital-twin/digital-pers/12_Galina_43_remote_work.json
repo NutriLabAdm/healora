@@ -1,5 +1,5 @@
 {
-  "profile_id": "P012",
+  "profile_id": "GALINA_43",
   "source_photo": "12_Galina_43_remote_work.png",
   "name": "Galina",
   "age": 43,
@@ -20,9 +20,19 @@
     "body_type": "normosthenic",
     "posture": "poor",
     "visible_skin_tone": "светлый",
-    "notable_features": ["наушники", "ноутбук"],
-    "suggested_biomarkers_attention": ["осанка", "зрение", "шея и поясница"],
-    "risk_factors_visible": ["длительное сидение", "экранная нагрузка"]
+    "notable_features": [
+      "наушники",
+      "ноутбук"
+    ],
+    "suggested_biomarkers_attention": [
+      "осанка",
+      "зрение",
+      "шея и поясница"
+    ],
+    "risk_factors_visible": [
+      "длительное сидение",
+      "экранная нагрузка"
+    ]
   },
   "narrative_summary": "Галина — 43-летняя женщина, работающая удалённо из дома. Она много времени проводит за ноутбуком, совмещая работу и быт. Ключевые цели — профилактика болей в спине, забота о зрении и организация режима труда и отдыха."
 }

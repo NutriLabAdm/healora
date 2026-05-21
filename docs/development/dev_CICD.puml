@@ -1,0 +1,66 @@
+@startuml
+title Healora / NutriChat — CI/CD Pipeline
+
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam BackgroundColor white
+
+actor "Developer" as DEV
+
+package "Planning & Docs" {
+
+  component "Requirements\nFR / UML / Docs" as DOCS
+  component "AI Documentation\nAgents" as AIDOC
+}
+
+package "Development" {
+
+  component "Frontend\nWeb / Mobile" as FE
+  component "Backend APIs" as BE
+  component "AI Modules\nLLM / RAG / ETL" as AI
+}
+
+package "CI Pipeline" {
+
+  component "Git Repository" as GIT
+  component "Build & Test" as TEST
+  component "Security Scan" as SEC
+  component "AI Validation\nAgents" as AIVAL
+}
+
+package "CD Pipeline" {
+
+  component "Docker Build" as DOCKER
+  component "Kubernetes / Cloud" as K8S
+  component "Monitoring & Logs" as MON
+}
+
+database "Vector DB /\nKnowledge Base" as KB
+
+DEV --> DOCS : specification
+DOCS --> AIDOC : auto-generation
+
+DEV --> FE : coding
+DEV --> BE : coding
+DEV --> AI : AI development
+
+FE --> GIT : commit
+BE --> GIT : commit
+AI --> GIT : commit
+
+GIT --> TEST : CI trigger
+TEST --> SEC : static analysis
+SEC --> AIVAL : AI checks
+
+AIVAL --> DOCKER : validated build
+DOCKER --> K8S : deployment
+
+K8S --> MON : monitoring
+AI --> KB : embeddings / RAG
+
+MON ..> DEV : alerts & feedback
+
+@enduml

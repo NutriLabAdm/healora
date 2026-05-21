@@ -181,6 +181,24 @@ const planTemplates = [
       { code: 'SP_27', name: 'Кофермент Q10', regularity: 'D' },
     ],
   },
+  {
+    id: 'rpp',
+    name: 'Коррекция РПП',
+    protocol: '8.0',
+    category: 'mental',
+    doctor: 'Психотерапевт · Центр расстройств пищевого поведения',
+    summary: 'Пациенту рекомендован комплекс коррекции расстройств пищевого поведения: осознанное питание, регулярный режим, работа с эмоциональными триггерами и образом тела.',
+    highlight: 'Осознанное питание, регулярный режим, дневник эмоций, работа с триггерами',
+    interventions: [
+      { code: 'ED_MA', name: 'Осознанное питание', regularity: 'D' },
+      { code: 'ED_SCH', name: 'Структура питания', regularity: 'D' },
+      { code: 'ED_EMO', name: 'Эмоциональная регуляция', regularity: 'D' },
+      { code: 'ED_BODY', name: 'Работа с образом тела', regularity: 'D' },
+      { code: 'ED_SUP', name: 'Поддержка и рефлексия', regularity: 'W' },
+      { code: 'MN_MDT', name: 'Медитация', regularity: 'D' },
+      { code: 'MN_STR', name: 'Управление стрессом', regularity: 'D' },
+    ],
+  },
 ];
 
 export function getTemplateById(id) {
