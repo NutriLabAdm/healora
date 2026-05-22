@@ -234,6 +234,13 @@
   color: #1a1a1a;
 }
 
+.protocol-card-count {
+  font-size: 10px;
+  color: #999;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
 .protocol-card-id {
   font-size: 8px;
   font-family: monospace;

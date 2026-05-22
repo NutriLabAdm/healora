@@ -357,7 +357,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   useEffect(() => {
     if (!profileId) return;
     const saved = getPlan(profileId);
-    if (saved.interventions.length > 0 || timelineInterventions.length > 0) {
+    if (saved.interventions.length > 0) {
       setTimelineInterventions(saved.interventions);
       setPlanDoctorNote(saved.note || '');
       setPlanStatus(saved.status || 'active');
@@ -402,7 +402,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
         { id: 'age', code: '01_1_DEMO_AGE', name: 'Возраст', current: profile?.demographics?.age, target: null, unit: 'лет', norm: '18-65', editable: true },
         { id: 'sex', code: '01_2_DEMO_GENDER', name: 'Пол', current: profile?.demographics?.sex, target: null, unit: '', norm: 'M/F', editable: true },
         { id: 'height', code: '01_3_DEMO_HEIGHT', name: 'Рост', current: profile?.anthropometrics?.height_cm, target: null, unit: 'см', norm: '150-200', editable: true },
-        { id: 'weight', code: '01_4_DEMO_WEIGHT', name: 'Вес', current: profile?.anthropometrics?.weight_kg, target: 70, unit: 'кг', norm: '50-120', editable: true },
+        { id: 'weight', code: '01_4_DEMO_WEIGHT', name: 'Вес', current: profile?.anthropometrics?.weight_kg, target: 88, unit: 'кг', norm: '50-120', editable: true },
         { id: 'bmi', code: '01_19_BIO_BMI', name: 'ИМТ', current: profile?.anthropometrics?.bmi, target: 22, unit: 'кг/м²', norm: '18.5-25', editable: false },
         { id: 'waist', code: '01_20_BIO_WAIST', name: 'Талия', current: profile?.anthropometrics?.waist_cm, target: 80, unit: 'см', norm: '60-100', editable: true },
         { id: 'ethnicity', code: '01_5_DEMO_ETHNICITY', name: 'Этническая принадлежность', current: profile?.demographics?.ethnicity_or_background, target: null, unit: '', norm: '-', editable: true },
@@ -1332,7 +1332,7 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
       title: 'Демография',
       color: '#6b21c8',
       attributes: [
-        { id: '01_4', name: 'Вес', start: profile.anthropometrics?.weight_kg, current: profile.anthropometrics?.weight_kg, target: 70, unit: 'кг' },
+        { id: '01_4', name: 'Вес', start: profile.anthropometrics?.weight_kg, current: profile.anthropometrics?.weight_kg, target: 88, unit: 'кг' },
         { id: '01_5', name: 'ИМТ', start: profile.anthropometrics?.bmi, current: profile.anthropometrics?.bmi, target: 22, unit: 'кг/м²' },
         { id: '01_6', name: 'Талия', start: profile.anthropometrics?.waist_cm, current: profile.anthropometrics?.waist_cm, target: 80, unit: 'см' },
       ]
@@ -2532,7 +2532,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                         <span>Было</span>
                         <span>Текущее</span>
                         <span>Цель</span>
-                        <span>Норма</span>
                         <span>Интервенции</span>
                         {(() => {
                           const cols = [];
@@ -2608,7 +2607,6 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                               />
                               <button className="target-btn" onClick={() => incrementTarget(attr.id, targetValues[attr.id] ?? attr.target)}>+</button>
                             </div>
-                            <span className="attr-cell norm">{attr.norm}</span>
                             <div className="attr-cell interventions">
                               {interventions.length > 0 ? (
                                 <div className="interv-group" title={`${interventions.length} интервенций`}>

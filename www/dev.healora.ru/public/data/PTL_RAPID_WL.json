@@ -2,10 +2,10 @@
   "profile_id": "DMITRY_57",
   "name": "Дмитрий",
   "protocol_id": "PTL_RAPID_WL",
-  "protocol_name": "Быстрое снижение веса (30 дней)",
+  "protocol_name": "Быстрое снижение веса (60 дней)",
   "therapy_plan": {
     "protocol": "Средиземноморская диета + умеренная активность",
-    "duration_days": 30,
+    "duration_days": 60,
     "daily_burden_min": 35,
     "interventions": [
       {
@@ -2854,5 +2854,34 @@
       "worst_day": 9,
       "target_weight_day10": 86.9
     }
-  }
+  },
+  "goals": [
+    {
+      "id": "G01",
+      "label": "Снизить вес со 107 до 88 кг",
+      "type": "weight",
+      "unit": "кг",
+      "current": 107,
+      "target": 88,
+      "deadline_days": 60
+    },
+    {
+      "id": "G02",
+      "label": "Нормализовать АД до 125/80",
+      "type": "bp",
+      "unit": "мм рт.ст.",
+      "current": "135/88",
+      "target": "125/80",
+      "deadline_days": 90
+    },
+    {
+      "id": "G03",
+      "label": "Снизить глюкозу до < 100 мг/дл",
+      "type": "glucose",
+      "unit": "мг/дл",
+      "current": 105,
+      "target": 95,
+      "deadline_days": 90
+    }
+  ]
 }

@@ -124,5 +124,27 @@
       "08_1"
     ],
     "protocol_id": "PTL_LONGEVITY"
+  },
+  "RAPID_WEIGHT_LOSS": {
+    "name": "Быстрое снижение веса",
+    "category": "medical",
+    "interventions": [
+      "FD_CAL",
+      "PH_WALK",
+      "PH_LOW",
+      "FD_SUG",
+      "FD_FIB",
+      "FD_IF",
+      "MN_BRTH",
+      "SL_BED",
+      "FD_WATER",
+      "PR_01",
+      "BEH_EAT",
+      "M_WGHT",
+      "M_WAIST",
+      "PR_01A",
+      "PR_SS"
+    ],
+    "protocol_id": "PTL_RAPID_WL"
   }
 }

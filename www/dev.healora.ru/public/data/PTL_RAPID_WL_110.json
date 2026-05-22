@@ -13285,5 +13285,34 @@
       150,
       180
     ]
-  }
+  },
+  "goals": [
+    {
+      "id": "G01",
+      "label": "Снизить вес с 110 до 88 кг",
+      "type": "weight",
+      "unit": "кг",
+      "current": 110,
+      "target": 88,
+      "deadline_days": 180
+    },
+    {
+      "id": "G02",
+      "label": "Нормализовать АД до 125/80",
+      "type": "bp",
+      "unit": "мм рт.ст.",
+      "current": "145/92",
+      "target": "125/80",
+      "deadline_days": 90
+    },
+    {
+      "id": "G03",
+      "label": "Снизить глюкозу до < 100 мг/дл",
+      "type": "glucose",
+      "unit": "мг/дл",
+      "current": 110,
+      "target": 95,
+      "deadline_days": 90
+    }
+  ]
 }

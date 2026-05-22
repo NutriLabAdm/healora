@@ -2,7 +2,7 @@
   "metadata": {
     "version": "1.0",
     "last_updated": "2026-05-07",
-    "total_interventions": 50,
+    "total_interventions": 59,
     "description": "Каталог интервенций для Цифрового Двойника - структурированный для парсинга"
   },
   "categories": {
@@ -2005,6 +2005,354 @@
         "stress"
       ],
       "probability": 0.7
+    },
+    "PR_01A": {
+      "code": "PR_01A",
+      "name": "Оценка по Гарвардской тарелке",
+      "category": "food",
+      "impact": 7,
+      "evidence": "C",
+      "type": "behavior",
+      "short_description": "Оценка соответствия приёмов пищи принципам Гарвардской тарелки",
+      "full_description": "Еженедельная оценка рациона по принципу Гарвардской тарелки: ½ овощи, ¼ белок, ¼ цельнозерновые. Коррекция списка закупок и привычек.",
+      "benefits": [
+        "Сбалансированное питание",
+        "Контроль порций",
+        "Осознанный выбор продуктов"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Первые 4 недели",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "color": "#ff9800",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "Гарвардская школа общественного здоровья",
+      "biomarkers": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0
+        ],
+        "time": "20:00"
+      }
+    },
+    "PR_SS": {
+      "code": "PR_SS",
+      "name": "SMART Shopping — умная закупка",
+      "category": "food",
+      "impact": 7,
+      "evidence": "C",
+      "type": "behavior",
+      "short_description": "Умная закупка продуктов по списку с чтением этикеток",
+      "full_description": "Закупка продуктов по заранее составленному списку. Правила: не ходить голодным, читать этикетки (сахар <5 г/100г, насыщ. жиры <3 г/100г), избегать impulse-покупок.",
+      "benefits": [
+        "Контроль бюджета",
+        "Здоровый выбор",
+        "Снижение спонтанных покупок"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "waist"
+      ],
+      "color": "#ff9800",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "waist"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0
+        ],
+        "time": "18:30"
+      }
+    },
+    "BEH_EAT": {
+      "code": "BEH_EAT",
+      "name": "Контроль РПП: осознанное питание",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Осознанное питание для контроля переедания",
+      "full_description": "Осознанное питание: без телефона/ТВ, медленное пережёвывание, пауза в середине приёма для оценки насыщения. Признаки РПП: переедание >2 р/нед.",
+      "benefits": [
+        "Контроль аппетита",
+        "Снижение переедания",
+        "Улучшение пищевого поведения"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "waist",
+        "bmi"
+      ],
+      "color": "#9c27b0",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "waist",
+        "bmi"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "перед едой"
+      }
+    },
+    "PR_01": {
+      "code": "PR_01",
+      "name": "Планирование закупок по Гарвардской тарелке",
+      "category": "food",
+      "impact": 7.5,
+      "evidence": "C",
+      "type": "behavior",
+      "short_description": "Планирование меню и закупок по принципу Гарвардской тарелки",
+      "full_description": "Составить меню на неделю по принципу Гарвардской тарелки: ½ овощи, ¼ белок, ¼ цельнозерновые. Список закупок по отделам магазина. Правило корзины 70/30.",
+      "benefits": [
+        "Сбалансированное питание",
+        "Экономия времени",
+        "Снижение спонтанных покупок"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "color": "#ff9800",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "Гарвардская школа общественного здоровья",
+      "biomarkers": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0
+        ],
+        "time": "19:00"
+      }
+    },
+    "PH_LOW": {
+      "code": "PH_LOW",
+      "name": "Низкоударная активность 25 мин",
+      "category": "physical",
+      "impact": 8,
+      "evidence": "A",
+      "type": "exercise",
+      "short_description": "Плавание, велотренажёр или эллипс 25 мин, ЧСС 110–125",
+      "full_description": "Низкоударная кардио-тренировка без нагрузки на суставы. Плавание, велотренажёр или эллипс 25 мин. ЧСС 110–125 уд/мин (зона 1–2).",
+      "benefits": [
+        "Сжигание жира",
+        "Укрепление сердечно-сосудистой системы",
+        "Безопасно для суставов"
+      ],
+      "implementation": {
+        "frequency": "3 раза в неделю",
+        "duration": "25 мин",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "color": "#4caf50",
+      "regularity": "3x/week",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          2,
+          4,
+          6
+        ],
+        "time": "08:00"
+      }
+    },
+    "M_WAIST": {
+      "code": "M_WAIST",
+      "name": "Измерение окружности талии",
+      "category": "medical",
+      "impact": 6,
+      "evidence": "B",
+      "type": "monitoring",
+      "short_description": "Еженедельное измерение талии для контроля висцерального жира",
+      "full_description": "Измерять окружность талии сантиметровой лентой на уровне пупка, на выдохе. Фиксировать в дневнике. Важный маркер висцерального жира.",
+      "benefits": [
+        "Контроль висцерального жира",
+        "Мониторинг прогресса"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "waist"
+      ],
+      "color": "#f44336",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "waist"
+      ],
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          1
+        ],
+        "time": "07:00"
+      }
+    },
+    "PH_WALK": {
+      "code": "PH_WALK",
+      "name": "Ходьба 6000→9000 шагов/день",
+      "category": "physical",
+      "impact": 8,
+      "evidence": "A",
+      "type": "exercise",
+      "short_description": "Увеличение ежедневной шаговой активности",
+      "full_description": "Увеличить шаги с 3500 до 6000→9000: парковаться дальше, 10-мин прогулка после обеда, 20 мин вечером.",
+      "benefits": [
+        "Сжигание калорий",
+        "Улучшение метаболизма",
+        "Снижение АД"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "color": "#4caf50",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "12:00"
+      }
+    },
+    "M_WGHT": {
+      "code": "M_WGHT",
+      "name": "Ежедневное взвешивание утром натощак",
+      "category": "medical",
+      "impact": 6,
+      "evidence": "B",
+      "type": "monitoring",
+      "short_description": "Ежедневный контроль веса",
+      "full_description": "Взвешиваться каждое утро после туалета, до завтрака, в лёгкой одежде. Записывать в дневник.",
+      "benefits": [
+        "Контроль прогресса",
+        "Мотивация"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "weight"
+      ],
+      "color": "#f44336",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight"
+      ],
+      "probability": 0.95,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "07:00"
+      }
     }
   }
 }

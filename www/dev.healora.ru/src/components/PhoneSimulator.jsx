@@ -275,19 +275,33 @@ export default function PhoneSimulator({
   useEffect(() => { setViewDay(simulationDay); }, [simulationDay]);
   const chatEndRef = useRef(null);
 
+  const calcPlanDaysFromWeight = (p, gs) => {
+    if (!p?.anthropometrics?.weight_kg) return null;
+    const cur = p.anthropometrics.weight_kg;
+    const weightGoal = (gs || goals).find(g => g.id === 'G01');
+    const tgt = weightGoal?.target;
+    if (!tgt || typeof tgt !== 'number') return null;
+    const delta = cur - tgt;
+    if (delta <= 0) return null;
+    return Math.ceil(delta / 1.5 * 7);
+  };
+
   const [planDays, setPlanDays] = useState(SIMULATION_HISTORY.days.length);
   const [execDays, setExecDays] = useState(SIMULATION_HISTORY.days);
 
   useEffect(() => {
+    const base = import.meta.env.BASE_URL || '/';
     const url = profileId === 'DMITRY_57_110KG'
-      ? '/data/PTL_RAPID_WL_110.json'
-      : '/data/PTL_RAPID_WL.json';
+      ? `${base}data/PTL_RAPID_WL_110.json`
+      : `${base}data/PTL_RAPID_WL.json`;
     fetch(url)
       .then(r => r.json())
       .then(data => {
         const days = data.execution_history.days.map(d => ({ ...d, notes: d.notes || d.note || '' }));
         setExecDays(days);
-        setPlanDays(Math.max(days.length, SIMULATION_HISTORY.days.length));
+        const fromPlan = data.therapy_plan?.duration_days;
+        const fromWeight = calcPlanDaysFromWeight(profile);
+        setPlanDays(fromPlan || fromWeight || Math.max(days.length, SIMULATION_HISTORY.days.length));
       })
       .catch(() => {});
   }, [profileId]);
@@ -865,11 +879,12 @@ ${planSection}
               planTemplateId={planTemplateId} planDoctorNote={planDoctorNote} planStatus={planStatus}
               timelineInterventions={timelineInterventions} interventionCatalog={interventionCatalog}
               planTemplates={planTemplates} getTemplateById={getTemplateById} simulationDay={viewDay} planDuration={planDays}
+              profileTargets={{ weight:88, bmi:22, glucose:95, hba1c:5.5, cholesterol:200, hdl:50, sleep:7.5, stress:3, steps:8000, water:2.5, hr:60, hrv:60 }}
               onSetPlanTemplateId={setPlanTemplateId} onSetPlanDoctorNote={setPlanDoctorNote}
               onSetPlanStatus={setPlanStatus} onRemoveIntervention={removeIntervention}
               onCreatePlan={onCreatePlan}
               onSavePlan={() => savePlan(profileId, { interventions: timelineInterventions, note: planDoctorNote, status: planStatus, templateId: planTemplateId })}
-              onClose={() => setPhoneOverlayTab('chat')} compact />
+              onClose={() => setPhoneOverlayTab('chat')} />
           ) : phoneOverlayTab === 'goals' ? (
             <div style={{padding:'12px 14px',height:'100%',overflowY:'auto',background:'#fafafa'}}>
               <h3 style={{fontSize:14,color:'#311b92',margin:'0 0 4px'}}>Цели программы</h3>

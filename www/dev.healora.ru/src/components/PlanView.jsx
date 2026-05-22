@@ -15,6 +15,7 @@ const PlanView = ({
   getTemplateById,
   simulationDay,
   planDuration = 60,
+  profileTargets,
   onSetPlanTemplateId,
   onSetPlanDoctorNote,
   onSetPlanStatus,
@@ -32,11 +33,15 @@ const PlanView = ({
     : template.interventions;
 
   const intervCounts = {};
+  items.forEach(item => {
+    const reg = item.regularity || 'D';
+    const freqMap = { 'D':1,'daily':1, 'W':1/7,'weekly':1/7, 'M':1/30,'monthly':1/30, '3x/week':3/7, 'biweekly':1/14 };
+    const freq = freqMap[reg] ?? 1;
+    intervCounts[item.code] = { total: Math.ceil(planDuration * freq), done: 0 };
+  });
   timelineInterventions.forEach(i => {
     if (i.day > (simulationDay || 0)) return;
-    if (!intervCounts[i.code]) intervCounts[i.code] = { total: 0, done: 0 };
-    intervCounts[i.code].total++;
-    if (i.done) intervCounts[i.code].done++;
+    if (intervCounts[i.code] && i.done) intervCounts[i.code].done++;
   });
 
   const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
@@ -107,6 +112,7 @@ const PlanView = ({
     PH_AER: '150 мин/нед умеренной или 75 мин высокой интенсивности. Разбивайте на 30 мин/день.',
     PH_FLEX: 'Растяжка после тренировки, йога 2–3 раза/нед. Без резких движений.',
     PH_Z2: 'Зона 2: 60–70% от макс ЧСС. Должно быть легко говорить. Начинайте с 20 мин.',
+    PH_LOW: '3×/нед (Вт/Чт/Сб): плавание, велотренажёр или эллипс 25 мин. ЧСС 110–125 уд/мин (зона 1–2). Без ударной нагрузки на суставы.',
     MN_MDT: 'Начните с 5 мин/день. Используйте приложения или таймер. Главное — регулярность.',
     MN_BRTH: 'Техника 4-7-8: вдох 4 сек, задержка 7, выдох 8. При стрессе — 3 цикла.',
     MN_STR: 'Записывайте 3 повода для благодарности ежедневно. Планируйте дела заранее.',
@@ -222,13 +228,13 @@ const PlanView = ({
               });
               const tracked = ['weight','bmi','sleep','stress','glucose','systolic_bp','diastolic_bp','cholesterol','hba1c','vitamin_d'].filter(k => trackedSet.has(k));
               return tracked.length === 0 ? [
-                { key:'weight', label:'Вес', start:profile?.anthropometrics?.weight_kg, current:profile?.anthropometrics?.weight_kg, target:null, unit:'кг', field:'weight_kg', group:'anthropometrics' },
-                { key:'bmi', label:'ИМТ', start:profile?.anthropometrics?.bmi, current:profile?.anthropometrics?.bmi, target:null, unit:'', field:'bmi', group:'anthropometrics' },
+                { key:'weight', label:'Вес', start:profile?.anthropometrics?.weight_kg, current:profileTargets?.weight ?? profile?.anthropometrics?.weight_kg, target:null, unit:'кг', field:'weight_kg', group:'anthropometrics' },
+                { key:'bmi', label:'ИМТ', start:profile?.anthropometrics?.bmi, current:profileTargets?.bmi ?? profile?.anthropometrics?.bmi, target:null, unit:'', field:'bmi', group:'anthropometrics' },
               ] : tracked.map(k => {
                 const m = affectMap[k];
                 const val = m ? (refinedData[m.g+'.'+m.f] ?? profile?.[m.g]?.[m.f]) : null;
                 const target = val ? (k === 'weight' || k === 'bmi' ? +(val * (k==='bmi'?0.95:0.97)).toFixed(1) : null) : null;
-                return { key:k, label:m?.label||k, start:profile?.[m.g]?.[m.f], current:val, target, unit:m?.unit||'', field:m?.f, group:m?.g };
+                return { key:k, label:m?.label||k, start:profile?.[m.g]?.[m.f], current:profileTargets?.[k] ?? val, target, unit:m?.unit||'', field:m?.f, group:m?.g };
               });
             })().map(p => (
               <div key={p.key} style={{display:'flex',flexDirection:'column',gap:2,background:'#fff',border:'1px solid #e0d8ff',borderRadius:8,padding:'6px 10px',cursor:'pointer',minWidth:120,transition:'0.15s'}}
@@ -275,22 +281,32 @@ const PlanView = ({
                     if (m) neededFields.add(m.g+'.'+m.f);
                   });
                 });
-                return fieldGroups.map(g => g.fields.filter(f => {
-                  const profVal = profile?.[g.key]?.[f.id];
-                  const isEmpty = profVal === null || profVal === undefined || profVal === '' || profVal === '—';
-                  return neededFields.has(g.key+'.'+f.id) || (isEmpty && ['weight_kg','height_cm','waist_cm','systolic_bp_mmhg','diastolic_bp_mmhg','resting_hr_bpm','glucose_mg_dl','total_cholesterol_mg_dl','hdl_mg_dl','ldl_mg_dl','triglycerides_mg_dl','hba1c_percent','vitamin_d','sleep_hours','stress_level_0_10','daily_steps','water_l_day'].includes(f.id));
-                }).map(f => {
-                  const val = profile?.[g.key]?.[f.id];
-                  const cur = refinedData[g.key+'.'+f.id] ?? val;
-                  const editing = refineField === g.key+'.'+f.id;
+                const allFields = [];
+                fieldGroups.forEach(g => {
+                  g.fields.forEach(f => {
+                    const profVal = profile?.[g.key]?.[f.id];
+                    const isEmpty = profVal === null || profVal === undefined || profVal === '' || profVal === '—';
+                    if (neededFields.has(g.key+'.'+f.id) && isEmpty) {
+                      allFields.push({ ...f, g: g.key });
+                    }
+                  });
+                });
+                allFields.sort((a, b) => {
+                  const rank = ['weight_kg','waist_cm','glucose_mg_dl','systolic_bp_mmhg','diastolic_bp_mmhg','hba1c_percent','hdl_mg_dl','ldl_mg_dl','triglycerides_mg_dl','daily_steps','resting_hr_bpm','sleep_hours','stress_level_0_10','vitamin_d','water_l_day'];
+                  return (rank.indexOf(a.id) === -1 ? 99 : rank.indexOf(a.id)) - (rank.indexOf(b.id) === -1 ? 99 : rank.indexOf(b.id));
+                });
+                return allFields.slice(0, 3).map(f => {
+                  const val = profile?.[f.g]?.[f.id];
+                  const cur = refinedData[f.g+'.'+f.id] ?? val;
+                  const editing = refineField === f.g+'.'+f.id;
                   return (
-                    <span key={g.key+'.'+f.id} style={{display:'inline-flex',alignItems:'center',gap:3,background:editing?'#f0edff':'#f5f5ff',border:'1px solid '+(editing?'#613CF5':'#e0d8ff'),borderRadius:6,padding:'2px 6px',fontSize:10,cursor:'pointer',transition:'0.15s'}}
-                      onClick={() => { if(!editing){ setRefineField(g.key+'.'+f.id); setRefineValue(cur??''); } }}>
+                    <span key={f.g+'.'+f.id} style={{display:'inline-flex',alignItems:'center',gap:3,background:editing?'#f0edff':'#f5f5ff',border:'1px solid '+(editing?'#613CF5':'#e0d8ff'),borderRadius:6,padding:'2px 6px',fontSize:10,cursor:'pointer',transition:'0.15s'}}
+                      onClick={() => { if(!editing){ setRefineField(f.g+'.'+f.id); setRefineValue(cur??''); } }}>
                       <span style={{color:'#666'}}>{f.label}:</span>
                       {editing ? (
                         <input autoFocus size={4} value={refineValue} onChange={e => setRefineValue(e.target.value)}
-                          onBlur={() => { setRefinedData(p=>({...p,[g.key+'.'+f.id]:refineValue})); setRefineField(null); }}
-                          onKeyDown={e => { if(e.key==='Enter'){ setRefinedData(p=>({...p,[g.key+'.'+f.id]:refineValue})); setRefineField(null); } }}
+                          onBlur={() => { setRefinedData(p=>({...p,[f.g+'.'+f.id]:refineValue})); setRefineField(null); }}
+                          onKeyDown={e => { if(e.key==='Enter'){ setRefinedData(p=>({...p,[f.g+'.'+f.id]:refineValue})); setRefineField(null); } }}
                           style={{width:40,border:'1px solid #613CF5',borderRadius:3,padding:'1px 3px',fontSize:10,outline:'none'}} />
                       ) : (
                         <><strong>{cur ?? '—'}</strong>{f.unit && <span style={{color:'#999'}}>{f.unit}</span>}</>
@@ -298,7 +314,7 @@ const PlanView = ({
                       {!editing && <svg viewBox="0 0 24 24" fill="none" stroke="#613CF5" strokeWidth="2" width="8" height="8"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>}
                     </span>
                   );
-                }));
+                });
               })()}
             </div>
           </div>

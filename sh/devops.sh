@@ -41,25 +41,16 @@ sync_files() {
         fi
     else
         log_info "Using tar over SSH..."
-        local tar_ok
+        local rc
         if [ -n "$exclude_pattern" ]; then
-            tar cf - --exclude="$exclude_pattern" -C "$src_dir" . && tar_ok=1 || tar_ok=0
+            tar cf - --exclude="$exclude_pattern" -C "$src_dir" . 2>&1 | \
+            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite" 2>&1
+            rc=${PIPESTATUS[0]}
         else
-            tar cf - -C "$src_dir" . && tar_ok=1 || tar_ok=0
+            tar cf - -C "$src_dir" . 2>&1 | \
+            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite" 2>&1
+            rc=${PIPESTATUS[0]}
         fi
-        if [ "$tar_ok" -eq 0 ]; then
-            log_error "tar failed for $src_dir"
-            return 1
-        fi
-        # pipe tar to ssh
-        if [ -n "$exclude_pattern" ]; then
-            tar cf - --exclude="$exclude_pattern" -C "$src_dir" . | \
-            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite"
-        else
-            tar cf - -C "$src_dir" . | \
-            ssh $REMOTE_USER@$dest_host "tar xf - -C $dest_dir --overwrite"
-        fi
-        local rc=${PIPESTATUS[0]}
         if [ "$rc" -ne 0 ]; then
             log_error "Sync failed (exit code $rc)"
             return 1
@@ -154,6 +145,10 @@ server {
 
     location /digital-twin/ {
         try_files $uri $uri/ /digital-twin/index.html;
+    }
+
+    location = / {
+        return 301 /digital-twin/;
     }
 
     location / {
