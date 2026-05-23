@@ -216,7 +216,17 @@ app.post('/api/provider', (req, res) => {
     res.json({ provider: AI_PROVIDER });
 });
 
-function buildSystemPrompt(found, tasks) {
+function classifyIntent(msg, hasPlan) {
+  const q = (msg || '').toLowerCase();
+  const statusKw = ['выполнил', 'сделал', 'отмет', 'чек', 'done', 'готово', 'сделано'];
+  if (statusKw.some(k => q.includes(k))) return 'status';
+  if (!hasPlan) return 'general';
+  const contextKw = ['план', 'задани', 'сегодня', 'прогресс', 'статус', 'напомни', 'что делать', 'интервенци'];
+  if (contextKw.some(k => q.includes(k))) return 'context';
+  return 'general';
+}
+
+function buildSystemPrompt(found, tasks, planData) {
     if (!found) return 'Ты — Healora AI, персональный ассистент здоровья. Отвечай на русском языке, будь краток (2-4 предложения).';
     const d = found.demographics || {};
     const a = found.anthropometrics || {};
@@ -226,7 +236,13 @@ function buildSystemPrompt(found, tasks) {
     const planSection = (tasks && tasks.length > 0)
       ? `\nПлан терапии на сегодня (день ${tasks[0]?.day || '?'}):
 ${tasks.map(t => `  ${t.done ? '✅ [ВЫПОЛНЕНО]' : t.alert ? '🔴 [ПРОПУЩЕНО]' : '⬜ [ОЖИДАЕТСЯ]'} ${t.name} (${t.code})`).join('\n')}`
-      : '\nПлан терапии: данные не загружены.';
+      : planData
+        ? `\nPlan-Journal (активный план):
+ID: ${planData.plan_id}
+Протокол: ${planData.protocol_id}
+Прогресс: ${planData.computed.progress_pct}% (${planData.computed.done_count}/${planData.computed.total_count})
+Интервенций сегодня: ${planData.schedule.filter(s => s.date === new Date().toISOString().slice(0, 10) && s.status === 'pending').length}`
+        : '\nПлан терапии: данные не загружены.';
     return `Ты — Healora AI, персональный ассистент здоровья.
 
 Информация о пользователе:
@@ -284,7 +300,25 @@ app.post('/api/chat', async (req, res) => {
             found = profiles.find(p => p.profile_id === profile);
         }
 
-        const promptContent = systemPrompt || buildSystemPrompt(found, tasks);
+        let planData = null;
+        if (profile) {
+          const userPlans = planStorage.list({ profile_id: profile, status: 'active' });
+          if (userPlans.length > 0) planData = userPlans[0];
+        }
+
+        const intent = classifyIntent(message, !!planData);
+
+        let promptContent;
+        if (systemPrompt) {
+          promptContent = systemPrompt;
+        } else if (intent === 'context' && planData) {
+          promptContent = buildSystemPrompt(found, tasks, planData);
+        } else if (intent === 'status') {
+          promptContent = buildSystemPrompt(found, tasks, planData) + '\n\nПользователь отмечает выполнение. Ответь кратко: поздравь, укажи следующий шаг.';
+        } else {
+          promptContent = buildSystemPrompt(found, tasks);
+        }
+
         const systemMsg = { role: 'system', content: promptContent };
         const historyMsgs = (history || []).map(m => ({ role: m.role, content: m.content }));
         const userMsg = { role: 'user', content: message };
@@ -399,6 +433,215 @@ app.post('/api/generate-quiz', async (req, res) => {
         console.error('Server error:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
+});
+
+// ── Plan-Journal ──────────────────────────────────────────────────────
+const planStorage = require('./planStorage');
+const planValidator = require('./planValidator');
+const scheduleGen = require('./scheduleGenerator');
+const computedFields = require('./computedFields');
+
+// POST /api/plan/generate — create plan (draft)
+app.post('/api/plan/generate', (req, res) => {
+  try {
+    const { profile_id, protocol_id, options } = req.body;
+    if (!profile_id) return res.status(400).json({ error: 'profile_id required' });
+    if (!protocol_id) return res.status(400).json({ error: 'protocol_id required' });
+
+    const plan = scheduleGen.generateSchedule(protocol_id, profile_id, options);
+    if (plan.error) return res.status(404).json({ error: plan.error });
+
+    plan.plan_id = planStorage.generateId();
+    const saved = planStorage.save(plan.plan_id, plan);
+    res.json({ plan: saved });
+  } catch (err) {
+    console.error('Error generating plan:', err);
+    res.status(500).json({ error: 'Failed to generate plan' });
+  }
+});
+
+// GET /api/plan/:plan_id — get single plan
+app.get('/api/plan/:plan_id', (req, res) => {
+  const plan = planStorage.get(req.params.plan_id);
+  if (!plan) return res.status(404).json({ error: 'Plan not found' });
+  res.json({ plan });
+});
+
+// PATCH /api/plan/:plan_id/intervention/:int_id — update intervention status
+app.patch('/api/plan/:plan_id/intervention/:int_id', (req, res) => {
+  try {
+    const plan = planStorage.get(req.params.plan_id);
+    if (!plan) return res.status(404).json({ error: 'Plan not found' });
+
+    const intervention = plan.schedule.find(s => s.id === req.params.int_id);
+    if (!intervention) return res.status(404).json({ error: 'Intervention not found' });
+
+    const { status, result, comment } = req.body;
+    if (status && !planValidator.VALID_INTERVENTION_STATUSES.includes(status)) {
+      return res.status(400).json({ error: `Invalid status. Must be one of: ${planValidator.VALID_INTERVENTION_STATUSES.join(', ')}` });
+    }
+
+    if (status) intervention.status = status;
+    if (result) intervention.result = result;
+    if (comment !== undefined) intervention.comment = comment;
+    if (status === 'done' && !intervention.completed_at) {
+      intervention.completed_at = new Date().toISOString();
+    }
+
+    plan.computed = computedFields.recompute(plan.schedule);
+    plan.changelog.push({ at: new Date().toISOString(), action: `intervention_${status || 'updated'}`, by: 'user' });
+
+    planStorage.save(plan.plan_id, plan);
+    res.json({ plan });
+  } catch (err) {
+    console.error('Error updating intervention:', err);
+    res.status(500).json({ error: 'Failed to update intervention' });
+  }
+});
+
+// GET /api/plans?profile_id=... — list plans
+app.get('/api/plans', (req, res) => {
+  const filter = {};
+  if (req.query.profile_id) filter.profile_id = req.query.profile_id;
+  if (req.query.status) filter.status = req.query.status;
+  const plans = planStorage.list(filter);
+  res.json({ plans });
+});
+
+// GET /api/plan/:plan_id/export — download plan.json
+app.get('/api/plan/:plan_id/export', (req, res) => {
+  const plan = planStorage.get(req.params.plan_id);
+  if (!plan) return res.status(404).json({ error: 'Plan not found' });
+  res.setHeader('Content-Disposition', `attachment; filename="${req.params.plan_id}.json"`);
+  res.setHeader('Content-Type', 'application/json');
+  res.json(plan);
+});
+
+// POST /api/plan/:plan_id/approve — draft → active
+app.post('/api/plan/:plan_id/approve', (req, res) => {
+  const plan = planStorage.get(req.params.plan_id);
+  if (!plan) return res.status(404).json({ error: 'Plan not found' });
+  if (plan.status !== 'draft') return res.status(400).json({ error: `Plan status is ${plan.status}, expected draft` });
+
+  plan.status = 'active';
+  plan.approved_by = req.body.approved_by || 'user';
+  plan.changelog.push({ at: new Date().toISOString(), action: 'approved', by: plan.approved_by });
+
+  planStorage.save(plan.plan_id, plan);
+  res.json({ plan });
+});
+
+// POST /api/plan/:plan_id/reschedule — move an intervention
+app.post('/api/plan/:plan_id/reschedule', (req, res) => {
+  try {
+    const plan = planStorage.get(req.params.plan_id);
+    if (!plan) return res.status(404).json({ error: 'Plan not found' });
+
+    const { intervention_id, new_date, new_time } = req.body;
+    const intervention = plan.schedule.find(s => s.id === intervention_id);
+    if (!intervention) return res.status(404).json({ error: 'Intervention not found' });
+
+    if (new_date) intervention.date = new_date;
+    if (new_time) intervention.scheduled_time = new_time;
+    intervention.status = 'rescheduled';
+    plan.changelog.push({ at: new Date().toISOString(), action: 'rescheduled', by: 'user' });
+
+    plan.computed = computedFields.recompute(plan.schedule);
+    planStorage.save(plan.plan_id, plan);
+    res.json({ plan });
+  } catch (err) {
+    console.error('Error rescheduling:', err);
+    res.status(500).json({ error: 'Failed to reschedule' });
+  }
+});
+
+// Goal Parser
+const GOAL_KEYWORDS = {
+  'сон': 'PTL_SLEEP',
+  'бессонница': 'PTL_SLEEP',
+  'спать': 'PTL_SLEEP',
+  'вес': 'PTL_RAPID_WL',
+  'похудеть': 'PTL_RAPID_WL',
+  'жир': 'PTL_RAPID_WL',
+  'ожирение': 'PTL_RAPID_WL',
+  'сахар': 'PTL_GLYCEMIC',
+  'глюкоза': 'PTL_GLYCEMIC',
+  'диабет': 'PTL_GLYCEMIC',
+  'сердце': 'PTL_CARDIO',
+  'давление': 'PTL_CARDIO',
+  'пульс': 'PTL_CARDIO',
+  'стресс': 'PTL_DEPR',
+  'тревога': 'PTL_DEPR',
+  'депрессия': 'PTL_DEPR',
+  'мозг': 'PTL_COG',
+  'память': 'PTL_COG',
+  'когнитив': 'PTL_COG',
+  'долголетие': 'PTL_LONGEVITY',
+  'возраст': 'PTL_LONGEVITY',
+  'старение': 'PTL_LONGEVITY',
+  'гормон': 'PTL_HORMONAL',
+  'щитовидка': 'PTL_HORMONAL',
+  'воспаление': 'PTL_INFLAM',
+  'биомаркер': 'PTL_INFLAM',
+  'еда': 'PTL_CIRCAD',
+  'питание': 'PTL_CIRCAD',
+  'диета': 'PTL_NUTR_BASE',
+  'добавки': 'PTL_NUTR_BASE',
+  'витамин': 'PTL_NUTR_BASE',
+};
+
+// GET /api/goal/suggest?q=... — keyword-based suggestion
+app.get('/api/goal/suggest', (req, res) => {
+  const q = (req.query.q || '').toLowerCase().trim();
+  if (!q) return res.json({ suggestions: [] });
+
+  const matched = [];
+  for (const [keyword, protocolId] of Object.entries(GOAL_KEYWORDS)) {
+    if (q.includes(keyword)) {
+      const proto = scheduleGen.getProtocol(protocolId);
+      if (proto && !matched.find(m => m.protocol_id === protocolId)) {
+        matched.push({ protocol_id: protocolId, name: proto.name, keyword, goal: proto.goal });
+      }
+    }
+  }
+  res.json({ suggestions: matched });
+});
+
+// POST /api/goal/parse — LLM goal parsing (falls back to keyword)
+app.post('/api/goal/parse', async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ error: 'text required' });
+
+    const matched = [];
+    const q = text.toLowerCase();
+    for (const [keyword, protocolId] of Object.entries(GOAL_KEYWORDS)) {
+      if (q.includes(keyword)) {
+        const proto = scheduleGen.getProtocol(protocolId);
+        if (proto && !matched.find(m => m.protocol_id === protocolId)) {
+          matched.push({ protocol_id: protocolId, name: proto.name, keyword, goal: proto.goal });
+        }
+      }
+    }
+
+    if (matched.length > 0) {
+      return res.json({ strategy: 'keyword', suggestions: matched });
+    }
+
+    res.json({
+      strategy: 'clarify',
+      question: 'Расскажите подробнее о вашей цели. Что именно вы хотите улучшить? (Например: качество сна, уровень энергии, снижение веса, питание)',
+      suggestions: []
+    });
+  } catch (err) {
+    console.error('Goal parse error:', err);
+    res.status(500).json({ error: 'Failed to parse goal' });
+  }
+});
+
+// GET /api/protocols — list all protocols (used by frontend goal picker)
+app.get('/api/protocols', (req, res) => {
+  res.json({ protocols: scheduleGen.listProtocols() });
 });
 
 // ── Diary Storage (JSON file) ──────────────────────────────────────────

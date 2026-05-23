@@ -1,0 +1,232 @@
+{
+  "plan_id": "plan_mpggh2xn_5qiui4",
+  "profile_id": "p001",
+  "protocol_id": "PTL_SLEEP",
+  "title": "Гигиена сна — 15 interventions",
+  "status": "active",
+  "created_at": "2026-05-22T05:04:58.139Z",
+  "source": "engine",
+  "approved_by": "doctor",
+  "schedule": [
+    {
+      "id": "01_1_001",
+      "day": 1,
+      "date": "2026-05-22",
+      "code": "01_1",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "done",
+      "result": null,
+      "completed_at": "2026-05-22T05:05:10.993Z",
+      "comment": "ok"
+    },
+    {
+      "id": "01_1_002",
+      "day": 2,
+      "date": "2026-05-23",
+      "code": "01_1",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_1_003",
+      "day": 3,
+      "date": "2026-05-24",
+      "code": "01_1",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_2_004",
+      "day": 1,
+      "date": "2026-05-22",
+      "code": "01_2",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_2_005",
+      "day": 2,
+      "date": "2026-05-23",
+      "code": "01_2",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_2_006",
+      "day": 3,
+      "date": "2026-05-24",
+      "code": "01_2",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_3_007",
+      "day": 1,
+      "date": "2026-05-22",
+      "code": "01_3",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_3_008",
+      "day": 2,
+      "date": "2026-05-23",
+      "code": "01_3",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "01_3_009",
+      "day": 3,
+      "date": "2026-05-24",
+      "code": "01_3",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "03_1_010",
+      "day": 1,
+      "date": "2026-05-22",
+      "code": "03_1",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "03_1_011",
+      "day": 2,
+      "date": "2026-05-23",
+      "code": "03_1",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "03_1_012",
+      "day": 3,
+      "date": "2026-05-24",
+      "code": "03_1",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "03_7_013",
+      "day": 1,
+      "date": "2026-05-22",
+      "code": "03_7",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "03_7_014",
+      "day": 2,
+      "date": "2026-05-23",
+      "code": "03_7",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    },
+    {
+      "id": "03_7_015",
+      "day": 3,
+      "date": "2026-05-24",
+      "code": "03_7",
+      "type": "behavior",
+      "scheduled_time": "09:00",
+      "params": {},
+      "status": "pending",
+      "result": null,
+      "completed_at": null,
+      "comment": null
+    }
+  ],
+  "computed": {
+    "progress_pct": 7,
+    "done_count": 1,
+    "total_count": 15,
+    "streak_days": 1,
+    "missed_streak": 0,
+    "next_intervention": "2026-05-22T09:00:00Z"
+  },
+  "changelog": [
+    {
+      "at": "2026-05-22T05:04:58.139Z",
+      "action": "created",
+      "by": "engine"
+    },
+    {
+      "at": "2026-05-22T05:05:10.718Z",
+      "action": "approved",
+      "by": "doctor"
+    },
+    {
+      "at": "2026-05-22T05:05:10.993Z",
+      "action": "intervention_done",
+      "by": "user"
+    }
+  ]
+}

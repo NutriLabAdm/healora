@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "last_updated": "2026-05-07",
+    "last_updated": "2026-05-22",
     "total_interventions": 59,
     "description": "Каталог интервенций для Цифрового Двойника - структурированный для парсинга"
   },
@@ -85,6 +85,26 @@
           6
         ],
         "time": "22:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "SL_DUR": {
@@ -130,6 +150,26 @@
           6
         ],
         "time": "22:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "SL_QLT": {
@@ -175,6 +215,26 @@
           6
         ],
         "time": "21:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_HIIT": {
@@ -223,6 +283,26 @@
           3
         ],
         "time": "10:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_STR": {
@@ -266,6 +346,26 @@
           4
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_AER": {
@@ -315,6 +415,26 @@
           4
         ],
         "time": "07:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_FLEX": {
@@ -355,6 +475,26 @@
           3
         ],
         "time": "18:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_Z2": {
@@ -398,6 +538,26 @@
           4
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "MN_MDT": {
@@ -447,6 +607,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "MN_BRTH": {
@@ -482,7 +662,27 @@
         "stress",
         "resting_hr"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
     "SL_HYG": {
       "code": "SL_HYG",
@@ -527,6 +727,26 @@
           6
         ],
         "time": "21:30"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "MN_STR": {
@@ -574,6 +794,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "MN_DTOX": {
@@ -621,6 +861,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_WATER": {
@@ -668,6 +928,26 @@
           6
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_ELEC": {
@@ -715,6 +995,26 @@
           6
         ],
         "time": "12:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_CAL": {
@@ -764,6 +1064,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_CRB": {
@@ -811,6 +1131,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_SUG": {
@@ -858,6 +1198,26 @@
           6
         ],
         "time": "12:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_IF": {
@@ -907,6 +1267,26 @@
           6
         ],
         "time": "10:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_EAT": {
@@ -954,6 +1334,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_FIB": {
@@ -1003,6 +1403,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "FD_CAF": {
@@ -1052,6 +1472,26 @@
           6
         ],
         "time": "10:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "SP_D3": {
@@ -1101,6 +1541,30 @@
           6
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
       }
     },
     "SP_O3": {
@@ -1150,6 +1614,30 @@
           6
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
       }
     },
     "SP_MG": {
@@ -1199,6 +1687,30 @@
           6
         ],
         "time": "21:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
       }
     },
     "SP_BC": {
@@ -1248,6 +1760,30 @@
           6
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
       }
     },
     "SP_ADP": {
@@ -1297,6 +1833,30 @@
           6
         ],
         "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
       }
     },
     "FD_ANTI": {
@@ -1346,6 +1906,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "SP_NTRP": {
@@ -1383,7 +1963,31 @@
         "memory",
         "focus"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
     "DG_CHK": {
       "code": "DG_CHK",
@@ -1422,7 +2026,21 @@
         "tsh",
         "early_detection"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "DG_CARD": {
       "code": "DG_CARD",
@@ -1459,7 +2077,21 @@
         "blood_pressure",
         "cholesterol"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "PH_HRV": {
       "code": "PH_HRV",
@@ -1508,6 +2140,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 1,
+          "max": 1440,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_END01": {
@@ -1530,7 +2182,21 @@
         "testosterone",
         "cortisol"
       ],
-      "probability": 0.85
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_END02": {
       "code": "M_END02",
@@ -1562,6 +2228,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_END03": {
@@ -1595,6 +2281,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_CAR01": {
@@ -1627,6 +2333,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_CAR02": {
@@ -1660,6 +2386,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_CAR03": {
@@ -1680,7 +2426,21 @@
         "resting_hr",
         "hrv"
       ],
-      "probability": 0.8
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_GAS01": {
       "code": "M_GAS01",
@@ -1702,7 +2462,21 @@
         "crp",
         "ggt"
       ],
-      "probability": 0.8
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_GAS02": {
       "code": "M_GAS02",
@@ -1722,7 +2496,21 @@
         "hemoglobin",
         "ferritin"
       ],
-      "probability": 0.8
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_GAS03": {
       "code": "M_GAS03",
@@ -1743,7 +2531,21 @@
         "ferritin",
         "early_detection"
       ],
-      "probability": 0.85
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_NEU01": {
       "code": "M_NEU01",
@@ -1763,7 +2565,21 @@
         "sleep",
         "stress"
       ],
-      "probability": 0.8
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_NEU02": {
       "code": "M_NEU02",
@@ -1782,7 +2598,21 @@
       "biomarkers": [
         "early_detection"
       ],
-      "probability": 0.7
+      "probability": 0.7,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_LAB01": {
       "code": "M_LAB01",
@@ -1808,7 +2638,21 @@
         "alt",
         "ast"
       ],
-      "probability": 0.95
+      "probability": 0.95,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_LAB02": {
       "code": "M_LAB02",
@@ -1830,7 +2674,21 @@
         "testosterone",
         "glucose"
       ],
-      "probability": 0.85
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "M_LAB03": {
       "code": "M_LAB03",
@@ -1849,7 +2707,21 @@
       "biomarkers": [
         "omega_3_index"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
     "ED_MA": {
       "code": "ED_MA",
@@ -1890,6 +2762,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "ED_BODY": {
@@ -1918,7 +2810,27 @@
       "biomarkers": [
         "stress"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
     "ED_SCH": {
       "code": "ED_SCH",
@@ -1947,7 +2859,27 @@
       "biomarkers": [
         "glucose"
       ],
-      "probability": 0.85
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
     "ED_EMO": {
       "code": "ED_EMO",
@@ -1976,7 +2908,27 @@
       "biomarkers": [
         "stress"
       ],
-      "probability": 0.8
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
     "ED_SUP": {
       "code": "ED_SUP",
@@ -2004,7 +2956,27 @@
       "biomarkers": [
         "stress"
       ],
-      "probability": 0.7
+      "probability": 0.7,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
     "PR_01A": {
       "code": "PR_01A",
@@ -2046,6 +3018,26 @@
           0
         ],
         "time": "20:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PR_SS": {
@@ -2086,6 +3078,26 @@
           0
         ],
         "time": "18:30"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "BEH_EAT": {
@@ -2134,6 +3146,26 @@
           6
         ],
         "time": "перед едой"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PR_01": {
@@ -2176,6 +3208,26 @@
           0
         ],
         "time": "19:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_LOW": {
@@ -2222,6 +3274,26 @@
           6
         ],
         "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_WAIST": {
@@ -2259,6 +3331,26 @@
           1
         ],
         "time": "07:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "PH_WALK": {
@@ -2309,6 +3401,26 @@
           6
         ],
         "time": "12:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     },
     "M_WGHT": {
@@ -2352,6 +3464,26 @@
           6
         ],
         "time": "07:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
       }
     }
   }

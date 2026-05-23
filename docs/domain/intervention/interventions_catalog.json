@@ -1,8 +1,8 @@
 {
   "metadata": {
     "version": "1.0",
-    "last_updated": "2026-05-07",
-    "total_interventions": 30,
+    "last_updated": "2026-05-22",
+    "total_interventions": 59,
     "description": "Каталог интервенций для Цифрового Двойника - структурированный для парсинга"
   },
   "categories": {
@@ -27,19 +27,19 @@
       "description": "Питание и диетология"
     },
     "medical": {
-      "name": "Медицинский",
+      "name": "мед",
       "color": "#f44336",
       "description": "Медицинские обследования и направления"
     },
     "supplement": {
       "name": "Добавки",
       "color": "#795548",
-      "description": "БАДы и нутрицевтики"
+      "description": "БАДы и нутри"
     }
   },
   "interventions": {
-    "01_1": {
-      "code": "01_1",
+    "SL_BED": {
+      "code": "SL_BED",
       "name": "Сон: время отхода",
       "category": "sleep",
       "impact": 9,
@@ -64,7 +64,7 @@
         "diastolic_bp"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -73,10 +73,42 @@
         "systolic_bp",
         "diastolic_bp"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "22:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "01_2": {
-      "code": "01_2",
+    "SL_DUR": {
+      "code": "SL_DUR",
       "name": "Сон: продолжительность",
       "category": "sleep",
       "impact": 8.5,
@@ -99,17 +131,49 @@
         "sleep"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
       "biomarkers": [
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "22:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "01_3": {
-      "code": "01_3",
+    "SL_QLT": {
+      "code": "SL_QLT",
       "name": "Сон: качество",
       "category": "sleep",
       "impact": 8,
@@ -132,17 +196,49 @@
         "sleep"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
       "biomarkers": [
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "21:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "02_1": {
-      "code": "02_1",
+    "PH_HIIT": {
+      "code": "PH_HIIT",
       "name": "Тренировки: ВИИТ",
       "category": "physical",
       "impact": 9,
@@ -169,7 +265,7 @@
         "weight"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "detailed",
       "sources": "-",
@@ -180,10 +276,37 @@
         "cholesterol",
         "weight"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          1,
+          3
+        ],
+        "time": "10:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "02_2": {
-      "code": "02_2",
+    "PH_STR": {
+      "code": "PH_STR",
       "name": "Тренировки: силовые",
       "category": "physical",
       "impact": 8.5,
@@ -207,7 +330,7 @@
         "muscle_mass"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -215,10 +338,38 @@
         "weight",
         "muscle_mass"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "02_3": {
-      "code": "02_3",
+    "PH_AER": {
+      "code": "PH_AER",
       "name": "Тренировки: аэробные",
       "category": "physical",
       "impact": 9,
@@ -244,7 +395,7 @@
         "glucose"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -254,10 +405,40 @@
         "diastolic_bp",
         "glucose"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "time": "07:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "02_4": {
-      "code": "02_4",
+    "PH_FLEX": {
+      "code": "PH_FLEX",
       "name": "Тренировки: гибкость",
       "category": "physical",
       "impact": 7.5,
@@ -280,17 +461,44 @@
         "flexibility"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
       "biomarkers": [
         "flexibility"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          3
+        ],
+        "time": "18:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "02_6": {
-      "code": "02_6",
+    "PH_Z2": {
+      "code": "PH_Z2",
       "name": "Тренировки: зона 2",
       "category": "physical",
       "impact": 8,
@@ -314,7 +522,7 @@
         "resting_hr"
       ],
       "color": "#4caf50",
-      "regularity": "weekly",
+      "regularity": "W",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -322,10 +530,38 @@
         "endurance",
         "resting_hr"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_1": {
-      "code": "03_1",
+    "MN_MDT": {
+      "code": "MN_MDT",
       "name": "Медитация",
       "category": "mental",
       "impact": 8.5,
@@ -350,7 +586,7 @@
         "sleep"
       ],
       "color": "#9c27b0",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -359,10 +595,42 @@
         "hrv",
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_2": {
-      "code": "03_2",
+    "MN_BRTH": {
+      "code": "MN_BRTH",
       "name": "Дыхательные упражнения",
       "category": "mental",
       "impact": 7,
@@ -386,7 +654,7 @@
         "resting_hr"
       ],
       "color": "#9c27b0",
-      "regularity": "on-demand",
+      "regularity": "P",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -394,10 +662,30 @@
         "stress",
         "resting_hr"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_5": {
-      "code": "03_5",
+    "SL_HYG": {
+      "code": "SL_HYG",
       "name": "Сон",
       "category": "sleep",
       "impact": 8,
@@ -420,17 +708,49 @@
         "sleep"
       ],
       "color": "#2196f3",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
       "biomarkers": [
         "sleep"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "21:30"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_6": {
-      "code": "03_6",
+    "MN_STR": {
+      "code": "MN_STR",
       "name": "Управление стрессом",
       "category": "mental",
       "impact": 8,
@@ -454,7 +774,7 @@
         "cortisol"
       ],
       "color": "#9c27b0",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -462,10 +782,42 @@
         "stress",
         "cortisol"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_7": {
-      "code": "03_7",
+    "MN_DTOX": {
+      "code": "MN_DTOX",
       "name": "Цифровой детокс",
       "category": "mental",
       "impact": 7.5,
@@ -489,7 +841,7 @@
         "eye_strain"
       ],
       "color": "#9c27b0",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "medium",
       "sources": "-",
@@ -497,10 +849,42 @@
         "sleep",
         "eye_strain"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_9": {
-      "code": "03_9",
+    "FD_WATER": {
+      "code": "FD_WATER",
       "name": "Водный режим",
       "category": "food",
       "impact": 8,
@@ -524,7 +908,7 @@
         "kidney_function"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -532,10 +916,42 @@
         "hydration",
         "kidney_function"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "03_10": {
-      "code": "03_10",
+    "FD_ELEC": {
+      "code": "FD_ELEC",
       "name": "Баланс электролитов",
       "category": "food",
       "impact": 7,
@@ -559,7 +975,7 @@
         "muscle_function"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -567,10 +983,42 @@
         "electrolytes",
         "muscle_function"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "12:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_1": {
-      "code": "04_1",
+    "FD_CAL": {
+      "code": "FD_CAL",
       "name": "Ограничение калорий",
       "category": "food",
       "impact": 8.5,
@@ -595,7 +1043,7 @@
         "weight"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -604,10 +1052,42 @@
         "cholesterol",
         "weight"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_2": {
-      "code": "04_2",
+    "FD_CRB": {
+      "code": "FD_CRB",
       "name": "Контроль углеводов",
       "category": "food",
       "impact": 8,
@@ -631,7 +1111,7 @@
         "insulin"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -639,10 +1119,42 @@
         "glucose",
         "insulin"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_3": {
-      "code": "04_3",
+    "FD_SUG": {
+      "code": "FD_SUG",
       "name": "Снижение сахара",
       "category": "food",
       "impact": 7.5,
@@ -666,7 +1178,7 @@
         "liver"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -674,10 +1186,42 @@
         "glucose",
         "liver"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "12:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_4": {
-      "code": "04_4",
+    "FD_IF": {
+      "code": "FD_IF",
       "name": "Ограничение по времени",
       "category": "food",
       "impact": 8,
@@ -702,7 +1246,7 @@
         "autophagy"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "detailed",
       "sources": "-",
@@ -711,10 +1255,42 @@
         "insulin",
         "autophagy"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "10:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_5": {
-      "code": "04_5",
+    "FD_EAT": {
+      "code": "FD_EAT",
       "name": "Ранние приемы пищи",
       "category": "food",
       "impact": 7.5,
@@ -738,7 +1314,7 @@
         "circadian_rhythm"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -746,10 +1322,42 @@
         "glucose",
         "circadian_rhythm"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_6": {
-      "code": "04_6",
+    "FD_FIB": {
+      "code": "FD_FIB",
       "name": "Богатая клетчаткой диета",
       "category": "food",
       "impact": 7,
@@ -774,7 +1382,7 @@
         "gut_health"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -783,10 +1391,42 @@
         "glucose",
         "gut_health"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "04_7": {
-      "code": "04_7",
+    "FD_CAF": {
+      "code": "FD_CAF",
       "name": "Снижение кофеина",
       "category": "food",
       "impact": 6.5,
@@ -811,7 +1451,7 @@
         "resting_hr"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -820,10 +1460,42 @@
         "anxiety",
         "resting_hr"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "10:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "05_1": {
-      "code": "05_1",
+    "SP_D3": {
+      "code": "SP_D3",
       "name": "Витамин D3",
       "category": "supplement",
       "impact": 8,
@@ -848,7 +1520,7 @@
         "immunity"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -857,10 +1529,46 @@
         "bone_health",
         "immunity"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
-    "05_2": {
-      "code": "05_2",
+    "SP_O3": {
+      "code": "SP_O3",
       "name": "Омега-3",
       "category": "supplement",
       "impact": 8.5,
@@ -885,7 +1593,7 @@
         "inflammation"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -894,10 +1602,46 @@
         "triglycerides",
         "inflammation"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
-    "05_3": {
-      "code": "05_3",
+    "SP_MG": {
+      "code": "SP_MG",
       "name": "Магний",
       "category": "supplement",
       "impact": 7.5,
@@ -922,7 +1666,7 @@
         "muscle_tension"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -931,10 +1675,46 @@
         "sleep",
         "muscle_tension"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "21:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
-    "05_4": {
-      "code": "05_4",
+    "SP_BC": {
+      "code": "SP_BC",
       "name": "В-комплекс",
       "category": "supplement",
       "impact": 7,
@@ -959,7 +1739,7 @@
         "blood_formation"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -968,10 +1748,46 @@
         "nervous_system",
         "blood_formation"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
-    "05_5": {
-      "code": "05_5",
+    "SP_ADP": {
+      "code": "SP_ADP",
       "name": "Адаптогены",
       "category": "supplement",
       "impact": 7.5,
@@ -996,7 +1812,7 @@
         "energy"
       ],
       "color": "#795548",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -1005,10 +1821,46 @@
         "cortisol",
         "energy"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "09:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
-    "05_6": {
-      "code": "05_6",
+    "FD_ANTI": {
+      "code": "FD_ANTI",
       "name": "Противовоспалительная диета",
       "category": "food",
       "impact": 8,
@@ -1033,7 +1885,7 @@
         "joint_health"
       ],
       "color": "#ff9800",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -1042,10 +1894,42 @@
         "crp",
         "joint_health"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     },
-    "05_7": {
-      "code": "05_7",
+    "SP_NTRP": {
+      "code": "SP_NTRP",
       "name": "Ноотропы",
       "category": "supplement",
       "impact": 7,
@@ -1070,7 +1954,7 @@
         "focus"
       ],
       "color": "#795548",
-      "regularity": "on-demand",
+      "regularity": "P",
       "delivery_type": "chatbot",
       "report_effort": "light",
       "sources": "-",
@@ -1079,10 +1963,34 @@
         "memory",
         "focus"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "dosage_mg": {
+          "type": "number",
+          "min": 1,
+          "max": 10000
+        },
+        "form": {
+          "type": "string",
+          "enum": [
+            "capsule",
+            "tablet",
+            "liquid",
+            "powder"
+          ]
+        }
+      }
     },
-    "07_1": {
-      "code": "07_1",
+    "DG_CHK": {
+      "code": "DG_CHK",
       "name": "Регулярный чекап",
       "category": "medical",
       "impact": 9,
@@ -1108,7 +2016,7 @@
         "early_detection"
       ],
       "color": "#f44336",
-      "regularity": "yearly",
+      "regularity": "Y",
       "delivery_type": "web_report",
       "report_effort": "light",
       "sources": "-",
@@ -1118,10 +2026,24 @@
         "tsh",
         "early_detection"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
-    "07_2": {
-      "code": "07_2",
+    "DG_CARD": {
+      "code": "DG_CARD",
       "name": "Направление к кардиологу",
       "category": "medical",
       "impact": 9,
@@ -1146,7 +2068,7 @@
         "cholesterol"
       ],
       "color": "#f44336",
-      "regularity": "on-demand",
+      "regularity": "P",
       "delivery_type": "web_report",
       "report_effort": "medium",
       "sources": "-",
@@ -1155,10 +2077,24 @@
         "blood_pressure",
         "cholesterol"
       ],
-      "probability": 0.9
+      "probability": 0.9,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
     },
-    "08_1": {
-      "code": "08_1",
+    "PH_HRV": {
+      "code": "PH_HRV",
       "name": "Мониторинг ЧСС",
       "category": "physical",
       "impact": 8.5,
@@ -1183,7 +2119,7 @@
         "recovery"
       ],
       "color": "#4caf50",
-      "regularity": "daily",
+      "regularity": "D",
       "delivery_type": "voice_report",
       "report_effort": "light",
       "sources": "-",
@@ -1192,7 +2128,1363 @@
         "resting_hr",
         "recovery"
       ],
-      "probability": 0.75
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 1,
+          "max": 1440,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_END01": {
+      "code": "M_END01",
+      "name": "Консультация эндокринолога",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Направление к эндокринологу",
+      "full_description": "Консультация эндокринолога при выявлении отклонений гормонального профиля (ТТГ, T3, T4, инсулин, кортизол, половые гормоны). Включает сбор анамнеза, физикальное обследование, интерпретацию лабораторных данных.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "Клинические рекомендации МЗ РФ",
+      "biomarkers": [
+        "tsh",
+        "glucose",
+        "testosterone",
+        "cortisol"
+      ],
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_END02": {
+      "code": "M_END02",
+      "name": "Интенсификация сахароснижающей терапии",
+      "category": "medical",
+      "impact": 9.5,
+      "evidence": "A",
+      "type": "medication",
+      "short_description": "Коррекция сахароснижающей терапии",
+      "full_description": "Коррекция сахароснижающей терапии при неэффективности монотерапии метформином: добавление GLP-1 агонистов, SGLT2-ингибиторов, ДПП-4 или инсулина. Требует контроля гликемии и HbA1c.",
+      "color": "#f44336",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "heavy",
+      "sources": "ADA Standards of Care 2025",
+      "biomarkers": [
+        "glucose",
+        "hba1c"
+      ],
+      "probability": 0.75,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_END03": {
+      "code": "M_END03",
+      "name": "Заместительная терапия (щитовидная железа)",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "medication",
+      "short_description": "Терапия L-тироксином",
+      "full_description": "Назначение L-тироксина (левотироксин) при гипотиреозе с титрацией дозы под контролем ТТГ каждые 6-8 недель до достижения целевого уровня ТТГ 0.5-2.5 мМЕ/л.",
+      "color": "#f44336",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "ATA Guidelines",
+      "biomarkers": [
+        "tsh",
+        "t3",
+        "t4"
+      ],
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_CAR01": {
+      "code": "M_CAR01",
+      "name": "Назначение гипотензивной терапии",
+      "category": "medical",
+      "impact": 9.5,
+      "evidence": "A",
+      "type": "medication",
+      "short_description": "Старт антигипертензивной терапии",
+      "full_description": "Старт антигипертензивной терапии (иАПФ/сартаны, тиазидные диуретики, антагонисты Ca) при стойком АД >140/90 мм рт.ст. Целевое АД <130/80 для большинства пациентов.",
+      "color": "#f44336",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "ESC/ESH Guidelines 2024",
+      "biomarkers": [
+        "systolic_bp",
+        "diastolic_bp"
+      ],
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_CAR02": {
+      "code": "M_CAR02",
+      "name": "Назначение статинов",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "medication",
+      "short_description": "Старт терапии статинами",
+      "full_description": "Назначение статинов (аторвастатин/розувастатин) при ЛПНП >3.0 ммоль/л и/или высоком риске ССЗ (SCORE >5%). Целевой ЛПНП <1.8 ммоль/л (высокий риск) или <2.6 ммоль/л (умеренный).",
+      "color": "#f44336",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "ESC/EAS Guidelines 2024",
+      "biomarkers": [
+        "ldl",
+        "total_cholesterol",
+        "triglycerides"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_CAR03": {
+      "code": "M_CAR03",
+      "name": "Холтер ЭКГ",
+      "category": "medical",
+      "impact": 7.5,
+      "evidence": "B",
+      "type": "diagnostic",
+      "short_description": "Суточное мониторирование ЭКГ",
+      "full_description": "Суточное (или 48-часовое) мониторирование ЭКГ по Холтеру при тахикардии, аритмии, синкопальных состояниях, подозрении на ишемию миокарда.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "РКО рекомендации",
+      "biomarkers": [
+        "resting_hr",
+        "hrv"
+      ],
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_GAS01": {
+      "code": "M_GAS01",
+      "name": "Консультация гастроэнтеролога",
+      "category": "medical",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Направление к гастроэнтерологу",
+      "full_description": "Консультация гастроэнтеролога при хронических жалобах (боли, вздутие, нарушение стула), изменении печёночных проб, подозрении на ВЗК или H. pylori.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "Клинические рекомендации",
+      "biomarkers": [
+        "alt",
+        "ast",
+        "crp",
+        "ggt"
+      ],
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_GAS02": {
+      "code": "M_GAS02",
+      "name": "ЭГДС (гастроскопия)",
+      "category": "medical",
+      "impact": 8,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Эндоскопия верхних отделов ЖКТ",
+      "full_description": "Эзофагогастродуоденоскопия при диспепсии, ГЭРБ, анемии, подозрении на язвенную болезнь или H. pylori. С биопсией при необходимости.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "Клинические рекомендации",
+      "biomarkers": [
+        "hemoglobin",
+        "ferritin"
+      ],
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_GAS03": {
+      "code": "M_GAS03",
+      "name": "Колоноскопия",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Скрининг колоректального рака",
+      "full_description": "Скрининговая колоноскопия с 45 лет (или раньше при семейном анамнезе). Диагностика воспалительных заболеваний кишечника, полипов, колоректального рака. Периодичность 5-10 лет.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "heavy",
+      "sources": "ACG Guidelines",
+      "biomarkers": [
+        "hemoglobin",
+        "ferritin",
+        "early_detection"
+      ],
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_NEU01": {
+      "code": "M_NEU01",
+      "name": "Консультация невролога",
+      "category": "medical",
+      "impact": 9,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Направление к неврологу",
+      "full_description": "Консультация невролога при хронических головных болях, когнитивных нарушениях, парестезиях, нарушении сна неясной этиологии, головокружении.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "Клинические рекомендации",
+      "biomarkers": [
+        "sleep",
+        "stress"
+      ],
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_NEU02": {
+      "code": "M_NEU02",
+      "name": "МРТ головного мозга",
+      "category": "medical",
+      "impact": 8.5,
+      "evidence": "B",
+      "type": "diagnostic",
+      "short_description": "МРТ при неврологической симптоматике",
+      "full_description": "МРТ головного мозга при подозрении на объёмное образование, демиелинизацию, сосудистую патологию (после консультации невролога).",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "medium",
+      "sources": "Клинические рекомендации",
+      "biomarkers": [
+        "early_detection"
+      ],
+      "probability": 0.7,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_LAB01": {
+      "code": "M_LAB01",
+      "name": "Расширенная биохимия крови",
+      "category": "medical",
+      "impact": 8.5,
+      "evidence": "A",
+      "type": "diagnostic",
+      "short_description": "Расширенный биохимический анализ",
+      "full_description": "Расширенная биохимия: глюкоза, HbA1c, липидный профиль (ОХ, ЛПНП, ЛПВП, ТГ), печёночные пробы (АЛТ, АСТ, ГГТП, ЩФ), креатинин, мочевая кислота, СРБ, ферритин, витамин D, B12.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "Рекомендации МЗ РФ",
+      "biomarkers": [
+        "glucose",
+        "hba1c",
+        "ldl",
+        "crp",
+        "vitamin_d",
+        "ferritin",
+        "alt",
+        "ast"
+      ],
+      "probability": 0.95,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_LAB02": {
+      "code": "M_LAB02",
+      "name": "Гормональный профиль",
+      "category": "medical",
+      "impact": 8,
+      "evidence": "B",
+      "type": "diagnostic",
+      "short_description": "Анализ гормонов",
+      "full_description": "Определение гормонального профиля: ТТГ, T3, T4, кортизол, инсулин, тестостерон (муж), прогестерон/эстрадиол (жен) при подозрении на эндокринные нарушения.",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "Клинические рекомендации",
+      "biomarkers": [
+        "tsh",
+        "cortisol",
+        "testosterone",
+        "glucose"
+      ],
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "M_LAB03": {
+      "code": "M_LAB03",
+      "name": "Омега-3 индекс",
+      "category": "medical",
+      "impact": 6.5,
+      "evidence": "B",
+      "type": "diagnostic",
+      "short_description": "Анализ омега-3 в эритроцитах",
+      "full_description": "Определение омега-3 индекса (сумма EPA+DHA в мембранах эритроцитов). Целевой уровень >8% (оптимально), >4% (минимально для кардиопротекции).",
+      "color": "#f44336",
+      "regularity": "Y",
+      "delivery_type": "web_report",
+      "report_effort": "light",
+      "sources": "Harris WS, 2018",
+      "biomarkers": [
+        "omega_3_index"
+      ],
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "referral_notes": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "ED_MA": {
+      "code": "ED_MA",
+      "name": "Осознанное питание",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Практика осознанного приёма пищи",
+      "full_description": "Развитие навыка осознанного отношения к еде: различение физического и эмоционального голода, замедление темпа еды, работа с триггерами переедания.",
+      "benefits": [
+        "Снижение частоты эпизодов переедания",
+        "Улучшение отношения к еде",
+        "Снижение тревоги вокруг приёмов пищи"
+      ],
+      "affects": [
+        "stress",
+        "gut_health",
+        "weight"
+      ],
+      "color": "#e91e63",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.8,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "ED_BODY": {
+      "code": "ED_BODY",
+      "name": "Работа с образом тела",
+      "category": "mental",
+      "impact": 7,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Позитивное восприятие тела",
+      "full_description": "Формирование здорового образа тела через когнитивные техники: дневник благодарности телу, работа с искажениями восприятия, снижение критики внешности.",
+      "benefits": [
+        "Улучшение образа тела",
+        "Снижение самокритики",
+        "Повышение самооценки"
+      ],
+      "affects": [
+        "stress",
+        "anxiety"
+      ],
+      "color": "#e91e63",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.75,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "ED_SCH": {
+      "code": "ED_SCH",
+      "name": "Структура питания",
+      "category": "food",
+      "impact": 9,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Регулярный режим питания",
+      "full_description": "Восстановление регулярного режима питания: 3 основных приёма + 1–2 перекуса, фиксированные интервалы, отмена пропусков. Стабилизация пищевого поведения.",
+      "benefits": [
+        "Нормализация пищевого поведения",
+        "Стабилизация уровня глюкозы",
+        "Снижение риска срывов"
+      ],
+      "affects": [
+        "glucose",
+        "weight",
+        "gut_health"
+      ],
+      "color": "#4caf50",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "glucose"
+      ],
+      "probability": 0.85,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "ED_EMO": {
+      "code": "ED_EMO",
+      "name": "Эмоциональная регуляция",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Управление эмоциональными триггерами",
+      "full_description": "Обучение навыкам эмоциональной регуляции: распознавание триггеров, альтернативные стратегии совладания, дневник эмоций и пищевого поведения.",
+      "benefits": [
+        "Снижение эмоционального переедания",
+        "Улучшение распознавания эмоций",
+        "Формирование здоровых копинг-стратегий"
+      ],
+      "affects": [
+        "stress",
+        "anxiety",
+        "sleep"
+      ],
+      "color": "#e91e63",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.8,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "ED_SUP": {
+      "code": "ED_SUP",
+      "name": "Поддержка и рефлексия",
+      "category": "mental",
+      "impact": 6,
+      "evidence": "B",
+      "type": "behavior",
+      "short_description": "Групповая поддержка и рефлексия",
+      "full_description": "Регулярная рефлексия прогресса, поддержка в сложные моменты, работа с устойчивыми убеждениями о питании и теле. Ведение дневника успехов и трудностей.",
+      "benefits": [
+        "Устойчивость изменений",
+        "Снижение изоляции",
+        "Повышение мотивации"
+      ],
+      "affects": [
+        "stress",
+        "anxiety"
+      ],
+      "color": "#e91e63",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "-",
+      "biomarkers": [
+        "stress"
+      ],
+      "probability": 0.7,
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "PR_01A": {
+      "code": "PR_01A",
+      "name": "Оценка по Гарвардской тарелке",
+      "category": "food",
+      "impact": 7,
+      "evidence": "C",
+      "type": "behavior",
+      "short_description": "Оценка соответствия приёмов пищи принципам Гарвардской тарелки",
+      "full_description": "Еженедельная оценка рациона по принципу Гарвардской тарелки: ½ овощи, ¼ белок, ¼ цельнозерновые. Коррекция списка закупок и привычек.",
+      "benefits": [
+        "Сбалансированное питание",
+        "Контроль порций",
+        "Осознанный выбор продуктов"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Первые 4 недели",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "color": "#ff9800",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "Гарвардская школа общественного здоровья",
+      "biomarkers": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0
+        ],
+        "time": "20:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "PR_SS": {
+      "code": "PR_SS",
+      "name": "SMART Shopping — умная закупка",
+      "category": "food",
+      "impact": 7,
+      "evidence": "C",
+      "type": "behavior",
+      "short_description": "Умная закупка продуктов по списку с чтением этикеток",
+      "full_description": "Закупка продуктов по заранее составленному списку. Правила: не ходить голодным, читать этикетки (сахар <5 г/100г, насыщ. жиры <3 г/100г), избегать impulse-покупок.",
+      "benefits": [
+        "Контроль бюджета",
+        "Здоровый выбор",
+        "Снижение спонтанных покупок"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "waist"
+      ],
+      "color": "#ff9800",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "waist"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0
+        ],
+        "time": "18:30"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "BEH_EAT": {
+      "code": "BEH_EAT",
+      "name": "Контроль РПП: осознанное питание",
+      "category": "mental",
+      "impact": 8,
+      "evidence": "A",
+      "type": "behavior",
+      "short_description": "Осознанное питание для контроля переедания",
+      "full_description": "Осознанное питание: без телефона/ТВ, медленное пережёвывание, пауза в середине приёма для оценки насыщения. Признаки РПП: переедание >2 р/нед.",
+      "benefits": [
+        "Контроль аппетита",
+        "Снижение переедания",
+        "Улучшение пищевого поведения"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "waist",
+        "bmi"
+      ],
+      "color": "#9c27b0",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "waist",
+        "bmi"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "перед едой"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "PR_01": {
+      "code": "PR_01",
+      "name": "Планирование закупок по Гарвардской тарелке",
+      "category": "food",
+      "impact": 7.5,
+      "evidence": "C",
+      "type": "behavior",
+      "short_description": "Планирование меню и закупок по принципу Гарвардской тарелки",
+      "full_description": "Составить меню на неделю по принципу Гарвардской тарелки: ½ овощи, ¼ белок, ¼ цельнозерновые. Список закупок по отделам магазина. Правило корзины 70/30.",
+      "benefits": [
+        "Сбалансированное питание",
+        "Экономия времени",
+        "Снижение спонтанных покупок"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Длительно",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "color": "#ff9800",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "Гарвардская школа общественного здоровья",
+      "biomarkers": [
+        "weight",
+        "glucose",
+        "waist"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          0
+        ],
+        "time": "19:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "PH_LOW": {
+      "code": "PH_LOW",
+      "name": "Низкоударная активность 25 мин",
+      "category": "physical",
+      "impact": 8,
+      "evidence": "A",
+      "type": "exercise",
+      "short_description": "Плавание, велотренажёр или эллипс 25 мин, ЧСС 110–125",
+      "full_description": "Низкоударная кардио-тренировка без нагрузки на суставы. Плавание, велотренажёр или эллипс 25 мин. ЧСС 110–125 уд/мин (зона 1–2).",
+      "benefits": [
+        "Сжигание жира",
+        "Укрепление сердечно-сосудистой системы",
+        "Безопасно для суставов"
+      ],
+      "implementation": {
+        "frequency": "3 раза в неделю",
+        "duration": "25 мин",
+        "effort_level": "Средний"
+      },
+      "affects": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "color": "#4caf50",
+      "regularity": "3x/week",
+      "delivery_type": "chatbot",
+      "report_effort": "medium",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "probability": 0.85,
+      "schedule": {
+        "days": [
+          2,
+          4,
+          6
+        ],
+        "time": "08:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_WAIST": {
+      "code": "M_WAIST",
+      "name": "Измерение окружности талии",
+      "category": "medical",
+      "impact": 6,
+      "evidence": "B",
+      "type": "monitoring",
+      "short_description": "Еженедельное измерение талии для контроля висцерального жира",
+      "full_description": "Измерять окружность талии сантиметровой лентой на уровне пупка, на выдохе. Фиксировать в дневнике. Важный маркер висцерального жира.",
+      "benefits": [
+        "Контроль висцерального жира",
+        "Мониторинг прогресса"
+      ],
+      "implementation": {
+        "frequency": "Еженедельно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "waist"
+      ],
+      "color": "#f44336",
+      "regularity": "W",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "waist"
+      ],
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          1
+        ],
+        "time": "07:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "PH_WALK": {
+      "code": "PH_WALK",
+      "name": "Ходьба 6000→9000 шагов/день",
+      "category": "physical",
+      "impact": 8,
+      "evidence": "A",
+      "type": "exercise",
+      "short_description": "Увеличение ежедневной шаговой активности",
+      "full_description": "Увеличить шаги с 3500 до 6000→9000: парковаться дальше, 10-мин прогулка после обеда, 20 мин вечером.",
+      "benefits": [
+        "Сжигание калорий",
+        "Улучшение метаболизма",
+        "Снижение АД"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "color": "#4caf50",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight",
+        "systolic_bp",
+        "diastolic_bp",
+        "hr"
+      ],
+      "probability": 0.9,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "12:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "M_WGHT": {
+      "code": "M_WGHT",
+      "name": "Ежедневное взвешивание утром натощак",
+      "category": "medical",
+      "impact": 6,
+      "evidence": "B",
+      "type": "monitoring",
+      "short_description": "Ежедневный контроль веса",
+      "full_description": "Взвешиваться каждое утро после туалета, до завтрака, в лёгкой одежде. Записывать в дневник.",
+      "benefits": [
+        "Контроль прогресса",
+        "Мотивация"
+      ],
+      "implementation": {
+        "frequency": "Ежедневно",
+        "duration": "Длительно",
+        "effort_level": "Низкий"
+      },
+      "affects": [
+        "weight"
+      ],
+      "color": "#f44336",
+      "regularity": "D",
+      "delivery_type": "chatbot",
+      "report_effort": "light",
+      "sources": "HEALORA AI",
+      "biomarkers": [
+        "weight"
+      ],
+      "probability": 0.95,
+      "schedule": {
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "time": "07:00"
+      },
+      "allowed_statuses": [
+        "pending",
+        "done",
+        "skipped",
+        "modified",
+        "rescheduled",
+        "cancelled"
+      ],
+      "params_schema": {
+        "duration": {
+          "type": "number",
+          "min": 5,
+          "max": 180,
+          "unit": "minutes"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
     }
   }
 }

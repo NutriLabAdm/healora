@@ -8,6 +8,9 @@ import protocolData from '../assets/data/protocol_mappings.json';
 import foodCatalog from '../assets/data/food_catalog.json';
 import planTemplates, { getTemplateById } from '../assets/data/plan_templates.js';
 import { usePlans } from '../context/PlansProvider';
+import GoalBadges from './GoalBadges';
+import PlanJournalView from './PlanJournalView';
+import PlanList from './PlanList';
 import icon from '../utils/icons';
 import protocolTypes from '../assets/data/protocols_type.json';
 import dietPrefsData from '../assets/data/diet_preferences.json';
@@ -175,6 +178,10 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
   const [chatGoals, setChatGoals] = useState([]);
   const [goalChatStep, setGoalChatStep] = useState(0); // 0=greeting, 1=selecting, 2=confirm, 3=done
   const [goalChatLog, setGoalChatLog] = useState([]);
+  const [showGoalBadges, setShowGoalBadges] = useState(false);
+  const [showPlanJournal, setShowPlanJournal] = useState(false);
+  const [planJournalId, setPlanJournalId] = useState(null);
+  const [showPlanList, setShowPlanList] = useState(false);
   const [showFoodSelector, setShowFoodSelector] = useState(false);
   const [selectedFoodMealIdx, setSelectedFoodMealIdx] = useState(null);
   const [selectedFoodItem, setSelectedFoodItem] = useState(null);
@@ -2451,6 +2458,14 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                     )}
                   </span>
                 </div>
+                <div className="profile-targets" style={{ cursor: 'pointer', marginBottom: 4 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Plan-Journal:</span>
+                    <button className="pjl-profile-btn" onClick={(e) => { e.stopPropagation(); setShowGoalBadges(true); }}>🎯 Новая цель</button>
+                    <button className="pjl-profile-btn" onClick={(e) => { e.stopPropagation(); setShowPlanList(true); }}>📋 Список планов</button>
+                    {chatGoals.length > 0 && <span className="pjl-profile-count" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{'старая цель: '}{chatGoals.map(g=>g.icon).join(' ')}</span>}
+                  </div>
+                </div>
                 <div className="profile-targets" onClick={() => { setShowGoalChat(true); setGoalChatStep(0); }} style={{ cursor: 'pointer' }}>
                   <span className="targets-label">Цели:</span>
                   <div className="targets-badges">
@@ -2936,6 +2951,43 @@ const DigitalTwin = ({ profileId, selectedProtocol, cartItems, onRemoveFromCart 
                       Добавить на таймлайн
                     </button>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Goal Badges (new) */}
+          {showGoalBadges && (
+            <GoalBadges
+              profileId={profileId}
+              profile={profile}
+              onPlanCreated={(plan) => { setPlanJournalId(plan.plan_id); setShowPlanJournal(true); }}
+              onClose={() => setShowGoalBadges(false)}
+            />
+          )}
+
+          {/* Plan Journal View */}
+          {showPlanJournal && planJournalId && (
+            <PlanJournalView
+              planId={planJournalId}
+              profileId={profileId}
+              onClose={() => setShowPlanJournal(false)}
+            />
+          )}
+
+          {/* Plan List */}
+          {showPlanList && (
+            <div className="pjl-overlay" onClick={() => setShowPlanList(false)}>
+              <div className="pjl-popup" onClick={e => e.stopPropagation()} style={{ width: 500 }}>
+                <div className="pjl-header">
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>📋 Планы пользователя</span>
+                  <button className="pjl-close" onClick={() => setShowPlanList(false)}>×</button>
+                </div>
+                <div className="pjl-body">
+                  <PlanList
+                    profileId={profileId}
+                    onSelectPlan={(planId) => { setPlanJournalId(planId); setShowPlanList(false); setShowPlanJournal(true); }}
+                  />
                 </div>
               </div>
             </div>

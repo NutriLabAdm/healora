@@ -1,0 +1,275 @@
+[
+  {
+    "id": "GLYCEMIC_CONTROL",
+    "protocol_id": "PTL_GLYCEMIC",
+    "name": "Гликемический контроль",
+    "category": "nutritional",
+    "goal": "Контроль уровня глюкозы и гликированного гемоглобина",
+    "interventions": [
+      "04_1",
+      "04_2",
+      "04_3",
+      "04_6",
+      "02_3",
+      "03_5"
+    ]
+  },
+  {
+    "id": "CIRCADIAN_EATING",
+    "protocol_id": "PTL_CIRCAD",
+    "name": "Циркадное питание",
+    "category": "nutritional",
+    "goal": "Синхронизация питания с циркадными ритмами",
+    "interventions": [
+      "04_4",
+      "04_5",
+      "01_1",
+      "03_5"
+    ]
+  },
+  {
+    "id": "SLEEP_HYGIENE",
+    "protocol_id": "PTL_SLEEP",
+    "name": "Гигиена сна",
+    "category": "nutritional",
+    "goal": "Улучшение качества и продолжительности сна",
+    "interventions": [
+      "01_1",
+      "01_2",
+      "01_3",
+      "03_1",
+      "03_7"
+    ]
+  },
+  {
+    "id": "HYDRATION",
+    "protocol_id": "PTL_HYDRATION",
+    "name": "Гидратация",
+    "category": "nutritional",
+    "goal": "Оптимизация водного баланса",
+    "interventions": [
+      "03_9",
+      "03_10",
+      "04_7"
+    ]
+  },
+  {
+    "id": "NUTRITIONAL_BASELINE",
+    "protocol_id": "PTL_NUTR_BASE",
+    "name": "Базовые добавки",
+    "category": "nutritional",
+    "goal": "Коррекция нутритивного статуса",
+    "interventions": [
+      "05_1",
+      "05_2",
+      "05_3",
+      "05_4",
+      "07_1"
+    ]
+  },
+  {
+    "id": "METABOLIC_CARDIO_RISKS",
+    "protocol_id": "PTL_METABOLIC",
+    "name": "Метаболические риски",
+    "category": "medical",
+    "goal": "Снижение метаболических и сердечно-сосудистых рисков",
+    "interventions": [
+      "02_1",
+      "02_2",
+      "04_1",
+      "07_1",
+      "07_2"
+    ]
+  },
+  {
+    "id": "CARDIOVASCULAR_HEALTH",
+    "protocol_id": "PTL_CARDIO",
+    "name": "Сердечно-сосудистое здоровье",
+    "category": "medical",
+    "goal": "Улучшение кардиоваскулярных показателей",
+    "interventions": [
+      "02_1",
+      "02_3",
+      "02_6",
+      "08_1",
+      "04_6",
+      "05_2",
+      "07_1"
+    ]
+  },
+  {
+    "id": "INFLAMMATORY_SYSTEMIC",
+    "protocol_id": "PTL_INFLAM",
+    "name": "Противовоспалительный",
+    "category": "medical",
+    "goal": "Снижение системного воспаления",
+    "interventions": [
+      "05_6",
+      "04_6",
+      "05_2",
+      "03_6",
+      "02_3",
+      "05_5"
+    ]
+  },
+  {
+    "id": "RAPID_WEIGHT_LOSS",
+    "protocol_id": "PTL_RAPID_WL",
+    "name": "Быстрое снижение веса",
+    "category": "medical",
+    "goal": "Интенсивное снижение веса под контролем",
+    "interventions": [
+      "FD_CAL",
+      "PH_WALK",
+      "PH_LOW",
+      "FD_SUG",
+      "FD_FIB",
+      "FD_IF",
+      "MN_BRTH",
+      "SL_BED",
+      "FD_WATER",
+      "PR_01",
+      "BEH_EAT",
+      "M_WGHT",
+      "M_WAIST",
+      "PR_01A",
+      "PR_SS"
+    ]
+  },
+  {
+    "id": "OZEMPIC_JUMPERS",
+    "protocol_id": "PTL_OZEMPIC",
+    "name": "Протокол GLP-1 агонистов (Оземпик)",
+    "category": "medical",
+    "goal": "Сопровождение терапии GLP-1 агонистами с сохранением мышечной массы",
+    "interventions": [
+      "OZ_01",
+      "OZ_02",
+      "OZ_03",
+      "OZ_04",
+      "OZ_05",
+      "OZ_06",
+      "OZ_10"
+    ]
+  },
+  {
+    "id": "COGNITIVE_HEALTH",
+    "protocol_id": "PTL_COG",
+    "name": "Когнитивное здоровье",
+    "category": "mental",
+    "goal": "Улучшение когнитивных функций и профилактика нейродегенерации",
+    "interventions": [
+      "05_7",
+      "03_1",
+      "03_6",
+      "05_2",
+      "02_2"
+    ]
+  },
+  {
+    "id": "PAIN_MANAGEMENT",
+    "protocol_id": "PTL_PAIN",
+    "name": "Управление болью",
+    "category": "mental",
+    "goal": "Снижение хронической боли",
+    "interventions": [
+      "03_2",
+      "03_6",
+      "05_3",
+      "03_1"
+    ]
+  },
+  {
+    "id": "DEPRESSION",
+    "protocol_id": "PTL_DEPR",
+    "name": "Поддержка при депрессии",
+    "category": "mental",
+    "goal": "Улучшение настроения и эмоционального фона",
+    "interventions": [
+      "02_3",
+      "03_1",
+      "03_6",
+      "05_5",
+      "03_7",
+      "05_2",
+      "05_3"
+    ]
+  },
+  {
+    "id": "RECOVERY_REGENERATION",
+    "protocol_id": "PTL_RECOVERY",
+    "name": "Восстановление и регенерация",
+    "category": "physical",
+    "goal": "Ускорение восстановления после нагрузок",
+    "interventions": [
+      "05_1",
+      "05_2",
+      "05_3",
+      "03_6",
+      "03_7",
+      "01_1",
+      "02_6"
+    ]
+  },
+  {
+    "id": "EATING_DISORDERS",
+    "protocol_id": "PTL_EAT_DIS",
+    "name": "Расстройства пищевого поведения",
+    "category": "mental",
+    "goal": "Нормализация пищевого поведения",
+    "interventions": [
+      "04_4",
+      "04_5",
+      "03_1",
+      "03_6",
+      "03_7"
+    ]
+  },
+  {
+    "id": "HORMONAL_ENDOCRINE",
+    "protocol_id": "PTL_HORMONAL",
+    "name": "Гормональный/эндокринный",
+    "category": "medical",
+    "goal": "Балансировка гормонального фона",
+    "interventions": [
+      "07_1",
+      "04_6",
+      "05_1",
+      "05_3",
+      "05_2",
+      "02_2",
+      "03_6"
+    ]
+  },
+  {
+    "id": "LONGEVITY",
+    "protocol_id": "PTL_LONGEVITY",
+    "name": "Долголетие",
+    "category": "nutritional",
+    "goal": "Комплексная программа для активного долголетия",
+    "interventions": [
+      "04_1",
+      "04_6",
+      "02_1",
+      "02_2",
+      "03_6",
+      "05_1",
+      "05_2",
+      "07_1"
+    ]
+  },
+  {
+    "id": "SPEECH_TOMATIS",
+    "protocol_id": "PTL_TOMATIS",
+    "name": "Коррекция речевых нарушений (Tomatiс®)",
+    "category": "medical",
+    "goal": "Коррекция ЗРР, алалии, ОНР, заикания, РАС методом Tomatis® + логопедия",
+    "interventions": [
+      "ST_01",
+      "ST_02",
+      "ST_03",
+      "ST_04",
+      "ST_05"
+    ]
+  }
+]
