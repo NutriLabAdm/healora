@@ -211,14 +211,15 @@ function cancelSession(id) {
 
 function getSearchSessions(opts) {
   const d = getDb();
-  let sql = 'SELECT * FROM search_sessions';
+  let sql = `SELECT ss.*, q.title AS query_title FROM search_sessions ss LEFT JOIN queries q ON ss.query_id = q.id`;
   const params = [];
   const where = [];
-  if (opts.domain) { where.push('domain = ?'); params.push(opts.domain); }
-  if (opts.source) { where.push('source = ?'); params.push(opts.source); }
-  if (opts.status) { where.push('status = ?'); params.push(opts.status); }
+  if (opts.domain) { where.push('ss.domain = ?'); params.push(opts.domain); }
+  if (opts.source) { where.push('ss.source = ?'); params.push(opts.source); }
+  if (opts.status) { where.push('ss.status = ?'); params.push(opts.status); }
+  if (opts.search_type) { where.push('ss.search_type = ?'); params.push(opts.search_type); }
   if (where.length) sql += ' WHERE ' + where.join(' AND ');
-  sql += ' ORDER BY created_at DESC';
+  sql += ' ORDER BY ss.created_at DESC';
   if (opts.limit) sql += ' LIMIT ?';
   if (opts.limit) params.push(opts.limit);
   return d.prepare(sql).all(...params);

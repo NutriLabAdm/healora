@@ -579,12 +579,14 @@ function SearchConfigTab() {
           <div className="ka-table-wrap" style={{ maxHeight: 'calc(100vh - 300px)', overflowY: 'auto' }}>
             <table className="ka-table">
               <thead><tr>
-                <th>Дата / время</th><th>Тип</th><th>Домен</th>
+                <th>ID</th><th>Название поиска</th><th>Дата / время</th><th>Тип</th><th>Домен</th>
                 <th>Pipeline</th><th>Найдено</th><th>После dedup</th><th>В БЗ</th><th>Одобрено</th><th>Отклонено</th>
               </tr></thead>
               <tbody>
                 {historyFilter === 'knowledge' && (
                   <tr>
+                    <td className="ka-cell-id">—</td>
+                    <td style={{ fontWeight: 500 }}>Все источники (knowledge)</td>
                     <td className="ka-cell-date">01.06.2026, 10:00</td>
                     <td><span className="ka-search-type" style={{ background: '#e8f0fe', color: '#1967d2' }}>knowledge</span></td>
                     <td><span className="ka-domain-tag">all</span></td>
@@ -600,6 +602,8 @@ function SearchConfigTab() {
                   .filter(s => historyFilter === 'all' || s.search_type === historyFilter)
                   .map(s => (
                     <tr key={s.id}>
+                      <td className="ka-cell-id">{s.query_id || '—'}</td>
+                      <td style={{ fontWeight: 500, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={s.query_title || ''}>{s.query_title || '—'}</td>
                       <td className="ka-cell-date">{new Date(s.created_at).toLocaleString('ru-RU')}</td>
                       <td><span className={`ka-search-type ${s.search_type}`}>{s.search_type}</span></td>
                       <td><span className="ka-domain-tag">{s.domain}</span></td>
@@ -612,7 +616,7 @@ function SearchConfigTab() {
                     </tr>
                   ))}
                 {historyFilter !== 'knowledge' && sessions.filter(s => historyFilter === 'all' || s.search_type === historyFilter).length === 0 && (
-                  <tr><td colSpan={10} className="ka-empty">Нет записей</td></tr>
+                  <tr><td colSpan={11} className="ka-empty">Нет записей</td></tr>
                 )}
               </tbody>
             </table>
