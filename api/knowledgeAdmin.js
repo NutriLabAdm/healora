@@ -51,6 +51,15 @@ router.delete('/queries/:id', (req, res) => {
   }
 });
 
+router.patch('/queries/:id', (req, res) => {
+  try {
+    kb.updateSearchQuery(Number(req.params.id), req.body);
+    res.json({ status: 'ok' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── Search Sessions ──
 router.get('/sessions', (req, res) => {
   try {

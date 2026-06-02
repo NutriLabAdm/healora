@@ -176,6 +176,23 @@ function deleteSearchQuery(id) {
   getDb().prepare('DELETE FROM search_queries WHERE id = ?').run(id);
 }
 
+function updateSearchQuery(id, fields) {
+  const d = getDb();
+  const allowed = ['title', 'domain', 'source', 'keywords', 'mesh_terms', 'llm_prompt', 'search_format', 'cron_expr', 'interval_minutes', 'is_active'];
+  const sets = [];
+  const params = [];
+  for (const k of allowed) {
+    if (fields[k] !== undefined) {
+      sets.push(`${k} = ?`);
+      params.push(k === 'is_active' ? (fields[k] ? 1 : 0) : fields[k]);
+    }
+  }
+  if (!sets.length) return;
+  sets.push("updated_at = datetime('now')");
+  params.push(id);
+  d.prepare(`UPDATE search_queries SET ${sets.join(', ')} WHERE id = ?`).run(...params);
+}
+
 // ── Search Sessions ──
 
 function createSession(session) {
@@ -402,7 +419,7 @@ function getDailyUsage(provider) {
 
 module.exports = {
   init, getDb,
-  getSearchQueries, upsertSearchQuery, deleteSearchQuery,
+  getSearchQueries, upsertSearchQuery, deleteSearchQuery, updateSearchQuery,
   createSession, completeSession, cancelSession, getSearchSessions,
   insertArticle, articleExists, getArticles, updateArticleStatus,
   getArticleStats, getChangelog,

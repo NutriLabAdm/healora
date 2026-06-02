@@ -399,6 +399,7 @@ function SearchConfigTab() {
   const [articlesModal, setArticlesModal] = useState(null);
   const [articlesList, setArticlesList] = useState([]);
   const [articlesLoading, setArticlesLoading] = useState(false);
+  const [editingTitle, setEditingTitle] = useState(null);
 
   const load = async () => {
     setLoading(true);
@@ -452,6 +453,13 @@ function SearchConfigTab() {
       setArticlesList(data);
     } catch (e) { setArticlesList([]); }
     setArticlesLoading(false);
+  };
+
+  const saveTitle = async (queryId, newTitle) => {
+    if (!queryId) return;
+    await fetchJson(`${API}/queries/${queryId}`, { method: 'PATCH', body: JSON.stringify({ title: newTitle }) });
+    setEditingTitle(null);
+    load();
   };
 
   if (loading) return <div className="ka-loading">Загрузка...</div>;
@@ -603,7 +611,19 @@ function SearchConfigTab() {
                   .map(s => (
                     <tr key={s.id}>
                       <td className="ka-cell-id">{s.query_id || '—'}</td>
-                      <td style={{ fontWeight: 500, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={s.query_title || ''}>{s.query_title || '—'}</td>
+                      <td style={{ fontWeight: 500, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={s.query_title || ''}>
+                        {editingTitle === s.query_id ? (
+                          <input type="text" defaultValue={s.query_title || ''} autoFocus
+                            style={{ width: '100%', boxSizing: 'border-box', fontSize: 13, padding: '2px 6px' }}
+                            onBlur={e => saveTitle(s.query_id, e.target.value)}
+                            onKeyDown={e => { if (e.key === 'Enter') saveTitle(s.query_id, e.target.value); if (e.key === 'Escape') setEditingTitle(null); }}
+                          />
+                        ) : (
+                          <span style={{ cursor: 'pointer', borderBottom: '1px dashed #c8b8ff' }} onClick={() => setEditingTitle(s.query_id)}>
+                            {s.query_title || '—'}
+                          </span>
+                        )}
+                      </td>
                       <td className="ka-cell-date">{new Date(s.created_at).toLocaleString('ru-RU')}</td>
                       <td><span className={`ka-search-type ${s.search_type}`}>{s.search_type}</span></td>
                       <td><span className="ka-domain-tag">{s.domain}</span></td>
