@@ -1,18 +1,6 @@
 const path = require('path');
-const fs = require('fs');
+const kb = require('../../api/knowledgeDb');
 const bigPickle = require('./bigPickle');
-
-function resolveKnowledgeDb() {
-  const candidates = [
-    path.join(__dirname, '..', '..', 'api', 'knowledgeDb'),
-    path.join(__dirname, '..', '..', 'knowledgeDb'),
-  ];
-  for (const c of candidates) {
-    try { return require(c); } catch {}
-  }
-  throw new Error('Cannot locate knowledgeDb module');
-}
-const kb = resolveKnowledgeDb();
 
 const ADAPTERS = {
   bigPickle:   { file: './bigPickle',   requires: 'ollama', module: bigPickle },

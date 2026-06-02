@@ -1,0 +1,8 @@
+{
+  "searchPath": "/studies",
+  "params": {
+    "pageSize": 20,
+    "format": "json",
+    "sort": "relevance"
+  }
+}

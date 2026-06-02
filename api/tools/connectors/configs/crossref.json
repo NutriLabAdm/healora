@@ -1,0 +1,10 @@
+{
+  "params": {
+    "rows": 20,
+    "sort": "relevance",
+    "order": "desc"
+  },
+  "filterParams": {
+    "type": "journal-article"
+  }
+}

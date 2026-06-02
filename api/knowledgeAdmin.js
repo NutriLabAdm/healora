@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const kb = require('./knowledgeDb');
 const { optionalAuth } = require('./middleware');
+const fs = require('fs');
 const path = require('path');
-const searchRunner = require(path.resolve(__dirname, '..', 'tools', 'search_runner'));
+const toolsSearchRunner = path.join(__dirname, 'tools', 'search_runner');
+const searchRunner = require(fs.existsSync(toolsSearchRunner + '.js') ? toolsSearchRunner : path.join(__dirname, '..', 'tools', 'search_runner'));
 
 kb.init();
 

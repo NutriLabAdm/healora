@@ -1,0 +1,7 @@
+{
+  "searchPath": "/search",
+  "params": {
+    "format": "json",
+    "count": 20
+  }
+}

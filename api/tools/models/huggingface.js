@@ -1,19 +1,7 @@
-const path = require('path');
 const HF_API_BASE = process.env.HF_API_BASE || 'https://router.huggingface.co';
 const HF_MODEL = process.env.HF_MODEL || 'meta-llama/Meta-Llama-3-8B-Instruct';
 const token = () => process.env.HF_API_TOKEN;
-
-function resolveKnowledgeDb() {
-  const candidates = [
-    path.join(__dirname, '..', '..', 'api', 'knowledgeDb'),
-    path.join(__dirname, '..', '..', 'knowledgeDb'),
-  ];
-  for (const c of candidates) {
-    try { return require(c); } catch {}
-  }
-  throw new Error('Cannot locate knowledgeDb module');
-}
-const kb = resolveKnowledgeDb();
+const kb = require('../../api/knowledgeDb');
 
 function resolveToken() {
   const t = process.env.HF_API_TOKEN;
