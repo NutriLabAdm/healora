@@ -269,11 +269,6 @@ router.post('/test-source', async (req, res) => {
         }
         break;
       }
-          result.status = 'error';
-          result.response = msg;
-        }
-        break;
-      }
       case 'BigPickle': {
         const bpUrl = `${process.env.OLLAMA_URL || 'http://localhost:11434'}/api/tags`;
         result.request = `GET ${bpUrl}`;
