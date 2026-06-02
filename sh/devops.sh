@@ -102,10 +102,11 @@ show_menu() {
     echo "╚══════════════════════════════════════════╝"
     echo "╔══ DEVELOPMENT ══════════════════════════╗"
     echo "║ 13) Start local development             ║"
+    echo "║ 14) Start Ollama (BigPickle)            ║"
     echo "╚══════════════════════════════════════════╝"
     echo "  0) Exit"
     echo ""
-    read -p "Select option [0-13]: " choice
+    read -p "Select option [0-14]: " choice
 }
 
 config_nginx() {
@@ -327,6 +328,14 @@ deploy_backend() {
 
     sync_files "$API_DIR" "$REMOTE_HOST" "$REMOTE_API_DIR" "node_modules"
 
+    # Sync tools/ (knowledge pipeline: connectors, models, orchestrator)
+    local TOOLS_DIR="$PROJECT_ROOT/tools"
+    local REMOTE_TOOLS_DIR="/var/www/healora-api/tools"
+    if [ -d "$TOOLS_DIR" ]; then
+        ssh $REMOTE_USER@$REMOTE_HOST "mkdir -p $REMOTE_TOOLS_DIR"
+        sync_files "$TOOLS_DIR" "$REMOTE_HOST" "$REMOTE_TOOLS_DIR"
+    fi
+
     ssh $REMOTE_USER@$REMOTE_HOST "bash -s" << 'ENDSSH'
 cd /var/www/healora-api
 npm install --production
@@ -443,18 +452,62 @@ git_push() {
     log_info "Git push complete"
 }
 
+start_ollama() {
+    # Check if Ollama is already running
+    if curl -s http://localhost:11434/api/tags > /dev/null 2>&1; then
+        log_info "Ollama уже запущен"
+        return 0
+    fi
+
+    log_info "Запуск Ollama (BigPickle)..."
+    # Try common install locations
+    if command -v ollama &> /dev/null; then
+        nohup ollama serve > "$PROJECT_ROOT/api/ollama.log" 2>&1 &
+        sleep 3
+        if curl -s http://localhost:11434/api/tags > /dev/null 2>&1; then
+            log_info "Ollama запущен"
+            # Check if big-pickle model exists
+            local has_model
+            has_model=$(curl -s http://localhost:11434/api/tags | grep -o '"name":"[^"]*"' | grep -i "big-pickle\|bigpickle" || true)
+            if [ -z "$has_model" ]; then
+                log_warn "Модель big-pickle не найдена. Скачайте: ollama pull big-pickle"
+            fi
+        else
+            log_error "Не удалось запустить Ollama"
+            return 1
+        fi
+    else
+        log_error "Ollama не установлена. Установите: winget install Ollama.Ollama"
+        return 1
+    fi
+}
+
 start_local() {
     log_info "Starting local development environment"
     
-    # Start backend on port 3051
-    log_info "Starting backend server on port 3051"
+    # Kill existing processes on API and Vite ports
+    log_info "Cleaning up old processes..."
+    for port in 3054 3051 3001; do
+        local pids
+        pids=$(netstat -ano 2>/dev/null | grep "LISTENING" | grep ":$port " | awk '{print $5}' | sort -u)
+        if [ -n "$pids" ]; then
+            for pid in $pids; do
+                taskkill //F //PID "$pid" 2>/dev/null && log_info "Killed PID $pid on port $port" || true
+            done
+        fi
+    done
+    sleep 2
+    
+    # Start Ollama if available
+    start_ollama || true
+    
+    # Start backend
+    log_info "Starting backend server"
     cd "$PROJECT_ROOT/api"
     if [ ! -d "node_modules" ]; then
         log_info "Installing backend dependencies..."
         npm install > /dev/null 2>&1
     fi
-    fuser -k 3051/tcp 2>/dev/null || true
-    sleep 1
     nohup node server.js > backend.log 2>&1 &
     BACKEND_PID=$!
     sleep 3
@@ -473,9 +526,7 @@ start_local() {
         log_info "Installing frontend dependencies..."
         npm install > /dev/null 2>&1
     fi
-    pkill -f "vite" 2>/dev/null || true
-    sleep 1
-    nohup npm run dev > frontend.log 2>&1 &
+    nohup npx vite --port 3001 --strictPort > frontend.log 2>&1 &
     FRONTEND_PID=$!
     sleep 5
     
@@ -488,11 +539,14 @@ start_local() {
         return 1
     fi
     
+    # Get actual API port from .env or default
+    local api_port=$(grep -oP 'PORT=\K\d+' "$PROJECT_ROOT/api/.env" 2>/dev/null || echo "3054")
+    
     log_info "Local development environment is ready"
-    log_info "Backend: http://localhost:3051"
+    log_info "Backend: http://localhost:$api_port"
     log_info "Frontend: http://localhost:3001"
     log_info "To stop servers, run: kill $BACKEND_PID $FRONTEND_PID"
-    log_info "Or press Ctrl+C and then run: fuser -k 3051/tcp; pkill -f 'vite'"
+    log_info "Or run: pkill -f 'node server.js'; pkill -f 'vite'"
 }
 
 # Main loop
@@ -512,8 +566,9 @@ while true; do
         11) git_commit ;;
         12) git_push ;;
         13) start_local ;;
+        14) start_ollama ;;
         0) exit 0 ;;
-        *) log_error "Invalid option" ;;
+        *) log_error "Invalid option. Use 0-14" ;;
     esac
     echo ""
 done

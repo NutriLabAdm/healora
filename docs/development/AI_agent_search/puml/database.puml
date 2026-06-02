@@ -1,0 +1,163 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FBFBFF
+skinparam entityStyle round
+skinparam defaultFontName Consolas
+skinparam defaultFontSize 11
+
+title "Knowledge Management — Database Schema"
+caption "8 tables · SQLite (better-sqlite3) · WAL mode"
+
+entity "search_queries" as SQ {
+  * id : INTEGER PK
+  --
+  * title : TEXT
+  * domain : TEXT
+  * source : TEXT
+  * keywords : TEXT
+  mesh_terms : TEXT
+  llm_prompt : TEXT
+  search_format : TEXT
+  cron_expr : TEXT
+  interval_minutes : INTEGER
+  is_active : INTEGER
+  last_run_at : TEXT
+  created_at : TEXT
+  updated_at : TEXT
+}
+
+entity "search_sessions" as SS {
+  * id : INTEGER PK
+  --
+  query_id : INTEGER FK
+  * search_type : TEXT
+  * domain : TEXT
+  * source : TEXT
+  * status : TEXT
+  articles_found : INTEGER
+  articles_after_dedup : INTEGER
+  articles_queued : INTEGER
+  articles_approved : INTEGER
+  articles_rejected : INTEGER
+  error_message : TEXT
+  started_at : TEXT
+  completed_at : TEXT
+  created_at : TEXT
+}
+
+entity "articles" as ART {
+  * id : INTEGER PK
+  --
+  source_id : TEXT
+  source_url : TEXT
+  * title : TEXT
+  abstract : TEXT
+  authors : TEXT
+  journal : TEXT
+  pub_date : TEXT
+  doi : TEXT
+  * domain : TEXT
+  * source : TEXT
+  relevance : REAL
+  evidence_level : TEXT
+  llm_confidence : REAL
+  llm_summary : TEXT
+  keywords : TEXT
+  mesh_terms : TEXT
+  session_id : INTEGER FK
+  * status : TEXT
+  status_changed_at : TEXT
+  status_changed_by : TEXT
+  expert_comment : TEXT
+  created_at : TEXT
+  updated_at : TEXT
+}
+
+entity "changelog" as CL {
+  * id : INTEGER PK
+  --
+  article_id : INTEGER FK
+  * action : TEXT
+  old_status : TEXT
+  new_status : TEXT
+  user_email : TEXT
+  comment : TEXT
+  created_at : TEXT
+}
+
+entity "sources" as SRC {
+  * id : INTEGER PK
+  --
+  * name : TEXT UNIQUE
+  url : TEXT
+  type : TEXT
+  authority_score : INTEGER
+  created_at : TEXT
+}
+
+entity "article_sources" as ASRC {
+  * id : INTEGER PK
+  --
+  article_id : INTEGER FK
+  source_id : INTEGER FK
+  reference_text : TEXT
+  source_url : TEXT
+  created_at : TEXT
+}
+
+entity "api_keys" as AK {
+  * id : INTEGER PK
+  --
+  * provider : TEXT
+  * key_value : TEXT
+  label : TEXT
+  is_active : INTEGER
+  priority : INTEGER
+  created_at : TEXT
+}
+
+entity "api_usage" as AU {
+  * id : INTEGER PK
+  --
+  * provider : TEXT
+  model : TEXT
+  tokens_in : INTEGER
+  tokens_out : INTEGER
+  requests : INTEGER
+  cost : REAL
+  period_start : TEXT
+  period_end : TEXT
+  created_at : TEXT
+}
+
+' ── Relations ──
+SQ ||..o{ SS : "query → sessions"
+SS ||..o{ ART : "session → articles"
+ART ||..o{ ASRC : "article → sources"
+SRC ||..o{ ASRC : "source reference"
+ART ||..o{ CL : "article → changelog"
+
+note top of SQ
+  Cron-запросы и
+  разовые поиски
+end note
+
+note top of SS
+  Статусы: pending →
+  searching → analyzing →
+  saving → completed /
+  cancelled_by_user / error
+end note
+
+note top of ART
+  Статусы: pending →
+  approved / rejected
+  (HITL pipeline)
+end note
+
+note right of AK
+  Multi-key rotation:
+  provider + priority
+end note
+
+@enduml

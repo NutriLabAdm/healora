@@ -1,0 +1,108 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FBFBFF
+skinparam componentStyle rectangle
+skinparam defaultFontName Consolas
+skinparam defaultFontSize 12
+
+title "Knowledge Management System — Component Architecture"
+caption "v2.0 — Healora Knowledge Base Pipeline"
+
+' ── Layers ──
+package "Frontend (Vite :3001)" as FE {
+  [App.jsx] as APP
+  [KnowledgeAdmin.jsx] as ADMIN
+  [PipelineTracker] as TRACKER
+  [AnalyticsTab] as ANALYTICS
+  [ValidationQueueTab] as VALIDATION
+  [SearchConfigTab] as SEARCH
+  [SettingsTab] as SETTINGS
+}
+
+package "API Gateway (Express :3054)" as API {
+  [knowledgeAdmin.js] as ROUTER
+  [middleware.js] as AUTH
+  database "knowledge.db" as DB
+}
+
+package "Search Pipeline (tools/)" as PIPELINE {
+  [search_runner.js] as RUNNER
+  [orchestrator.js] as ORCH
+  [cache.js] as CACHE
+
+  package "connectors/" as CONN {
+    [pubmed.js] as PUBMED
+    [crossref.js] as CROSSREF
+    [clinicalTrials.js] as CTRIALS
+    [cochrane.js] as COCHRANE
+    [who.js] as WHO
+    [fda.js] as FDA
+    [googleScholar.js] as GSCHOLAR
+  }
+
+  package "models/" as MODELS {
+    [adapter.js] as ADAPTER
+    [bigPickle.js] as BIGPICKLE
+  }
+}
+
+package "External APIs" as EXT {
+  [PubMed E-utilities] as EPUBMED
+  [CrossRef REST API] as ECROSSREF
+  [ClinicalTrials.gov] as ECTRIALS
+  [Cochrane Library] as ECOCHRANE
+  [WHO API] as EWHO
+  [openFDA] as EFDA
+
+  [Ollama (localhost:11434)] as EOLLAMA
+  [HuggingFace Inference] as EHF
+  [GigaChat API] as EGIGA
+  [OpenAI API] as EOPENAI
+}
+
+' ── Frontend Relations ──
+APP --> ADMIN : /knowledge-admin
+ADMIN --> ANALYTICS : tab
+ADMIN --> VALIDATION : tab
+ADMIN --> SEARCH : tab
+ADMIN --> SETTINGS : tab
+SEARCH --> TRACKER : session progress
+
+' ── Frontend → API ──
+ADMIN -right-> ROUTER : HTTP /api/knowledge-admin/*
+ROUTER -right-> DB : better-sqlite3
+
+' ── Pipeline Internal ──
+ROUTER -down-> RUNNER : POST /sessions (trigger)
+RUNNER --> ORCH : search(query, sources)
+ORCH --> CACHE : check/update
+ORCH --> PUBMED
+ORCH --> CROSSREF
+ORCH --> CTRIALS
+ORCH --> COCHRANE
+ORCH --> WHO
+ORCH --> FDA
+ORCH --> ADAPTER : enrich articles
+ADAPTER --> BIGPICKLE : priority 1
+ADAPTER --> EHF : priority 2
+ADAPTER --> EGIGA : priority 3
+ADAPTER --> EOPENAI : priority 4 (fallback)
+ORCH --> DB : save articles + sources
+
+' ── Connectors → External ──
+PUBMED --> EPUBMED : E-utilities REST
+CROSSREF --> ECROSSREF : REST API
+CTRIALS --> ECTRIALS : API v2
+COCHRANE --> ECOCHRANE : REST API
+WHO --> EWHO : REST API
+FDA --> EFDA : openFDA API
+BIGPICKLE --> EOLLAMA : Ollama API
+
+legend top
+  <#DCF0FF> = Frontend (React SPA)
+  <#FFF0DC> = Backend (Express / SQLite)
+  <#DCFFDC> = Pipeline (Node.js worker)
+  <#FFDCDC> = External APIs
+endlegend
+
+@enduml

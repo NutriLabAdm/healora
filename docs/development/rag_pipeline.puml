@@ -1,0 +1,32 @@
+@startuml
+title RAG-пайплайн Healora
+top to bottom direction
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+
+actor "Пользователь" as USER
+
+component "Классификатор\nRuBERT" as CLASSIFIER #FCE8E6
+
+component "ToolRAG\nGTE-Qwen2-1.5B*" as TOOLRAG #E8F0FE
+
+component "Crawler\n(асинхронный цикл сбора\nPubMed, Cochrane,\nдесятки источников)" as CRAWLER #E6F4EA
+
+database "Embeddings\n(формируем из\nсобранных данных)" as EMB #E6F4EA
+
+component "Dynamic Prompt Assembly\nL1 + L2 + L3 + L4 +\nTop-5 документов" as PROMPT #FEF7E0
+
+component "LLM (GigaChat /\nMedGemma / AntAngelMed)\n→ Chain-of-Thought\n→ Факт-чекинг" as LLM #F3E8FD
+component "Цифровой план\nповеденческих\nинтервенций" as PLAN #F3E8FD
+
+USER -r-> CLASSIFIER : запрос
+CLASSIFIER --> TOOLRAG : тематика
+TOOLRAG -r-> CRAWLER : поиск
+CRAWLER --> EMB : формирование эмбеддингов
+EMB --> TOOLRAG : векторный поиск
+TOOLRAG --> PROMPT : Top-5 документов
+PROMPT --> LLM : обогащённый промпт
+LLM --> PLAN : результат
+PLAN --> USER : план интервенций
+@enduml

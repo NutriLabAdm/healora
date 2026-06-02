@@ -1,0 +1,89 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FBFBFF
+skinparam sequenceMessageAlign center
+skinparam defaultFontName Consolas
+skinparam defaultFontSize 11
+
+title "Knowledge Search — Full Session Sequence"
+caption "Типовой сценарий: ручной запуск поиска"
+
+actor "Admin" as ADMIN
+participant "KnowledgeAdmin\n(React)" as FE
+participant "knowledgeAdmin\n(Express API)" as API
+participant "orchestrator.js" as ORCH
+participant "search_runner.js" as RUNNER
+database "SQLite\n(knowledge.db)" as DB
+collections "Search\nConnectors" as CONN
+collections "LLM\nAdapter" as LLM
+
+' ── 1. Create Query ──
+ADMIN -> FE : Открывает /knowledge-admin#search
+FE -> API : GET /queries
+API -> DB : SELECT * FROM search_queries
+DB --> API : [...]
+API --> FE : queries[]
+
+ADMIN -> FE : Нажимает ▶ (run)
+FE -> API : POST /sessions { query_id, source, domain }
+API -> DB : INSERT search_session (status=pending)
+DB --> API : session_id
+API --> FE : { session_id, status: 'pending' }
+
+' ── 2. Start Session ──
+API -> RUNNER : triggerSearch(session_id)
+RUNNER -> DB : UPDATE session status → 'searching'
+
+' ── 3. Search Phase ──
+RUNNER -> ORCH : search(query, sources)
+loop for each source
+  ORCH -> CONN : search(query, domain, maxResults)
+  CONN -> CONN : HTTP GET (PubMed / CrossRef / ...)
+  CONN --> ORCH : Article[]
+end
+ORCH -> DB : UPDATE session articles_found = N
+
+' ── 4. Dedup Phase ──
+ORCH -> ORCH : dedup(articles) by PMID→DOI→URL→title
+ORCH -> DB : UPDATE session articles_after_dedup = M
+
+' ── 5. LLM Enrich Phase ──
+RUNNER -> DB : UPDATE session status → 'analyzing'
+ORCH -> LLM : analyze(articles, llm_prompt, search_format)
+
+alt evidence level требуется
+  LLM -> LLM : 8B: relevance + domain (локально)
+  LLM -> LLM : API: evidence_level + summary
+else упрощённый режим
+  LLM -> LLM : 8B: всё локально (fallback)
+end
+
+LLM --> ORCH : EnrichedArticle[]
+
+' ── 6. Save Phase ──
+RUNNER -> DB : UPDATE session status → 'saving'
+ORCH -> DB : Batch INSERT articles
+ORCH -> DB : INSERT article_sources
+ORCH -> DB : INSERT changelog
+ORCH -> DB : UPDATE session { completed_at, articles_queued }
+
+' ── 7. Complete ──
+RUNNER -> DB : UPDATE session status → 'completed'
+RUNNER -> DB : UPDATE api_usage (token tracking)
+API --> FE : session poll → status='completed'
+FE -> FE : PipelineTracker shows ✅
+
+' ── 8. HITL Validation ──
+ADMIN -> FE : Открывает Валидацию
+FE -> API : GET /articles?status=pending
+API -> DB : SELECT ... WHERE status='pending'
+DB --> API : [...]
+API --> FE : articles[]
+
+ADMIN -> FE : Approve / Reject
+FE -> API : PATCH /articles/:id/status
+API -> DB : UPDATE status, INSERT changelog
+DB --> API : ok
+API --> FE : { status: 'ok' }
+
+@enduml

@@ -81,7 +81,7 @@ docs/design/DESIGN.md
     ├── 🔗 Ссылается на BADGE_001...BADGE_008 (Badges)
     └── 🔗 assets/ui_library.html (реализация всех компонентов с ID_EL)
 
-docs/domain/vitamin/
+docs/domain/knowledge/vitamins/
     │
     ├── data.json ←── 🔗 Синхронизирован с ↓
     │                  ├── vitamins/vit_*.md (13 файлов)

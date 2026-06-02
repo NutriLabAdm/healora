@@ -4,6 +4,7 @@ import '../assets/css/CategoryBadges.css';
 import catalogData from '../assets/data/interventions_catalog.json';
 import supplementsCatalog from '../assets/data/supplements_catalog.json';
 import dietsCatalog from '../assets/data/diets_catalog.json';
+import protocolsCatalog from '../assets/data/protocols_catalog.json';
 import backlogMd from '../../../../docs/development/BACKLOG.md?raw';
 
 const backlogVersion = (() => {
@@ -21,7 +22,21 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
   const [showBacklog, setShowBacklog] = useState(false);
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [selectedIntervention, setSelectedIntervention] = useState(null);
+  const [selectedProtocol, setSelectedProtocol] = useState(null);
+  const [protocolCategory, setProtocolCategory] = useState('all');
   const [showLegend, setShowLegend] = useState(false);
+
+  const protocolCategories = [
+    { key: 'all', label: 'Все', color: '#6b21c8' },
+    { key: 'nutritional', label: 'Питание', color: '#f57c00' },
+    { key: 'medical', label: 'Медицина', color: '#d32f2f' },
+    { key: 'mental', label: 'Ментальный', color: '#7b1fa2' },
+    { key: 'physical', label: 'Физический', color: '#388e3c' },
+  ];
+
+  const filteredProtocols = protocolCategory === 'all'
+    ? protocolsCatalog
+    : protocolsCatalog.filter(p => p.category === protocolCategory);
 
   const categories = [
     { key: 'all', label: 'Все', color: '#6b21c8' },
@@ -60,27 +75,6 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
       description: entry.short_description || entry.full_description,
     });
   });
-
-  const protocols = [
-    { id: 'GLYCEMIC_CONTROL', protocol_id: 'PTL_GLYCEMIC', name: 'Гликемический контроль', category: 'nutritional', goal: 'Контроль уровня глюкозы и гликированного гемоглобина', interventions: ['04_1','04_2','04_3','04_6','02_3','03_5'], red_flags: [{metric:'Глюкоза натощак',threshold:'>7.0 ммоль/л',action:'Консультация эндокринолога'},{metric:'HbA1c',threshold:'>7%',action:'Интенсификация терапии'}], recommendations:['Ограничить простые углеводы','Увеличить клетчатку','Контроль порций','Регулярный мониторинг глюкозы'] },
-    { id: 'CIRCADIAN_EATING', protocol_id: 'PTL_CIRCAD', name: 'Циркадное питание', category: 'nutritional', goal: 'Синхронизация питания с циркадными ритмами', interventions: ['04_4','04_5','01_1','03_5'], red_flags: [{metric:'Время последнего приема',threshold:'после 20:00',action:'Перенести ужин на 18:00-19:00'},{metric:'Пропуск завтрака',threshold:'>3 раза в неделю',action:'Установить регулярный завтрак'}], recommendations:['Ужин за 3-4 часа до сна','Завтрак в течение 1 часа после пробуждения','Пищевое окно 8-10 часов'] },
-    { id: 'SLEEP_HYGIENE', protocol_id: 'PTL_SLEEP', name: 'Гигиена сна', category: 'nutritional', goal: 'Улучшение качества и продолжительности сна', interventions: ['01_1','01_2','01_3','03_1','03_7'], red_flags: [{metric:'Длительность сна',threshold:'<6 часов',action:'Сдвиг отхода ко сну на 15 мин раньше'},{metric:'Вариабельность пробуждения',threshold:'>2 часа',action:'Установить постоянное время пробуждения'}], recommendations:['Ложиться и вставать в одно время','Без экранов за 60 мин до сна','Прохлада 18-20°C','Ритуал расслабления 30 мин'] },
-    { id: 'HYDRATION', protocol_id: 'PTL_HYDRATION', name: 'Гидратация', category: 'nutritional', goal: 'Оптимизация водного баланса', interventions: ['03_9','03_10','04_7'], red_flags: [{metric:'Цвет мочи',threshold:'Темный',action:'Увеличить потребление воды'},{metric:'Суточное потребление',threshold:'<1.5 л',action:'Пить 2-3 л воды в день'}], recommendations:['2-3 л воды в день','Снизить кофеин до 1-2 чашек','Электролиты при нагрузках'] },
-    { id: 'NUTRITIONAL_BASELINE', protocol_id: 'PTL_NUTR_BASE', name: 'Базовые добавки', category: 'nutritional', goal: 'Коррекция нутритивного статуса', interventions: ['05_1','05_2','05_3','05_4','07_1'], red_flags: [{metric:'Уровень 25(OH)D',threshold:'<30 нг/мл',action:'Коррекция дозы D3'},{metric:'Омега-3 индекс',threshold:'<4%',action:'Увеличить дозу Омега-3'}], recommendations:['D3: 2000-5000 МЕ/день','Омега-3: 2-3 г/день','Магний: 300-400 мг/день','В-комплекс: 1 капсула/день'] },
-    { id: 'METABOLIC_CARDIO_RISKS', protocol_id: 'PTL_METABOLIC', name: 'Метаболические риски', category: 'medical', goal: 'Снижение метаболических и сердечно-сосудистых рисков', interventions: ['02_1','02_2','04_1','07_1','07_2'], red_flags: [{metric:'АД',threshold:'>140/90',action:'Консультация кардиолога'},{metric:'Холестерин ЛПНП',threshold:'>3.0 ммоль/л',action:'Диета + статины'}], recommendations:['ВИИТ 2-3 раза в неделю','Силовые 2 раза в неделю','Дефицит калорий 300-500 ккал','Чекап раз в 6 мес'] },
-    { id: 'CARDIOVASCULAR_HEALTH', protocol_id: 'PTL_CARDIO', name: 'Сердечно-сосудистое здоровье', category: 'medical', goal: 'Улучшение кардиоваскулярных показателей', interventions: ['02_1','02_3','02_6','08_1','04_6','05_2','07_1'], red_flags: [{metric:'ЧСС покоя',threshold:'>100 уд/мин',action:'Консультация кардиолога'},{metric:'Вариабельность ЧСС',threshold:'<20 мс',action:'Снизить стресс, улучшить сон'}], recommendations:['Зона 2: 150 мин/нед','ВИИТ: 1 раз/нед','Омега-3: 2-3 г/день','Ежедневный мониторинг ЧСС'] },
-    { id: 'INFLAMMATORY_SYSTEMIC', protocol_id: 'PTL_INFLAM', name: 'Противовоспалительный', category: 'medical', goal: 'Снижение системного воспаления', interventions: ['05_6','04_6','05_2','03_6','02_3','05_5'], red_flags: [{metric:'СРБ',threshold:'>3 мг/л',action:'Усилить противовоспалительную диету'},{metric:'ФНО-α',threshold:'>2.8 пг/мл',action:'Добавить куркумин/Омега-3'}], recommendations:['Противовоспалительная диета','Исключить трансжиры и сахар','Омега-3 3 г/день','Адаптогены: ашваганда/родиола'] },
-    { id: 'RAPID_WEIGHT_LOSS', protocol_id: 'PTL_RAPID_WL', name: 'Быстрое снижение веса', category: 'medical', goal: 'Интенсивное снижение веса под контролем', interventions: ['FD_CAL','PH_WALK','PH_LOW','FD_SUG','FD_FIB','FD_IF','MN_BRTH','SL_BED','FD_WATER','PR_01','BEH_EAT','M_WGHT','M_WAIST','PR_01A','PR_SS'], red_flags: [{metric:'Темп снижения',threshold:'>2 кг/нед',action:'Увеличить калорийность'},{metric:'Мышечная масса',threshold:'Потеря >1 кг/мес',action:'Увеличить белок + силовые'}], recommendations:['Дефицит 500-800 ккал/день','Белок 1.6-2 г/кг','ВИИТ 3 раза/нед','Силовые 2 раза/нед','Чекап каждые 2 нед'] },
-    { id: 'OZEMPIC_JUMPERS', protocol_id: 'PTL_OZEMPIC', name: 'Протокол GLP-1 агонистов (Оземпик)', category: 'medical', goal: 'Сопровождение терапии GLP-1 агонистами с сохранением мышечной массы', interventions: ['OZ_01','OZ_02','OZ_03','OZ_04','OZ_05','OZ_06','OZ_10'], red_flags: [{metric:'Потеря мышечной массы',threshold:'>1.5 кг/мес',action:'Белок 2.2 г/кг + силовые'},{metric:'Тошнота/рвота',threshold:'>3 дней',action:'Консультация врача'}], recommendations:['Белок 1.6-2.2 г/кг','Силовые 3-4 раза/нед','Гидратация 2.5-3 л/день','Электролиты ежедневно','Дробное питание 5-6 раз/день'] },
-    { id: 'COGNITIVE_HEALTH', protocol_id: 'PTL_COG', name: 'Когнитивное здоровье', category: 'mental', goal: 'Улучшение когнитивных функций и профилактика нейродегенерации', interventions: ['05_7','03_1','03_6','05_2','02_2'], red_flags: [{metric:'Ухудшение памяти',threshold:'Прогрессирующее',action:'Невролог + когнитивное тестирование'},{metric:'Концентрация',threshold:'Снижение >3 мес',action:'Проверить дефициты B12, D, ферритин'}], recommendations:['Медитация 10-15 мин/день','Омега-3 2-3 г/день','Силовые тренировки','Ноотропы курсами','Цифровой детокс вечером'] },
-    { id: 'PAIN_MANAGEMENT', protocol_id: 'PTL_PAIN', name: 'Управление болью', category: 'mental', goal: 'Снижение хронической боли', interventions: ['03_2','03_6','05_3','03_1'], red_flags: [{metric:'Интенсивность боли',threshold:'7/10 >3 дней',action:'Консультация невролога'},{metric:'Качество сна',threshold:'<5 часов',action:'Усилить протокол гигиены сна'}], recommendations:['Дыхательные практики 5-10 мин','Магний 300-400 мг/день','Медитация сканирования тела','Управление стрессом'] },
-    { id: 'DEPRESSION', protocol_id: 'PTL_DEPR', name: 'Поддержка при депрессии', category: 'mental', goal: 'Улучшение настроения и эмоционального фона', interventions: ['02_3','03_1','03_6','05_5','03_7','05_2','05_3'], red_flags: [{metric:'Суицидальные мысли',threshold:'Любые',action:'Немедленно к психиатру'},{metric:'Апатия',threshold:'>2 нед',action:'Психотерапия + антидепрессанты'}], recommendations:['Аэробные нагрузки 30 мин/день','Медитация 2 раза/день','Цифровой детокс','Омега-3 3 г/день','Витамин D 5000 МЕ/день'] },
-    { id: 'RECOVERY_REGENERATION', protocol_id: 'PTL_RECOVERY', name: 'Восстановление и регенерация', category: 'physical', goal: 'Ускорение восстановления после нагрузок', interventions: ['05_1','05_2','05_3','03_6','03_7','01_1','02_6'], red_flags: [{metric:'Креатинкиназа',threshold:'>500 Ед/л',action:'Снизить нагрузку на 50%'},{metric:'Субъективное восстановление',threshold:'<2/10',action:'Доп. день отдыха'}], recommendations:['Сон 8-9 часов','Магний 400 мг/день','D3 5000 МЕ/день','Зона 2 восстановление','Контрастный душ'] },
-    { id: 'EATING_DISORDERS', protocol_id: 'PTL_EAT_DIS', name: 'Расстройства пищевого поведения', category: 'mental', goal: 'Нормализация пищевого поведения', interventions: ['04_4','04_5','03_1','03_6','03_7'], red_flags: [{metric:'Пропуск приемов пищи',threshold:'>1 раза/день',action:'Психотерапия + регулярное питание'},{metric:'Переедание',threshold:'>2 раз/нед',action:'Дневник питания + психолог'}], recommendations:['3+1 приемов пищи в день','Осознанное питание','Медитация перед едой','Исключить диеты','Цифровой детокс'] },
-    { id: 'HORMONAL_ENDOCRINE', protocol_id: 'PTL_HORMONAL', name: 'Гормональный/эндокринный', category: 'medical', goal: 'Балансировка гормонального фона', interventions: ['07_1','04_6','05_1','05_3','05_2','02_2','03_6'], red_flags: [{metric:'ТТГ',threshold:'>4.0 мМЕ/л',action:'Эндокринолог'},{metric:'Тестостерон (муж)',threshold:'<12 нмоль/л',action:'Андролог'}], recommendations:['Чекап гормонов раз в 6 мес','Силовые 3 раза/нед','D3 5000 МЕ/день','Магний 400 мг/день','Омега-3 2 г/день'] },
-    { id: 'LONGEVITY', protocol_id: 'PTL_LONGEVITY', name: 'Долголетие', category: 'nutritional', goal: 'Комплексная программа для активного долголетия', interventions: ['04_1','04_6','02_1','02_2','03_6','05_1','05_2','07_1'], red_flags: [{metric:'Показатель Healora Score',threshold:'<60',action:'Комплексная коррекция образа жизни'},{metric:'Биологический возраст',threshold:'>хронологического на 5+ лет',action:'Интенсификация протокола'}], recommendations:['Ограничение калорий (CR)','ВИИТ + силовые','Противовоспалительная диета','D3 5000 МЕ/день','Омега-3 2-3 г/день','Чекап раз в год'] },
-    { id: 'SPEECH_TOMATIS', protocol_id: 'PTL_TOMATIS', name: 'Коррекция речевых нарушений (Tomatiс®)', category: 'medical', goal: 'Коррекция ЗРР, алалии, ОНР, заикания, РАС методом Tomatis® + логопедия', interventions: ['ST_01','ST_02','ST_03','ST_04','ST_05'], red_flags: [{metric:'Усиление заикания после сеанса',threshold:'Любое',action:'Снизить интенсивность, увеличить интервалы'},{metric:'Отсутствие динамики',threshold:'>7 сеансов',action:'Пересмотр программы, доп. диагностика'},{metric:'Головная боль/головокружение',threshold:'>2 ч после сеанса',action:'Консультация невролога'}], recommendations:['Курс Tomatis 14 сеансов (40-80 мин)','Артикуляционная гимнастика ежедневно','ЛФМ 2 раза в неделю','Трекинг речевых навыков еженедельно','Смирнова Л.И. Tomatis-терапевт: +7 985 285-74-44'] },
-  ];
 
   const filteredSupplements = supplementGroup === 'all'
     ? supplementsCatalog
@@ -300,8 +294,17 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
       )}
 
       {tab === 'protocols' && (
-        <div className="protocols-list">
-          {protocols.map(p => {
+        <>
+          <div className="protocol-category-filters">
+            {protocolCategories.map(cat => (
+              <button key={cat.key} className={`cat-btn ${protocolCategory === cat.key ? 'active' : ''}`} style={protocolCategory === cat.key ? {background:cat.color,borderColor:cat.color,color:'#fff'} : {}}
+                onClick={() => setProtocolCategory(cat.key)}>
+                {cat.label}
+              </button>
+            ))}
+          </div>
+          <div className="protocols-list">
+          {filteredProtocols.map(p => {
             const isExpanded = expandedProtocol === p.id;
             const toggle = () => setExpandedProtocol(isExpanded ? null : p.id);
             return (
@@ -313,14 +316,15 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
                 }}
                 onClick={toggle}>
                 <div className="protocol-card-header">
-                  <span className="protocol-card-name">{p.name} <span className="protocol-card-count">{p.interventions.length}</span></span>
+                  <span className="protocol-card-name">{p.name_ru} <span className="protocol-card-count">{p.interventions.length}</span></span>
                   <span className="protocol-card-id">{p.protocol_id}</span>
-                  <span className={`protocol-card-cat ${p.category}`}>{p.category === 'nutritional' ? 'Питание' : p.category === 'medical' ? 'Медицина' : p.category === 'mental' ? 'Ментальный' : 'Физический'}</span>
+                  <span className={`protocol-card-cat ${p.category}`}>{p.category === 'nutritional' ? 'Питание' : p.category === 'medical' ? 'Медицина' : p.category === 'mental' ? 'Ментальный' : p.category === 'physical' ? 'Физический' : p.category}</span>
+                  <button className="protocol-info-btn" onClick={(e) => { e.stopPropagation(); setSelectedProtocol(p); }} title="Подробнее">ℹ️</button>
                   <span className="protocol-chevron">{isExpanded ? '▲' : '▼'}</span>
                 </div>
                 {isExpanded && (
-                  <div className="protocol-card-body">
-                    <p className="protocol-card-goal">{p.goal}</p>
+                  <div className="protocol-card-body" onClick={e => e.stopPropagation()}>
+                    <p className="protocol-card-goal">{p.goal_ru}</p>
                     <div className="protocol-card-interventions">
                       {p.interventions.map(code => {
                         const interv = interventions.find(i => i.code === code);
@@ -357,6 +361,81 @@ const InterventionsPanel = ({ profileId, onDragStart, cartItems, onAddToCart, on
               </div>
             );
           })}
+          </div>
+        </>
+      )}
+
+      {selectedProtocol && (
+        <div className="supplement-popup-overlay" onClick={() => setSelectedProtocol(null)}>
+          <div className="supplement-popup" onClick={e => e.stopPropagation()}>
+            <div className="supplement-popup-header" style={{ borderLeftColor: selectedProtocol.category === 'medical' ? '#d32f2f' : selectedProtocol.category === 'nutritional' ? '#f57c00' : selectedProtocol.category === 'mental' ? '#7b1fa2' : '#388e3c' }}>
+              <span className="supplement-popup-code">{selectedProtocol.protocol_id}</span>
+              <h3>{selectedProtocol.name_ru}</h3>
+              <button className="supplement-popup-close" onClick={() => setSelectedProtocol(null)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+            <div className="supplement-popup-body">
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Цель</span>
+                <span className="supplement-popup-value">{selectedProtocol.goal_ru}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Категория</span>
+                <span className="supplement-popup-value">{selectedProtocol.category === 'nutritional' ? 'Питание' : selectedProtocol.category === 'medical' ? 'Медицина' : selectedProtocol.category === 'mental' ? 'Ментальный' : selectedProtocol.category === 'physical' ? 'Физический' : selectedProtocol.category}</span>
+              </div>
+              <div className="supplement-popup-row">
+                <span className="supplement-popup-label">Интервенций</span>
+                <span className="supplement-popup-value">{selectedProtocol.interventions.length}</span>
+              </div>
+              <div className="supplement-popup-row" style={{display:'block',padding:'8px 0'}}>
+                <span className="supplement-popup-label" style={{display:'block',marginBottom:4}}>Интервенции</span>
+                <div className="protocol-card-interventions">
+                  {selectedProtocol.interventions.map(code => {
+                    const interv = interventions.find(i => i.code === code);
+                    return interv ? (
+                      <span key={code} className="protocol-interv-badge" style={{ borderLeftColor: getCategoryColor(interv.category) }}>{interv.name}</span>
+                    ) : (
+                      <span key={code} className="protocol-interv-badge" style={{ borderLeftColor: '#d50000' }}>{code}</span>
+                    );
+                  })}
+                </div>
+              </div>
+              {selectedProtocol.red_flags && selectedProtocol.red_flags.length > 0 && (
+                <div className="supplement-popup-row" style={{display:'block',padding:'8px 0'}}>
+                  <span className="supplement-popup-label" style={{display:'block',marginBottom:4}}>🚩 Красные флаги</span>
+                  {selectedProtocol.red_flags.map((rf, i) => (
+                    <div key={i} className="protocol-flag-item" style={{marginBottom:2}}>
+                      <span className="protocol-flag-metric">{rf.metric}</span>
+                      <span className="protocol-flag-threshold">{rf.threshold}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {selectedProtocol.recommendations && selectedProtocol.recommendations.length > 0 && (
+                <div className="supplement-popup-row" style={{display:'block',padding:'8px 0'}}>
+                  <span className="supplement-popup-label" style={{display:'block',marginBottom:4}}>✓ Рекомендации</span>
+                  {selectedProtocol.recommendations.map((r, i) => (
+                    <div key={i} className="protocol-rec-item" style={{marginBottom:2}}>{r}</div>
+                  ))}
+                </div>
+              )}
+              {selectedProtocol.relevance_params && (
+                <div className="supplement-popup-row">
+                  <span className="supplement-popup-label">Параметры ЦД</span>
+                  <span className="supplement-popup-value" style={{fontSize:10}}>{selectedProtocol.relevance_params}</span>
+                </div>
+              )}
+              {selectedProtocol.name_en && (
+                <div className="supplement-popup-row">
+                  <span className="supplement-popup-label">English</span>
+                  <span className="supplement-popup-value">{selectedProtocol.name_en}</span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
 

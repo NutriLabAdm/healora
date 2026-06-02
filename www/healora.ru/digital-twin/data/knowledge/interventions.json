@@ -1,0 +1,888 @@
+[
+  {
+    "id": "SL_BED",
+    "code": "SL_BED",
+    "name_ru": "Сон: время отхода",
+    "category": "sleep",
+    "category_ru": "Сон",
+    "impact": 9,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Фиксированное время отхода ко сну",
+    "benefits": [
+      "Стабилизация циркадных ритмов",
+      "Улучшение качества сна",
+      "Снижение времени засыпания"
+    ]
+  },
+  {
+    "id": "SL_DUR",
+    "code": "SL_DUR",
+    "name_ru": "Сон: продолжительность",
+    "category": "sleep",
+    "category_ru": "Сон",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Рекомендовано 7-9 часов сна",
+    "benefits": [
+      "Снижение риска сердечно-сосудистых заболеваний",
+      "Улучшение когнитивных функций",
+      "Поддержка иммунной системы"
+    ]
+  },
+  {
+    "id": "SL_QLT",
+    "code": "SL_QLT",
+    "name_ru": "Сон: качество",
+    "category": "sleep",
+    "category_ru": "Сон",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Улучшение качества сна через гигиену сна",
+    "benefits": [
+      "Глубокий сон",
+      "Снижение ночных пробуждений",
+      "Улучшение фаз сна"
+    ]
+  },
+  {
+    "id": "PH_HIIT",
+    "code": "PH_HIIT",
+    "name_ru": "Тренировки: ВИИТ",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 9,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Высокоинтенсивный интервальный тренинг",
+    "benefits": [
+      "Сжигание висцерального жира",
+      "Улучшение кардиоваскулярного здоровья",
+      "Повышение VO2 max"
+    ]
+  },
+  {
+    "id": "PH_STR",
+    "code": "PH_STR",
+    "name_ru": "Тренировки: силовые",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Регулярные силовые тренировки",
+    "benefits": [
+      "Увеличение мышечной массы",
+      "Повышение метаболизма",
+      "Укрепление костей"
+    ]
+  },
+  {
+    "id": "PH_AER",
+    "code": "PH_AER",
+    "name_ru": "Тренировки: аэробные",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 9,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Бег, плавание, велосипед",
+    "benefits": [
+      "Улучшение работы сердца",
+      "Снижение АД",
+      "Контроль веса"
+    ]
+  },
+  {
+    "id": "PH_FLEX",
+    "code": "PH_FLEX",
+    "name_ru": "Тренировки: гибкость",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 7.5,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Растяжка и йога",
+    "benefits": [
+      "Улучшение подвижности",
+      "Предотвращение травм",
+      "Снижение мышечного напряжения"
+    ]
+  },
+  {
+    "id": "PH_Z2",
+    "code": "PH_Z2",
+    "name_ru": "Тренировки: зона 2",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Тренировки в зоне 2 для выносливости",
+    "benefits": [
+      "Развитие митохондрий",
+      "Улучшение базовой выносливости",
+      "Сжигание жира как топлива"
+    ]
+  },
+  {
+    "id": "MN_MDT",
+    "code": "MN_MDT",
+    "name_ru": "Медитация",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Медитация и осознанность",
+    "benefits": [
+      "Снижение уровня кортизола",
+      "Улучшение концентрации",
+      "Снижение тревожности"
+    ]
+  },
+  {
+    "id": "MN_BRTH",
+    "code": "MN_BRTH",
+    "name_ru": "Дыхательные упражнения",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 7,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Глубокое дыхание",
+    "benefits": [
+      "Снижение ЧСС",
+      "Активация парасимпатики",
+      "Снижение давления"
+    ]
+  },
+  {
+    "id": "SL_HYG",
+    "code": "SL_HYG",
+    "name_ru": "Сон",
+    "category": "sleep",
+    "category_ru": "Сон",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Гигиена сна и режим",
+    "benefits": [
+      "Быстрое засыпание",
+      "Глубокий сон",
+      "Утренняя бодрость"
+    ]
+  },
+  {
+    "id": "MN_STR",
+    "code": "MN_STR",
+    "name_ru": "Управление стрессом",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Техники управления стрессом",
+    "benefits": [
+      "Снижение уровня кортизола",
+      "Улучшение гормонального фона",
+      "Снижение воспаления"
+    ]
+  },
+  {
+    "id": "MN_DTOX",
+    "code": "MN_DTOX",
+    "name_ru": "Цифровой детокс",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 7.5,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Отказ от экранов перед сном",
+    "benefits": [
+      "Улучшение выработки мелатонина",
+      "Снижение нагрузки на глаза",
+      "Улучшение качества сна"
+    ]
+  },
+  {
+    "id": "FD_WATER",
+    "code": "FD_WATER",
+    "name_ru": "Водный режим",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Оптимальный водный баланс",
+    "benefits": [
+      "Улучшение работы почек",
+      "Оптимизация метаболизма",
+      "Улучшение состояния кожи"
+    ]
+  },
+  {
+    "id": "FD_ELEC",
+    "code": "FD_ELEC",
+    "name_ru": "Баланс электролитов",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Поддержание баланса электролитов",
+    "benefits": [
+      "Предотвращение судорог",
+      "Нормальная работа сердца",
+      "Поддержка мышечных сокращений"
+    ]
+  },
+  {
+    "id": "FD_CAL",
+    "code": "FD_CAL",
+    "name_ru": "Ограничение калорий",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Умеренное ограничение калорий",
+    "benefits": [
+      "Снижение веса",
+      "Улучшение чувствительности к инсулину",
+      "Снижение воспаления"
+    ]
+  },
+  {
+    "id": "FD_CRB",
+    "code": "FD_CRB",
+    "name_ru": "Контроль углеводов",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Контроль потребления углеводов",
+    "benefits": [
+      "Стабилизация глюкозы",
+      "Снижение инсулинорезистентности",
+      "Контроль аппетита"
+    ]
+  },
+  {
+    "id": "FD_SUG",
+    "code": "FD_SUG",
+    "name_ru": "Снижение сахара",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7.5,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Снижение потребления сахара",
+    "benefits": [
+      "Снижение риска диабета",
+      "Улучшение здоровья зубов",
+      "Снижение воспаления"
+    ]
+  },
+  {
+    "id": "FD_IF",
+    "code": "FD_IF",
+    "name_ru": "Ограничение по времени",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 8,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Питание в ограниченное время (16:8)",
+    "benefits": [
+      "Улучшение чувствительности к инсулину",
+      "Активация аутофагии",
+      "Снижение воспаления"
+    ]
+  },
+  {
+    "id": "FD_EAT",
+    "code": "FD_EAT",
+    "name_ru": "Ранние приемы пищи",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7.5,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Ранние приемы пищи для циркадного питания",
+    "benefits": [
+      "Улучшение метаболизма глюкозы",
+      "Синхронизация с биоритмами",
+      "Лучшее качество сна"
+    ]
+  },
+  {
+    "id": "FD_FIB",
+    "code": "FD_FIB",
+    "name_ru": "Богатая клетчаткой диета",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Диета с высоким содержанием клетчатки",
+    "benefits": [
+      "Здоровье микробиома",
+      "Снижение холестерина",
+      "Улучшение пищеварения"
+    ]
+  },
+  {
+    "id": "FD_CAF",
+    "code": "FD_CAF",
+    "name_ru": "Снижение кофеина",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 6.5,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Снижение потребления кофеина",
+    "benefits": [
+      "Улучшение качества сна",
+      "Снижение тревожности",
+      "Нормализация ЧСС"
+    ]
+  },
+  {
+    "id": "SP_D3",
+    "code": "SP_D3",
+    "name_ru": "Витамин D3",
+    "category": "supplement",
+    "category_ru": "Добавки",
+    "impact": 8,
+    "evidence": "A",
+    "type": "supplement",
+    "description": "Прием витамина D3",
+    "benefits": [
+      "Здоровье костей",
+      "Поддержка иммунитета",
+      "Улучшение настроения"
+    ]
+  },
+  {
+    "id": "SP_O3",
+    "code": "SP_O3",
+    "name_ru": "Омега-3",
+    "category": "supplement",
+    "category_ru": "Добавки",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "supplement",
+    "description": "Прием Омега-3 жирных кислот",
+    "benefits": [
+      "Здоровье сердца",
+      "Когнитивные функции",
+      "Снижение воспаления"
+    ]
+  },
+  {
+    "id": "SP_MG",
+    "code": "SP_MG",
+    "name_ru": "Магний",
+    "category": "supplement",
+    "category_ru": "Добавки",
+    "impact": 7.5,
+    "evidence": "A",
+    "type": "supplement",
+    "description": "Прием магния",
+    "benefits": [
+      "Улучшение сна",
+      "Расслабление мышц",
+      "Снижение стресса"
+    ]
+  },
+  {
+    "id": "SP_BC",
+    "code": "SP_BC",
+    "name_ru": "В-комплекс",
+    "category": "supplement",
+    "category_ru": "Добавки",
+    "impact": 7,
+    "evidence": "B",
+    "type": "supplement",
+    "description": "Комплекс витаминов группы B",
+    "benefits": [
+      "Энергетический метаболизм",
+      "Здоровье нервной системы",
+      "Образование крови"
+    ]
+  },
+  {
+    "id": "SP_ADP",
+    "code": "SP_ADP",
+    "name_ru": "Адаптогены",
+    "category": "supplement",
+    "category_ru": "Добавки",
+    "impact": 7.5,
+    "evidence": "B",
+    "type": "supplement",
+    "description": "Прием адаптогенов",
+    "benefits": [
+      "Снижение кортизола",
+      "Повышение стрессоустойчивости",
+      "Улучшение энергии"
+    ]
+  },
+  {
+    "id": "FD_ANTI",
+    "code": "FD_ANTI",
+    "name_ru": "Противовоспалительная диета",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Диета для снижения воспаления",
+    "benefits": [
+      "Снижение системного воспаления",
+      "Улучшение маркеров воспаления (СРБ)",
+      "Снижение риска хронических заболеваний"
+    ]
+  },
+  {
+    "id": "SP_NTRP",
+    "code": "SP_NTRP",
+    "name_ru": "Ноотропы",
+    "category": "supplement",
+    "category_ru": "Добавки",
+    "impact": 7,
+    "evidence": "B",
+    "type": "supplement",
+    "description": "Прием ноотропов для когнитивных функций",
+    "benefits": [
+      "Улучшение памяти",
+      "Повышение концентрации",
+      "Когнитивная выносливость"
+    ]
+  },
+  {
+    "id": "DG_CHK",
+    "code": "DG_CHK",
+    "name_ru": "Регулярный чекап",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Ежегодные медицинские осмотры",
+    "benefits": [
+      "Раннее выявление заболеваний",
+      "Профилактика осложнений",
+      "Мониторинг динамики здоровья"
+    ]
+  },
+  {
+    "id": "DG_CARD",
+    "code": "DG_CARD",
+    "name_ru": "Направление к кардиологу",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "При подозрении на сердечно-сосудистые риски",
+    "benefits": [
+      "Профессиональная диагностика",
+      "Предотвращение инфарктов/инсультов",
+      "Назначение таргетной терапии"
+    ]
+  },
+  {
+    "id": "PH_HRV",
+    "code": "PH_HRV",
+    "name_ru": "Мониторинг ЧСС",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 8.5,
+    "evidence": "B",
+    "type": "device",
+    "description": "Отслеживание вариабельности сердечного ритма",
+    "benefits": [
+      "Мониторинг восстановления",
+      "Оптимизация тренировок",
+      "Выявление перетренированности"
+    ]
+  },
+  {
+    "id": "M_END01",
+    "code": "M_END01",
+    "name_ru": "Консультация эндокринолога",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Направление к эндокринологу",
+    "benefits": []
+  },
+  {
+    "id": "M_END02",
+    "code": "M_END02",
+    "name_ru": "Интенсификация сахароснижающей терапии",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9.5,
+    "evidence": "A",
+    "type": "medication",
+    "description": "Коррекция сахароснижающей терапии",
+    "benefits": []
+  },
+  {
+    "id": "M_END03",
+    "code": "M_END03",
+    "name_ru": "Заместительная терапия (щитовидная железа)",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "medication",
+    "description": "Терапия L-тироксином",
+    "benefits": []
+  },
+  {
+    "id": "M_CAR01",
+    "code": "M_CAR01",
+    "name_ru": "Назначение гипотензивной терапии",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9.5,
+    "evidence": "A",
+    "type": "medication",
+    "description": "Старт антигипертензивной терапии",
+    "benefits": []
+  },
+  {
+    "id": "M_CAR02",
+    "code": "M_CAR02",
+    "name_ru": "Назначение статинов",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "medication",
+    "description": "Старт терапии статинами",
+    "benefits": []
+  },
+  {
+    "id": "M_CAR03",
+    "code": "M_CAR03",
+    "name_ru": "Холтер ЭКГ",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 7.5,
+    "evidence": "B",
+    "type": "diagnostic",
+    "description": "Суточное мониторирование ЭКГ",
+    "benefits": []
+  },
+  {
+    "id": "M_GAS01",
+    "code": "M_GAS01",
+    "name_ru": "Консультация гастроэнтеролога",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Направление к гастроэнтерологу",
+    "benefits": []
+  },
+  {
+    "id": "M_GAS02",
+    "code": "M_GAS02",
+    "name_ru": "ЭГДС (гастроскопия)",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 8,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Эндоскопия верхних отделов ЖКТ",
+    "benefits": []
+  },
+  {
+    "id": "M_GAS03",
+    "code": "M_GAS03",
+    "name_ru": "Колоноскопия",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Скрининг колоректального рака",
+    "benefits": []
+  },
+  {
+    "id": "M_NEU01",
+    "code": "M_NEU01",
+    "name_ru": "Консультация невролога",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 9,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Направление к неврологу",
+    "benefits": []
+  },
+  {
+    "id": "M_NEU02",
+    "code": "M_NEU02",
+    "name_ru": "МРТ головного мозга",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 8.5,
+    "evidence": "B",
+    "type": "diagnostic",
+    "description": "МРТ при неврологической симптоматике",
+    "benefits": []
+  },
+  {
+    "id": "M_LAB01",
+    "code": "M_LAB01",
+    "name_ru": "Расширенная биохимия крови",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 8.5,
+    "evidence": "A",
+    "type": "diagnostic",
+    "description": "Расширенный биохимический анализ",
+    "benefits": []
+  },
+  {
+    "id": "M_LAB02",
+    "code": "M_LAB02",
+    "name_ru": "Гормональный профиль",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 8,
+    "evidence": "B",
+    "type": "diagnostic",
+    "description": "Анализ гормонов",
+    "benefits": []
+  },
+  {
+    "id": "M_LAB03",
+    "code": "M_LAB03",
+    "name_ru": "Омега-3 индекс",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 6.5,
+    "evidence": "B",
+    "type": "diagnostic",
+    "description": "Анализ омега-3 в эритроцитах",
+    "benefits": []
+  },
+  {
+    "id": "ED_MA",
+    "code": "ED_MA",
+    "name_ru": "Осознанное питание",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 8,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Практика осознанного приёма пищи",
+    "benefits": [
+      "Снижение частоты эпизодов переедания",
+      "Улучшение отношения к еде",
+      "Снижение тревоги вокруг приёмов пищи"
+    ]
+  },
+  {
+    "id": "ED_BODY",
+    "code": "ED_BODY",
+    "name_ru": "Работа с образом тела",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 7,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Позитивное восприятие тела",
+    "benefits": [
+      "Улучшение образа тела",
+      "Снижение самокритики",
+      "Повышение самооценки"
+    ]
+  },
+  {
+    "id": "ED_SCH",
+    "code": "ED_SCH",
+    "name_ru": "Структура питания",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 9,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Регулярный режим питания",
+    "benefits": [
+      "Нормализация пищевого поведения",
+      "Стабилизация уровня глюкозы",
+      "Снижение риска срывов"
+    ]
+  },
+  {
+    "id": "ED_EMO",
+    "code": "ED_EMO",
+    "name_ru": "Эмоциональная регуляция",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Управление эмоциональными триггерами",
+    "benefits": [
+      "Снижение эмоционального переедания",
+      "Улучшение распознавания эмоций",
+      "Формирование здоровых копинг-стратегий"
+    ]
+  },
+  {
+    "id": "ED_SUP",
+    "code": "ED_SUP",
+    "name_ru": "Поддержка и рефлексия",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 6,
+    "evidence": "B",
+    "type": "behavior",
+    "description": "Групповая поддержка и рефлексия",
+    "benefits": [
+      "Устойчивость изменений",
+      "Снижение изоляции",
+      "Повышение мотивации"
+    ]
+  },
+  {
+    "id": "PR_01A",
+    "code": "PR_01A",
+    "name_ru": "Оценка по Гарвардской тарелке",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7,
+    "evidence": "C",
+    "type": "behavior",
+    "description": "Оценка соответствия приёмов пищи принципам Гарвардской тарелки",
+    "benefits": [
+      "Сбалансированное питание",
+      "Контроль порций",
+      "Осознанный выбор продуктов"
+    ]
+  },
+  {
+    "id": "PR_SS",
+    "code": "PR_SS",
+    "name_ru": "SMART Shopping — умная закупка",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7,
+    "evidence": "C",
+    "type": "behavior",
+    "description": "Умная закупка продуктов по списку с чтением этикеток",
+    "benefits": [
+      "Контроль бюджета",
+      "Здоровый выбор",
+      "Снижение спонтанных покупок"
+    ]
+  },
+  {
+    "id": "BEH_EAT",
+    "code": "BEH_EAT",
+    "name_ru": "Контроль РПП: осознанное питание",
+    "category": "mental",
+    "category_ru": "Ментальный",
+    "impact": 8,
+    "evidence": "A",
+    "type": "behavior",
+    "description": "Осознанное питание для контроля переедания",
+    "benefits": [
+      "Контроль аппетита",
+      "Снижение переедания",
+      "Улучшение пищевого поведения"
+    ]
+  },
+  {
+    "id": "PR_01",
+    "code": "PR_01",
+    "name_ru": "Планирование закупок по Гарвардской тарелке",
+    "category": "food",
+    "category_ru": "Питание",
+    "impact": 7.5,
+    "evidence": "C",
+    "type": "behavior",
+    "description": "Планирование меню и закупок по принципу Гарвардской тарелки",
+    "benefits": [
+      "Сбалансированное питание",
+      "Экономия времени",
+      "Снижение спонтанных покупок"
+    ]
+  },
+  {
+    "id": "PH_LOW",
+    "code": "PH_LOW",
+    "name_ru": "Низкоударная активность 25 мин",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 8,
+    "evidence": "A",
+    "type": "exercise",
+    "description": "Плавание, велотренажёр или эллипс 25 мин, ЧСС 110–125",
+    "benefits": [
+      "Сжигание жира",
+      "Укрепление сердечно-сосудистой системы",
+      "Безопасно для суставов"
+    ]
+  },
+  {
+    "id": "M_WAIST",
+    "code": "M_WAIST",
+    "name_ru": "Измерение окружности талии",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 6,
+    "evidence": "B",
+    "type": "monitoring",
+    "description": "Еженедельное измерение талии для контроля висцерального жира",
+    "benefits": [
+      "Контроль висцерального жира",
+      "Мониторинг прогресса"
+    ]
+  },
+  {
+    "id": "PH_WALK",
+    "code": "PH_WALK",
+    "name_ru": "Ходьба 6000→9000 шагов/день",
+    "category": "physical",
+    "category_ru": "Физический",
+    "impact": 8,
+    "evidence": "A",
+    "type": "exercise",
+    "description": "Увеличение ежедневной шаговой активности",
+    "benefits": [
+      "Сжигание калорий",
+      "Улучшение метаболизма",
+      "Снижение АД"
+    ]
+  },
+  {
+    "id": "M_WGHT",
+    "code": "M_WGHT",
+    "name_ru": "Ежедневное взвешивание утром натощак",
+    "category": "medical",
+    "category_ru": "мед",
+    "impact": 6,
+    "evidence": "B",
+    "type": "monitoring",
+    "description": "Ежедневный контроль веса",
+    "benefits": [
+      "Контроль прогресса",
+      "Мотивация"
+    ]
+  }
+]

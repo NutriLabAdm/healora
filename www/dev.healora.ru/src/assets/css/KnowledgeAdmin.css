@@ -1,0 +1,526 @@
+.ka-container {
+  max-width: 1400px;
+  margin: 0;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1a1a2e;
+}
+
+.ka-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.ka-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.ka-mode-badge {
+  background: #ffd93d;
+  color: #5a4a00;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ka-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e8e8f0;
+}
+
+.ka-tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.ka-tab:hover { color: #333; }
+.ka-tab.active {
+  color: #7c5cfc;
+  border-bottom-color: #7c5cfc;
+}
+
+.ka-tab-content { min-height: 400px; }
+
+.ka-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* ── Scientific Dashboard ── */
+.ka-dashboard {
+  font-family: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 12px;
+}
+
+.ka-metrics {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 12px;
+  background: #e8e8f0;
+  border: 1px solid #d0d0da;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ka-metric {
+  flex: 1;
+  text-align: center;
+  padding: 10px 8px;
+  background: #fff;
+}
+
+.ka-metric + .ka-metric { border-left: 1px solid #e8e8f0; }
+
+.ka-metric-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.1;
+}
+
+.ka-metric-label {
+  display: block;
+  font-size: 9px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 2px;
+}
+
+.ka-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ka-panel {
+  background: #fafafe;
+  border: 1px solid #e8e8f0;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.ka-panel-wide {
+  grid-column: 1 / -1;
+}
+
+.ka-panel-title {
+  font-size: 9px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e8e8f0;
+}
+
+.ka-bar {
+  display: grid;
+  grid-template-columns: 70px 1fr 55px;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.ka-bar-l {
+  font-size: 10px;
+  color: #666;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ka-bar-t {
+  height: 14px;
+  background: #f0f0f6;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ka-bar-f {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.ka-bar-r {
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  font-variant-numeric: tabular-nums;
+}
+
+.ka-bar-pct {
+  font-size: 9px;
+  color: #aaa;
+  margin-left: 4px;
+  font-weight: 400;
+}
+
+.ka-evidence-row {
+  display: flex;
+  gap: 6px;
+}
+
+.ka-evidence-cell {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  background: #fff;
+  border: 1px solid #e8e8f0;
+  border-radius: 4px;
+}
+
+.ka-ev-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-top: 4px;
+}
+
+.ka-ev-pct {
+  font-size: 10px;
+  color: #aaa;
+  font-weight: 400;
+}
+
+.ka-timeline {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 80px;
+}
+
+.ka-tl-bar {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.ka-tl-fill {
+  width: 100%;
+  background: #4dabf7;
+  border-radius: 2px 2px 0 0;
+  min-height: 3px;
+  transition: height 0.3s ease;
+}
+
+.ka-sci-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.ka-sci-table th {
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: #999;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e8e8f0;
+}
+
+.ka-sci-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #f5f5f8;
+}
+
+.ka-num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  font-weight: 500;
+}
+
+.ka-c-pending { color: #e6a700; }
+.ka-c-ok { color: #2b8a3e; }
+.ka-c-err { color: #c92a2a; }
+
+.ka-source-tag {
+  display: inline-block;
+  background: #f0edff;
+  color: #7c5cfc;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.ka-sci-table a:hover { text-decoration: underline !important; }
+
+.filter-row, .ka-filter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ka-select, .ka-filter-row select {
+  padding: 6px 12px;
+  border: 1px solid #d0d0da;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #fff;
+  color: #333;
+}
+
+.ka-btn {
+  padding: 6px 16px;
+  border: 1px solid #d0d0da;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ka-btn:hover { background: #f0f0f6; border-color: #b0b0c0; }
+.ka-btn-primary { background: #7c5cfc; color: #fff; border-color: #7c5cfc; }
+.ka-btn-primary:hover { background: #6b4be0; }
+.ka-btn-approve-all { background: #4ecdc4; color: #fff; border-color: #4ecdc4; }
+.ka-btn-approve-all:hover { background: #3dbdb5; }
+
+.ka-btn-sm {
+  padding: 4px 8px;
+  border: 1px solid #d0d0da;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #fff;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.ka-btn-sm:hover { background: #f0f0f6; }
+.ka-btn-approve { color: #2ecc71; border-color: #2ecc71; }
+.ka-btn-approve:hover { background: #e8faf0; }
+.ka-btn-reject { color: #e74c3c; border-color: #e74c3c; }
+.ka-btn-reject:hover { background: #fde8e6; }
+
+.ka-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e8e8f0;
+  border-radius: 8px;
+}
+
+.ka-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ka-table th {
+  background: #f8f8fe;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e8e8f0;
+  white-space: nowrap;
+}
+
+.ka-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f6;
+  vertical-align: top;
+}
+
+.ka-table tr:hover { background: #fafafe; }
+.ka-row-approved { background: #f0faf8 !important; }
+.ka-row-rejected { background: #fef0ef !important; }
+
+.ka-cell-id { font-weight: 600; color: #888; width: 40px; }
+.ka-cell-title { min-width: 250px; max-width: 400px; }
+.ka-cell-keywords { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ka-cell-date { white-space: nowrap; font-size: 12px; color: #888; }
+.ka-cell-actions { white-space: nowrap; }
+
+.ka-title { font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
+.ka-abstract { font-size: 11px; color: #999; line-height: 1.4; }
+.ka-doi { font-size: 11px; color: #7c5cfc; margin-top: 2px; }
+.ka-source-id { font-size: 11px; color: #888; }
+
+.ka-domain-tag {
+  display: inline-block;
+  background: #f0edff;
+  color: #7c5cfc;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.ka-ev-badge {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 12px;
+}
+.ka-ev-a { background: #4ecdc4; color: #fff; }
+.ka-ev-b { background: #7c5cfc; color: #fff; }
+.ka-ev-c { background: #ffd93d; color: #5a4a00; }
+.ka-ev-d { background: #ff6b6b; color: #fff; }
+
+.ka-status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.ka-status-pending { background: #fff3cd; color: #856404; }
+.ka-status-approved { background: #d4edda; color: #155724; }
+.ka-status-rejected { background: #f8d7da; color: #721c24; }
+.ka-status-in_progress { background: #cce5ff; color: #004085; }
+.ka-status-completed { background: #d4edda; color: #155724; }
+.ka-status-failed { background: #f8d7da; color: #721c24; }
+
+.ka-search-type {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.ka-search-type.scheduled { background: #e8f0fe; color: #1967d2; }
+.ka-search-type.manual { background: #fce8e6; color: #c5221f; }
+
+.ka-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #aaa;
+}
+
+.ka-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1a1a2e;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  z-index: 1000;
+  animation: ka-fadein 0.2s ease;
+}
+
+@keyframes ka-fadein {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal */
+.ka-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.ka-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 520px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.ka-modal-wide {
+  width: 720px;
+}
+
+.ka-modal h3 { margin: 0 0 16px; font-size: 18px; }
+
+.ka-modal label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+}
+
+.ka-modal input, .ka-modal textarea, .ka-modal select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px solid #d0d0da;
+  border-radius: 6px;
+  font-size: 13px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ka-modal textarea { resize: vertical; }
+
+.ka-checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.ka-checkbox-label input { width: auto; margin: 0; }
+
+.ka-modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.ka-spin {
+  animation: ka-spin 1s linear infinite;
+  transform-origin: center;
+  display: inline-block;
+}
+
+@keyframes ka-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ka-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ka-section-header h3 { margin: 0; font-size: 16px; }

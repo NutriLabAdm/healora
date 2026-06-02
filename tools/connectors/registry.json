@@ -1,0 +1,56 @@
+{
+  "PubMed": {
+    "handler": "pubmed.js",
+    "config": "configs/pubmed.json",
+    "type": "search",
+    "baseUrl": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils",
+    "rateLimit": { "rate": 10, "perSeconds": 1, "maxTokens": 10 },
+    "retryCount": 2,
+    "timeout": 15000
+  },
+  "CrossRef": {
+    "handler": "crossref.js",
+    "config": "configs/crossref.json",
+    "type": "search",
+    "baseUrl": "https://api.crossref.org/works",
+    "rateLimit": { "rate": 50, "perSeconds": 1, "maxTokens": 50 },
+    "retryCount": 2,
+    "timeout": 10000
+  },
+  "ClinicalTrials.gov": {
+    "handler": "clinicalTrials.js",
+    "config": "configs/clinicalTrials.json",
+    "type": "search",
+    "baseUrl": "https://clinicaltrials.gov/api/v2",
+    "rateLimit": null,
+    "retryCount": 1,
+    "timeout": 15000
+  },
+  "WHO": {
+    "handler": "who.js",
+    "config": "configs/who.json",
+    "type": "search",
+    "baseUrl": "https://www.who.int/api",
+    "rateLimit": { "rate": 10, "perSeconds": 1, "maxTokens": 10 },
+    "retryCount": 1,
+    "timeout": 10000
+  },
+  "FDA": {
+    "handler": "fda.js",
+    "config": "configs/fda.json",
+    "type": "search",
+    "baseUrl": "https://api.fda.gov",
+    "rateLimit": { "rate": 240, "perSeconds": 60, "maxTokens": 240 },
+    "retryCount": 2,
+    "timeout": 15000
+  },
+  "Cochrane": {
+    "handler": "cochrane.js",
+    "config": "configs/cochrane.json",
+    "type": "search",
+    "baseUrl": "https://www.cochranelibrary.com/api",
+    "rateLimit": null,
+    "retryCount": 1,
+    "timeout": 10000
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "cyp2c9",
+    "name_ru": "CYP2C9",
+    "function": "Метаболизм НПВС, варфарина, сульфонилмочевины",
+    "impact_desc": "↑ риска кровотечений на варфарине",
+    "intervention": ""
+  },
+  {
+    "id": "cyp2d6",
+    "name_ru": "CYP2D6",
+    "function": "Метаболизм β-блокаторов, антидепрессантов, опиоидов",
+    "impact_desc": "Poor metabolizers: ↑ токсичности кодеина",
+    "intervention": ""
+  },
+  {
+    "id": "tpmt",
+    "name_ru": "TPMT",
+    "function": "Метаболизм тиопуринов",
+    "impact_desc": "↑ риска миелосупрессии",
+    "intervention": "---\n\n## 3. Полигенные шкалы риска (PRS)"
+  },
+  {
+    "id": "метилмалоновая_кислота_mma",
+    "name_ru": "Метилмалоновая кислота (MMA)",
+    "function": "Статус B12",
+    "impact_desc": "Коррекция B12",
+    "intervention": ""
+  }
+]

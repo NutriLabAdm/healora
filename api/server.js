@@ -7,6 +7,9 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 const gigachat = require('./gigachat');
+const knowledgeAdminRouter = require('./knowledgeAdmin');
+const authRouter = require('./auth');
+const { requireAuth, optionalAuth } = require('./middleware');
 
 dotenv.config();
 dotenv.config({ path: path.join(__dirname, 'gigachat.env') });
@@ -14,6 +17,15 @@ dotenv.config({ path: path.join(__dirname, 'gigachat.env') });
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+
+// Optional JWT auth for all API routes — sets req.user_id if token present
+app.use('/api', optionalAuth);
+
+// ── Auth routes ───
+app.use('/api/auth', authRouter);
+
+// ── Knowledge Admin routes (JWT required inside) ───
+app.use('/api/knowledge-admin', knowledgeAdminRouter);
 
 // AI provider config
 let AI_PROVIDER = process.env.AI_PROVIDER || 'openai'; // 'openai' | 'gigachat'
@@ -128,6 +140,74 @@ app.put('/api/profiles/:id', (req, res) => {
     } catch (err) {
         console.error('Error updating profile:', err.message);
         res.status(500).json({ error: 'Failed to update profile' });
+    }
+});
+
+// Partial update profile (PATCH)
+app.patch('/api/profiles/:id', (req, res) => {
+    try {
+        const profilesPath = path.join(__dirname, '../docs/healora_mvp_testing_json_pack/healora_10_synthetic_digital_twin_profiles.json');
+        const data = JSON.parse(fs.readFileSync(profilesPath, 'utf8'));
+        const profileIndex = data.healora_test_profiles.findIndex(p => p.profile_id === req.params.id);
+
+        if (profileIndex === -1) {
+            return res.status(404).json({ error: 'Profile not found' });
+        }
+
+        const patch = req.body;
+
+        // Validate only the fields being patched
+        if (patch.anthropometrics) {
+            if (patch.anthropometrics.bmi !== undefined && (patch.anthropometrics.bmi < 10 || patch.anthropometrics.bmi > 60)) {
+                return res.status(400).json({ error: 'BMI must be between 10 and 60' });
+            }
+            if (patch.anthropometrics.weight_kg !== undefined && (patch.anthropometrics.weight_kg < 20 || patch.anthropometrics.weight_kg > 300)) {
+                return res.status(400).json({ error: 'Weight must be between 20 and 300 kg' });
+            }
+        }
+
+        if (patch.vitals) {
+            if (patch.vitals.systolic_bp_mmhg !== undefined && (patch.vitals.systolic_bp_mmhg < 70 || patch.vitals.systolic_bp_mmhg > 250)) {
+                return res.status(400).json({ error: 'Systolic BP must be between 70 and 250 mmHg' });
+            }
+            if (patch.vitals.resting_hr_bpm !== undefined && (patch.vitals.resting_hr_bpm < 30 || patch.vitals.resting_hr_bpm > 220)) {
+                return res.status(400).json({ error: 'Heart rate must be between 30 and 220 bpm' });
+            }
+        }
+
+        if (patch.labs) {
+            if (patch.labs.glucose_mg_dl !== undefined && (patch.labs.glucose_mg_dl < 50 || patch.labs.glucose_mg_dl > 500)) {
+                return res.status(400).json({ error: 'Glucose must be between 50 and 500 mg/dL' });
+            }
+        }
+
+        // Deep merge: only update provided nested fields
+        const deepMerge = (target, source) => {
+            for (const key of Object.keys(source)) {
+                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key]) && target[key]) {
+                    deepMerge(target[key], source[key]);
+                } else {
+                    target[key] = source[key];
+                }
+            }
+        };
+
+        deepMerge(data.healora_test_profiles[profileIndex], patch);
+
+        // Ensure ID cannot be changed
+        data.healora_test_profiles[profileIndex].profile_id = req.params.id;
+
+        // Save back to file
+        fs.writeFileSync(profilesPath, JSON.stringify(data, null, 2), 'utf8');
+
+        res.json({
+            success: true,
+            profile: data.healora_test_profiles[profileIndex],
+            message: 'Profile patched successfully'
+        });
+    } catch (err) {
+        console.error('Error patching profile:', err.message);
+        res.status(500).json({ error: 'Failed to patch profile' });
     }
 });
 
@@ -721,7 +801,72 @@ app.get('/api/diary/:profile_id/:day', (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3051;
+// ── Upload config ───
+const multer = require('multer');
+
+const UPLOAD_DIR = path.join(__dirname, 'uploads');
+const IMAGES_DIR = path.join(UPLOAD_DIR, 'images');
+const AUDIO_DIR = path.join(UPLOAD_DIR, 'audio');
+
+// Ensure upload dirs exist
+[UPLOAD_DIR, IMAGES_DIR, AUDIO_DIR].forEach(dir => {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dest = file.fieldname === 'audio' || file.mimetype.startsWith('audio/') ? AUDIO_DIR : IMAGES_DIR;
+        cb(null, dest);
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname) || '.bin';
+        const name = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}${ext}`;
+        cb(null, name);
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+    fileFilter: (req, file, cb) => {
+        if (file.fieldname === 'audio') {
+            cb(null, true);
+            return;
+        }
+        const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
+        if (allowed.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Unsupported file type. Allowed: jpg, png, webp, heic'));
+        }
+    }
+});
+
+// POST /api/upload/image – upload image (meal photo, avatar)
+app.post('/api/upload/image', upload.single('image'), (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'No image file provided' });
+    const url = `/uploads/images/${req.file.filename}`;
+    res.json({ success: true, url, filename: req.file.filename, size: req.file.size });
+});
+
+// POST /api/upload/audio – upload audio (voice note)
+app.post('/api/upload/audio', upload.single('audio'), (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'No audio file provided' });
+    const url = `/uploads/audio/${req.file.filename}`;
+    res.json({ success: true, url, filename: req.file.filename, size: req.file.size });
+});
+
+// Global multer error handler
+app.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') return res.status(413).json({ error: 'File too large (max 20MB)' });
+        return res.status(400).json({ error: err.message });
+    }
+    if (err) return res.status(400).json({ error: err.message });
+    next();
+});
+
+const PORT = process.env.PORT || 3054;
 app.listen(PORT, () => {
     console.log(`Healora API running on port ${PORT}`);
 });

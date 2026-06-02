@@ -1,0 +1,576 @@
+[
+  {
+    "id": "sup_5htp",
+    "name_ru": "5-HTP (5-Гидрокситриптофан)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_adaptogens",
+    "name_ru": "Адаптогены (Adaptogens — общая концепция)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_ginkgo_biloba",
+    "name_ru": "Гинкго билоба (Ginkgo biloba)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_gotu_kola",
+    "name_ru": "Готу кола (Centella asiatica, Gotu Kola)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_hops",
+    "name_ru": "Хмель (Humulus lupulus, Hops)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_l_theanine",
+    "name_ru": "L-теанин (L-Theanine)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_magnesium_glycinate",
+    "name_ru": "Магний глицинат (Magnesium Glycinate)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_melatonin",
+    "name_ru": "Мелатонин (Melatonin)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_melissa",
+    "name_ru": "Мелисса (Melissa officinalis, Lemon Balm)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_myoinositol",
+    "name_ru": "Миоинозитол (Myo-Inositol)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_tryptophan",
+    "name_ru": "Триптофан (L-Tryptophan)",
+    "category": "бады_для_нормализации_сна_и_поддержки_нервной_системы",
+    "category_ru": "БАДы для нормализации сна и поддержки нервной системы",
+    "description": ""
+  },
+  {
+    "id": "sup_aloe",
+    "name_ru": "Алоэ вера (Aloe vera, Aloe barbadensis)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_artichoke",
+    "name_ru": "Артишок (Artichoke, Cynara cardunculus / Cynara scolymus)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_baical_skullcap",
+    "name_ru": "Шлемник байкальский (Scutellaria baicalensis)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_berberine",
+    "name_ru": "Берберин (Berberine)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_betaine",
+    "name_ru": "Бетаин (Betaine, Trimethylglycine, TMG)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_bone_broth",
+    "name_ru": "Костный бульон, желатин, коллаген (Bone broth, Gelatin, Collagen)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_boswellia",
+    "name_ru": "Босвеллия (Boswellia)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_burdock",
+    "name_ru": "Лопух (Burdock, Arctium lappa)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_butyrate",
+    "name_ru": "Бутират / Масляная кислота (Butyrate, Sodium Butyrate)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_calendula",
+    "name_ru": "Календула лекарственная (Calendula officinalis)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_chaga",
+    "name_ru": "Чага (Inonotus obliquus)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_chamomile",
+    "name_ru": "Ромашка аптечная (Chamomilla recutita, Matricaria chamomilla)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_colostrum",
+    "name_ru": "Колострум (Bovine Colostrum)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_curcumin",
+    "name_ru": "Куркумин (Curcumin)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_dandelion",
+    "name_ru": "Одуванчик (Dandelion, Taraxacum officinale)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_dgl_licorice",
+    "name_ru": "Солодка деглицирризированная (DGL, Deglycyrrhizinated Licorice)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_digestive_enzymes",
+    "name_ru": "Пищеварительные ферменты (Digestive Enzymes)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_flaxseed_jelly",
+    "name_ru": "Льняной кисель (Flaxseed jelly, Linum usitatissimum)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_ginger",
+    "name_ru": "Имбирь (Ginger, Zingiber officinale)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_glutamine",
+    "name_ru": "Глутамин (L-Glutamine)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_glycine",
+    "name_ru": "Глицин (Glycine)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_lecithin",
+    "name_ru": "Лецитин (Lecithin / Phosphatidylcholine)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_mastic",
+    "name_ru": "Мастиковая смола (Mastic gum, Pistacia lentiscus)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_nac",
+    "name_ru": "N-ацетилцистеин (N-Acetylcysteine, NAC)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_omega3",
+    "name_ru": "Омега-3 жирные кислоты (Omega-3, n-3 PUFA)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_pea",
+    "name_ru": "PEA — Пальмитоилэтаноламид (Palmitoylethanolamide)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_pectin",
+    "name_ru": "Пектин (Pectin)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_peppermint_oil",
+    "name_ru": "Мята перечная (Peppermint Oil, Mentha × piperita)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_plantaglucid",
+    "name_ru": "Плантаглюцид (Plantaglucid, Plantain extract)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_postbiotics",
+    "name_ru": "Метабиотики / Постбиотики (Postbiotics / Metabiotics)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_prebiotics",
+    "name_ru": "Пребиотики (Prebiotics)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_probiotics",
+    "name_ru": "Пробиотики (Probiotics)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_psyllium",
+    "name_ru": "Подорожник (Psyllium, Plantago ovata)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_rebagit",
+    "name_ru": "Ребагит (Rebamipide, Ребамипид)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_rosmarinic_acid",
+    "name_ru": "Розмариновая кислота (Rosmarinic Acid)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_silymarin",
+    "name_ru": "Расторопша / Силимарин (Silymarin, Silybum marianum)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_slippery_elm",
+    "name_ru": "Ржавый вяз (Slippery Elm, Ulmus rubra)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_symbiotics",
+    "name_ru": "Симбиотики (Symbiotics — комбинации пробиотических штаммов)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_synbiotics_postbiotics",
+    "name_ru": "Синбиотики и Метабиотики (Synbiotics & Postbiotics)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_taurine",
+    "name_ru": "Таурин (Taurine)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_ventramin",
+    "name_ru": "Вентрамин — пептиды желудка (Stomach peptides)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_vitamin_a_gut",
+    "name_ru": "Витамин A (Ретинол) для слизистых ЖКТ",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_vitamin_d_gut",
+    "name_ru": "Витамин D (Холекальциферол) для ЖКТ",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_zinc_carnosine",
+    "name_ru": "Цинк-L-карнозин (Zinc-L-carnosine)",
+    "category": "жкт",
+    "category_ru": "ЖКТ",
+    "description": ""
+  },
+  {
+    "id": "sup_sed_baical_skullcap",
+    "name_ru": "Шлемник байкальский (Baikal Skullcap, Scutellaria baicalensis)",
+    "category": "седативные",
+    "category_ru": "Седативные",
+    "description": ""
+  },
+  {
+    "id": "sup_sed_passiflora",
+    "name_ru": "Пассифлора (Passiflora incarnata, Passion Flower)",
+    "category": "седативные",
+    "category_ru": "Седативные",
+    "description": ""
+  },
+  {
+    "id": "sup_sed_valerian",
+    "name_ru": "Валериана (Valerian, Valeriana officinalis)",
+    "category": "седативные",
+    "category_ru": "Седативные",
+    "description": ""
+  },
+  {
+    "id": "sup_stim_echinacea",
+    "name_ru": "Эхинацея (Echinacea purpurea / Echinacea angustifolia)",
+    "category": "стимуляторы",
+    "category_ru": "Стимуляторы",
+    "description": ""
+  },
+  {
+    "id": "sup_stim_eleutherococcus",
+    "name_ru": "Элеутерококк (Eleutherococcus senticosus)",
+    "category": "стимуляторы",
+    "category_ru": "Стимуляторы",
+    "description": ""
+  },
+  {
+    "id": "sup_stim_ginseng",
+    "name_ru": "Женьшень (Ginseng, Panax ginseng — красный азиатский)",
+    "category": "стимуляторы",
+    "category_ru": "Стимуляторы",
+    "description": ""
+  },
+  {
+    "id": "sup_stim_leuzea",
+    "name_ru": "Левзея сафлоровидная (Leuzea carthamoides / Rhaponticum carthamoides)",
+    "category": "стимуляторы",
+    "category_ru": "Стимуляторы",
+    "description": ""
+  },
+  {
+    "id": "sup_stim_rhodiola",
+    "name_ru": "Родиола розовая (Rhodiola rosea, Golden Root)",
+    "category": "стимуляторы",
+    "category_ru": "Стимуляторы",
+    "description": ""
+  },
+  {
+    "id": "sup_stim_schisandra",
+    "name_ru": "Лимонник китайский (Schisandra chinensis)",
+    "category": "стимуляторы",
+    "category_ru": "Стимуляторы",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_aralia",
+    "name_ru": "Аралия маньчжурская (Aralia mandshurica / Aralia elata)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_arnica",
+    "name_ru": "Арника горная (Arnica montana, Mountain Arnica, Leopard's Bane)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_ashwagandha",
+    "name_ru": "Ашваганда (Ashwagandha, Withania somnifera)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_bacopa",
+    "name_ru": "Бакопа Монье (Bacopa monnieri, Brahmi)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_fir",
+    "name_ru": "Пихта сибирская (Abies sibirica, Siberian Fir)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_fish_collagen",
+    "name_ru": "Рыбный коллаген (Fish collagen, Marine collagen Type I)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_harpagophytum",
+    "name_ru": "Мартиния душистая (Harpagophytum procumbens, Devil's Claw)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_harpagoside",
+    "name_ru": "Гарпагозид (Harpagoside)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_hericium",
+    "name_ru": "Ежовик гребенчатый (Hericium erinaceus, Lion's Mane Mushroom, Hedgehog Mushroom, Hou Tou Gu)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_msm",
+    "name_ru": "Метилсульфонилметан (MSM, Methylsulfonylmethane)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_mumie",
+    "name_ru": "Мумиё (Mumie, Shilajit)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_mushrooms",
+    "name_ru": "Лекарственные грибы (Medicinal Mushrooms: Reishi, Chaga, Cordyceps, Lion's Mane, Maitake, Shiitake)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_pantocrine",
+    "name_ru": "Пантокрин (Pantocrine / Pantocrinum)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_royal_jelly",
+    "name_ru": "Маточное молочко (Royal Jelly, Apis mellifera)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_succinic_acid",
+    "name_ru": "Янтарная кислота (Succinic Acid, Butanedioic Acid)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_tulsi",
+    "name_ru": "Тулси (Tulsi, Ocimum sanctum / Ocimum tenuiflorum)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_ton_zymosan",
+    "name_ru": "Зимозан (Zymosan)",
+    "category": "тонизирующие",
+    "category_ru": "Тонизирующие",
+    "description": ""
+  },
+  {
+    "id": "sup_adaptogens",
+    "name_ru": "Адаптогены (Adaptogens) — Энергия и концентрация",
+    "category": "энергия_и_концентрация",
+    "category_ru": "Энергия и концентрация",
+    "description": ""
+  }
+]

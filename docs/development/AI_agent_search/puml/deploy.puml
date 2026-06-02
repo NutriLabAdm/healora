@@ -1,0 +1,104 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FBFBFF
+skinparam nodeStyle rectangle
+skinparam defaultFontName Consolas
+skinparam defaultFontSize 11
+skinparam rectangle {
+  BorderColor #4488AA
+  BackgroundColor #E8F0FE
+}
+
+title "Healora — Deployment Topology"
+caption "Локальная разработка → Продакшен-сервер (217.114.8.5)"
+
+node "Локальная разработка (Windows)" as DEV {
+  frame "Vite Dev Server" as VITE {
+    component "localhost:3001" as VPORT
+  }
+  frame "Express API" as EXPRESS {
+    component "localhost:3054" as APORT
+  }
+  frame "Ollama" as OLLAMA {
+    component "localhost:11434" as OLPORT
+    component "qwen3:8b" as QWEN
+    component "deepseek-r1:8b" as DSR1
+  }
+  database "SQLite\nknowledge.db" as SQLITE_DEV
+}
+
+node "Продакшен (217.114.8.5)" as PROD {
+  frame "Nginx (:80 / :443)" as NGINX {
+    component "SSL Termination" as SSL
+    component "Reverse Proxy" as RPROXY
+  }
+
+  frame "Frontend (Vite build)" as FEBUILD {
+    component "/var/www/healora" as FEDIR
+  }
+
+  frame "API Server (PM2)" as PM2 {
+    component "port 3054" as APORT_PROD
+    component "cluster mode" as CLUSTER
+  }
+
+  frame "Окружение LLM" as LLM_ENV {
+    component "Ollama" as OLLAMA_PROD
+    component "HuggingFace\nClient" as HF_CLIENT
+    component "GigaChat\nClient" as GIGA_CLIENT
+    component "OpenAI\nClient" as OAI_CLIENT
+  }
+
+  database "SQLite\nknowledge.db" as SQLITE_PROD
+}
+
+cloud "External APIs" as CLOUD {
+  [PubMed E-utilities]
+  [CrossRef REST]
+  [ClinicalTrials.gov]
+  [Cochrane Library]
+  [openFDA]
+  [WHO API]
+}
+
+cloud "LLM APIs" as LLM_CLOUD {
+  [HuggingFace\nInference API]
+  [GigaChat\n(Sber)]
+  [OpenAI\nAPI]
+}
+
+' ── Connections DEV ──
+VPORT --> APORT : /api/* proxy
+APORT --> SQLITE_DEV : better-sqlite3
+APORT --> OLPORT : /api/generate
+OLLAMA --> QWEN
+OLLAMA --> DSR1
+
+' ── Connections PROD ──
+NGINX --> SSL
+NGINX --> RPROXY
+RPROXY --> FEDIR : static files
+RPROXY --> APORT_PROD : /api/*
+APORT_PROD --> SQLITE_PROD : WAL mode
+APORT_PROD --> OLLAMA_PROD : localhost:11434
+APORT_PROD --> HF_CLIENT : api-inference.hf.co
+APORT_PROD --> GIGA_CLIENT : gigachat.devices.sberbank.ru
+APORT_PROD --> OAI_CLIENT : api.openai.com
+
+' ── External ──
+PM2 --> CLOUD : search queries
+LLM_ENV --> LLM_CLOUD : model inference
+
+' ── Legend ──
+legend top
+  <#E8F0FE> = Локальная разработка (Windows)
+  <#E8F0FE> = Продакшен (Ubuntu 22.04)
+  == Dev ==
+  Ollama только локально (HF DNS blocked)
+  SQLite WAL — файл на диске
+  == Prod ==
+  PM2 cluster mode, Nginx SSL
+  HuggingFace доступен с prod-сервера
+endlegend
+
+@enduml

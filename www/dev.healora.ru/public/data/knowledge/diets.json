@@ -1,0 +1,195 @@
+[
+  {
+    "id": "dash_diet",
+    "name_ru": "DASH-диета",
+    "name_en": "DASH Diet",
+    "type": "diet",
+    "goal": "Снижение артериального давления",
+    "indications": [
+      "Артериальная гипертензия",
+      "Предгипертензия",
+      "Сердечно-сосудистые риски",
+      "Метаболический синдром"
+    ]
+  },
+  {
+    "id": "mediterranean_diet",
+    "name_ru": "Средиземноморская диета",
+    "name_en": "Mediterranean Diet",
+    "type": "diet",
+    "goal": "Сердечно-сосудистое здоровье и долголетие",
+    "indications": [
+      "Профилактика ССЗ",
+      "Метаболический синдром",
+      "Когнитивное здоровье",
+      "Anti-age"
+    ]
+  },
+  {
+    "id": "keto_diet",
+    "name_ru": "Кетогенная диета",
+    "name_en": "Ketogenic Diet",
+    "type": "diet",
+    "goal": "Достижение кетоза",
+    "indications": [
+      "Фармакорезистентная эпилепсия",
+      "Ожирение",
+      "Диабет 2 типа",
+      "СПКЯ"
+    ]
+  },
+  {
+    "id": "intermittent_fasting",
+    "name_ru": "Интервальное голодание",
+    "name_en": "Intermittent Fasting",
+    "type": "diet",
+    "goal": "Снижение веса и метаболическое здоровье",
+    "indications": [
+      "Избыточный вес",
+      "Инсулинорезистентность",
+      "Предиабет"
+    ]
+  },
+  {
+    "id": "low_fodmap",
+    "name_ru": "Low-FODMAP диета",
+    "name_en": "Low-FODMAP Diet",
+    "type": "diet",
+    "goal": "Снижение симптомов СРК",
+    "indications": [
+      "СРК",
+      "Вздутие",
+      "Функциональная диспепсия"
+    ]
+  },
+  {
+    "id": "gluten_free_diet",
+    "name_ru": "Безглютеновая диета",
+    "name_en": "Gluten-Free Diet",
+    "type": "diet",
+    "goal": "Исключение глютена при целиакии",
+    "indications": [
+      "Целиакия",
+      "NCGS (чувствительность к глютену)",
+      "Герпетиформный дерматит"
+    ]
+  },
+  {
+    "id": "low_carb_diet",
+    "name_ru": "Низкоуглеводная диета",
+    "name_en": "Low-Carb Diet",
+    "type": "diet",
+    "goal": "Контроль гликемии и снижение веса",
+    "indications": [
+      "Предиабет",
+      "Диабет 2 типа",
+      "Метаболический синдром",
+      "Ожирение"
+    ]
+  },
+  {
+    "id": "anti_inflammatory_diet",
+    "name_ru": "Противовоспалительная диета",
+    "name_en": "Anti-Inflammatory Diet",
+    "type": "diet",
+    "goal": "Снижение системного воспаления",
+    "indications": [
+      "Повышенный СРБ",
+      "Аутоиммунные заболевания",
+      "Хроническая боль"
+    ]
+  },
+  {
+    "id": "elimination_diet",
+    "name_ru": "Элиминационная диета",
+    "name_en": "Elimination Diet",
+    "type": "diet",
+    "goal": "Выявление пищевых триггеров",
+    "indications": [
+      "Хроническая крапивница",
+      "Атопический дерматит",
+      "СРК",
+      "Мигрень"
+    ]
+  },
+  {
+    "id": "diet_gluten_free",
+    "name_ru": "Предпочтение: Без глютена",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_if",
+    "name_ru": "Предпочтение: Интервальное голодание",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_keto",
+    "name_ru": "Предпочтение: Кетодиета",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_lactose_free",
+    "name_ru": "Предпочтение: Без лактозы",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_low_carb",
+    "name_ru": "Предпочтение: Низкоуглеводное",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_mediterranean",
+    "name_ru": "Предпочтение: Средиземноморская",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_no_sugar",
+    "name_ru": "Предпочтение: Без сахара",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_sports",
+    "name_ru": "Предпочтение: Спортивное питание",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_vegan",
+    "name_ru": "Предпочтение: Веганство",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  },
+  {
+    "id": "diet_vegetarian",
+    "name_ru": "Предпочтение: Вегетарианство",
+    "type": "preference",
+    "goal": "",
+    "indications": [],
+    "name_en": ""
+  }
+]

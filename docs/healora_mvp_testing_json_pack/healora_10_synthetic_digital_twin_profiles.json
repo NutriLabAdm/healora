@@ -11,12 +11,12 @@
       },
       "anthropometrics": {
         "height_cm": 165,
-        "weight_kg": 55,
+        "weight_kg": 80,
         "bmi": 20.2,
         "waist_cm": 65
       },
       "vitals": {
-        "systolic_bp_mmhg": 105,
+        "systolic_bp_mmhg": 999,
         "diastolic_bp_mmhg": 68,
         "resting_hr_bpm": 68,
         "hrv_ms": 62,

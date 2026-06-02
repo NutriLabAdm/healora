@@ -253,7 +253,7 @@ cardinal "Решение" as SOL {
 | `PlansProvider.jsx` | Хранить `{ interventions: [{code, w, f, r, protocolKey}], goals, constraints }` |
 | `InterventionsPanel.jsx` | Режим выбора: показывать w_i, кнопка «Добавить в план» |
 | — | Новый компонент `PlanCustomization.jsx` (popup, как GoalChat) |
-| — | Новый файл `docs/domain/intervention/intervention_generation_algo.md` |
+| — | Новый файл `docs/domain/knowledge/intervention/intervention_generation_algo.md` |
 
 ---
 

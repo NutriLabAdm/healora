@@ -1,0 +1,95 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FBFBFF
+skinparam activityStyle rounded
+skinparam defaultFontName Consolas
+skinparam defaultFontSize 11
+
+title "Knowledge Search Pipeline — Activity Flow"
+caption "Гибридный пайплайн: 8B для фильтрации + API для evidence level"
+
+start
+
+:Admin создаёт search_query;
+:Выбирает источники (PubMed, CrossRef, ...);
+:Настраивает LLM prompt / search format;
+:Указывает cron или "запустить сейчас";
+
+partition "Search Runner (node-cron)" {
+  :Читает активные запросы из БД;
+  if (Время по cron или ручной запуск?) then (да)
+    :Создаёт search_session (status=pending);
+  else (нет)
+    stop
+  endif
+}
+
+partition "Orchestrator" {
+  :Устанавливает статус → "searching";
+  :Параллельный запуск выбранных connectors;
+
+  fork
+    :PubMed — E-utilities;
+  fork again
+    :CrossRef — REST API;
+  fork again
+    :ClinicalTrials.gov — API;
+  fork again
+    :Cochrane Library — API;
+  fork again
+    :WHO / FDA — API;
+  end fork
+
+  :Агрегация результатов;
+  :Дедупликация (PMID → DOI → URL → title);
+  :Обновление session → articles_found, articles_after_dedup;
+}
+
+partition "LLM Enrichment" {
+  :Статус → "analyzing";
+
+  :Для каждой статьи:
+  relevance + domain;
+  note right: 8B (локально, 0 cost)
+
+  if (evidence level нужен?) then (да — научный поиск)
+    :evidence_level + summary;
+    note right: gpt-4o-mini / GigaChat
+  else (нет — ЗОЖ-лайфхаки / цигун)
+    :evidence_level = "D" (default);
+    :summary = 8B (локально);
+  endif
+
+  if (API-модель недоступна?) then (да)
+    :Fallback → 8B модель;
+    note right: Меньшая точность
+  endif
+}
+
+partition "Save & Validate" {
+  :Статус → "saving";
+  :Batch insert в articles;
+  :Связи в article_sources;
+  :Обновление changelog;
+  :Статус → "completed";
+  :Обновление session_id у статей;
+  :Запись статистики в api_usage;
+}
+
+:Уведомление Admin UI;
+:Admin проверяет через HITL;
+if (Одобрено?) then (да)
+  :Статья публикуется в /knowledge;
+else (нет)
+  :Статья отклонена → changelog;
+endif
+
+stop
+
+legend top
+  <#FFE0E0> = Orchestrator stages
+  <#E0FFE0> = LLM processing
+  Пунктир = fallback path
+endlegend
+
+@enduml

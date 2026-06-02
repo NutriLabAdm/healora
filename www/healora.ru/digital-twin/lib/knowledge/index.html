@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Библиотека знаний Healora</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f9fa;color:#333}
+.km-topnav{background:#1a1a2e;color:#fff;display:flex;align-items:center;gap:16px;padding:0 20px;height:40px;font-size:12px}
+.km-topnav a{color:#ccc;text-decoration:none;transition:color .15s;white-space:nowrap}
+.km-topnav a:hover{color:#fff}
+.km-topnav-brand{font-weight:700;color:#FEAAE6!important;margin-right:8px}
+.km-topnav-sep{color:#444;font-size:10px}
+.km-topnav-current{color:#fff!important;font-weight:600}
+
+.km-subnav{background:#fff;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;gap:0;padding:0 16px;height:38px;overflow-x:auto;position:sticky;top:0;z-index:100}
+.km-subnav a{display:inline-flex;align-items:center;height:38px;padding:0 12px;font-size:12px;color:#555;text-decoration:none;border-bottom:2px solid transparent;transition:.12s;white-space:nowrap;flex-shrink:0}
+.km-subnav a:hover{color:#613CF5;background:#f5f3ff}
+.km-subnav a.active{color:#613CF5;border-bottom-color:#613CF5;font-weight:600}
+
+.km-wrap{max-width:1040px;margin:0 auto;padding:20px}
+.km-header{background:linear-gradient(135deg,#613CF5,#022374);border-radius:12px;padding:24px 28px;margin-bottom:16px;color:#fff}
+.km-header h1{margin:0;font-size:22px;font-weight:700}
+.km-header p{margin:4px 0 0;font-size:12px;opacity:.8}
+.km-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.km-search{flex:1;min-width:180px;padding:7px 12px;font-size:13px;border:1px solid #d0d0d0;border-radius:8px;outline:none}
+.km-search:focus{border-color:#613CF5}
+.km-filters{display:flex;gap:5px;flex-wrap:wrap}
+.km-filter-btn{padding:4px 10px;font-size:11px;border:1px solid #d0d0d0;border-radius:14px;background:#fff;color:#555;cursor:pointer;transition:.15s}
+.km-filter-btn:hover{border-color:#613CF5;color:#613CF5}
+.km-filter-btn.active{border-color:#613CF5;background:#613CF5;color:#fff}
+
+.km-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.km-card{background:#fff;border-radius:10px;overflow:hidden;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .15s,box-shadow .15s;border:1px solid #eee}
+.km-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.km-card-head{padding:5px 12px;font-size:10px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.4px}
+.km-card-body{padding:10px 12px}
+.km-card-body h3{margin:0 0 3px;font-size:13px;color:#1a1a1a;font-weight:600;line-height:1.3}
+.km-card-body .km-desc{margin:0 0 6px;font-size:11px;color:#666;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.km-card-meta{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#999;flex-wrap:wrap;gap:3px}
+.km-card-id{font-size:9px;font-family:monospace;color:#7b1fa2;background:#f3e5f5;padding:1px 5px;border-radius:3px}
+.km-card-tag{font-size:9px;color:#666;background:#f0f0f0;padding:1px 5px;border-radius:3px}
+.km-empty{text-align:center;padding:40px;color:#999;font-size:13px}
+
+.km-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
+.km-popup{background:#fff;border-radius:12px;width:580px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.km-popup-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #e0e0e0;border-left:4px solid #613CF5}
+.km-popup-head h2{margin:0;font-size:15px;color:#333;flex:1}
+.km-popup-close{background:none;border:none;font-size:20px;color:#999;cursor:pointer;padding:0 4px;line-height:1}
+.km-popup-close:hover{color:#333}
+.km-popup-body{padding:14px 18px}
+.km-popup-row{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;align-items:baseline}
+.km-popup-label{font-size:10px;font-weight:600;color:#999;min-width:90px;flex-shrink:0;text-transform:uppercase;letter-spacing:.3px}
+.km-popup-value{font-size:12px;color:#333}
+.km-popup-block{padding:8px 0;border-bottom:1px solid #f0f0f0}
+.km-popup-block-title{display:block;margin-bottom:4px;font-size:10px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.3px}
+.km-badges{display:flex;flex-wrap:wrap;gap:3px}
+.km-badge{font-size:10px;font-family:monospace;background:#f5f5f5;color:#555;padding:2px 6px;border-radius:3px;border:1px solid #e0e0e0}
+.km-missing{font-size:11px;color:#bbb;font-style:italic}
+.km-rec-list{margin:0;padding-left:16px}
+.km-rec-list li{font-size:12px;color:#444;margin-bottom:2px}
+.km-source{font-size:10px;color:#888;margin-top:4px;display:block}
+.km-cat-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
+.km-cat-tag{font-size:9px;padding:1px 6px;border-radius:8px;color:#fff;font-weight:600}
+
+@media(max-width:640px){.km-topnav{font-size:10px;gap:8px;padding:0 10px}.km-subnav{padding:0 8px}.km-subnav a{font-size:11px;padding:0 8px}.km-header{padding:16px}.km-header h1{font-size:18px}.km-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.km-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="km-topnav">
+  <a class="km-topnav-brand" href="/digital-twin">HEALORA</a>
+  <span class="km-topnav-sep">|</span>
+  <a href="/digital-twin">Главная</a>
+  <a href="/digital-twin/chat">Чат</a>
+  <a href="/digital-twin/path">Путь</a>
+  <a href="/digital-twin/goals">Цели</a>
+  <a href="/digital-twin/diary">Дневник</a>
+  <span class="km-topnav-sep">|</span>
+  <a class="km-topnav-current" href="/lib/knowledge">База знаний</a>
+</div>
+
+<div class="km-subnav" id="subnav"></div>
+
+<div id="app"></div>
+
+<script>
+// ---- COLOR MAPS ----
+const CAT_COLORS = {
+  nutritional:'#f57c00',medical:'#d32f2f',mental:'#7b1fa2',physical:'#388e3c',nutrition:'#f57c00',
+  supplement:'#795548',vitamin:'#e65100',mineral:'#00695c',vitamin_like:'#4a148c',
+  diet:'#2e7d32',preference:'#558b2f',
+  sleep:'#1565c0',food:'#ef6c00',
+  superfood:'#33691e',cuisine:'#4e342e',
+  genetics:'#37474f',ttm:'#01579b',habit:'#827717'
+};
+const CAT_LABELS = {
+  nutritional:'Питание',medical:'Медицина',mental:'Ментальный',physical:'Физический',nutrition:'Питание',
+  supplement:'Добавки',vitamin:'Витамины',mineral:'Минералы',vitamin_like:'Витаминоподобные',
+  diet:'Диеты',preference:'Предпочтения',
+  sleep:'Сон',food:'Продукты',
+  superfood:'Суперфуды',cuisine:'Кухни',
+  genetics:'Генетика',ttm:'ТТМ',habit:'Привычки'
+};
+
+const TABS = [
+  { id:'protocols',      label:'Протоколы',      file:'/data/protocols_catalog.json',     catKey:'category' },
+  { id:'supplements',    label:'Добавки',         file:'/data/knowledge/supplements.json',  catKey:'category', catLabelKey:'category_ru' },
+  { id:'vitamins',       label:'Витамины и микроэлементы', file:'/data/knowledge/vitamins_minerals.json', catKey:'category', catLabelKey:'type' },
+  { id:'diets',          label:'Диеты',           file:'/data/knowledge/diets.json',         catKey:'type' },
+  { id:'interventions',  label:'Интервенции',     file:'/data/knowledge/interventions.json', catKey:'category', catLabelKey:'category_ru' },
+  { id:'ttm',            label:'ТТМ',             file:'/data/knowledge/ttm.json',           catKey:null },
+  { id:'atomic_habits',  label:'Atomic Habits',   file:'/data/knowledge/atomic_habits.json', catKey:null },
+  { id:'food',           label:'Продукты и суперфуды', file:'/data/knowledge/food.json',     catKey:'category' },
+  { id:'cuisines',       label:'Кухни мира',      file:'/data/knowledge/cuisines.json',      catKey:null },
+  { id:'genetics',       label:'Генетика',        file:'/data/knowledge/genetics.json',      catKey:null }
+];
+
+let state = { tab:'protocols', search:'', catFilter:'all', selected:null, data:{}, loaded:{} };
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
+
+function getTabConfig(id) { return TABS.find(t => t.id === id) || TABS[0]; }
+
+function setTab(id) {
+  state.tab = id; state.search = ''; state.catFilter = 'all'; state.selected = null;
+  renderSubnav(); loadData(id, render);
+}
+
+function loadData(id, cb) {
+  if (state.loaded[id]) { cb(); return; }
+  const tab = getTabConfig(id);
+  if (!tab.file) { state.data[id] = []; state.loaded[id] = true; cb(); return; }
+  fetch(tab.file)
+    .then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(d => { state.data[id] = Array.isArray(d) ? d : (d.interventions ? Object.values(d.interventions) : []); state.loaded[id] = true; cb(); })
+    .catch(() => { state.data[id] = []; state.loaded[id] = true; cb(); });
+}
+
+function getFiltered() {
+  const tab = getTabConfig(state.tab);
+  let list = state.data[state.tab] || [];
+  if (state.catFilter !== 'all' && tab.catKey) {
+    list = list.filter(p => (p[tab.catKey] || '') === state.catFilter);
+  }
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    list = list.filter(p =>
+      ((p.name_ru || p.label || p.name || '') + ' ' + (p.name_en || '') + ' ' + (p.id || p.code || '') + ' ' + (p.desc || p.description || p.goal_ru || p.goal || '')).toLowerCase().includes(q)
+    );
+  }
+  return list;
+}
+
+function getTabCategories() {
+  const tab = getTabConfig(state.tab);
+  if (!tab.catKey) return [];
+  const list = state.data[state.tab] || [];
+  const keys = [...new Set(list.map(p => p[tab.catKey]).filter(Boolean))];
+  const labelKey = tab.catLabelKey;
+  return keys.map(k => ({
+    key: k,
+    label: labelKey ? (list.find(p => p[tab.catKey] === k)?.[labelKey] || k) : k
+  }));
+}
+
+function renderSubnav() {
+  let html = TABS.map(t =>
+    `<a href="#" class="${state.tab === t.id ? 'active' : ''}" onclick="event.preventDefault();setTab('${t.id}')">${esc(t.label)}</a>`
+  ).join('');
+  document.getElementById('subnav').innerHTML = html;
+}
+
+function isObject(v) { return v && typeof v === 'object' && !Array.isArray(v); }
+
+function renderDetail(item, tabId) {
+  let rows = '';
+  const addRow = (label, val) => { if (val != null && val !== '') rows += `<div class="km-popup-row"><span class="km-popup-label">${esc(label)}</span><span class="km-popup-value">${esc(val)}</span></div>`; };
+  addRow('ID', item.code || item.id);
+  addRow('Название', item.name_ru || item.name || item.label);
+  if (item.name_en) addRow('English', item.name_en);
+  addRow('Категория', item.category_ru || item.type || item.category || '');
+  if (item.goal_ru || item.goal) addRow('Цель', item.goal_ru || item.goal);
+  if (item.impact != null) addRow('Влияние', item.impact + '/10');
+  if (item.evidence) addRow('Доказательность', item.evidence);
+  if (item.stage != null) addRow('Стадия', item.stage);
+  if (item.readiness != null) addRow('Готовность', item.readiness);
+  if (item.calories != null) addRow('Калории', item.calories + ' ккал');
+  if (item.desc || item.description) addRow('Описание', item.desc || item.description);
+
+  // Functions / benefits
+  const funcList = item.functions || item.benefits || [];
+  if (funcList.length > 0) {
+    rows += `<div class="km-popup-block"><span class="km-popup-block-title">${tabId === 'vitamins' ? 'Функции' : 'Преимущества'}</span><ul class="km-rec-list">${funcList.map(f => '<li>'+esc(f)+'</li>').join('')}</ul></div>`;
+  }
+
+  // Examples (Atomic Habits)
+  if (item.examples && item.examples.length > 0) {
+    rows += `<div class="km-popup-block"><span class="km-popup-block-title">Примеры</span><ul class="km-rec-list">${item.examples.map(e => '<li>'+esc(e)+'</li>').join('')}</ul></div>`;
+  }
+
+  // Indications
+  if (item.indications && item.indications.length > 0) {
+    rows += `<div class="km-popup-block"><span class="km-popup-block-title">Показания</span><div class="km-badges">${item.indications.map(i => '<span class="km-badge">'+esc(i)+'</span>').join('')}</div></div>`;
+  }
+
+  // Interventions
+  if (item.interventions && item.interventions.length > 0) {
+    rows += `<div class="km-popup-block"><span class="km-popup-block-title">Интервенции (${item.interventions.length})</span><div class="km-badges">${item.interventions.map(c => '<span class="km-badge">'+esc(c)+'</span>').join('')}</div></div>`;
+  }
+
+  // Red flags
+  if (item.red_flags && item.red_flags.length > 0) {
+    rows += `<div class="km-popup-block"><span class="km-popup-block-title">Красные флаги</span>${item.red_flags.map(rf => '<div style="display:flex;gap:6px;align-items:center;padding:3px 0;font-size:11px"><span style="font-weight:500;color:#d32f2f">'+esc(rf.metric)+'</span><span style="color:#e53935;background:#ffebee;padding:0 4px;border-radius:2px">'+esc(rf.threshold)+'</span>'+(rf.action?'<span style="color:#666;font-size:10px">→ '+esc(rf.action)+'</span>':'')+'</div>').join('')}</div>`;
+  }
+
+  // Recommendations
+  if (item.recommendations && item.recommendations.length > 0) {
+    rows += `<div class="km-popup-block"><span class="km-popup-block-title">Рекомендации</span><ul class="km-rec-list">${item.recommendations.map(r => '<li>'+esc(r)+'</li>').join('')}</ul></div>`;
+  }
+
+  // Impact (genetics)
+  if (item.impact_desc) addRow('Влияние', item.impact_desc);
+  if (item.intervention) addRow('Интервенция', item.intervention);
+
+  // Source
+  if (item.source) rows += `<div class="km-popup-block"><span class="km-source">Источник: ${esc(item.source)}</span></div>`;
+
+  return rows;
+}
+
+function render() {
+  const tab = getTabConfig(state.tab);
+  const filtered = getFiltered();
+  const cats = getTabCategories();
+  const totalCount = (state.data[state.tab] || []).length;
+  let html = '<div class="km-wrap">';
+  html += '<div class="km-header"><h1>'+esc(tab.label)+'</h1><p>'+(totalCount ? totalCount + ' записей' : 'Загрузка...')+'</p></div>';
+  html += '<div class="km-controls">';
+  html += '<input class="km-search" type="text" placeholder="Поиск..." value="'+esc(state.search)+'" oninput="state.search=this.value;render()">';
+  if (cats.length > 0) {
+    html += '<div class="km-filters"><button class="km-filter-btn'+(state.catFilter==='all'?' active':'')+'" onclick="state.catFilter=\'all\';render()">Все</button>';
+    cats.forEach(c => {
+      const isActive = state.catFilter === c.key;
+      html += '<button class="km-filter-btn'+(isActive?' active':'')+'" style="'+(isActive?'background:'+(CAT_COLORS[c.key]||'#6b21c8')+';border-color:'+(CAT_COLORS[c.key]||'#6b21c8')+';color:#fff':'')+'" onclick="state.catFilter=\''+c.key+'\';render()">'+esc(c.label)+'</button>';
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  if (!state.loaded[state.tab]) {
+    html += '<div class="km-empty">Загрузка данных...</div>';
+  } else if (filtered.length === 0) {
+    html += '<div class="km-empty">'+(state.search || state.catFilter !== 'all' ? 'Ничего не найдено' : 'Нет данных')+'</div>';
+  } else {
+    html += '<div class="km-grid">';
+    filtered.forEach(p => {
+      const cat = p[tab.catKey] || '';
+      const color = CAT_COLORS[cat] || '#6b21c8';
+      const catLabel = p.category_ru || CAT_LABELS[cat] || p.type || cat;
+      const descText = p.desc || p.description || p.goal_ru || p.goal || '';
+      const metaParts = [];
+      if (p.impact != null) metaParts.push(p.impact+'/10');
+      if (p.evidence) metaParts.push(p.evidence);
+      if (p.stage != null) metaParts.push('Стадия '+p.stage);
+      if (p.calories != null) metaParts.push(p.calories+' ккал');
+      if (p.interventions) metaParts.push(p.interventions.length+' инт.');
+      if (p.functions) metaParts.push(p.functions.length+' ф-ций');
+      if (p.benefits) metaParts.push(p.benefits.length+' плюсов');
+
+      const safeItem = esc(JSON.stringify(p).replace(/"/g,'&quot;'));
+      html += '<div class="km-card" onclick="state.selected='+safeItem+';render()">';
+      html += '<div class="km-card-head" style="background:'+color+'">'+esc(catLabel || 'Общее')+'</div>';
+      html += '<div class="km-card-body">';
+      html += '<h3>'+esc(p.name_ru || p.name || p.label)+'</h3>';
+      if (descText) html += '<div class="km-desc">'+esc(descText)+'</div>';
+      html += '<div class="km-card-meta">';
+      if (metaParts.length) html += '<span>'+metaParts.join(' · ')+'</span>';
+      html += '<span class="km-card-id">'+esc(p.code || p.id || '')+'</span>';
+      html += '</div></div></div>';
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Popup
+  if (state.selected) {
+    const sel = state.selected;
+    const cat = sel[tab.catKey] || '';
+    const color = CAT_COLORS[cat] || '#6b21c8';
+    html += '<div class="km-overlay" onclick="state.selected=null;render()">';
+    html += '<div class="km-popup" onclick="event.stopPropagation()">';
+    html += '<div class="km-popup-head" style="border-left-color:'+color+'">';
+    html += '<span class="km-card-id">'+esc(sel.code || sel.id || '')+'</span>';
+    html += '<h2>'+esc(sel.name_ru || sel.name || sel.label)+'</h2>';
+    html += '<button class="km-popup-close" onclick="state.selected=null;render()">×</button>';
+    html += '</div>';
+    html += '<div class="km-popup-body">'+renderDetail(sel, state.tab)+'</div>';
+    html += '</div></div>';
+  }
+
+  document.getElementById('app').innerHTML = html;
+}
+
+// ---- INIT ----
+renderSubnav();
+loadData('protocols', render);
+</script>
+</body>
+</html>
