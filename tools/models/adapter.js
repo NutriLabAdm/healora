@@ -65,7 +65,8 @@ async function analyze({ articles, llm_prompt, search_format, domain }) {
     }
   }
 
-  throw new Error(`All LLM models failed. Last error: ${lastError?.message}`);
+  console.warn(`[adapter] All LLM models failed: ${lastError?.message}. Returning articles with defaults.`);
+  return articles.map(a => ({ ...a, relevance: 50, evidence_level: 'D', llm_confidence: 0, llm_summary: '' }));
 }
 
 async function healthCheck() {

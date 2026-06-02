@@ -89,11 +89,16 @@ function computeFingerprint(article) {
 
 function normalize(raw, source, queryDomain) {
   let articles = [];
-  switch (source) {
-    case 'PubMed': articles = normalizePubmed(raw); break;
-    case 'CrossRef': articles = normalizeCrossRef(raw); break;
-    case 'ClinicalTrials.gov': articles = normalizeClinicalTrials(raw); break;
-    default: articles = [];
+  // Check if raw has pre-normalized articles (connector output wrapped as { items: [...] })
+  if (raw && Array.isArray(raw.items) && raw.items.length > 0 && raw.items[0].source) {
+    articles = raw.items;
+  } else {
+    switch (source) {
+      case 'PubMed': articles = normalizePubmed(raw); break;
+      case 'CrossRef': articles = normalizeCrossRef(raw); break;
+      case 'ClinicalTrials.gov': articles = normalizeClinicalTrials(raw); break;
+      default: articles = [];
+    }
   }
   return articles.map(a => {
     a = assignDomain(a, queryDomain);

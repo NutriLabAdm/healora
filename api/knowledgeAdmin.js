@@ -248,22 +248,27 @@ router.post('/test-source', async (req, res) => {
         const hfKey = kb.getApiKeys().find(k => k.provider === 'huggingface' && k.is_active);
         const token = hfKey?.key_value || process.env.HF_API_TOKEN;
         if (!token) { result.status = 'no_key'; result.response = 'API-ключ не настроен. Добавьте HuggingFace ключ или HF_API_TOKEN в .env'; break; }
-        result.request = 'POST https://router.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct';
+        const endpoint = 'https://router.huggingface.co/v1/chat/completions';
+        result.request = `POST ${endpoint}`;
         try {
-          const hfRes = await fetch('https://router.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct', {
+          const hfRes = await fetch(endpoint, {
             method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ inputs: 'Reply with just the word "ok".', parameters: { max_new_tokens: 10 } }),
+            body: JSON.stringify({ model: 'meta-llama/Meta-Llama-3-8B-Instruct', messages: [{ role: 'user', content: 'Reply with just the word "ok".' }], max_tokens: 10 }),
             signal: AbortSignal.timeout(30000)
           });
           const hfText = await hfRes.text();
           result.response = { status: hfRes.status, reply: hfText.slice(0, 300) };
           result.status = hfRes.ok ? 'ok' : 'warning';
         } catch (e) {
-          // Проверяем тип ошибки сети
           let msg = e.message;
           if (msg.includes('fetch failed') || msg.includes('ENOTFOUND') || msg.includes('ETIMEDOUT') || msg.includes('ECONNREFUSED')) {
             msg = 'API недоступен — DNS/сеть блокирует router.huggingface.co. Проверьте на production-сервере или используйте BigPickle локально.';
           }
+          result.status = 'error';
+          result.response = msg;
+        }
+        break;
+      }
           result.status = 'error';
           result.response = msg;
         }

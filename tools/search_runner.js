@@ -27,6 +27,7 @@ async function triggerSearch(session, kb) {
       mesh_terms: mesh_terms || '',
       sessionId,
       queryId,
+      kb,
     });
 
     if (abortController.signal.aborted) {

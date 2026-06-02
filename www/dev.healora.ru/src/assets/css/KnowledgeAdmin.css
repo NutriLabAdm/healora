@@ -256,6 +256,32 @@
   font-weight: 500;
 }
 
+.ka-count-link {
+  cursor: pointer;
+  color: #7c5cfc;
+  text-decoration: none;
+  border-bottom: 1px dashed #c8b8ff;
+  transition: all 0.15s;
+}
+.ka-count-link:hover {
+  color: #5c3cf0;
+  border-bottom-color: #7c5cfc;
+  background: #f0edff;
+}
+
+.ka-status-pending { color: #e6a700; font-weight: 500; }
+.ka-status-approved { color: #2b8a3e; font-weight: 500; }
+.ka-status-rejected { color: #c92a2a; font-weight: 500; }
+
+.ka-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.ka-modal-header h3 { margin: 0; }
+.ka-modal-body { margin-bottom: 16px; }
+
 .ka-c-pending { color: #e6a700; }
 .ka-c-ok { color: #2b8a3e; }
 .ka-c-err { color: #c92a2a; }

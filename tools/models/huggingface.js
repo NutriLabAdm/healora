@@ -1,6 +1,7 @@
 const path = require('path');
 const HF_API_BASE = process.env.HF_API_BASE || 'https://router.huggingface.co';
 const HF_MODEL = process.env.HF_MODEL || 'meta-llama/Meta-Llama-3-8B-Instruct';
+const HF_ENDPOINT = `${HF_API_BASE}/v1/chat/completions`;
 const token = () => process.env.HF_API_TOKEN;
 
 function resolveKnowledgeDb() {
@@ -25,12 +26,11 @@ function resolveToken() {
 
 async function healthCheck() {
   if (!resolveToken()) return false;
-  const url = `${HF_API_BASE}/models/${HF_MODEL}`;
   try {
-    const res = await fetch(url, {
+    const res = await fetch(HF_ENDPOINT, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${resolveToken()}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ inputs: 'ok', parameters: { max_new_tokens: 5 } }),
+      body: JSON.stringify({ model: HF_MODEL, messages: [{ role: 'user', content: 'ok' }], max_tokens: 5 }),
       signal: AbortSignal.timeout(15000),
     });
     return res.ok || res.status === 503;
@@ -41,24 +41,25 @@ async function generate({ model, prompt, options = {} }) {
   const m = model || HF_MODEL;
   const t = resolveToken();
   if (!t) throw new Error('HF_API_TOKEN not configured');
-  const url = `${HF_API_BASE}/models/${m}`;
-  const res = await fetch(url, {
+  const body = {
+    model: m,
+    messages: [{ role: 'user', content: prompt }],
+    max_tokens: options.max_new_tokens || 500,
+    temperature: options.temperature ?? 0.1,
+  };
+  const res = await fetch(HF_ENDPOINT, {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${t}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      inputs: prompt,
-      parameters: { max_new_tokens: 500, temperature: 0.1, ...options },
-    }),
-    signal: AbortSignal.timeout(60000),
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(options.timeout || 60000),
   });
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`HuggingFace error (${res.status}): ${text}`);
   }
   const data = await res.json();
-  if (Array.isArray(data) && data[0]?.generated_text) {
-    return { response: data[0].generated_text };
-  }
+  const content = data?.choices?.[0]?.message?.content;
+  if (content) return { response: content };
   return { response: JSON.stringify(data) };
 }
 

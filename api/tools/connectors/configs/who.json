@@ -1,8 +1,0 @@
-{
-  "searchPath": "/catalog",
-  "params": {
-    "format": "json",
-    "count": 20
-  },
-  "fallback": "PubMed filter jsubsetaim[ALL]"
-}

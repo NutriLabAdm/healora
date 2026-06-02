@@ -396,6 +396,9 @@ function SearchConfigTab() {
   const [modalTab, setModalTab] = useState('settings');
   const [searchSubTab, setSearchSubTab] = useState('queries');
   const [historyFilter, setHistoryFilter] = useState('all');
+  const [articlesModal, setArticlesModal] = useState(null);
+  const [articlesList, setArticlesList] = useState([]);
+  const [articlesLoading, setArticlesLoading] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -436,6 +439,19 @@ function SearchConfigTab() {
   const stopSession = async (id) => {
     await fetchJson(`${API}/sessions/${id}/cancel`, { method: 'PATCH' }).catch(() => null);
     load();
+  };
+
+  const openArticles = async (sessionId, column, label) => {
+    setArticlesModal({ sessionId, column, label });
+    setArticlesLoading(true);
+    try {
+      const statusMap = { articles_found: '', articles_after_dedup: '', articles_queued: 'pending', articles_approved: 'approved', articles_rejected: 'rejected' };
+      const status = statusMap[column] || '';
+      const url = `${API}/articles?session_id=${sessionId}${status ? '&status=' + status : ''}`;
+      const data = await fetchJson(url);
+      setArticlesList(data);
+    } catch (e) { setArticlesList([]); }
+    setArticlesLoading(false);
   };
 
   if (loading) return <div className="ka-loading">Загрузка...</div>;
@@ -564,7 +580,7 @@ function SearchConfigTab() {
             <table className="ka-table">
               <thead><tr>
                 <th>Дата / время</th><th>Тип</th><th>Домен</th>
-                <th>Pipeline</th><th>Найдено</th><th>После dedup</th><th>В БЗ</th>
+                <th>Pipeline</th><th>Найдено</th><th>После dedup</th><th>В БЗ</th><th>Одобрено</th><th>Отклонено</th>
               </tr></thead>
               <tbody>
                 {historyFilter === 'knowledge' && (
@@ -573,9 +589,11 @@ function SearchConfigTab() {
                     <td><span className="ka-search-type" style={{ background: '#e8f0fe', color: '#1967d2' }}>knowledge</span></td>
                     <td><span className="ka-domain-tag">all</span></td>
                     <td><PipelineTracker session={{ status: 'completed', articles_found: totalLocal, articles_after_dedup: totalLocal, articles_queued: totalLocal, articles_approved: totalLocal }} /></td>
-                    <td className="ka-num">{totalLocal}</td>
-                    <td className="ka-num">{totalLocal}</td>
-                    <td className="ka-num">{totalLocal}</td>
+                    <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(0, 'articles_found', 'Найдено')}>{totalLocal}</span></td>
+                    <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(0, 'articles_after_dedup', 'После dedup')}>{totalLocal}</span></td>
+                    <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(0, 'articles_queued', 'В БЗ')}>{totalLocal}</span></td>
+                    <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(0, 'articles_approved', 'Одобрено')}>{totalLocal}</span></td>
+                    <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(0, 'articles_rejected', 'Отклонено')}>0</span></td>
                   </tr>
                 )}
                 {sessions
@@ -586,18 +604,61 @@ function SearchConfigTab() {
                       <td><span className={`ka-search-type ${s.search_type}`}>{s.search_type}</span></td>
                       <td><span className="ka-domain-tag">{s.domain}</span></td>
                       <td><PipelineTracker session={s} showTimes onStop={stopSession} /></td>
-                      <td className="ka-num">{s.articles_found}</td>
-                      <td className="ka-num">{s.articles_after_dedup}</td>
-                      <td className="ka-num">{s.articles_queued}</td>
+                      <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(s.id, 'articles_found', 'Найдено')}>{s.articles_found}</span></td>
+                      <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(s.id, 'articles_after_dedup', 'После dedup')}>{s.articles_after_dedup}</span></td>
+                      <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(s.id, 'articles_queued', 'В БЗ')}>{s.articles_queued}</span></td>
+                      <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(s.id, 'articles_approved', 'Одобрено')}>{s.articles_approved}</span></td>
+                      <td className="ka-num"><span className="ka-count-link" onClick={() => openArticles(s.id, 'articles_rejected', 'Отклонено')}>{s.articles_rejected}</span></td>
                     </tr>
                   ))}
                 {historyFilter !== 'knowledge' && sessions.filter(s => historyFilter === 'all' || s.search_type === historyFilter).length === 0 && (
-                  <tr><td colSpan={8} className="ka-empty">Нет записей</td></tr>
+                  <tr><td colSpan={10} className="ka-empty">Нет записей</td></tr>
                 )}
               </tbody>
             </table>
           </div>
         </>
+      )}
+
+      {articlesModal && (
+        <div className="ka-modal-overlay" onClick={() => setArticlesModal(null)}>
+          <div className="ka-modal ka-modal-wide" onClick={e => e.stopPropagation()}>
+            <div className="ka-modal-header">
+              <h3>Статьи: {articlesModal.label}</h3>
+              <span style={{ fontSize: 12, color: '#999' }}>Сессия #{articlesModal.sessionId}</span>
+            </div>
+            <div className="ka-modal-body" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+              {articlesLoading ? (
+                <div className="ka-loading">Загрузка...</div>
+              ) : articlesList.length === 0 ? (
+                <div className="ka-empty">Нет статей</div>
+              ) : (
+                <table className="ka-table">
+                  <thead><tr>
+                    <th>ID</th><th>Название</th><th>Источник</th><th>Релевантность</th><th>Evidence</th><th>Статус</th>
+                  </tr></thead>
+                  <tbody>
+                    {articlesList.map(a => (
+                      <tr key={a.id}>
+                        <td className="ka-cell-id">{a.id}</td>
+                        <td style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={a.title}>
+                          {a.doi ? <a href={`https://doi.org/${a.doi}`} target="_blank" rel="noopener noreferrer">{a.title}</a> : a.title}
+                        </td>
+                        <td>{a.source}</td>
+                        <td className="ka-num">{a.relevance}</td>
+                        <td>{a.evidence_level}</td>
+                        <td><span className={`ka-status-${a.status}`}>{a.status}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            <div className="ka-modal-actions">
+              <button className="ka-btn" onClick={() => setArticlesModal(null)}>Закрыть</button>
+            </div>
+          </div>
+        </div>
       )}
 
       {editQuery && (

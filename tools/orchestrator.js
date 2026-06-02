@@ -19,7 +19,7 @@ function loadConnector(name) {
   }
 }
 
-async function runSearch({ query, sources, domain, keywords, mesh_terms, llm_prompt, search_format, sessionId, queryId, maxResults }) {
+async function runSearch({ query, sources, domain, keywords, mesh_terms, llm_prompt, search_format, sessionId, queryId, maxResults, kb }) {
   const start = Date.now();
   const results = {};
 
@@ -61,7 +61,7 @@ async function runSearch({ query, sources, domain, keywords, mesh_terms, llm_pro
   let etlResult = null;
   if (totalFound > 0) {
     const llmAdapter = adapter.analyze ? adapter : null;
-    etlResult = await ETLPipeline.run(sessionId, queryId, domain, llmAdapter, null);
+    etlResult = await ETLPipeline.run(sessionId, queryId, domain, llmAdapter, kb);
   }
 
   return {

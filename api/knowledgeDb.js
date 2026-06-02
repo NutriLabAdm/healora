@@ -256,6 +256,7 @@ function getArticles(opts) {
   if (opts.domain) { where.push('domain = ?'); params.push(opts.domain); }
   if (opts.source) { where.push('source = ?'); params.push(opts.source); }
   if (opts.evidence_level) { where.push('evidence_level = ?'); params.push(opts.evidence_level); }
+  if (opts.session_id) { where.push('session_id = ?'); params.push(opts.session_id); }
   if (where.length) sql += ' WHERE ' + where.join(' AND ');
   sql += ' ORDER BY created_at DESC';
   if (opts.limit) sql += ' LIMIT ?';
