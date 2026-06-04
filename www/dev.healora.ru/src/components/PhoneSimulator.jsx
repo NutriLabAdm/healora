@@ -354,21 +354,21 @@ export default function PhoneSimulator({
 
   // Z-фактор — регрессионная оценка эффективности похудения
   const zFactors = (() => {
+    const execDay = execDays.find(d => d.day === viewDay);
     const total = todayTasks.length;
     const done = todayTasks.filter(t => t.done).length;
-    const adherence = total > 0 ? done / total : 0;
     const hasDiary = diaryMeals.some(m => m.calories && Number(m.calories) > 0);
     const totalCals = diaryMeals.reduce((s, m) => s + (Number(m.calories) || 0), 0);
-    const calOk = totalCals <= 2200;
+    const calOk = execDay ? execDay.adherence_pct >= 70 : totalCals <= 2200;
     const w_adherence = 0.35;
     const w_calories  = 0.25;
     const w_diary     = 0.15;
     const w_evidence  = 0.15;
     const w_genetics  = 0.10;
     const vals = {
-      adherence:   adherence,
+      adherence:   execDay ? execDay.adherence_pct / 100 : (total > 0 ? done / total : 0),
       calories:    calOk ? 1 : 0,
-      diary:       hasDiary ? 1 : 0,
+      diary:       execDay ? (execDay.tasks?.some(t => t.code === 'FD_CAL' && t.status === 'done') ? 1 : 0) : (hasDiary ? 1 : 0),
       evidence:    0.8,
       genetics:    (profile?.anthropometrics?.bmi || 25) > 30 ? 0.6 : (profile?.anthropometrics?.bmi || 25) > 25 ? 0.8 : 1.0,
     };
@@ -947,11 +947,11 @@ ${planSection}
                   <span className="z-title-letter">Z</span> — регрессионная оценка эффективности
                 </div>
                 <div className="z-formula">
-                  Z = β₀ + β₁·Adherence + β₂·Калории + β₃·Дневник + β₄·Evidence + β₅·Генетика
+                  Z = β₀ + β₁·Приверженность + β₂·Калории + β₃·Дневник + β₄·Evidence + β₅·Генетика
                 </div>
                 <div className="z-factors">
                   {[
-                    { label:'Adherence к плану',     weight:'β₁=0.35', val:zFactors.factors.adherence,   pct:Math.round(zFactors.factors.adherence * 100) },
+                    { label:'Приверженность',     weight:'β₁=0.35', val:zFactors.factors.adherence,   pct:Math.round(zFactors.factors.adherence * 100) },
                     { label:'Калорийный контроль',   weight:'β₂=0.25', val:zFactors.factors.calories,    pct:Math.round(zFactors.factors.calories * 100) },
                     { label:'Ведение дневника',      weight:'β₃=0.15', val:zFactors.factors.diary,       pct:Math.round(zFactors.factors.diary * 100) },
                     { label:'Доказательность плана', weight:'β₄=0.15', val:zFactors.factors.evidence,    pct:Math.round(zFactors.factors.evidence * 100) },

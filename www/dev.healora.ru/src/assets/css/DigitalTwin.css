@@ -1856,7 +1856,7 @@
 
 .unit { font-size: 9px; color: #78909c; margin-left: 2px; }
 
-.section-header { border-left: 3px solid; padding-left: 8px; }
+.section-header { border-left: 0px solid; padding-left: 8px; }
 
 /* Profile Header Card */
 .profile-header-card {

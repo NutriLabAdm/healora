@@ -64,7 +64,7 @@ function AppContent() {
       <div className="app-topbar">
         <div className="app-topbar-inner">
           <div className="app-topbar-left">
-            <span className="app-topbar-title">Healora</span>
+            <Link className="app-topbar-title" to="/">Healora</Link>
             <span className="app-topbar-sep">·</span>
             <span className="app-topbar-platform">платформа Нутричат</span>
             <img className="app-topbar-logo" src="https://bmitech.ru/assets/images/logos/nutrichat.png" alt="Нутричат" width="25" height="25" />

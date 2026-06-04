@@ -488,39 +488,37 @@ function SearchConfigTab() {
       </div>
 
       <div style={{ marginBottom: 16, background: '#fafafe', border: '1px solid #e8e8f0', borderRadius: 8, padding: 12, fontSize: 11, display: 'flex', gap: 12, alignItems: 'center' }}>
-        <svg width="520" height="60" viewBox="0 0 520 60" fill="none" style={{ flexShrink: 0 }}>
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l10 5-10 5z" fill="#d0d0da"/></marker>
-            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7c5cfc"/><stop offset="1" stopColor="#6b4be0"/></linearGradient>
-            <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#4ecdc4"/><stop offset="1" stopColor="#3dbdb5"/></linearGradient>
-            <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffd93d"/><stop offset="1" stopColor="#f0c929"/></linearGradient>
-            <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff6b6b"/><stop offset="1" stopColor="#e05555"/></linearGradient>
-          </defs>
-          <rect x="2" y="2" width="116" height="56" rx="8" fill="url(#g1)" />
-          <text x="60" y="28" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="700">🔍 Search</text>
-          <text x="60" y="42" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="8">PubMed / CrossRef</text>
-          <text x="60" y="52" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="7">ClinicalTrials / FDA</text>
-          <line x1="120" y1="30" x2="140" y2="30" stroke="#d0d0da" strokeWidth="2" markerEnd="url(#arrow)"/>
-          <rect x="142" y="2" width="116" height="56" rx="8" fill="url(#g2)" />
-          <text x="200" y="24" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="700">🧠 LLM 8B</text>
-          <text x="200" y="36" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="8">Relevance</text>
-          <text x="200" y="46" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="8">Domain</text>
-          <text x="200" y="56" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="7">0 cost / быстрая</text>
-          <line x1="260" y1="30" x2="280" y2="30" stroke="#d0d0da" strokeWidth="2"/>
-          <rect x="282" y="2" width="116" height="56" rx="8" fill="url(#g3)" />
-          <text x="340" y="22" textAnchor="middle" fill="#5a4a00" fontSize="9" fontWeight="700">🤖 API Model</text>
-          <text x="340" y="34" textAnchor="middle" fill="rgba(90,74,0,0.7)" fontSize="8">Evidence Level</text>
-          <text x="340" y="44" textAnchor="middle" fill="rgba(90,74,0,0.7)" fontSize="8">Summary</text>
-          <text x="340" y="56" textAnchor="middle" fill="rgba(90,74,0,0.5)" fontSize="7">gpt-4o / GigaChat</text>
-          <line x1="400" y1="30" x2="420" y2="30" stroke="#d0d0da" strokeWidth="2"/>
-          <rect x="422" y="2" width="96" height="56" rx="8" fill="url(#g4)" />
-          <text x="470" y="24" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="700">⬇ Fallback</text>
-          <text x="470" y="36" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="8">8B модель</text>
-          <text x="470" y="50" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="7">если API</text>
-          <text x="470" y="58" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="7">недоступен</text>
-          <path d="M340 58 Q340 68 60 68 Q10 68 10 58" stroke="#ffd93d" strokeWidth="1.5" strokeDasharray="3,3" fill="none"/>
-          <text x="200" y="76" textAnchor="middle" fill="#999" fontSize="7">Dedup (PMID → DOI → title)</text>
-        </svg>
+        <div className="pipeline-flow">
+          <div className="pipeline-stages">
+            <div className="pipeline-stage">
+              <div className="pst-title">Search</div>
+              <div className="pst-sub">PubMed / CrossRef</div>
+              <div className="pst-sub2">ClinicalTrials / FDA</div>
+            </div>
+            <div className="pipeline-arrow"/>
+            <div className="pipeline-stage">
+              <div className="pst-title">LLM 8B</div>
+              <div className="pst-sub">Relevance</div>
+              <div className="pst-sub">Domain</div>
+              <div className="pst-sub2">0 cost / быстрая</div>
+            </div>
+            <div className="pipeline-arrow"/>
+            <div className="pipeline-stage">
+              <div className="pst-title">API Model</div>
+              <div className="pst-sub">Evidence Level</div>
+              <div className="pst-sub">Summary</div>
+              <div className="pst-sub2">gpt-4o / GigaChat</div>
+            </div>
+            <div className="pipeline-arrow"/>
+            <div className="pipeline-stage">
+              <div className="pst-title">Fallback</div>
+              <div className="pst-sub">8B модель</div>
+              <div className="pst-sub2">если API</div>
+              <div className="pst-sub2">недоступен</div>
+            </div>
+          </div>
+          <div className="pipeline-dedup">↺ Dedup (PMID → DOI → title)</div>
+        </div>
         <div style={{ color: '#666', lineHeight: 1.5, fontSize: 11 }}>
           <b style={{ color: '#333' }}>Pipeline поиска:</b><br/>
           1. <b style={{ color: '#7c5cfc' }}>Search</b> — параллельные запросы к PubMed, CrossRef, ClinicalTrials, FDA<br/>
