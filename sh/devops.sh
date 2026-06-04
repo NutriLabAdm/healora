@@ -27,6 +27,8 @@ case "$(uname -s)" in
         [ -n "$NVM_HOME" ] && _nvm_home=$(echo "$NVM_HOME" | tr '\\' '/' | sed 's|^\([a-zA-Z]\):/|/\L\1/|') && PATH="$PATH:$_nvm_home"
         # Common Node.js install locations if nvm not used
         [ -d "/c/Program Files/nodejs" ] && PATH="$PATH:/c/Program Files/nodejs"
+        # Windows system utilities (netstat, taskkill, etc.)
+        [ -d "/c/Windows/System32" ] && PATH="$PATH:/c/Windows/System32"
         ;;
 esac
 
