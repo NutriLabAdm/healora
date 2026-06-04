@@ -19,6 +19,14 @@ log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
+# Windows (Git Bash) PATH fix: nvm paths may contain unexpanded %VAR% refs
+case "$(uname -s)" in
+    CYGWIN*|MINGW*|MSYS*)
+        [ -n "$NVM_SYMLINK" ] && PATH="$PATH:$(echo "$NVM_SYMLINK" | sed 's|\\|/|g; s|^C:|/c|I')"
+        [ -n "$NVM_HOME" ] && PATH="$PATH:$(echo "$NVM_HOME" | sed 's|\\|/|g; s|^C:|/c|I')"
+        ;;
+esac
+
 # Sync files from local to remote — copies only what's new/changed
 # Uses rsync if available, falls back to tar over SSH (reliable on any platform)
 sync_files() {
