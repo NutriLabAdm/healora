@@ -22,8 +22,9 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 # Windows (Git Bash) PATH fix: nvm paths may contain unexpanded %VAR% refs
 case "$(uname -s)" in
     CYGWIN*|MINGW*|MSYS*)
-        [ -n "$NVM_SYMLINK" ] && PATH="$PATH:$(echo "$NVM_SYMLINK" | tr '\\' '/' 2>/dev/null)"
-        [ -n "$NVM_HOME" ] && PATH="$PATH:$(echo "$NVM_HOME" | tr '\\' '/' 2>/dev/null)"
+        _nvm_path=""; _nvm_home=""
+        [ -n "$NVM_SYMLINK" ] && _nvm_path=$(echo "$NVM_SYMLINK" | tr '\\' '/' | sed 's|^\([a-zA-Z]\):/|/\L\1/|') && PATH="$PATH:$_nvm_path"
+        [ -n "$NVM_HOME" ] && _nvm_home=$(echo "$NVM_HOME" | tr '\\' '/' | sed 's|^\([a-zA-Z]\):/|/\L\1/|') && PATH="$PATH:$_nvm_home"
         # Common Node.js install locations if nvm not used
         [ -d "/c/Program Files/nodejs" ] && PATH="$PATH:/c/Program Files/nodejs"
         ;;
