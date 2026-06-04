@@ -485,11 +485,21 @@ start_ollama() {
 start_local() {
     log_info "Starting local development environment"
     
+    # Detect OS for platform-specific commands
+    local IS_WIN=false
+    case "$(uname -s)" in
+        CYGWIN*|MINGW*|MSYS*) IS_WIN=true ;;
+    esac
+    
     # Kill existing processes on API and Vite ports
     log_info "Cleaning up old processes..."
     for port in 3054 3051 3001; do
         local pids
-        pids=$(netstat -ano 2>/dev/null | grep "LISTENING" | grep ":$port " | awk '{print $5}' | sort -u)
+        if $IS_WIN; then
+            pids=$(netstat -ano 2>/dev/null | grep "LISTENING" | grep ":$port " | awk '{print $NF}' | sort -u)
+        else
+            pids=$(lsof -ti:$port 2>/dev/null)
+        fi
         if [ -n "$pids" ]; then
             for pid in $pids; do
                 taskkill //F //PID "$pid" 2>/dev/null && log_info "Killed PID $pid on port $port" || true
@@ -508,15 +518,26 @@ start_local() {
         log_info "Installing backend dependencies..."
         npm install > /dev/null 2>&1
     fi
-    nohup node server.js > backend.log 2>&1 &
-    BACKEND_PID=$!
-    sleep 3
-    if ps -p $BACKEND_PID > /dev/null; then
-        log_info "Backend started successfully (PID: $BACKEND_PID)"
+    if $IS_WIN; then
+        start "healora-api" cmd /c "node server.js"
+        sleep 3
+        if curl -s -o /dev/null -w '' http://localhost:3054/ 2>/dev/null; then
+            log_info "Backend started successfully"
+        else
+            log_error "Failed to start backend"
+            return 1
+        fi
     else
-        log_error "Failed to start backend"
-        cat backend.log
-        return 1
+        nohup node server.js > backend.log 2>&1 &
+        BACKEND_PID=$!
+        sleep 3
+        if ps -p $BACKEND_PID > /dev/null; then
+            log_info "Backend started successfully (PID: $BACKEND_PID)"
+        else
+            log_error "Failed to start backend"
+            cat backend.log
+            return 1
+        fi
     fi
     
     # Start frontend (Vite dev server) on port 3001
@@ -526,17 +547,21 @@ start_local() {
         log_info "Installing frontend dependencies..."
         npm install > /dev/null 2>&1
     fi
-    nohup npx vite --port 3001 --strictPort > frontend.log 2>&1 &
-    FRONTEND_PID=$!
-    sleep 5
-    
-    if ps -p $FRONTEND_PID > /dev/null; then
-        log_info "Frontend dev server started successfully (PID: $FRONTEND_PID)"
-        log_info "Open your browser at: http://localhost:3001"
+    if $IS_WIN; then
+        start "healora-vite" cmd /c "npx vite --port 3001 --strictPort"
+        sleep 5
     else
-        log_error "Failed to start frontend dev server"
-        cat frontend.log
-        return 1
+        nohup npx vite --port 3001 --strictPort > frontend.log 2>&1 &
+        FRONTEND_PID=$!
+        sleep 5
+        if ps -p $FRONTEND_PID > /dev/null; then
+            log_info "Frontend dev server started successfully (PID: $FRONTEND_PID)"
+            log_info "Open your browser at: http://localhost:3001"
+        else
+            log_error "Failed to start frontend dev server"
+            cat frontend.log
+            return 1
+        fi
     fi
     
     # Get actual API port from .env or default
@@ -545,8 +570,12 @@ start_local() {
     log_info "Local development environment is ready"
     log_info "Backend: http://localhost:$api_port"
     log_info "Frontend: http://localhost:3001"
-    log_info "To stop servers, run: kill $BACKEND_PID $FRONTEND_PID"
-    log_info "Or run: pkill -f 'node server.js'; pkill -f 'vite'"
+    if ! $IS_WIN; then
+        log_info "To stop servers, run: kill $BACKEND_PID $FRONTEND_PID"
+        log_info "Or run: pkill -f 'node server.js'; pkill -f 'vite'"
+    else
+        log_info "To stop servers, close the opened cmd windows or use Task Manager"
+    fi
 }
 
 # Main loop
