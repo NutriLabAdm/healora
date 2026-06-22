@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import protocolsCatalog from '../assets/data/protocols_catalog.json';
+import VitaminsModule from './VitaminsModule';
 import '../assets/css/KnowledgeModule.css';
 
 const CATEGORY_COLORS = {
@@ -16,6 +17,7 @@ const KnowledgeModule = () => {
   const [search, setSearch] = useState('');
   const [catFilter, setCatFilter] = useState('all');
   const [selected, setSelected] = useState(null);
+  const [showVitamins, setShowVitamins] = useState(false);
 
   const categories = useMemo(() => {
     const keys = [...new Set(protocolsCatalog.map(p => p.category))];
@@ -50,14 +52,19 @@ const KnowledgeModule = () => {
         <div className="km2-controls">
           <input className="km2-search" type="text" placeholder="Поиск протоколов..." value={search} onChange={e => setSearch(e.target.value)} />
           <div className="km2-filters">
-            <button className={`km2-fbtn ${catFilter === 'all' ? 'active' : ''}`} onClick={() => setCatFilter('all')}>Все</button>
+            <button className={`km2-fbtn ${catFilter === 'all' && !showVitamins ? 'active' : ''}`} onClick={() => { setCatFilter('all'); setShowVitamins(false); setSelected(null); }}>Все</button>
             {categories.keys.map(k => (
-              <button key={k} className={`km2-fbtn ${catFilter === k ? 'active' : ''}`}
-                style={catFilter === k ? { background: CATEGORY_COLORS[k] || '#6b21c8', borderColor: CATEGORY_COLORS[k] || '#6b21c8', color: '#fff' } : {}}
-                onClick={() => setCatFilter(k)}>
+              <button key={k} className={`km2-fbtn ${catFilter === k && !showVitamins ? 'active' : ''}`}
+                style={catFilter === k && !showVitamins ? { background: CATEGORY_COLORS[k] || '#6b21c8', borderColor: CATEGORY_COLORS[k] || '#6b21c8', color: '#fff' } : {}}
+                onClick={() => { setCatFilter(k); setShowVitamins(false); setSelected(null); }}>
                 {CATEGORY_LABELS[k] || k}
               </button>
             ))}
+            <button className={`km2-fbtn ${showVitamins ? 'active' : ''}`}
+              style={showVitamins ? { background: '#2e7d32', borderColor: '#2e7d32', color: '#fff' } : {}}
+              onClick={() => { setShowVitamins(true); setSelected(null); setCatFilter('all'); }}>
+              🧪 Витамины
+            </button>
           </div>
         </div>
         <div className="km2-list">
@@ -77,7 +84,9 @@ const KnowledgeModule = () => {
 
       {/* RIGHT PANEL - детальная страница */}
       <div className="km2-right">
-        {!selected ? (
+        {showVitamins ? (
+          <VitaminsModule onClose={() => setShowVitamins(false)} />
+        ) : !selected ? (
           <div className="km2-empty">Выберите протокол из списка</div>
         ) : (
           <div className="km2-detail">
