@@ -1,0 +1,235 @@
+{
+  "model_id": "qwen",
+  "model_name": "Qwen 3.7",
+  "model_title": "Qwen 3.7",
+  "date_created": "2026-06-14",
+  "date_updated": "2026-06-14",
+  "notes": "Анализ 5 блюд: 11, 12, 13, 14, 15",
+  "dishes": {
+    "11": {
+      "dish_id": "11",
+      "dish_name": "Овощи и фрукты на подносе",
+      "image_file": "11. овощи фрукты поднос.jpg",
+      "gold_standard": {
+        "calories": 380.0,
+        "protein_g": 12.0,
+        "fat_g": 4.0,
+        "carbs_g": 75.0,
+        "fiber_g": 12.0,
+        "ndi": 8.5,
+        "ingredients": [
+          "грибы шампиньоны",
+          "помидор",
+          "брюссельская капуста",
+          "виноград"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "грибы шампиньоны (упаковка)",
+          "помидор",
+          "брюссельская капуста (сетка)",
+          "виноград (упаковка)"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 360,
+        "protein_predicted": 10.0,
+        "fat_predicted": 3.5,
+        "carbs_predicted": 72.0,
+        "confidence": 92,
+        "pros": "Идеальное распознавание всех упакованных продуктов и свежих овощей/фруктов",
+        "cons": "Небольшая погрешность в оценке калорийности из-за сложности определения веса",
+        "recommendations": "Отлично подходит для анализа сырых продуктов в упаковках"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 5.3,
+        "pro_mae_pct": 16.7,
+        "fat_mae_pct": 12.5,
+        "carbs_mae_pct": 4.0
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "12": {
+      "dish_id": "12",
+      "dish_name": "Боул с курицей и булгуром",
+      "image_file": "12. боул с курицей.jpg",
+      "gold_standard": {
+        "calories": 520.0,
+        "protein_g": 38.0,
+        "fat_g": 15.0,
+        "carbs_g": 58.0,
+        "fiber_g": 8.0,
+        "ndi": 9.0,
+        "ingredients": [
+          "куриное филе",
+          "булгур/перловка",
+          "помидоры черри",
+          "огурец",
+          "листья салата"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "куриная грудка",
+          "булгур/перловка",
+          "помидоры черри",
+          "огурец",
+          "листья салата"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 500,
+        "protein_predicted": 40.0,
+        "fat_predicted": 14.0,
+        "carbs_predicted": 55.0,
+        "confidence": 95,
+        "pros": "Отличное распознавание всех компонентов боула, четкое разделение белков, углеводов и овощей",
+        "cons": "Минимальные погрешности в оценке калорийности",
+        "recommendations": "Оптимальна для боулов с четким разделением ингредиентов"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 3.8,
+        "pro_mae_pct": 5.3,
+        "fat_mae_pct": 6.7,
+        "carbs_mae_pct": 5.2
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "13": {
+      "dish_id": "13",
+      "dish_name": "Свиная рулька с овощами",
+      "image_file": "13. rulka.jpg",
+      "gold_standard": {
+        "calories": 680.0,
+        "protein_g": 38.0,
+        "fat_g": 40.0,
+        "carbs_g": 32.0,
+        "fiber_g": 3.0,
+        "ndi": 4.5,
+        "ingredients": [
+          "свиная рулька",
+          "зеленый лук",
+          "помидоры",
+          "огурец"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свиная рулька/голяшка",
+          "зеленый лук",
+          "помидоры",
+          "огурец"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 720,
+        "protein_predicted": 42.0,
+        "fat_predicted": 45.0,
+        "carbs_predicted": 30.0,
+        "confidence": 85,
+        "pros": "Распознала основной белковый компонент и свежие овощи",
+        "cons": "Высокая жирность блюда сложно оценивается визуально. Небольшая переоценка калорийности",
+        "recommendations": "Подходит для жирных мясных блюд, но требует калибровки для точной оценки жиров"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 5.9,
+        "pro_mae_pct": 10.5,
+        "fat_mae_pct": 12.5,
+        "carbs_mae_pct": 6.3
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "14": {
+      "dish_id": "14",
+      "dish_name": "Сибас с картофелем",
+      "image_file": "14. сибас.jpg",
+      "gold_standard": {
+        "calories": 440.0,
+        "protein_g": 32.0,
+        "fat_g": 24.0,
+        "carbs_g": 28.0,
+        "fiber_g": 3.0,
+        "ndi": 7.8,
+        "ingredients": [
+          "сибас (морской окунь)",
+          "картофель",
+          "лимон",
+          "укроп",
+          "петрушка",
+          "оливковое масло"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сибас/морской окунь",
+          "картофель",
+          "лимон",
+          "укроп",
+          "петрушка"
+        ],
+        "ingredient_match_pct": 83,
+        "calories_predicted": 420,
+        "protein_predicted": 30.0,
+        "fat_predicted": 22.0,
+        "carbs_predicted": 30.0,
+        "confidence": 88,
+        "pros": "Хорошее распознавание рыбы и гарнира",
+        "cons": "Не распознала оливковое масло. Небольшая недооценка калорийности",
+        "recommendations": "Подходит для рыбных блюд с простым гарниром"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4.5,
+        "pro_mae_pct": 6.3,
+        "fat_mae_pct": 8.3,
+        "carbs_mae_pct": 7.1
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "15": {
+      "dish_id": "15",
+      "dish_name": "Завтрак: ряженка, хлеб, яйцо, яблоко",
+      "image_file": "15. ряженка яблоко хлеб.jpg",
+      "gold_standard": {
+        "calories": 290.0,
+        "protein_g": 12.0,
+        "fat_g": 10.0,
+        "carbs_g": 38.0,
+        "fiber_g": 5.0,
+        "ndi": 7.5,
+        "ingredients": [
+          "ряженка 4%",
+          "яблоко",
+          "хлеб цельнозерновой",
+          "яйцо вареное"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "ряженка (бутылка)",
+          "яйцо вареное",
+          "яблоко",
+          "хлеб черный/отрубной"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 310,
+        "protein_predicted": 14.0,
+        "fat_predicted": 11.0,
+        "carbs_predicted": 40.0,
+        "confidence": 96,
+        "pros": "Идеальное распознавание благодаря четким объектам и читаемой этикетке на бутылке",
+        "cons": "Минимальные погрешности в оценке калорийности",
+        "recommendations": "Отличный результат для простых завтраков с упакованными продуктами"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 6.9,
+        "pro_mae_pct": 16.7,
+        "fat_mae_pct": 10.0,
+        "carbs_mae_pct": 5.3
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    }
+  }
+}

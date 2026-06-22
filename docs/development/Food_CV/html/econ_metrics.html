@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экономика, метрики и оптимизация</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 40px;
+            font-size: 12px;
+        }
+        .top-nav a { color: #555; text-decoration: none; font-weight: 500; white-space: nowrap; }
+        .top-nav a:hover { color: #2e7d32; }
+        .top-nav .logo-nav { font-weight: 700; color: #2e7d32; font-size: 13px; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .column-rd { background: #e3f2fd; padding: 16px; border-radius: 8px; }
+        .column-production { background: #e8f5e9; padding: 16px; border-radius: 8px; }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .icon {
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li {
+            padding: 6px 0; padding-left: 20px;
+            position: relative; font-size: 14px;
+        }
+        ul li:before { content: "•"; position: absolute; left: 0; color: #666; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px; border-radius: 12px;
+            font-size: 12px; font-weight: 600;
+            margin-top: 12px;
+        }
+        .badge-capex { background: #bbdefb; color: #1976d2; }
+        .badge-opex { background: #c8e6c9; color: #388e3c; }
+
+        .highlight-box {
+            background: #fff3e0; padding: 12px; border-radius: 8px;
+            margin-top: 16px; font-size: 14px; border-left: 4px solid #ff9800;
+        }
+
+        .metrics-list { display: flex; flex-direction: column; gap: 12px; }
+        .metric-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px; background: #f8f9fa; border-radius: 8px;
+        }
+        .metric-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+        .metric-content { flex: 1; }
+        .metric-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .metric-desc { font-size: 12px; color: #666; }
+
+        .unit-economy { display: flex; flex-direction: column; gap: 16px; }
+        .unit-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 12px; background: #f8f9fa; border-radius: 8px;
+        }
+        .unit-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .unit-content { flex: 1; }
+        .unit-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .unit-value { font-size: 13px; color: #666; }
+
+        .chart-container { position: relative; width: 100%; margin-top: 20px; }
+        .chart { width: 100%; height: auto; display: block; }
+
+        .conclusion { text-align: center; padding: 40px 20px; }
+        .trophy { font-size: 64px; margin-bottom: 20px; }
+        .conclusion-text {
+            font-size: 16px; line-height: 1.6;
+            color: #2c3e50; font-weight: 500;
+        }
+
+        .footer {
+            background: white; border-radius: 12px;
+            padding: 20px; margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        .footer-title { font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .link-item {
+            display: flex; flex-direction: column;
+            padding: 12px; background: #f8f9fa; border-radius: 8px;
+            text-decoration: none; color: inherit;
+            transition: background 0.2s;
+        }
+        .link-item:hover { background: #e9ecef; }
+        .link-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .link-url { font-size: 12px; color: #666; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .two-columns { grid-template-columns: 1fr; }
+            .links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+  <span class="logo-nav">Healora</span>
+  <a href="index.html">Рационы</a>
+  <a href="comparative.html">CV Benchmark</a>
+  <a href="zozh_modules.html">Модули ЗОЖ</a>
+  <a href="agent_kb_update.html">Агент БЗ</a>
+  <a href="digital-twin-slide.html">Digital Twin</a>
+  <a href="agent_orchestrator.html">Оркестратор</a>
+  <a href="econ_metrics.html" style="color:#2e7d32;font-weight:700;">Экономика</a>
+</div>
+
+<div class="container">
+    <h1>Экономика, метрики и оптимизация</h1>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-title">Две основные части затрат</div>
+            <div class="two-columns">
+                <div class="column-rd">
+                    <div class="column-header">
+                        <div class="icon"><svg viewBox="0 0 20 20" width="20" height="20"><path d="M6 2v6l-4 4v2h16v-2l-4-4V2H6z" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 14v4M8 18h4" stroke="#1976d2" stroke-width="1.5"/></svg></div>
+                        <span>R&D (разработка)</span>
+                    </div>
+                    <ul>
+                        <li>Обучение моделей</li>
+                        <li>Разметка данных</li>
+                        <li>Эксперименты</li>
+                        <li>Сбор доказательной информации</li>
+                        <li>Изучение моделей командой ML</li>
+                    </ul>
+                    <span class="badge badge-capex">CAPEX (разовые / периодические)</span>
+                </div>
+                <div class="column-production">
+                    <div class="column-header">
+                        <div class="icon"><svg viewBox="0 0 20 20" width="20" height="20"><circle cx="10" cy="7" r="4" fill="none" stroke="#388e3c" stroke-width="1.5"/><path d="M4 18c0-4 2.7-6 6-6s6 2 6 6" fill="none" stroke="#388e3c" stroke-width="1.5"/></svg></div>
+                        <span>Production (эксплуатация)</span>
+                    </div>
+                    <ul>
+                        <li>API LLM или GPU-инференс</li>
+                        <li>Embeddings, Vector DB</li>
+                        <li>Инфраструктура и мониторинг</li>
+                        <li>Поддержка и масштабирование</li>
+                    </ul>
+                    <span class="badge badge-opex">OPEX (растёт с пользователями)</span>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <strong>Главная особенность</strong> — себестоимость масштабируется с нагрузкой, а не фиксирована, как в SaaS.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Пример Unit-экономики</div>
+            <div class="unit-economy">
+                <div class="unit-item">
+                        <div class="unit-icon" style="background: #e3f2fd;"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 4h16v12H8l-4 4V4z" fill="none" stroke="#1565c0" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+                    <div class="unit-content">
+                        <div class="unit-title">1 запрос</div>
+                        <div class="unit-value">≈ 1.55 ₽ (LLM + RAG + инфраструктура)</div>
+                    </div>
+                </div>
+                <div class="unit-item">
+                        <div class="unit-icon" style="background: #e8f5e9;"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="8" r="4" fill="none" stroke="#2e7d32" stroke-width="1.5"/><path d="M4 22c0-5.5 3.6-8 8-8s8 2.5 8 8" fill="none" stroke="#2e7d32" stroke-width="1.5"/></svg></div>
+                    <div class="unit-content">
+                        <div class="unit-title">Пользователь (300 запросов/мес)</div>
+                        <div class="unit-value">≈ 46.5 ₽ себестоимость</div>
+                    </div>
+                </div>
+                <div class="unit-item">
+                        <div class="unit-icon" style="background: #fff3e0;"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8" fill="none" stroke="#e65100" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#e65100" stroke-width="1.5"/></svg></div>
+                    <div class="unit-content">
+                        <div class="unit-title">Цена 499 ₽/мес</div>
+                        <div class="unit-value">Маржа ~85% (падает при росте активности пользователей)</div>
+                    </div>
+                </div>
+                <div class="unit-item">
+                        <div class="unit-icon" style="background: #f3e5f5;"><svg viewBox="0 0 24 24" width="22" height="22"><polygon points="12,3 20,10 16,21 8,21 4,10" fill="none" stroke="#7b1fa2" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+                    <div class="unit-content">
+                        <div class="unit-title">Цена 1499 ₽/мес</div>
+                        <div class="unit-value">Маржа ~95%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="grid-column:1/-1;">
+            <div class="card-title">Маржа: один пользователь vs клиентская база</div>
+            <div class="chart-container">
+                <svg class="chart" viewBox="0 0 440 370" preserveAspectRatio="xMidYMid meet">
+                    <line x1="50" y1="55" x2="50" y2="286" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="286" x2="420" y2="286" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="101" x2="420" y2="101" stroke="#eee" stroke-width="1"/>
+                    <line x1="50" y1="147" x2="420" y2="147" stroke="#eee" stroke-width="1"/>
+                    <line x1="50" y1="194" x2="420" y2="194" stroke="#eee" stroke-width="1"/>
+                    <line x1="143" y1="55" x2="143" y2="286" stroke="#eee" stroke-width="1"/>
+                    <line x1="235" y1="55" x2="235" y2="286" stroke="#eee" stroke-width="1"/>
+                    <line x1="328" y1="55" x2="328" y2="286" stroke="#eee" stroke-width="1"/>
+                    <line x1="420" y1="55" x2="420" y2="286" stroke="#eee" stroke-width="1"/>
+                    <text x="42" y="61" font-size="18" text-anchor="end">100%</text>
+                    <text x="42" y="107" font-size="18" text-anchor="end">80%</text>
+                    <text x="42" y="153" font-size="18" text-anchor="end">60%</text>
+                    <text x="42" y="200" font-size="18" text-anchor="end">40%</text>
+                    <text x="42" y="292" font-size="18" text-anchor="end">0%</text>
+                    <text x="50" y="312" font-size="16" text-anchor="middle">0</text>
+                    <text x="143" y="312" font-size="16" text-anchor="middle">5K</text>
+                    <text x="235" y="312" font-size="16" text-anchor="middle">10K</text>
+                    <text x="328" y="312" font-size="16" text-anchor="middle">15K</text>
+                    <text x="420" y="312" font-size="16" text-anchor="middle">20K</text>
+                    <text x="235" y="340" font-size="16" text-anchor="middle" fill="#666">Запросов</text>
+                    <polyline points="50,101 143,109 235,119 328,130 420,138" fill="none" stroke="#e53935" stroke-width="2.5"/>
+                    <polyline points="50,101 143,135 235,164 328,191 420,214" fill="none" stroke="#e53935" stroke-width="2" stroke-dasharray="6,4"/>
+                    <polyline points="50,101 143,93 235,85 328,76 420,68" fill="none" stroke="#2196f3" stroke-width="2.5"/>
+                    <polyline points="50,101 143,98 235,96 328,93 420,90" fill="none" stroke="#2196f3" stroke-width="2" stroke-dasharray="6,4"/>
+                    <rect x="275" y="8" width="12" height="8" fill="#e53935"/>
+                    <text x="290" y="24" font-size="14" fill="#555">один (опт.)</text>
+                    <line x1="275" y1="40" x2="287" y2="40" stroke="#e53935" stroke-width="2" stroke-dasharray="4,3"/>
+                    <text x="290" y="50" font-size="14" fill="#555">один (баз.)</text>
+                    <rect x="50" y="8" width="12" height="8" fill="#2196f3"/>
+                    <text x="65" y="24" font-size="14" fill="#555">база (опт.)</text>
+                    <line x1="50" y1="40" x2="62" y2="40" stroke="#2196f3" stroke-width="2" stroke-dasharray="4,3"/>
+                    <text x="65" y="50" font-size="14" fill="#555">база (баз.)</text>
+                </svg>
+            </div>
+            <div style="margin-top:12px;font-size:12px;color:#555;line-height:1.5;padding:10px;background:#f8f9fa;border-radius:6px;">
+                <strong>Эффект оптимизации:</strong> кэширование типовых вопросов в RAG и оркестрация COMPUTE удерживают маржу на пользователе, а накопление кэша по всей клиентской базе повышает общую доходность платформы.
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-title">Ключевые метрики</div>
+            <div class="metrics-list">
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #e3f2fd;"><svg viewBox="0 0 24 24" width="22" height="22"><text x="12" y="17" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">T</text></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Стоимость 1k токенов</div>
+                        <div class="metric-desc">Базовая стоимость использования модели</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #e8f5e9;"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="9" cy="8" r="3" fill="none" stroke="#2e7d32" stroke-width="1.5"/><circle cx="17" cy="8" r="3" fill="none" stroke="#2e7d32" stroke-width="1.5"/><path d="M3 20c0-3.3 2.7-5 6-5" fill="none" stroke="#2e7d32" stroke-width="1.5"/><path d="M15 15c3.3 0 6 1.7 6 5" fill="none" stroke="#2e7d32" stroke-width="1.5"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Tokens per user</div>
+                        <div class="metric-desc">Среднее количество токенов на пользователя в месяц</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #fff3e0;"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 4h16v12H8l-4 4V4z" fill="none" stroke="#e65100" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Cost per session</div>
+                        <div class="metric-desc">Себестоимость одной сессии / запроса</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #f3e5f5;"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="4" y="14" width="4" height="6" fill="none" stroke="#7b1fa2" stroke-width="1.5" rx="1"/><rect x="10" y="10" width="4" height="10" fill="none" stroke="#7b1fa2" stroke-width="1.5" rx="1"/><rect x="16" y="6" width="4" height="14" fill="none" stroke="#7b1fa2" stroke-width="1.5" rx="1"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">ARPU</div>
+                        <div class="metric-desc">Средняя выручка на пользователя</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #fce4ec;"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8" fill="none" stroke="#c62828" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="#c62828" stroke-width="1.5"/><circle cx="12" cy="12" r="1.5" fill="#c62828"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">LTV / CAC</div>
+                        <div class="metric-desc">Ценность пользователя к стоимости привлечения</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Основные способы оптимизации</div>
+            <div class="metrics-list">
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #e3f2fd;"><svg viewBox="0 0 24 24" width="22" height="22"><ellipse cx="12" cy="7" rx="8" ry="3" fill="none" stroke="#1565c0" stroke-width="1.5"/><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7" fill="none" stroke="#1565c0" stroke-width="1.5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" fill="none" stroke="#1565c0" stroke-width="1.5"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Кэширование</div>
+                        <div class="metric-desc">Кэш ответов, эмбеддингов, частых запросов</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #e8f5e9;"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 4l12 16M18 4L6 20" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Снижение токенов</div>
+                        <div class="metric-desc">Оптимизация промптов, сжатие контекста, фильтрация</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #fff3e0;"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 4l8 8-8 8" fill="none" stroke="#e65100" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4h4v16h-4" fill="none" stroke="#e65100" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Routing между моделями</div>
+                        <div class="metric-desc">Использование small-моделей для простых задач, big — только при необходимости</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #f3e5f5;"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="10" cy="10" r="6" fill="none" stroke="#7b1fa2" stroke-width="1.5"/><path d="M14.5 14.5L20 20" stroke="#7b1fa2" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Оптимизация RAG</div>
+                        <div class="metric-desc">Лучший поиск, ранжирование, минимизация контекста</div>
+                    </div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-icon" style="background: #fce4ec;"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 4a8 8 0 018 8" fill="none" stroke="#c62828" stroke-width="1.5" stroke-linecap="round"/><path d="M17 4l3 3-3 3" stroke="#c62828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20a8 8 0 01-8-8" fill="none" stroke="#c62828" stroke-width="1.5" stroke-linecap="round"/><path d="M7 20l-3-3 3-3" stroke="#c62828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="metric-content">
+                        <div class="metric-name">Преиспользование рекомендаций</div>
+                        <div class="metric-desc">Сохранение ответов и контента в RAG для повторного использования</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Вывод</div>
+            <div class="conclusion">
+                <div class="trophy"><svg viewBox="0 0 48 48" width="48" height="48"><path d="M16 6h16v6c0 5-3 10-8 10s-8-5-8-10V6z" fill="none" stroke="#f5a623" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 12c-4 0-7 2-7 5s3 3 7 3" fill="none" stroke="#f5a623" stroke-width="2"/><path d="M32 12c4 0 7 2 7 5s-3 3-7 3" fill="none" stroke="#f5a623" stroke-width="2"/><path d="M24 22v8M20 34h8l2 8H18l2-8z" stroke="#f5a623" stroke-width="2" stroke-linejoin="round"/></svg></div>
+                <div class="conclusion-text">
+                    Прибыльность AI-продукта напрямую зависит от контроля вычислительных затрат и эффективности использования моделей.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-title">
+            <svg viewBox="0 0 20 20" width="18" height="18" style="margin-right:6px;"><path d="M4 3h12v14H4z" fill="none" stroke="#333" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 3v14M4 8h12M4 12h12" stroke="#333" stroke-width="1.2"/></svg>
+            <span>Полезные ссылки</span>
+        </div>
+        <div class="links">
+            <a href="https://openai.com/pricing" class="link-item" target="_blank">
+                <div class="link-name">OpenAI Pricing</div>
+                <div class="link-url">openai.com/pricing</div>
+            </a>
+            <a href="https://anthropic.com/pricing" class="link-item" target="_blank">
+                <div class="link-name">Anthropic Pricing</div>
+                <div class="link-url">anthropic.com/pricing</div>
+            </a>
+            <a href="https://pinecone.io/pricing" class="link-item" target="_blank">
+                <div class="link-name">Pinecone (Vector DB)</div>
+                <div class="link-url">pinecone.io/pricing</div>
+            </a>
+            <a href="https://aws.amazon.com/calculator" class="link-item" target="_blank">
+                <div class="link-name">AWS Pricing Calculator</div>
+                <div class="link-url">aws.amazon.com/calculator</div>
+            </a>
+            <a href="https://huggingface.co/models" class="link-item" target="_blank">
+                <div class="link-name">Hugging Face Models</div>
+                <div class="link-url">huggingface.co/models</div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

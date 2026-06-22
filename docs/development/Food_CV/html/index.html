@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сравнительный нутрициологический анализ рационов | Healora</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      height: 40px;
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+    .top-nav a {
+      color: #555;
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .top-nav a:hover { color: #2e7d32; }
+    .top-nav .logo-nav { font-weight: 700; color: #2e7d32; font-size: 13px; }
+    body {
+      font-family: 'Segoe UI', -apple-system, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a1a;
+      padding: 0;
+    }
+    h1 {
+      font-size: 22px;
+      color: #311b92;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: #757575;
+      margin-bottom: 24px;
+    }
+    .table-container {
+      overflow-x: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 900px;
+    }
+    thead th {
+      background: #311b92;
+      color: white;
+      padding: 12px 10px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    thead th:first-child { border-radius: 12px 0 0 0; }
+    thead th:last-child { border-radius: 0 12px 0 0; }
+    tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.2s;
+    }
+    tbody tr:hover { background: #fafafa; }
+    tbody tr:last-child { border-bottom: none; }
+    td {
+      padding: 12px 10px;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .ndi-cell {
+      text-align: center;
+      width: 80px;
+      min-width: 80px;
+    }
+    .ndi-score {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+    .ndi-value {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .ndi-label {
+      font-size: 8px;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+    .ndi-status {
+      font-size: 9px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .dish-cell { width: 220px; min-width: 220px; }
+    .dish-content {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .dish-photo {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f5f5f5;
+    }
+    .dish-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .dish-info {
+      flex: 1;
+    }
+    .dish-info strong {
+      font-size: 13px;
+      color: #1a1a1a;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .dish-meta {
+      font-size: 9px;
+      color: #757575;
+      margin-bottom: 4px;
+    }
+    .dish-ingredients {
+      font-size: 10px;
+      color: #666;
+      line-height: 1.4;
+    }
+    .nutri-cell {
+      width: 150px;
+      min-width: 150px;
+    }
+    .cal-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #311b92;
+    }
+    .bju-value {
+      font-size: 11px;
+      color: #555;
+      margin-top: 2px;
+    }
+    .fiber-value {
+      font-size: 10px;
+      color: #888;
+      margin-top: 2px;
+    }
+    .pros-cell, .cons-cell, .recs-cell {
+      font-size: 11px;
+      min-width: 200px;
+    }
+    .pros-cell { color: #2e7d32; }
+    .cons-cell { color: #c62828; }
+    .recs-cell { color: #1565c0; }
+    .footer {
+      margin-top: 20px;
+      font-size: 11px;
+      color: #999;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      table { font-size: 10px; }
+      td { padding: 8px 6px; }
+      .dish-photo { width: 40px; height: 40px; min-width: 40px; }
+      .dish-info strong { font-size: 11px; }
+    }
+    .content { padding: 20px; }
+  </style>
+</head>
+<body>
+<div class="top-nav">
+  <span class="logo-nav">Healora</span>
+  <a href="index.html">Рационы</a>
+  <a href="comparative.html">CV Benchmark</a>
+  <a href="zozh_modules.html">Модули ЗОЖ</a>
+  <a href="agent_kb_update.html">Агент БЗ</a>
+  <a href="digital-twin-slide.html">Digital Twin</a>
+  <a href="agent_orchestrator.html">Оркестратор</a>
+  <a href="econ_metrics.html">Экономика</a>
+</div>
+  <div class="content">
+  <h1>Сравнительный нутрициологический анализ рационов</h1>
+  <div class="subtitle">Healora Food CV — 23 блюд • Дата анализа: 2026-06-14</div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>NDI (Health Score)</th>
+          <th>Название и состав блюда</th>
+          <th>Калорийность и БЖУ</th>
+          <th>Плюсы с точки зрения нутрициологии</th>
+          <th>Минусы и риски</th>
+          <th>Рекомендации по оптимизации</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">6.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/01. котлеты с макаронами и салат.jpg" alt="Котлеты с макаронами и салат" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Котлеты с макаронами и салат</strong>
+        <div class="dish-meta">обед | мясное, обед, горячее, сытное</div>
+        <div class="dish-ingredients">котлеты мясные (говядина/свинина), макароны из пшеницы, помидоры, огурцы, листья салата, растительное масло, лук</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~580 ккал</div>
+    <div class="bju-value">Б: 24 г | Ж: 26 г | У: 60 г</div>
+    <div class="fiber-value">Клетчатка: 4 г</div>
+  </td>
+  <td class="pros-cell">Хорошее количество белка; присутствие свежих овощей помогает усвоению тяжелой мясной пищи.</td>
+  <td class="cons-cell">Макароны, скорее всего, из мягких сортов пшеницы; котлеты содержат скрытый жир (и, возможно, белый хлеб в фарше).</td>
+  <td class="recs-cell">Выбирать макароны строго из твердых сортов (Al Dente); запекать котлеты в духовке, а не жарить; уменьшить порцию углеводов.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">7</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/02. обед с фруктами и мантами.jpg" alt="Обед с фруктами и мантами" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Обед с фруктами и мантами</strong>
+        <div class="dish-meta">обед | мясное, обед, азиатская, паровое</div>
+        <div class="dish-ingredients">манты с мясом и луком, яблоко, виноград, помидоры, огурцы, зелень</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~580 ккал</div>
+    <div class="bju-value">Б: 28 г | Ж: 20 г | У: 65 г</div>
+    <div class="fiber-value">Клетчатка: 7 г</div>
+  </td>
+  <td class="pros-cell">Разнообразие продуктов; мясо в мантах — источник белка; фрукты дают витамины и клетчатку.</td>
+  <td class="cons-cell">Тесто мантов — быстрые углеводы; виноград — высокий ГИ; сочетание теста+мяса — тяжелое для пищеварения.</td>
+  <td class="recs-cell">Уменьшить количество мантов до 3-4 шт; заменить виноград на ягоды с низким ГИ; добавить овощи вместо фруктов.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#ffebee;color:#c62828;border:2px solid #c62828">
+      <span class="ndi-value">4.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#c62828">(Низкий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/03. сосиски с оливье.jpg" alt="Сосиски с оливье" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Сосиски с оливье</strong>
+        <div class="dish-meta">обед | мясное, обед, быстрое, салат</div>
+        <div class="dish-ingredients">сосиски молочные, картофель, морковь, горошек консервированный, яйца, майонез, солёные огурцы</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~520 ккал</div>
+    <div class="bju-value">Б: 18 г | Ж: 30 г | У: 42 г</div>
+    <div class="fiber-value">Клетчатка: 3 г</div>
+  </td>
+  <td class="pros-cell">Быстрое приготовление; знакомый вкус; содержит яйца и горошек (витамины группы B).</td>
+  <td class="cons-cell">Избыток насыщенных жиров (майонез + сосиски); дефицит клетчатки; переработанное мясо; много соли.</td>
+  <td class="recs-cell">Заменить майонез на греческий йогурт с горчицей; заменить сосиски на отварную курицу; добавить свежие овощи.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">8</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/_04. яишница с овощами.jpg" alt="Яичница с овощами" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Яичница с овощами</strong>
+        <div class="dish-meta">завтрак | завтрак, вегетарианское, быстрое, низкоуглеводное</div>
+        <div class="dish-ingredients">яйца куриные (2 шт), помидоры, болгарский перец, лук, зелень, растительное масло</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~280 ккал</div>
+    <div class="bju-value">Б: 20 г | Ж: 18 г | У: 8 г</div>
+    <div class="fiber-value">Клетчатка: 3 г</div>
+  </td>
+  <td class="pros-cell">Отличный стартовый белок и жиры из яичного желтка для долгой сытости; обилие свежих сезонных овощей.</td>
+  <td class="cons-cell">Жарка яиц на масле добавляет лишние насыщенные жиры; для полноценного завтрака не хватает сложных углеводов.</td>
+  <td class="recs-cell">Добавить цельнозерновой тост; использовать оливковое масло extra virgin; добавить авокадо для полезных жиров.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">8.2</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/05. гречка с котлетой.jpg" alt="Гречка с котлетой" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Гречка с котлетой</strong>
+        <div class="dish-meta">обед | мясное, обед, русская, высокобелковое</div>
+        <div class="dish-ingredients">гречневая крупа, котлета мясная (говядина), лук, морковь, растительное масло, зелень</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~490 ккал</div>
+    <div class="bju-value">Б: 30 г | Ж: 16 г | У: 48 г</div>
+    <div class="fiber-value">Клетчатка: 6 г</div>
+  </td>
+  <td class="pros-cell">Гречка — лучший гарнир с низким ГИ и высоким содержанием клетчатки; котлета — полноценный белок.</td>
+  <td class="cons-cell">Не хватает свежих овощей для полной гарвардской тарелки; жарка котлеты добавляет насыщенные жиры.</td>
+  <td class="recs-cell">Добавить порцию свежих овощей (салат, помидоры); приготовить котлету на пару или запечь; добавить квашеную капусту.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">9</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/06. киноа с курице брокколи.jpg" alt="Киноа с курицей и брокколи" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Киноа с курицей и брокколи</strong>
+        <div class="dish-meta">обед | мясное, обед, диетическое, высокобелковое, пп</div>
+        <div class="dish-ingredients">киноа, куриное филе, брокколи, оливковое масло, чеснок, специи</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~450 ккал</div>
+    <div class="bju-value">Б: 38 г | Ж: 12 г | У: 38 г</div>
+    <div class="fiber-value">Клетчатка: 8 г</div>
+  </td>
+  <td class="pros-cell">Киноа — полный аминокислотный профиль; куриная грудка — постный белок; брокколи — мощный антиоксидант (сульфорафан).</td>
+  <td class="cons-cell">Практически идеальное блюдо; можно добавить полезные жиры для лучшего усвоения жирорастворимых витаминов.</td>
+  <td class="recs-cell">Добавить авокадо или оливковое масло; приправить куркумой с чёрным перцем; добавить лимонный сок.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">8.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/07 овощи с йогуртом.jpg" alt="Овощи с йогуртом" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Овощи с йогуртом</strong>
+        <div class="dish-meta">перекус | перекус, вегетарианское, лёгкое, быстрое, пробиотики</div>
+        <div class="dish-ingredients">йогурт натуральный, морковь, огурец, болгарский перец, чеснок, зелень, соль</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~180 ккал</div>
+    <div class="bju-value">Б: 12 г | Ж: 6 г | У: 16 г</div>
+    <div class="fiber-value">Клетчатка: 5 г</div>
+  </td>
+  <td class="pros-cell">Много овощей с клетчаткой; пробиотики из йогурта; низкая калорийность; отличный перекус.</td>
+  <td class="cons-cell">Недостаточно белка для самостоятельного приёма пищи; мало полезных жиров.</td>
+  <td class="recs-cell">Использовать греческий йогурт для большего содержания белка; добавить семена льна или чиа для омега-3.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">8</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/08. оливки гречка фасоль.jpg" alt="Оливки, гречка, фасоль" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Оливки, гречка, фасоль</strong>
+        <div class="dish-meta">обед | обед, вегетарианское, постное, высококлетчаточное</div>
+        <div class="dish-ingredients">гречневая крупа, стручковая фасоль, оливки зелёные, оливковое масло, чеснок, лимон, петрушка</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~360 ккал</div>
+    <div class="bju-value">Б: 14 г | Ж: 14 г | У: 42 г</div>
+    <div class="fiber-value">Клетчатка: 9 г</div>
+  </td>
+  <td class="pros-cell">Высокое содержание клетчатки; полезные мононенасыщенные жиры из оливок; растительный белок.</td>
+  <td class="cons-cell">Маловато белка для обеда; натрий из оливок — умеренно высокий; отсутствие животного белка может не дать длительного насыщения.</td>
+  <td class="recs-cell">Добавить нут или тофу для увеличения белка; подавать с яйцом-пашот; посыпать тыквенными семечками.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">8.8</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/09. авокадо шпинат горошек.jpg" alt="Авокадо, шпинат, горошек" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Авокадо, шпинат, горошек</strong>
+        <div class="dish-meta">обед | обед, вегетарианское, низкоуглеводное, сыроедческое</div>
+        <div class="dish-ingredients">авокадо, шпинат свежий, горошек зелёный, оливковое масло, лимонный сок, кунжут, соль морская</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~340 ккал</div>
+    <div class="bju-value">Б: 10 г | Ж: 26 г | У: 18 г</div>
+    <div class="fiber-value">Клетчатка: 12 г</div>
+  </td>
+  <td class="pros-cell">Очень высокая nutritional density; полезные мононенасыщенные жиры авокадо; рекордное содержание клетчатки (12 г).</td>
+  <td class="cons-cell">Крайне недостаточно белка (10 г); высокая калорийность за счёт жиров может быть неочевидна.</td>
+  <td class="recs-cell">Добавить киноа или нут для полноценного белка; подавать с яйцом пашот; посыпать семенами чиа.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">6</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/10. котлеты макароны лук томат.jpg" alt="Котлеты, макароны, лук, томат" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Котлеты, макароны, лук, томат</strong>
+        <div class="dish-meta">обед | мясное, обед, русская, сытное</div>
+        <div class="dish-ingredients">котлеты мясные (говядина), макароны, лук репчатый, томаты в собственном соку, чеснок, растительное масло, зелень</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~580 ккал</div>
+    <div class="bju-value">Б: 30 г | Ж: 24 г | У: 54 г</div>
+    <div class="fiber-value">Клетчатка: 4 г</div>
+  </td>
+  <td class="pros-cell">Хороший источник белка; ликопин из томатов — мощный антиоксидант; кверцетин из лука — противовоспалительное.</td>
+  <td class="cons-cell">Высокая гликемическая нагрузка из-за макарон; недостаток овощей; жарка котлет добавляет насыщенные жиры.</td>
+  <td class="recs-cell">Уменьшить порцию макарон, увеличить овощи; использовать макароны из твёрдых сортов; котлеты запекать.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">7.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/11. ряженка яблоко хлеб.jpg" alt="Ряженка, яблоко, хлеб" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Ряженка, яблоко, хлеб</strong>
+        <div class="dish-meta">завтрак | завтрак, вегетарианское, быстрое, лёгкое, молочное</div>
+        <div class="dish-ingredients">ряженка 4%, яблоко, хлеб цельнозерновой, мёд (опционально), корица</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~290 ккал</div>
+    <div class="bju-value">Б: 12 г | Ж: 10 г | У: 38 г</div>
+    <div class="fiber-value">Клетчатка: 5 г</div>
+  </td>
+  <td class="pros-cell">Пробиотики из ряженки; клетчатка из яблока и хлеба; быстрый и лёгкий завтрак; кальций для костей.</td>
+  <td class="cons-cell">Недостаточно белка для завтрака; углеводный перекос; мёд добавляет лишний сахар.</td>
+  <td class="recs-cell">Добавить горсть орехов или семян для белка и жиров; выбрать хлеб с семечками; заменить мёд на ягоды.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">8.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/12. 20260219_204535.jpg" alt="Ужин (фото 20260219_204535)" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Ужин (фото 20260219_204535)</strong>
+        <div class="dish-meta">ужин | мясное, ужин, диетическое, высокобелковое, азиатская</div>
+        <div class="dish-ingredients">куриное филе, рис бурый, брокколи, морковь, чеснок, соевый соус, кунжутное масло</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~420 ккал</div>
+    <div class="bju-value">Б: 34 г | Ж: 10 г | У: 40 г</div>
+    <div class="fiber-value">Клетчатка: 6 г</div>
+  </td>
+  <td class="pros-cell">Высокое содержание постного белка; бурый рис — медленные углеводы; брокколи — сульфорафан и клетчатка.</td>
+  <td class="cons-cell">Маловато жиров для полноценного усвоения жирорастворимых витаминов; соевый соус — много натрия.</td>
+  <td class="recs-cell">Добавить авокадо или кунжутное масло; заменить соевый соус на тамари (без глютена); добавить куркуму.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">9.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/13. гарвардская тарелка.jpg" alt="Гарвардская тарелка" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Гарвардская тарелка</strong>
+        <div class="dish-meta">обед | обед, диетическое, сбалансированное, высокобелковое, пп</div>
+        <div class="dish-ingredients">куриное филе, киноа, брокколи, помидоры черри, авокадо, листья салата, оливковое масло, лимонный сок</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~480 ккал</div>
+    <div class="bju-value">Б: 35 г | Ж: 18 г | У: 35 г</div>
+    <div class="fiber-value">Клетчатка: 10 г</div>
+  </td>
+  <td class="pros-cell">Эталон Гарвардской тарелки; идеальный баланс БЖУ; полный спектр витаминов и антиоксидантов; высокая клетчатка.</td>
+  <td class="cons-cell">Практически идеально; может не хватать ферментированных продуктов для микробиома.</td>
+  <td class="recs-cell">Добавить ферментированные овощи (кимчи, квашеная капуста); посыпать тыквенными семечками для цинка.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#ffebee;color:#c62828;border:2px solid #c62828">
+      <span class="ndi-value">4.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#c62828">(Низкий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/14. rulka.jpg" alt="Рулька" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Рулька</strong>
+        <div class="dish-meta">ужин | мясное, обед, русская, сытное, праздничное</div>
+        <div class="dish-ingredients">свиная рулька, картофель, морковь, лук, чеснок, лавровый лист, специи, горчица</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~750-900 ккал</div>
+    <div class="bju-value">Б: 45 г | Ж: 65 г | У: 8 г</div>
+    <div class="fiber-value">Клетчатка: 3 г</div>
+  </td>
+  <td class="pros-cell">Высокое содержание белка и коллагена; наличие свежей зелени и овощей несколько облегчает пищеварение.</td>
+  <td class="cons-cell">Огромное количество насыщенных жиров и общая высокая калорийность блюда; сильная нагрузка на печень и поджелудочную.</td>
+  <td class="recs-cell">Срезать жирную кожуру перед употреблением; контролировать размер порции мяса (не более 150 г); утроить порцию овощей.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">9.2</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/15. сибас.jpg" alt="Сибас" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Сибас</strong>
+        <div class="dish-meta">ужин | рыбное, обед, диетическое, высокобелковое, паровое</div>
+        <div class="dish-ingredients">сибас (морской окунь), лимон, розмарин, брокколи, черри, оливковое масло, чеснок, спаржа</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~380 ккал</div>
+    <div class="bju-value">Б: 34 г | Ж: 22 г | У: 10 г</div>
+    <div class="fiber-value">Клетчатка: 5 г</div>
+  </td>
+  <td class="pros-cell">Сибас — источник легкоусвояемого белка, фосфора и Омега-3 жирных кислот; минимальное количество жира при приготовлении.</td>
+  <td class="cons-cell">Практически идеальное блюдо; для полноценного приёма пищи можно добавить сложные углеводы.</td>
+  <td class="recs-cell">Подавать с киноа или бурым рисом; чередовать с другими видами рыбы (лосось, треска); использовать минимум соли.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">7.8</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/16. сибас.jpg" alt="Сибас (второе фото)" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Сибас (второе фото)</strong>
+        <div class="dish-meta">ужин | рыбное, обед, диетическое, высокобелковое, паровое</div>
+        <div class="dish-ingredients">сибас (морской окунь), картофель, сметана, укроп, лимон, сливочное масло, огурец</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~440 ккал</div>
+    <div class="bju-value">Б: 32 г | Ж: 24 г | У: 28 г</div>
+    <div class="fiber-value">Клетчатка: 3 г</div>
+  </td>
+  <td class="pros-cell">Качественный рыбный белок; Омега-3 из сибаса; витамин D.</td>
+  <td class="cons-cell">Картофельный гарнир повышает ГИ; сметанный соус добавляет насыщенные жиры; маловато овощей.</td>
+  <td class="recs-cell">Заменить картофель на запечённые овощи (цукини, баклажан); заменить сметану на греческий йогурт; добавить шпинат.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#ffebee;color:#c62828;border:2px solid #c62828">
+      <span class="ndi-value">5.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#c62828">(Низкий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/17.сельдь под шубой.jpg" alt="Сельдь под шубой" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Сельдь под шубой</strong>
+        <div class="dish-meta">обед | рыбное, обед, русская, праздничное, салат</div>
+        <div class="dish-ingredients">сельдь слабосолёная, свёкла, картофель, морковь, яйца, майонез, лук репчатый</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~350 ккал</div>
+    <div class="bju-value">Б: 16 г | Ж: 20 г | У: 24 г</div>
+    <div class="fiber-value">Клетчатка: 4 г</div>
+  </td>
+  <td class="pros-cell">Сельдь — рекордсмен по витамину D и Омега-3; свёкла — бетаин для печени и нитраты для сосудов.</td>
+  <td class="cons-cell">Майонез сводит пользу сельди на нет; много соли; недостаточно белка для основного блюда.</td>
+  <td class="recs-cell">Заменить майонез на смесь греческого йогурта с горчицей; добавить зелёное яблоко; сверху посыпать грецкими орехами.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">9.0</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/18. Лосось с авокадо и шпинатом.png" alt="Лосось с авокадо и шпинатом" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Лосось с авокадо и шпинатом</strong>
+        <div class="dish-meta">ужин | рыбное, ужин, омега-3, легкое</div>
+        <div class="dish-ingredients">лосось, авокадо, шпинат, лимон, оливковое масло, соль, перец, семена кунжута</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~420 ккал</div>
+    <div class="bju-value">Б: 32 г | Ж: 28 г | У: 8 г</div>
+    <div class="fiber-value">Клетчатка: 6 г</div>
+  </td>
+  <td class="pros-cell">Лосось — богатейший источник Омега-3 EPA/DHA; авокадо — мононенасыщенные жиры и калий; шпинат — железо и витамин K.</td>
+  <td class="cons-cell">Высокая калорийность за счёт жиров может быть неочевидна; для кого-то может быть слишком жирно.</td>
+  <td class="recs-cell">Подавать с киноа для углеводов; добавить лимонно-имбирную заправку; использовать дикий лосось для меньшего содержания токсинов.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#e8f5e9;color:#2e7d32;border:2px solid #2e7d32">
+      <span class="ndi-value">9.0</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#2e7d32">(Высокий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/19. Карри из нута с киноа и овощами.png" alt="Карри из нута с киноа и овощами" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Карри из нута с киноа и овощами</strong>
+        <div class="dish-meta">обед | вегетарианское, обед, высокобелковое, пряное</div>
+        <div class="dish-ingredients">нут, киноа, морковь, лук, томаты, кокосовое молоко, куркума, имбирь, чеснок, кинза</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~480 ккал</div>
+    <div class="bju-value">Б: 18 г | Ж: 16 г | У: 52 г</div>
+    <div class="fiber-value">Клетчатка: 12 г</div>
+  </td>
+  <td class="pros-cell">Богатое клетчаткой вегетарианское блюдо; нут + киноа = полный аминокислотный профиль; куркума — мощный противовоспалительный эффект.</td>
+  <td class="cons-cell">Растительный белок усваивается хуже животного; высокое содержание углеводов (52 г) может не подойти для низкоуглеводных диет.</td>
+  <td class="recs-cell">Добавить тофу или темпе для дополнительного белка; подавать с кинзой для детокса; добавить кокосовое молоко для кремовости.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">7.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/20. Борщ.png" alt="Борщ" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Борщ</strong>
+        <div class="dish-meta">обед | суп, обед, традиционное, овощное</div>
+        <div class="dish-ingredients">свёкла, капуста, картофель, морковь, лук, томатная паста, говядина, сметана, зелень, чеснок</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~320 ккал</div>
+    <div class="bju-value">Б: 22 г | Ж: 12 г | У: 28 г</div>
+    <div class="fiber-value">Клетчатка: 6 г</div>
+  </td>
+  <td class="pros-cell">Свёкла — антиоксиданты и нитраты для сосудов; говядина — гемовое железо; сметана — пробиотики; много овощей и клетчатки.</td>
+  <td class="cons-cell">Картофель повышает ГИ; сметана добавляет насыщенные жиры; может содержать много соли; долго варить.</td>
+  <td class="recs-cell">Уменьшить количество картофеля, добавить больше капусты; использовать сметану 10%; подавать с цельнозерновым хлебом.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#fff8e1;color:#f57f17;border:2px solid #f57f17">
+      <span class="ndi-value">7.8</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#f57f17">(Средний)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/21. Окрошка.png" alt="Окрошка" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Окрошка</strong>
+        <div class="dish-meta">обед | суп, обед, холодное, лёгкое</div>
+        <div class="dish-ingredients">кефир, редис, огурец, яйцо, картофель, зелень (укроп, петрушка), зелёный лук, сметана</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~250 ккал</div>
+    <div class="bju-value">Б: 14 г | Ж: 12 г | У: 18 г</div>
+    <div class="fiber-value">Клетчатка: 3 г</div>
+  </td>
+  <td class="pros-cell">Лёгкий холодный суп на кефире; пробиотики для микрофлоры; свежие овощи — витамины и клетчатка; низкая калорийность.</td>
+  <td class="cons-cell">Недостаточно белка для обеда (14 г); употребление холодной еды может замедлить пищеварение; мало жиров для сытости.</td>
+  <td class="recs-cell">Добавить отварное яйцо или курицу для белка; заменить кефир на тан/айран для разнообразия пробиотиков.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#ffebee;color:#c62828;border:2px solid #c62828">
+      <span class="ndi-value">4.5</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#c62828">(Низкий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/22. Гамбургер.png" alt="Гамбургер" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Гамбургер</strong>
+        <div class="dish-meta">обед | фастфуд, обед, мясное, сытное</div>
+        <div class="dish-ingredients">булочка, котлета говяжья, сыр, салат айсберг, помидор, лук, маринованные огурцы, соус</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~650 ккал</div>
+    <div class="bju-value">Б: 32 г | Ж: 36 г | У: 42 г</div>
+    <div class="fiber-value">Клетчатка: 2 г</div>
+  </td>
+  <td class="pros-cell">Говяжья котлета — хороший источник железа и цинка; сыр — кальций; есть овощи (салат, помидор, лук).</td>
+  <td class="cons-cell">Избыток насыщенных жиров; булочка из белой муки — быстрые углеводы; мало клетчатки; соусы содержат сахар.</td>
+  <td class="recs-cell">Заменить булочку на цельнозерновую или листья салада; добавить авокадо; выбрать котлету меньшего размера.</td>
+</tr><tr>
+  <td class="ndi-cell">
+    <div class="ndi-score" style="background:#ffebee;color:#c62828;border:2px solid #c62828">
+      <span class="ndi-value">5.0</span>
+      <span class="ndi-label">/ 10</span>
+    </div>
+    <div class="ndi-status" style="color:#c62828">(Низкий)</div>
+  </td>
+  <td class="dish-cell">
+    <div class="dish-content">
+      <div class="dish-photo">
+        <img src="../images/23. Плов.png" alt="Плов" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="dish-info">
+        <strong>Плов</strong>
+        <div class="dish-meta">обед | мясное, обед, традиционное, сытное</div>
+        <div class="dish-ingredients">рис, баранина, морковь, лук, чеснок, зира, растительное масло, соль, перец</div>
+      </div>
+    </div>
+  </td>
+  <td class="nutri-cell">
+    <div class="cal-value">~580 ккал</div>
+    <div class="bju-value">Б: 28 г | Ж: 24 г | У: 52 г</div>
+    <div class="fiber-value">Клетчатка: 3 г</div>
+  </td>
+  <td class="pros-cell">Баранина — железо, цинк, витамин B12; зира улучшает пищеварение; рис даёт энергию; морковь — бета-каротин.</td>
+  <td class="cons-cell">Высокая калорийность; избыток масла в традиционном рецепте; мало овощей; высокий ГИ из-за белого риса.</td>
+  <td class="recs-cell">Заменить белый рис на бурый; уменьшить количество масла; подавать с большим овощным салатом; использовать постную баранину.</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    Сгенерировано Healora AI • Источник: food_catalog.json • Фото: www/healora.ru/images/food/
+  </div>
+</div>
+</body>
+</html>

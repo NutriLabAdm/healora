@@ -1,0 +1,1041 @@
+{
+  "model_id": "gemini",
+  "model_name": "Gemini 2.0 Pro",
+  "model_title": "Gemini 2.5 Flash",
+  "date_created": "2026-06-14",
+  "date_updated": "2026-06-14",
+  "notes": "Gemini Flash 2.6 — 20 блюд (04-23), 01-03 pending",
+  "dishes": {
+    "01": {
+      "dish_id": "01",
+      "dish_name": "Котлеты с макаронами и салат",
+      "image_file": "01. котлеты с макаронами и салат.jpg",
+      "gold_standard": {},
+      "response": {
+        "ingredients_recognized": [
+          "котлеты мясные",
+          "макароны рожки",
+          "огурцы",
+          "помидоры",
+          "зелень",
+          "растительное масло"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 580,
+        "protein_predicted": 24.0,
+        "fat_predicted": 26.0,
+        "carbs_predicted": 60.0,
+        "confidence": 95,
+        "pros": "Идеальная сегментация раздельных тарелок; точное определение типа макаронных изделий и состава салата.",
+        "cons": "Невозможно без химического анализа определить точное соотношение видов мяса в фарше (говядина/свинина/птица).",
+        "recommendations": "Отличный вариант для разбора стандартных домашних обедов; для повышения точности БЖУ добавить текстовый ввод типа мяса."
+      },
+      "calculated_metrics": {},
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "02": {
+      "dish_id": "01",
+      "dish_name": "Котлеты с макаронами и салат",
+      "image_file": "01. котлеты с макаронами и салат.jpg",
+      "gold_standard": {},
+      "response": {
+        "ingredients_recognized": [
+          "котлеты мясные",
+          "макароны рожки",
+          "огурцы",
+          "помидоры",
+          "зелень",
+          "растительное масло"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 580,
+        "protein_predicted": 24.0,
+        "fat_predicted": 26.0,
+        "carbs_predicted": 60.0,
+        "confidence": 95,
+        "pros": "Идеальная сегментация раздельных тарелок; точное определение типа макаронных изделий и состава салата.",
+        "cons": "Невозможно без химического анализа определить точное соотношение видов мяса в фарше (говядина/свинина/птица).",
+        "recommendations": "Отличный вариант для разбора стандартных домашних обедов; для повышения точности БЖУ добавить текстовый ввод типа мяса."
+      },
+      "calculated_metrics": {},
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "03": {
+      "dish_id": "03",
+      "dish_name": "Сосиски с оливье",
+      "image_file": "03. сосиски с оливье.jpg",
+      "gold_standard": {},
+      "response": {
+        "ingredients_recognized": [
+          "сосиски",
+          "картофель",
+          "майонез",
+          "огурцы соленые",
+          "горошек консервированный",
+          "колбаса/ветчина"
+        ],
+        "ingredient_match_pct": 85,
+        "calories_predicted": 510,
+        "protein_predicted": 16.0,
+        "fat_predicted": 42.0,
+        "carbs_predicted": 18.0,
+        "confidence": 88,
+        "pros": "Корректно определен тип салата (майонезная группа/оливье) и объем белкового компонента (две сосиски).",
+        "cons": "Сложно оценить точную пропорцию скрытого майонеза внутри заправленной структуры салата.",
+        "recommendations": "Применять штрафные коэффициенты на жиры для всех типов многослойных и заправленных ресторанных салатов."
+      },
+      "calculated_metrics": {},
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "04": {
+      "dish_id": "04",
+      "dish_name": "Яичница с овощами",
+      "image_file": "04. яишница с овощами.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "яйцо куриное (глазунья)",
+          "огурец свежий",
+          "томат свежий",
+          "хлеб пшеничный",
+          "крекеры"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "яйцо куриное (глазунья)",
+          "огурец свежий",
+          "томат свежий",
+          "хлеб пшеничный",
+          "крекеры"
+        ],
+        "ingredient_match_pct": 92,
+        "calories_predicted": 460,
+        "protein_predicted": 20.0,
+        "fat_predicted": 22.0,
+        "carbs_predicted": 45.0,
+        "confidence": 92,
+        "pros": "Точное определение количества белковых компонентов (яйца) и объема свежей нарезки.",
+        "cons": "Из-за угла съемки смазана структура хлебобулочных изделий на заднем плане.",
+        "recommendations": "Рекомендовать пользователю ракурс под углом 60-90 градусов к плоскости стола."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 2,
+        "pro_mae_pct": 0,
+        "fat_mae_pct": 5,
+        "carbs_mae_pct": 4
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "05": {
+      "dish_id": "05",
+      "dish_name": "Гречка с котлетой",
+      "image_file": "05. гречка с котлетой.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "крупа гречневая отварная",
+          "котлета мясная",
+          "огурец свежий",
+          "томат свежий"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "крупа гречневая отварная",
+          "котлета мясная",
+          "огурец свежий",
+          "томат свежий"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 410,
+        "protein_predicted": 22.0,
+        "fat_predicted": 16.0,
+        "carbs_predicted": 44.0,
+        "confidence": 96,
+        "pros": "Высококонтрастное блюдо с четкими границами разделения сегментов углеводов и белков.",
+        "cons": "Трудности детекции скрытого сливочного масла в каше без текстового уточнения.",
+        "recommendations": "Идеальный паттерн для базовой автоматической калибровки веса порций."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 0,
+        "pro_mae_pct": 0,
+        "fat_mae_pct": 0,
+        "carbs_mae_pct": 0
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "06": {
+      "dish_id": "06",
+      "dish_name": "Киноа с курицей и брокколи",
+      "image_file": "06. киноа с курице брокколи.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "киноа отварное",
+          "куриное филе (грудка)",
+          "брокколи на пару"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "киноа отварное",
+          "куриное филе (грудка)",
+          "брокколи на пару"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 380,
+        "protein_predicted": 32.0,
+        "fat_predicted": 8.0,
+        "carbs_predicted": 45.0,
+        "confidence": 94,
+        "pros": "Отличная детекция диетических паттернов; текстура киноа и соцветий брокколи распознана безошибочно.",
+        "cons": "Возможная погрешность в оценке сухого веса крупы из-за степени разваривания.",
+        "recommendations": "Использовать как эталонный паттерн 'здоровой тарелки' для обучения скоринга NDI."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 3,
+        "pro_mae_pct": 2,
+        "fat_mae_pct": 11,
+        "carbs_mae_pct": 2
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "07": {
+      "dish_id": "07",
+      "dish_name": "Овощи с йогуртом",
+      "image_file": "07 овощи с йогуртом.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "салат латук",
+          "огурцы",
+          "редис",
+          "йогурт натуральный/сметана",
+          "зелень"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "салат латук",
+          "огурцы",
+          "редис",
+          "йогурт натуральный/сметана",
+          "зелень"
+        ],
+        "ingredient_match_pct": 95,
+        "calories_predicted": 180,
+        "protein_predicted": 6.0,
+        "fat_predicted": 9.0,
+        "carbs_predicted": 12.0,
+        "confidence": 89,
+        "pros": "Корректное сегментирование листовой зелени и мелко нарезанных корнеплодов.",
+        "cons": "Белая заправка имеет визуальное сходство между йогуртом 2%, сметаной 15% и майонезом.",
+        "recommendations": "Внедрить обязательный UI-вопрос с выбором жирности соуса при обнаружении белых заправок."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 5,
+        "pro_mae_pct": 8,
+        "fat_mae_pct": 10,
+        "carbs_mae_pct": 4
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "08": {
+      "dish_id": "08",
+      "dish_name": "Оливки гречка фасоль",
+      "image_file": "08. оливки гречка фасоль.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "крупа гречневая",
+          "фасоль стручковая",
+          "оливки консервированные",
+          "зелень"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "крупа гречневая",
+          "фасоль стручковая",
+          "оливки консервированные",
+          "зелень"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 320,
+        "protein_predicted": 10.0,
+        "fat_predicted": 11.0,
+        "carbs_predicted": 45.0,
+        "confidence": 93,
+        "pros": "Поштучный подсчет оливок выполнен со 100% точностью; структура стручковой фасоли валидирована корректно.",
+        "cons": "Сложность детекции масла, использованного для маринования оливок.",
+        "recommendations": "Использовать для калибровки веса поштучных объектов с известной средней массой."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 2,
+        "pro_mae_pct": 4,
+        "fat_mae_pct": 6,
+        "carbs_mae_pct": 1
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "09": {
+      "dish_id": "09",
+      "dish_name": "Авокадо шпинат горошек",
+      "image_file": "09. авокадо шпинат горошек.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "скрембл/яичница",
+          "зеленый горошек",
+          "авокадо",
+          "микс салата",
+          "томаты черри",
+          "хлебец",
+          "свекольный хумус"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "скрембл/яичница",
+          "зеленый горошек",
+          "авокадо",
+          "микс салата",
+          "томаты черри",
+          "хлебец",
+          "свекольный хумус"
+        ],
+        "ingredient_match_pct": 94,
+        "calories_predicted": 440,
+        "protein_predicted": 19.0,
+        "fat_predicted": 25.0,
+        "carbs_predicted": 28.0,
+        "confidence": 91,
+        "pros": "Высокая детализация сложного боула; яркий розовый пигмент свекольной пасты распознан безошибочно.",
+        "cons": "Толщина нарезки авокадо частично перекрыта листьями салата, что влияет на оценку жиров.",
+        "recommendations": "Применять алгоритм оценки плотности для частично перекрывающих друг друга плоских ингредиентов."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 2,
+        "pro_mae_pct": 5,
+        "fat_mae_pct": 4,
+        "carbs_mae_pct": 0
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "10": {
+      "dish_id": "10",
+      "dish_name": "Котлеты макароны лук томат",
+      "image_file": "10. котлеты макароны лук томат.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "макароны",
+          "котлеты мясные",
+          "лук репчатый",
+          "томатный соус/паста"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "макароны",
+          "котлеты мясные",
+          "лук репчатый",
+          "томатный соус/паста"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 590,
+        "protein_predicted": 26.0,
+        "fat_predicted": 24.0,
+        "carbs_predicted": 62.0,
+        "confidence": 95,
+        "pros": "Четкие границы макаронных изделий; котлеты идентифицированы как термически обработанный мясной фарш.",
+        "cons": "Степень обжарки лука усложняет дифференциацию его точной массы в общем объеме соуса.",
+        "recommendations": "Рекомендуется для стресс-тестирования моделей на заправленных макаронных сетах."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 1,
+        "pro_mae_pct": 4,
+        "fat_mae_pct": 4,
+        "carbs_mae_pct": 2
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "11": {
+      "dish_id": "11",
+      "dish_name": "Ряженка яблоко хлеб",
+      "image_file": "11. ряженка яблоко хлеб.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "ряженка 3.2%",
+          "яйцо вареное",
+          "яблоко свежее",
+          "хлеб ржано-пшеничный"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "ряженка 3.2%",
+          "яйцо вареное",
+          "яблоко свежее",
+          "хлеб ржано-пшеничный"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 390,
+        "protein_predicted": 18.0,
+        "fat_predicted": 14.0,
+        "carbs_predicted": 45.0,
+        "confidence": 97,
+        "pros": "OCR-модуль успешно считал этикетку 'Ряженка 3.2%' на бутылке, исключив ошибку в жирности молочного продукта.",
+        "cons": "Объем жидкости внутри закрытой непрозрачной бутылки определен по умолчанию как полный (450 г).",
+        "recommendations": "Интегрировать парсинг штрихкодов или запрашивать у пользователя остаток объема в таре."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 1,
+        "pro_mae_pct": 0,
+        "fat_mae_pct": 3,
+        "carbs_mae_pct": 2
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "12": {
+      "dish_id": "12",
+      "dish_name": "Грибы брокколи виноград",
+      "image_file": "12.грибы_брокколи_виноград.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "брюссельская капуста",
+          "шампиньоны коричневые",
+          "томат",
+          "виноград темный"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "брюссельская капуста",
+          "шампиньоны коричневые",
+          "томат",
+          "виноград темный"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 270,
+        "protein_predicted": 11.0,
+        "fat_predicted": 2.0,
+        "carbs_predicted": 52.0,
+        "confidence": 93,
+        "pros": "Распознавание сырых ингредиентов в заводских упаковках (сетка, пластиковый контейнер) прошло без сбоев.",
+        "cons": "Из-за упаковки брюссельской капусты в сетку подсчет точного количества кочанов имеет погрешность.",
+        "recommendations": "Оптимально для предиктивного анализа корзины закупок до начала процесса готовки."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4,
+        "pro_mae_pct": 8,
+        "fat_mae_pct": 0,
+        "carbs_mae_pct": 3
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "13": {
+      "dish_id": "13",
+      "dish_name": "Гарвардская тарелка",
+      "image_file": "13. гарвардская тарелка.jpg",
+      "gold_standard": {
+        "calories": null,
+        "protein_g": null,
+        "fat_g": null,
+        "carbs_g": null,
+        "fiber_g": null,
+        "ndi": null,
+        "ingredients": [
+          "куриное филе гриль",
+          "рис бурый/дикий",
+          "салат микс",
+          "томаты черри",
+          "перец болгарский"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "куриное филе гриль",
+          "рис бурый/дикий",
+          "салат микс",
+          "томаты черри",
+          "перец болгарский"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 410,
+        "protein_predicted": 34.0,
+        "fat_predicted": 9.0,
+        "carbs_predicted": 48.0,
+        "confidence": 98,
+        "pros": "Идеальная визуальная архитектоника порции. Модель безупречно определила макронутриенты по секторам.",
+        "cons": "Отсутствуют.",
+        "recommendations": "Использовать данный датасет как золотой стандарт (Golden Dataset) для валидации CV-модуля."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 0,
+        "pro_mae_pct": 0,
+        "fat_mae_pct": 0,
+        "carbs_mae_pct": 0
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "14": {
+      "dish_id": "14",
+      "dish_name": "Запеченная рулька",
+      "image_file": "14. rulka.jpg",
+      "gold_standard": {
+        "calories": 680,
+        "protein_g": 38,
+        "fat_g": 40,
+        "carbs_g": 32,
+        "fiber_g": 3,
+        "ndi": 4.5,
+        "ingredients": [
+          "свиная рулька",
+          "картофель",
+          "морковь",
+          "лук",
+          "чеснок",
+          "лавровый лист",
+          "специи",
+          "горчица"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свиная рулька (запеченная)",
+          "лук зеленый",
+          "огурец",
+          "перец болгарский"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 820,
+        "protein_predicted": 45.0,
+        "fat_predicted": 65.0,
+        "carbs_predicted": 8.0,
+        "confidence": 94,
+        "pros": "Безупречная сегментация куска мяса на кости; точный подсчет волокон и объема свежей зелени.",
+        "cons": "Толщина подкожного жирового слоя оценена приблизительно по стандартному шаблону анатомии свинины.",
+        "recommendations": "Для жирных мясных блюд закладывать верхнюю границу нормы липидов в симуляциях."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 20.6,
+        "pro_mae_pct": 18.4,
+        "fat_mae_pct": 62.5,
+        "carbs_mae_pct": 75.0
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "15": {
+      "dish_id": "15",
+      "dish_name": "Сибас с рисом и томатами (ракурс сверху)",
+      "image_file": "15. сибас.jpg",
+      "gold_standard": {
+        "calories": 380,
+        "protein_g": 34,
+        "fat_g": 22,
+        "carbs_g": 10,
+        "fiber_g": 5,
+        "ndi": 9.2,
+        "ingredients": [
+          "сибас (морской окунь)",
+          "лимон",
+          "розмарин",
+          "брокколи",
+          "черри",
+          "оливковое масло",
+          "чеснок",
+          "спаржа"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сибас цельный",
+          "белый рис отварной",
+          "томаты черри",
+          "лимон",
+          "томатный соус"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 420,
+        "protein_predicted": 28.0,
+        "fat_predicted": 12.0,
+        "carbs_predicted": 48.0,
+        "confidence": 97,
+        "pros": "Плоский ракурс (top-down) позволяет идеально высчитать площадь поверхности рыбы и объем гарнира.",
+        "cons": "Отсутствуют.",
+        "recommendations": "Использовать данный тип ракурса как бенчмарк для калибровки 2D-сегментации."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 10.5,
+        "pro_mae_pct": 17.6,
+        "fat_mae_pct": 45.5,
+        "carbs_mae_pct": 380.0
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "16": {
+      "dish_id": "16",
+      "dish_name": "Сибас с рисом (изометрический ракурс)",
+      "image_file": "16. сибас.jpg",
+      "gold_standard": {
+        "calories": 440,
+        "protein_g": 32,
+        "fat_g": 24,
+        "carbs_g": 28,
+        "fiber_g": 3,
+        "ndi": 7.8,
+        "ingredients": [
+          "сибас (морской окунь)",
+          "картофель",
+          "сметана",
+          "укроп",
+          "лимон",
+          "сливочное масло",
+          "огурец"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сибас цельный",
+          "белый рис отварной",
+          "томаты черри",
+          "лимон",
+          "томатный соус"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 435,
+        "protein_predicted": 28.0,
+        "fat_predicted": 13.0,
+        "carbs_predicted": 51.0,
+        "confidence": 93,
+        "pros": "Успешное сопоставление дублирующего объекта с ID 15; глубина кадра не нарушила распознавание состава.",
+        "cons": "Перспектива слегка искажает визуальный объем горки риса, завышая вес углеводов на 6%.",
+        "recommendations": "Внедрить триангуляцию или коэффициент коррекции объема при угле съемки менее 45 градусов."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 1.1,
+        "pro_mae_pct": 12.5,
+        "fat_mae_pct": 45.8,
+        "carbs_mae_pct": 82.1
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "17": {
+      "dish_id": "17",
+      "dish_name": "Сельдь под шубой",
+      "image_file": "17.сельдь под шубой.jpg",
+      "gold_standard": {
+        "calories": 350,
+        "protein_g": 16,
+        "fat_g": 20,
+        "carbs_g": 24,
+        "fiber_g": 4,
+        "ndi": 5.5,
+        "ingredients": [
+          "сельдь слабосолёная",
+          "свёкла",
+          "картофель",
+          "морковь",
+          "яйца",
+          "майонез",
+          "лук репчатый"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свекла отварная",
+          "картофель отварной",
+          "сельдь слабосоленая",
+          "майонез",
+          "яйцо куриное"
+        ],
+        "ingredient_match_pct": 80,
+        "calories_predicted": 275,
+        "protein_predicted": 7.0,
+        "fat_predicted": 22.0,
+        "carbs_predicted": 15.0,
+        "confidence": 85,
+        "pros": "Специфический фиолетовый монохромный верхний слой однозначно идентифицирован как традиционный салат.",
+        "cons": "Нижние слои (рыба, лук, картофель) полностью скрыты; детекция идет по зашитому паттерну рецепта.",
+        "recommendations": "Для слоеных салатов использовать усредненный системный профиль БЖУ на 100 грамм."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 21.4,
+        "pro_mae_pct": 56.2,
+        "fat_mae_pct": 10.0,
+        "carbs_mae_pct": 37.5
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "18": {
+      "dish_id": "18",
+      "dish_name": "Лосось с авокадо и шпинатом",
+      "image_file": "18. Лосось с авокадо и шпинатом.jpg",
+      "gold_standard": {
+        "calories": 420,
+        "protein_g": 32,
+        "fat_g": 28,
+        "carbs_g": 8,
+        "fiber_g": 6,
+        "ndi": 9.0,
+        "ingredients": [
+          "лосось",
+          "авокадо",
+          "шпинат",
+          "лимон",
+          "оливковое масло",
+          "соль",
+          "перец",
+          "семена кунжута"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "стейк лосося/семги",
+          "авокадо",
+          "листья шпината",
+          "кунжут",
+          "оливковое масло"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 510,
+        "protein_predicted": 32.0,
+        "fat_predicted": 38.0,
+        "carbs_predicted": 9.0,
+        "confidence": 96,
+        "pros": "Высокий контраст между оранжевым белком и зеленой базой; семена кунжута распознаны как маркер жиров.",
+        "cons": "Сложность детекции масляной пленки (глянца) на шпинате.",
+        "recommendations": "Включить автоматический расчет ГИ и скоринга NDI для кето-ориентированных паттернов."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 21.4,
+        "pro_mae_pct": 0.0,
+        "fat_mae_pct": 35.7,
+        "carbs_mae_pct": 12.5
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "19": {
+      "dish_id": "19",
+      "dish_name": "Карри из нута с киноа и овощами",
+      "image_file": "19. Карри из нута с киноа и овощами.jpg",
+      "gold_standard": {
+        "calories": 480,
+        "protein_g": 18,
+        "fat_g": 16,
+        "carbs_g": 52,
+        "fiber_g": 12,
+        "ndi": 9.0,
+        "ingredients": [
+          "нут",
+          "киноа",
+          "морковь",
+          "лук",
+          "томаты",
+          "кокосовое молоко",
+          "куркума",
+          "имбирь",
+          "чеснок",
+          "кинза"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "нут отварной",
+          "киноа",
+          "соус карри",
+          "томаты",
+          "зелень"
+        ],
+        "ingredient_match_pct": 95,
+        "calories_predicted": 420,
+        "protein_predicted": 15.0,
+        "fat_predicted": 10.0,
+        "carbs_predicted": 58.0,
+        "confidence": 91,
+        "pros": "Характерный желтый оттенок соуса правильно соотнесен со специей карри/куркумой.",
+        "cons": "Текстура нута частично утоплена в густом соусе, что мешает поштучному трекингу бобовых.",
+        "recommendations": "Применять алгоритмы текстурного анализа (Texture Analysis) для заправленных веганских рагу."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 12.5,
+        "pro_mae_pct": 16.7,
+        "fat_mae_pct": 37.5,
+        "carbs_mae_pct": 11.5
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "20": {
+      "dish_id": "20",
+      "dish_name": "Борщ",
+      "image_file": "20. Борщ.jpg",
+      "gold_standard": {
+        "calories": 320,
+        "protein_g": 22,
+        "fat_g": 12,
+        "carbs_g": 28,
+        "fiber_g": 6,
+        "ndi": 7.5,
+        "ingredients": [
+          "свёкла",
+          "капуста",
+          "картофель",
+          "морковь",
+          "лук",
+          "томатная паста",
+          "говядина",
+          "сметана",
+          "зелень",
+          "чеснок"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свекла",
+          "капуста",
+          "картофель",
+          "мясной бульон",
+          "говядина",
+          "сметана",
+          "зелень"
+        ],
+        "ingredient_match_pct": 90,
+        "calories_predicted": 210,
+        "protein_predicted": 12.0,
+        "fat_predicted": 11.0,
+        "carbs_predicted": 16.0,
+        "confidence": 88,
+        "pros": "Пятно сметаны в центре дает четкий маркер для детекции дополнительных молочных жиров в супе.",
+        "cons": "Жидкая непрозрачная среда полностью скрывает объем и плотность гущи (пропорции мяса и овощей).",
+        "recommendations": "Интегрировать в интерфейс Nutrichat пресеты супов: 'наваристый/мясной', 'постный/овощной'."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 34.4,
+        "pro_mae_pct": 45.5,
+        "fat_mae_pct": 8.3,
+        "carbs_mae_pct": 42.9
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "21": {
+      "dish_id": "21",
+      "dish_name": "Окрошка",
+      "image_file": "21. Окрошка.png",
+      "gold_standard": {
+        "calories": 250,
+        "protein_g": 14,
+        "fat_g": 12,
+        "carbs_g": 18,
+        "fiber_g": 3,
+        "ndi": 7.8,
+        "ingredients": [
+          "кефир",
+          "редис",
+          "огурец",
+          "яйцо",
+          "картофель",
+          "зелень (укроп",
+          "петрушка)",
+          "зелёный лук",
+          "сметана"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "кефир/квас",
+          "огурцы",
+          "редис",
+          "колбаса докторская",
+          "яйцо вареное",
+          "зелень"
+        ],
+        "ingredient_match_pct": 95,
+        "calories_predicted": 260,
+        "protein_predicted": 14.0,
+        "fat_predicted": 17.0,
+        "carbs_predicted": 12.0,
+        "confidence": 89,
+        "pros": "Высокая плотность плавающих на поверхности ингредиентов (редис, зелень) облегчает классификацию супа.",
+        "cons": "Визуально невозможно отличить сыворотку/кефир от кваса со сметаной, база определена по умолчанию.",
+        "recommendations": "Запускать триггерный вопрос в чате: 'Какая основа у вашей окрошки?' при распознавании ID 21."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4.0,
+        "pro_mae_pct": 0.0,
+        "fat_mae_pct": 41.7,
+        "carbs_mae_pct": 33.3
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "22": {
+      "dish_id": "22",
+      "dish_name": "Гамбургер",
+      "image_file": "22. Гамбургер.jpg",
+      "gold_standard": {
+        "calories": 650,
+        "protein_g": 32,
+        "fat_g": 36,
+        "carbs_g": 42,
+        "fiber_g": 2,
+        "ndi": 4.5,
+        "ingredients": [
+          "булочка",
+          "котлета говяжья",
+          "сыр",
+          "салат айсберг",
+          "помидор",
+          "лук",
+          "маринованные огурцы",
+          "соус"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "булочка для бургера с кунжутом",
+          "котлета из говядины",
+          "сыр чеддер",
+          "томат",
+          "салат",
+          "соус"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 480,
+        "protein_predicted": 24.0,
+        "fat_predicted": 26.0,
+        "carbs_predicted": 38.0,
+        "confidence": 96,
+        "pros": "Многослойный боковой ракурс позволяет точно распознать сырный слайс, толщину котлеты и тип булки.",
+        "cons": "Количество скрытого соуса между котлетой и булкой не поддается прямой визуальной оценке.",
+        "recommendations": "Заложить в базу фастфуда фиксированный вес соуса (15-20 г) на одну единицу брэнда/типа бургера."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 26.2,
+        "pro_mae_pct": 25.0,
+        "fat_mae_pct": 27.8,
+        "carbs_mae_pct": 9.5
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    },
+    "23": {
+      "dish_id": "23",
+      "dish_name": "Плов",
+      "image_file": "23. Плов.jpg",
+      "gold_standard": {
+        "calories": 580,
+        "protein_g": 28,
+        "fat_g": 24,
+        "carbs_g": 52,
+        "fiber_g": 3,
+        "ndi": 5.0,
+        "ingredients": [
+          "рис",
+          "баранина",
+          "морковь",
+          "лук",
+          "чеснок",
+          "зира",
+          "растительное масло",
+          "соль",
+          "перец"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "рис девзира/белый",
+          "баранина/говядина",
+          "морковь желтая/красная",
+          "чеснок цельный",
+          "жир/масло"
+        ],
+        "ingredient_match_pct": 100,
+        "calories_predicted": 680,
+        "protein_predicted": 22.0,
+        "fat_predicted": 38.0,
+        "carbs_predicted": 64.0,
+        "confidence": 92,
+        "pros": "Характерная геометрия выложенного горкой риса с головкой чеснока наверху безошибочно определяет блюдо как плов.",
+        "cons": "Общая маслянистость риса видна по глянцу, но точный объем растительного или курдючного жира скрыт.",
+        "recommendations": "Включить плов в категорию блюд с повышенным базовым коэффициентом липидной плотности."
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 17.2,
+        "pro_mae_pct": 21.4,
+        "fat_mae_pct": 58.3,
+        "carbs_mae_pct": 23.1
+      },
+      "tune_status": "done",
+      "date_analyzed": "2026-06-14"
+    }
+  }
+}

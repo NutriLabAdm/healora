@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модули платформы | Healora</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0f0f1a;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+/* Header / Nav */
+.header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-bottom: 1px solid #2a2a4e;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
+.logo-gradient { background: linear-gradient(90deg, #4CAF50, #2196F3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav { display: flex; align-items: center; gap: 24px; }
+.nav a {
+  color: #999;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+.nav a:hover, .nav a.active { color: #4CAF50; border-bottom-color: #4CAF50; }
+.nav a.comparative-link {
+  background: linear-gradient(90deg, #7c3aed, #4CAF50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 48px 24px 32px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+}
+.hero h1 {
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #4CAF50, #2196F3, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.hero p {
+  color: #888;
+  font-size: 14px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.hero .badge-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 6px 16px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #4CAF50;
+}
+
+/* Stats row */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px 24px 32px;
+  background: linear-gradient(180deg, #0f0f1a, #1a1a2e);
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-value { font-size: 28px; font-weight: 800; background: linear-gradient(90deg, #4CAF50, #2196F3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-label { font-size: 11px; color: #666; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Section */
+.section { padding: 32px 24px; max-width: 1200px; margin: 0 auto; }
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title .icon { font-size: 22px; }
+.section-subtitle { font-size: 12px; color: #666; }
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: #888;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-dot.competitor { background: #FF9800; }
+.legend-dot.unique { background: #4CAF50; }
+
+/* Module Grid */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.module-card {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4e;
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.module-card:hover {
+  border-color: #4CAF50;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(76,175,80,0.1);
+}
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4CAF50, #2196F3);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.module-card:hover::before { opacity: 1; }
+.module-card.competitor {
+  border-color: rgba(255, 152, 0, 0.3);
+}
+.module-card.competitor::before {
+  background: linear-gradient(90deg, #FF9800, #F44336);
+}
+.module-card.competitor:hover {
+  border-color: #FF9800;
+  box-shadow: 0 8px 32px rgba(255,152,0,0.1);
+}
+.module-card.unique {
+  border-color: rgba(76, 175, 80, 0.3);
+}
+.module-card.unique:hover {
+  border-color: #4CAF50;
+  box-shadow: 0 8px 32px rgba(76,175,80,0.15);
+}
+
+.module-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.module-badge.competitor {
+  background: rgba(255, 152, 0, 0.15);
+  color: #FF9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+.module-badge.unique {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4CAF50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.module-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.module-card.competitor .module-icon { background: rgba(255, 152, 0, 0.1); }
+.module-card.unique .module-icon { background: rgba(76, 175, 80, 0.1); }
+
+.module-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.module-desc {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.module-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.module-tag {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.05);
+  color: #666;
+}
+.module-tag.ai { background: rgba(124, 58, 237, 0.15); color: #a78bfa; }
+.module-tag.cv { background: rgba(33, 150, 243, 0.15); color: #64b5f6; }
+.module-tag.data { background: rgba(76, 175, 80, 0.15); color: #81c784; }
+.module-tag.ux { background: rgba(255, 152, 0, 0.15); color: #ffb74d; }
+
+.competitor-list {
+  font-size: 10px;
+  color: #666;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #2a2a4e;
+}
+.competitor-list strong { color: #FF9800; }
+
+/* Timeline Section */
+.timeline-container {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4e;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 8px;
+}
+.timeline-container h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.timeline-container .sub {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 20px;
+}
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+#timelineChart {
+  max-height: 300px;
+  width: 100%;
+}
+.timeline-insights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.insight-card {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #2a2a4e;
+}
+.insight-value {
+  font-size: 22px;
+  font-weight: 800;
+}
+.insight-value.green { color: #4CAF50; }
+.insight-value.orange { color: #FF9800; }
+.insight-value.purple { color: #7c3aed; }
+.insight-label {
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Comparison Table */
+.comparison-table-wrap {
+  overflow-x: auto;
+  margin-top: 8px;
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.comparison-table th {
+  background: #1a1a2e;
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #2a2a4e;
+  white-space: nowrap;
+}
+.comparison-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #2a2a4e;
+  color: #ccc;
+}
+.comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+.comparison-table .highlight { color: #4CAF50; font-weight: 600; }
+.comparison-table .highlight-ai { color: #a78bfa; font-weight: 600; }
+.comparison-table .bar-cell { min-width: 120px; }
+.comparison-table .bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #2a2a4e;
+  overflow: hidden;
+  position: relative;
+}
+.comparison-table .bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+.bar-ai { background: linear-gradient(90deg, #7c3aed, #4CAF50); }
+.bar-trad { background: linear-gradient(90deg, #FF9800, #F44336); }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 24px;
+  color: #444;
+  font-size: 11px;
+  border-top: 1px solid #1a1a2e;
+  margin-top: 40px;
+}
+.footer a { color: #666; text-decoration: none; }
+.footer a:hover { color: #4CAF50; }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+.modal-window {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4e;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 700px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  color: #e0e0e0;
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #666;
+  border: none;
+  background: none;
+  line-height: 1;
+}
+.modal-close:hover { color: #fff; }
+.modal-window h2 { font-size: 18px; color: #fff; margin-bottom: 16px; }
+.modal-window h3 { font-size: 14px; color: #4CAF50; margin: 12px 0 6px; }
+.modal-window p, .modal-window li { font-size: 12px; color: #aaa; line-height: 1.6; }
+.modal-window ul { padding-left: 18px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header { padding: 0 16px; }
+  .nav { gap: 12px; }
+  .nav a { font-size: 11px; }
+  .hero h1 { font-size: 24px; }
+  .module-grid { grid-template-columns: 1fr; }
+  .stats-row { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <span class="logo-gradient">✦ Healora</span>
+  </div>
+  <div class="nav">
+    <a href="#" class="active">Модули</a>
+    <a href="file:///E:/_dev/55.Skoltech/56.AIMLEI-2026/healora.ru/docs/development/Food_CV/pres/comparative.html" class="comparative-link" target="_blank">📊 CV Benchmark</a>
+    <a href="#" onclick="showModal()">О проекте</a>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Модули платформы Healora</h1>
+  <p>Архитектура интеллектуальной платформы персонализированного питания на базе AI-агентов</p>
+  <div class="badge-count">
+    <span>🟢</span> Уникальные модули · <span style="color:#FF9800">🟠</span> Как у конкурентов
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-item">
+    <div class="stat-value">9</div>
+    <div class="stat-label">Модулей</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">5</div>
+    <div class="stat-label">AI-агентов</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" style="-webkit-text-fill-color: #FF9800;">4</div>
+    <div class="stat-label">Как у конкурентов</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value" style="-webkit-text-fill-color: #4CAF50;">5</div>
+    <div class="stat-label">Уникальных</div>
+  </div>
+</div>
+
+<!-- Module Grid -->
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title"><span class="icon">🧩</span> Модули платформы</div>
+      <div class="section-subtitle">9 модулей, формирующих полный цикл AI-нутрициологии</div>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot competitor"></span> Есть у конкурентов</span>
+      <span class="legend-item"><span class="legend-dot unique"></span> Уникальный модуль</span>
+    </div>
+  </div>
+
+  <div class="module-grid">
+
+    <!-- 1. Food CV Recognition -->
+    <div class="module-card competitor">
+      <div class="module-badge competitor">Как у конкурентов</div>
+      <div class="module-icon" style="font-size:24px">📷</div>
+      <div class="module-name">Food CV Recognition</div>
+      <div class="module-desc">Распознавание еды по фото с мульти-агентным ансамблем: GPT-5.5‑vision, Claude 4.6, Gemini 2.0, DeepSeek‑V3, Qwen2.5‑VL. Ансамблевое взвешивание для максимальной точности.</div>
+      <div class="module-tags">
+        <span class="module-tag cv">CV</span>
+        <span class="module-tag ai">AI Agent</span>
+        <span class="module-tag data">Ensemble</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> MyFitnessPal (Photo Scan), Yazio, Lifesum, Calorie Mama</div>
+    </div>
+
+    <!-- 2. AI Nutrition Chat -->
+    <div class="module-card unique">
+      <div class="module-badge unique">Уникальный</div>
+      <div class="module-icon" style="font-size:24px">💬</div>
+      <div class="module-name">AI Nutrition Chat</div>
+      <div class="module-desc">Контекстный чат-ассистент с RAG поверх базы знаний. Понимает историю питания, цели, предпочтения. Даёт персонализированные рекомендации в диалоге.</div>
+      <div class="module-tags">
+        <span class="module-tag ai">AI Agent</span>
+        <span class="module-tag ux">UX</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> Частично Noom (коучинг), но без AI-агента</div>
+    </div>
+
+    <!-- 3. Knowledge Base -->
+    <div class="module-card unique">
+      <div class="module-badge unique">Уникальный</div>
+      <div class="module-icon" style="font-size:24px">📚</div>
+      <div class="module-name">База знаний</div>
+      <div class="module-desc">Структурированная база по нутрициологии, БАДам, лекарственным взаимодействиям. Векторное индексирование для semantic search и RAG.</div>
+      <div class="module-tags">
+        <span class="module-tag ai">RAG</span>
+        <span class="module-tag data">Vector DB</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> Аналогов нет среди приложений питания</div>
+    </div>
+
+    <!-- 4. Digital Twin -->
+    <div class="module-card unique">
+      <div class="module-badge unique">Уникальный</div>
+      <div class="module-icon" style="font-size:24px">🧬</div>
+      <div class="module-name">Digital Twin</div>
+      <div class="module-desc">Цифровой двойник пользователя: профиль здоровья, метаболические параметры, генетические данные, нутриентный статус. Динамическое обновление.</div>
+      <div class="module-tags">
+        <span class="module-tag data">ML</span>
+        <span class="module-tag ai">AI</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> Аналогов нет среди мобильных приложений питания</div>
+    </div>
+
+    <!-- 5. Nutrition Diary -->
+    <div class="module-card competitor">
+      <div class="module-badge competitor">Как у конкурентов</div>
+      <div class="module-icon" style="font-size:24px">📓</div>
+      <div class="module-name">Дневник питания</div>
+      <div class="module-desc">Логгирование приёмов пищи с автозаполнением из CV, ручным вводом и голосовым вводом. Детальная нутриентная разбивка.</div>
+      <div class="module-tags">
+        <span class="module-tag ux">UX</span>
+        <span class="module-tag data">Tracking</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> MyFitnessPal, Yazio, Lifesum, Cronometer</div>
+    </div>
+
+    <!-- 6. Goals & Progress Path -->
+    <div class="module-card competitor">
+      <div class="module-badge competitor">Как у конкурентов</div>
+      <div class="module-icon" style="font-size:24px">🎯</div>
+      <div class="module-name">Цели и путь прогресса</div>
+      <div class="module-desc">Постановка целей (КБЖУ, вес, привычки), визуализация прогресса, адаптивная корректировка плана на основе данных двойника.</div>
+      <div class="module-tags">
+        <span class="module-tag ux">UX</span>
+        <span class="module-tag data">ML</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> Noom, MyFitnessPal, Apple Health</div>
+    </div>
+
+    <!-- 7. Interventions Engine -->
+    <div class="module-card unique">
+      <div class="module-badge unique">Уникальный</div>
+      <div class="module-icon" style="font-size:24px">⚡</div>
+      <div class="module-name">Интервенции (Nudge)</div>
+      <div class="module-desc">Персонализированные микро-интервенции: напоминания, образовательные карточки, мотивационные сообщения. Выбор времени и канала на основе ML.</div>
+      <div class="module-tags">
+        <span class="module-tag ai">AI Agent</span>
+        <span class="module-tag ux">Behaviour</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> Частично Noom, но без AI-оптимизации</div>
+    </div>
+
+    <!-- 8. Achievements & Gamification -->
+    <div class="module-card competitor">
+      <div class="module-badge competitor">Как у конкурентов</div>
+      <div class="module-icon" style="font-size:24px">🏆</div>
+      <div class="module-name">Геймификация</div>
+      <div class="module-desc">Система достижений, серий (streaks), рейтингов. Мотивация через игровые механики с привязкой к реальным результатам.</div>
+      <div class="module-tags">
+        <span class="module-tag ux">UX</span>
+        <span class="module-tag data">Gamification</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> MyFitnessPal, Apple Health, Fitbit</div>
+    </div>
+
+    <!-- 9. Analytics Dashboard -->
+    <div class="module-card unique">
+      <div class="module-badge unique">Уникальный</div>
+      <div class="module-icon" style="font-size:24px">📊</div>
+      <div class="module-name">Аналитика и отчёты</div>
+      <div class="module-desc">Глубокий анализ: тренды нутриентов, корреляции с самочувствием, дефициты, сравнительные отчёты "до/после". Экспорт PDF.</div>
+      <div class="module-tags">
+        <span class="module-tag data">Analytics</span>
+        <span class="module-tag ai">ML</span>
+      </div>
+      <div class="competitor-list"><strong>Конкуренты:</strong> Частично Cronometer, но без AI-анализа</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Timeline Section -->
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title"><span class="icon">⏱️</span> Сравнение сроков разработки</div>
+      <div class="section-subtitle">AI-агенты vs Традиционный подход (в неделях)</div>
+    </div>
+  </div>
+
+  <div class="timeline-container">
+    <h3>⏳ Длительность разработки модулей</h3>
+    <p class="sub">Сравнение с использованием AI-агентов (Healora) и традиционной командной разработки</p>
+
+    <div class="chart-wrapper">
+      <canvas id="timelineChart"></canvas>
+    </div>
+
+    <div class="timeline-insights">
+      <div class="insight-card">
+        <div class="insight-value green">3.2×</div>
+        <div class="insight-label">Ускорение с AI-агентами (среднее)</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-value purple">8 нед</div>
+        <div class="insight-label">Средний срок с AI-агентами</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-value orange">26 нед</div>
+        <div class="insight-label">Средний срок традиционно</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-value green">~70%</div>
+        <div class="insight-label">Экономии времени на разработке</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detailed Comparison Table -->
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title"><span class="icon">📋</span> Детальное сравнение</div>
+      <div class="section-subtitle">Разбивка по этапам для типового модуля (Food CV Recognition)</div>
+    </div>
+  </div>
+
+  <div class="timeline-container">
+    <div class="comparison-table-wrap">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th style="width:22%">Этап</th>
+            <th style="width:26%">Традиционная разработка</th>
+            <th style="width:26%">AI-агентная разработка</th>
+            <th style="width:26%">Сроки (нед)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Исследование и бенчмаркинг</td>
+            <td class="highlight">Ручной обзор 20+ моделей</td>
+            <td class="highlight-ai">AI-автоматизированный бенчмарк (GPT-5.5, Claude 4.6, Gemini 2.0, DeepSeek, Qwen)</td>
+            <td><div class="bar"><div class="bar-fill bar-trad" style="width:45%"></div></div> 9 нед · <span class="highlight-ai">2 нед</span></td>
+          </tr>
+          <tr>
+            <td>Dataset preparation</td>
+            <td class="highlight">Ручная разметка 23+ блюд</td>
+            <td class="highlight-ai">AI-assisted аннотация + валидация</td>
+            <td><div class="bar"><div class="bar-fill bar-trad" style="width:30%"></div></div> 6 нед · <span class="highlight-ai">2 нед</span></td>
+          </tr>
+          <tr>
+            <td>Model training / fine-tuning</td>
+            <td class="highlight">Обучение одной модели, итерации</td>
+            <td class="highlight-ai">API-ready foundation models, prompt tuning</td>
+            <td><div class="bar"><div class="bar-fill bar-trad" style="width:60%"></div></div> 12 нед · <span class="highlight-ai">1 нед</span></td>
+          </tr>
+          <tr>
+            <td>Ensemble integration</td>
+            <td class="highlight">Ручная склейка 1-2 моделей</td>
+            <td class="highlight-ai">Автоматизированный ансамбль из 5 агентов</td>
+            <td><div class="bar"><div class="bar-fill bar-trad" style="width:40%"></div></div> 8 нед · <span class="highlight-ai">1 нед</span></td>
+          </tr>
+          <tr>
+            <td>Frontend / UI интеграция</td>
+            <td class="highlight">Native / SwiftUI разработка</td>
+            <td class="highlight-ai">React SPA + Vite (автогенерация UI)</td>
+            <td><div class="bar"><div class="bar-fill bar-trad" style="width:50%"></div></div> 10 нед · <span class="highlight-ai">2 нед</span></td>
+          </tr>
+          <tr>
+            <td>Тестирование и QA</td>
+            <td class="highlight">Ручное QA + unit-тесты</td>
+            <td class="highlight-ai">AI-генерация тестов + автоматическое регрессионное</td>
+            <td><div class="bar"><div class="bar-fill bar-trad" style="width:33%"></div></div> 5 нед · <span class="highlight-ai">1 нед</span></td>
+          </tr>
+          <tr style="background: rgba(76,175,80,0.05);">
+            <td style="font-weight:700; color:#fff;">Итого</td>
+            <td style="color:#FF9800; font-weight:700;">~50 недель (1 год)</td>
+            <td style="color:#4CAF50; font-weight:700;">~9 недель (2 мес)</td>
+            <td style="color:#4CAF50; font-weight:700;">5.5× быстрее 🚀</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <a href="#">Healora Platform</a> · Архитектура модулей · 2026
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal-window">
+    <button class="modal-close" onclick="hideModal()">✕</button>
+    <h2>О платформе Healora</h2>
+    <p>Healora — интеллектуальная платформа персонализированного питания на базе мульти-агентного AI. </p>
+    <p>Ключевое отличие от конкурентов:</p>
+    <ul>
+      <li><strong>Мульти-агентный ансамбль</strong> — 5 CV-моделей работают совместно (GPT-5.5, Claude 4.6, Gemini 2.0, DeepSeek, Qwen) для максимальной точности распознавания</li>
+      <li><strong>Digital Twin</strong> — цифровой двойник пользователя, учитывающий метаболические и генетические параметры</li>
+      <li><strong>RAG-база знаний</strong> — структурированная база по нутрициологии с семантическим поиском</li>
+      <li><strong>AI-агентная разработка</strong> — все модули созданы с использованием AI-агентов, что сократило сроки разработки в 3-5 раз</li>
+    </ul>
+    <h3>Стек технологий</h3>
+    <p>React 19 + Vite · Node.js + Express · SQLite · OpenAI / Anthropic / Google AI · Chart.js · react-router-dom v7</p>
+  </div>
+</div>
+
+<script>
+function showModal() { document.getElementById('aboutModal').classList.add('active'); }
+function hideModal() { document.getElementById('aboutModal').classList.remove('active'); }
+document.getElementById('aboutModal').addEventListener('click', function(e) {
+  if (e.target === this) hideModal();
+});
+
+// Timeline Chart
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('timelineChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [
+        'Food CV\nRecognition',
+        'AI Chat',
+        'База\nзнаний',
+        'Digital\nTwin',
+        'Дневник\nпитания',
+        'Цели и\nпуть',
+        'Интер-\nвенции',
+        'Геймифи-\nкация',
+        'Анали-\nтика'
+      ],
+      datasets: [
+        {
+          label: 'AI-агенты (нед)',
+          data: [9, 6, 5, 10, 4, 4, 7, 3, 6],
+          backgroundColor: 'rgba(76, 175, 80, 0.8)',
+          borderColor: '#4CAF50',
+          borderWidth: 1,
+          borderRadius: 4,
+        },
+        {
+          label: 'Традиционно (нед)',
+          data: [50, 28, 20, 52, 16, 18, 32, 12, 24],
+          backgroundColor: 'rgba(255, 152, 0, 0.6)',
+          borderColor: '#FF9800',
+          borderWidth: 1,
+          borderRadius: 4,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: '#ccc',
+            font: { size: 11 },
+            usePointStyle: true,
+            padding: 16,
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#888',
+            font: { size: 10 },
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.04)',
+          }
+        },
+        y: {
+          beginAtZero: true,
+          max: 60,
+          ticks: {
+            color: '#888',
+            font: { size: 10 },
+            stepSize: 10,
+            callback: function(val) { return val + ' нед'; }
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.06)',
+          }
+        }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

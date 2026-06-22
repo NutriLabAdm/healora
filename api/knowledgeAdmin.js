@@ -193,11 +193,12 @@ router.post('/test-source', async (req, res) => {
         break;
       }
       case 'ClinicalTrials.gov': {
-        result.request = 'GET https://clinicaltrials.gov/api/query/field_values?expr=obesity&field=Condition&fmt=json';
+        const ctUrl = 'https://clinicaltrials.gov/api/v2/studies?query.term=obesity&pageSize=3&format=json';
+        result.request = 'GET ' + ctUrl;
         try {
-          const ctRes = await fetch(result.request, { signal: AbortSignal.timeout(10000) });
+          const ctRes = await fetch(ctUrl, { signal: AbortSignal.timeout(10000) });
           const ctData = await ctRes.json();
-          result.response = { status: ctRes.status, fieldValues: ctData.FieldValuesResponse?.FieldValues?.Count || 0 };
+          result.response = { status: ctRes.status, studies: ctData.studies?.length || 0 };
           result.status = ctRes.ok ? 'ok' : 'error';
         } catch (e) { result.status = 'error'; result.response = e.message; }
         break;
@@ -213,9 +214,10 @@ router.post('/test-source', async (req, res) => {
         break;
       }
       case 'FDA': {
-        result.request = 'GET https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct:obesity&limit=3';
+        const fdaUrl = 'https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct:obesity&limit=3';
+        result.request = 'GET ' + fdaUrl;
         try {
-          const fdaRes = await fetch(result.request, { signal: AbortSignal.timeout(10000) });
+          const fdaRes = await fetch(fdaUrl, { signal: AbortSignal.timeout(10000) });
           const fdaData = await fdaRes.json();
           result.response = { status: fdaRes.status, results: fdaData.results?.length || 0, error: fdaData.error || null };
           result.status = fdaRes.ok ? 'ok' : 'warning';

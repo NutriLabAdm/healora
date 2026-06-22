@@ -461,6 +461,42 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+// ── GigaChat Proxy (CORS-free for browser clients) ───
+app.post('/api/gigachat-proxy', async (req, res) => {
+    try {
+        const { prompt, max_tokens = 600, temperature = 0.3 } = req.body;
+        if (!prompt) return res.status(400).json({ error: 'Prompt required' });
+
+        const response = await gigachat.chatCompletion({
+            model: 'GigaChat-Max',
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens,
+            temperature,
+        });
+        const reply = response.choices?.[0]?.message?.content?.trim();
+        if (!reply) throw new Error('Empty response from GigaChat');
+        res.json({ reply });
+    } catch (err) {
+        console.error('GigaChat proxy error:', err.message);
+        res.status(502).json({ error: err.message });
+    }
+});
+
+app.get('/api/gigachat-test', async (req, res) => {
+    try {
+        const response = await gigachat.chatCompletion({
+            messages: [{ role: 'user', content: 'Ответь OK' }],
+            max_tokens: 5,
+            temperature: 0.1,
+        });
+        const reply = response.choices?.[0]?.message?.content?.trim();
+        res.json({ status: 'ok', reply });
+    } catch (err) {
+        console.error('GigaChat test error:', err.message);
+        res.status(502).json({ status: 'error', error: err.message });
+    }
+});
+
 app.post('/api/generate-quiz', async (req, res) => {
     try {
         const { text, category, profile } = req.body;

@@ -1,0 +1,1178 @@
+{
+  "model_id": "claude",
+  "model_name": "Claude 3.5 Sonnet",
+  "model_title": "Claude 3.5 Sonnet",
+  "date_created": "2026-06-14",
+  "date_updated": "2026-06-14",
+  "notes": "",
+  "dishes": {
+    "01": {
+      "dish_id": "01",
+      "dish_name": "Котлеты с макаронами и салат",
+      "image_file": "01. котлеты с макаронами и салат.jpg",
+      "gold_standard": {
+        "calories": 620.0,
+        "protein_g": 32.0,
+        "fat_g": 26.0,
+        "carbs_g": 58.0,
+        "fiber_g": 4.0,
+        "ndi": 6.5,
+        "ingredients": [
+          "котлеты мясные (говядина/свинина)",
+          "макароны из пшеницы",
+          "помидоры",
+          "огурцы",
+          "листья салата",
+          "растительное масло",
+          "лук"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "котлеты мясные (говядина/свинина)",
+          "макароны из пшеницы",
+          "помидоры",
+          "огурцы",
+          "листья салата",
+          "растительное масло",
+          "лук"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "02": {
+      "dish_id": "02",
+      "dish_name": "Обед с фруктами и мантами",
+      "image_file": "02. обед с фруктами и мантами.jpg",
+      "gold_standard": {
+        "calories": 580.0,
+        "protein_g": 28.0,
+        "fat_g": 20.0,
+        "carbs_g": 65.0,
+        "fiber_g": 7.0,
+        "ndi": 7.0,
+        "ingredients": [
+          "манты с мясом и луком",
+          "яблоко",
+          "виноград",
+          "помидоры",
+          "огурцы",
+          "зелень"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "манты с мясом и луком",
+          "яблоко",
+          "виноград",
+          "помидоры",
+          "огурцы",
+          "зелень"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "03": {
+      "dish_id": "03",
+      "dish_name": "Сосиски с оливье",
+      "image_file": "03. сосиски с оливье.jpg",
+      "gold_standard": {
+        "calories": 520.0,
+        "protein_g": 18.0,
+        "fat_g": 30.0,
+        "carbs_g": 42.0,
+        "fiber_g": 3.0,
+        "ndi": 4.5,
+        "ingredients": [
+          "сосиски молочные",
+          "картофель",
+          "морковь",
+          "горошек консервированный",
+          "яйца",
+          "майонез",
+          "солёные огурцы"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сосиски молочные",
+          "картофель",
+          "морковь",
+          "горошек консервированный",
+          "яйца",
+          "майонез",
+          "солёные огурцы"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "04": {
+      "dish_id": "04",
+      "dish_name": "Яичница с овощами",
+      "image_file": "_04. яишница с овощами.jpg",
+      "gold_standard": {
+        "calories": 280.0,
+        "protein_g": 20.0,
+        "fat_g": 18.0,
+        "carbs_g": 8.0,
+        "fiber_g": 3.0,
+        "ndi": 8.0,
+        "ingredients": [
+          "яйца куриные (2 шт)",
+          "помидоры",
+          "болгарский перец",
+          "лук",
+          "зелень",
+          "растительное масло"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "яйца куриные (2 шт)",
+          "помидоры",
+          "болгарский перец",
+          "лук",
+          "зелень",
+          "растительное масло"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "05": {
+      "dish_id": "05",
+      "dish_name": "Гречка с котлетой",
+      "image_file": "05. гречка с котлетой.jpg",
+      "gold_standard": {
+        "calories": 490.0,
+        "protein_g": 30.0,
+        "fat_g": 16.0,
+        "carbs_g": 48.0,
+        "fiber_g": 6.0,
+        "ndi": 8.2,
+        "ingredients": [
+          "гречневая крупа",
+          "котлета мясная (говядина)",
+          "лук",
+          "морковь",
+          "растительное масло",
+          "зелень"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "гречневая крупа",
+          "котлета мясная (говядина)",
+          "лук",
+          "морковь",
+          "растительное масло",
+          "зелень"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "06": {
+      "dish_id": "06",
+      "dish_name": "Киноа с курицей и брокколи",
+      "image_file": "06. киноа с курице брокколи.jpg",
+      "gold_standard": {
+        "calories": 450.0,
+        "protein_g": 38.0,
+        "fat_g": 12.0,
+        "carbs_g": 38.0,
+        "fiber_g": 8.0,
+        "ndi": 9.0,
+        "ingredients": [
+          "киноа",
+          "куриное филе",
+          "брокколи",
+          "оливковое масло",
+          "чеснок",
+          "специи"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "киноа",
+          "куриное филе",
+          "брокколи",
+          "оливковое масло",
+          "чеснок",
+          "специи"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "07": {
+      "dish_id": "07",
+      "dish_name": "Овощи с йогуртом",
+      "image_file": "07 овощи с йогуртом.jpg",
+      "gold_standard": {
+        "calories": 180.0,
+        "protein_g": 12.0,
+        "fat_g": 6.0,
+        "carbs_g": 16.0,
+        "fiber_g": 5.0,
+        "ndi": 8.5,
+        "ingredients": [
+          "йогурт натуральный",
+          "морковь",
+          "огурец",
+          "болгарский перец",
+          "чеснок",
+          "зелень",
+          "соль"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "йогурт натуральный",
+          "морковь",
+          "огурец",
+          "болгарский перец",
+          "чеснок",
+          "зелень",
+          "соль"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "08": {
+      "dish_id": "08",
+      "dish_name": "Оливки, гречка, фасоль",
+      "image_file": "08. оливки гречка фасоль.jpg",
+      "gold_standard": {
+        "calories": 360.0,
+        "protein_g": 14.0,
+        "fat_g": 14.0,
+        "carbs_g": 42.0,
+        "fiber_g": 9.0,
+        "ndi": 8.0,
+        "ingredients": [
+          "гречневая крупа",
+          "стручковая фасоль",
+          "оливки зелёные",
+          "оливковое масло",
+          "чеснок",
+          "лимон",
+          "петрушка"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "гречневая крупа",
+          "стручковая фасоль",
+          "оливки зелёные",
+          "оливковое масло",
+          "чеснок",
+          "лимон",
+          "петрушка"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "09": {
+      "dish_id": "09",
+      "dish_name": "Авокадо, шпинат, горошек",
+      "image_file": "09. авокадо шпинат горошек.jpg",
+      "gold_standard": {
+        "calories": 340.0,
+        "protein_g": 10.0,
+        "fat_g": 26.0,
+        "carbs_g": 18.0,
+        "fiber_g": 12.0,
+        "ndi": 8.8,
+        "ingredients": [
+          "авокадо",
+          "шпинат свежий",
+          "горошек зелёный",
+          "оливковое масло",
+          "лимонный сок",
+          "кунжут",
+          "соль морская"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "авокадо",
+          "шпинат свежий",
+          "горошек зелёный",
+          "оливковое масло",
+          "лимонный сок",
+          "кунжут",
+          "соль морская"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "10": {
+      "dish_id": "10",
+      "dish_name": "Котлеты, макароны, лук, томат",
+      "image_file": "10. котлеты макароны лук томат.jpg",
+      "gold_standard": {
+        "calories": 580.0,
+        "protein_g": 30.0,
+        "fat_g": 24.0,
+        "carbs_g": 54.0,
+        "fiber_g": 4.0,
+        "ndi": 6.0,
+        "ingredients": [
+          "котлеты мясные (говядина)",
+          "макароны",
+          "лук репчатый",
+          "томаты в собственном соку",
+          "чеснок",
+          "растительное масло",
+          "зелень"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "котлеты мясные (говядина)",
+          "макароны",
+          "лук репчатый",
+          "томаты в собственном соку",
+          "чеснок",
+          "растительное масло",
+          "зелень"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "11": {
+      "dish_id": "11",
+      "dish_name": "Ряженка, яблоко, хлеб",
+      "image_file": "11. ряженка яблоко хлеб.jpg",
+      "gold_standard": {
+        "calories": 290.0,
+        "protein_g": 12.0,
+        "fat_g": 10.0,
+        "carbs_g": 38.0,
+        "fiber_g": 5.0,
+        "ndi": 7.5,
+        "ingredients": [
+          "ряженка 4%",
+          "яблоко",
+          "хлеб цельнозерновой",
+          "мёд (опционально)",
+          "корица"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "ряженка 4%",
+          "яблоко",
+          "хлеб цельнозерновой",
+          "мёд (опционально)",
+          "корица"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "12": {
+      "dish_id": "12",
+      "dish_name": "Ужин (фото 20260219_204535)",
+      "image_file": "12.грибы_брокколи_виноград.jpg",
+      "gold_standard": {
+        "calories": 420.0,
+        "protein_g": 34.0,
+        "fat_g": 10.0,
+        "carbs_g": 40.0,
+        "fiber_g": 6.0,
+        "ndi": 8.5,
+        "ingredients": [
+          "куриное филе",
+          "рис бурый",
+          "брокколи",
+          "морковь",
+          "чеснок",
+          "соевый соус",
+          "кунжутное масло"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "куриное филе",
+          "рис бурый",
+          "брокколи",
+          "морковь",
+          "чеснок",
+          "соевый соус",
+          "кунжутное масло"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "13": {
+      "dish_id": "13",
+      "dish_name": "Гарвардская тарелка",
+      "image_file": "13. гарвардская тарелка.jpg",
+      "gold_standard": {
+        "calories": 480.0,
+        "protein_g": 35.0,
+        "fat_g": 18.0,
+        "carbs_g": 35.0,
+        "fiber_g": 10.0,
+        "ndi": 9.5,
+        "ingredients": [
+          "куриное филе",
+          "киноа",
+          "брокколи",
+          "помидоры черри",
+          "авокадо",
+          "листья салата",
+          "оливковое масло",
+          "лимонный сок"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "куриное филе",
+          "киноа",
+          "брокколи",
+          "помидоры черри",
+          "авокадо",
+          "листья салата",
+          "оливковое масло",
+          "лимонный сок"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "14": {
+      "dish_id": "14",
+      "dish_name": "Рулька",
+      "image_file": "14. rulka.jpg",
+      "gold_standard": {
+        "calories": 680.0,
+        "protein_g": 38.0,
+        "fat_g": 40.0,
+        "carbs_g": 32.0,
+        "fiber_g": 3.0,
+        "ndi": 4.5,
+        "ingredients": [
+          "свиная рулька",
+          "картофель",
+          "морковь",
+          "лук",
+          "чеснок",
+          "лавровый лист",
+          "специи",
+          "горчица"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свиная рулька",
+          "картофель",
+          "морковь",
+          "лук",
+          "чеснок",
+          "лавровый лист",
+          "специи",
+          "горчица"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "15": {
+      "dish_id": "15",
+      "dish_name": "Сибас",
+      "image_file": "15. сибас.jpg",
+      "gold_standard": {
+        "calories": 380.0,
+        "protein_g": 34.0,
+        "fat_g": 22.0,
+        "carbs_g": 10.0,
+        "fiber_g": 5.0,
+        "ndi": 9.2,
+        "ingredients": [
+          "сибас (морской окунь)",
+          "лимон",
+          "розмарин",
+          "брокколи",
+          "черри",
+          "оливковое масло",
+          "чеснок",
+          "спаржа"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сибас (морской окунь)",
+          "лимон",
+          "розмарин",
+          "брокколи",
+          "черри",
+          "оливковое масло",
+          "чеснок",
+          "спаржа"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "16": {
+      "dish_id": "16",
+      "dish_name": "Сибас (второе фото)",
+      "image_file": "16. сибас.jpg",
+      "gold_standard": {
+        "calories": 440.0,
+        "protein_g": 32.0,
+        "fat_g": 24.0,
+        "carbs_g": 28.0,
+        "fiber_g": 3.0,
+        "ndi": 7.8,
+        "ingredients": [
+          "сибас (морской окунь)",
+          "картофель",
+          "сметана",
+          "укроп",
+          "лимон",
+          "сливочное масло",
+          "огурец"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сибас (морской окунь)",
+          "картофель",
+          "сметана",
+          "укроп",
+          "лимон",
+          "сливочное масло",
+          "огурец"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "17": {
+      "dish_id": "17",
+      "dish_name": "Сельдь под шубой",
+      "image_file": "17.сельдь под шубой.jpg",
+      "gold_standard": {
+        "calories": 350.0,
+        "protein_g": 16.0,
+        "fat_g": 20.0,
+        "carbs_g": 24.0,
+        "fiber_g": 4.0,
+        "ndi": 5.5,
+        "ingredients": [
+          "сельдь слабосолёная",
+          "свёкла",
+          "картофель",
+          "морковь",
+          "яйца",
+          "майонез",
+          "лук репчатый"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сельдь слабосолёная",
+          "свёкла",
+          "картофель",
+          "морковь",
+          "яйца",
+          "майонез",
+          "лук репчатый"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "18": {
+      "dish_id": "18",
+      "dish_name": "Лосось с авокадо и шпинатом",
+      "image_file": "18. Лосось с авокадо и шпинатом.png",
+      "gold_standard": {
+        "calories": 420.0,
+        "protein_g": 32.0,
+        "fat_g": 28.0,
+        "carbs_g": 8.0,
+        "fiber_g": 6.0,
+        "ndi": 9.0,
+        "ingredients": [
+          "лосось",
+          "авокадо",
+          "шпинат",
+          "лимон",
+          "оливковое масло",
+          "соль",
+          "перец",
+          "семена кунжута"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "лосось",
+          "авокадо",
+          "шпинат",
+          "лимон",
+          "оливковое масло",
+          "соль",
+          "перец",
+          "семена кунжута"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "19": {
+      "dish_id": "19",
+      "dish_name": "Карри из нута с киноа и овощами",
+      "image_file": "19. Карри из нута с киноа и овощами.png",
+      "gold_standard": {
+        "calories": 480.0,
+        "protein_g": 18.0,
+        "fat_g": 16.0,
+        "carbs_g": 52.0,
+        "fiber_g": 12.0,
+        "ndi": 9.0,
+        "ingredients": [
+          "нут",
+          "киноа",
+          "морковь",
+          "лук",
+          "томаты",
+          "кокосовое молоко",
+          "куркума",
+          "имбирь",
+          "чеснок",
+          "кинза"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "нут",
+          "киноа",
+          "морковь",
+          "лук",
+          "томаты",
+          "кокосовое молоко",
+          "куркума",
+          "имбирь",
+          "чеснок",
+          "кинза"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "20": {
+      "dish_id": "20",
+      "dish_name": "Борщ",
+      "image_file": "20. Борщ.png",
+      "gold_standard": {
+        "calories": 320.0,
+        "protein_g": 22.0,
+        "fat_g": 12.0,
+        "carbs_g": 28.0,
+        "fiber_g": 6.0,
+        "ndi": 7.5,
+        "ingredients": [
+          "свёкла",
+          "капуста",
+          "картофель",
+          "морковь",
+          "лук",
+          "томатная паста",
+          "говядина",
+          "сметана",
+          "зелень",
+          "чеснок"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свёкла",
+          "капуста",
+          "картофель",
+          "морковь",
+          "лук",
+          "томатная паста",
+          "говядина",
+          "сметана",
+          "зелень",
+          "чеснок"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "21": {
+      "dish_id": "21",
+      "dish_name": "Окрошка",
+      "image_file": "21. Окрошка.png",
+      "gold_standard": {
+        "calories": 250.0,
+        "protein_g": 14.0,
+        "fat_g": 12.0,
+        "carbs_g": 18.0,
+        "fiber_g": 3.0,
+        "ndi": 7.8,
+        "ingredients": [
+          "кефир",
+          "редис",
+          "огурец",
+          "яйцо",
+          "картофель",
+          "зелень (укроп",
+          "петрушка)",
+          "зелёный лук",
+          "сметана"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "кефир",
+          "редис",
+          "огурец",
+          "яйцо",
+          "картофель",
+          "зелень (укроп",
+          "петрушка)",
+          "зелёный лук",
+          "сметана"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "22": {
+      "dish_id": "22",
+      "dish_name": "Гамбургер",
+      "image_file": "22. Гамбургер.png",
+      "gold_standard": {
+        "calories": 650.0,
+        "protein_g": 32.0,
+        "fat_g": 36.0,
+        "carbs_g": 42.0,
+        "fiber_g": 2.0,
+        "ndi": 4.5,
+        "ingredients": [
+          "булочка",
+          "котлета говяжья",
+          "сыр",
+          "салат айсберг",
+          "помидор",
+          "лук",
+          "маринованные огурцы",
+          "соус"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "булочка",
+          "котлета говяжья",
+          "сыр",
+          "салат айсберг",
+          "помидор",
+          "лук",
+          "маринованные огурцы",
+          "соус"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    },
+    "23": {
+      "dish_id": "23",
+      "dish_name": "Плов",
+      "image_file": "23. Плов.png",
+      "gold_standard": {
+        "calories": 580.0,
+        "protein_g": 28.0,
+        "fat_g": 24.0,
+        "carbs_g": 52.0,
+        "fiber_g": 3.0,
+        "ndi": 5.0,
+        "ingredients": [
+          "рис",
+          "баранина",
+          "морковь",
+          "лук",
+          "чеснок",
+          "зира",
+          "растительное масло",
+          "соль",
+          "перец"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "рис",
+          "баранина",
+          "морковь",
+          "лук",
+          "чеснок",
+          "зира",
+          "растительное масло",
+          "соль",
+          "перец"
+        ],
+        "ingredient_match_pct": null,
+        "calories_predicted": null,
+        "protein_predicted": null,
+        "fat_predicted": null,
+        "carbs_predicted": null,
+        "confidence": null,
+        "pros": null,
+        "cons": null,
+        "recommendations": null
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": null,
+        "pro_mae_pct": null,
+        "fat_mae_pct": null,
+        "carbs_mae_pct": null
+      },
+      "tune_status": "pending",
+      "date_analyzed": null
+    }
+  }
+}

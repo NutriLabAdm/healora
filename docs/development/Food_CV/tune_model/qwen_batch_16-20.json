@@ -1,0 +1,258 @@
+{
+  "model_id": "qwen",
+  "model_name": "Qwen 3.7",
+  "model_title": "Qwen 3.7",
+  "date_created": "2026-06-14",
+  "date_updated": "2026-06-14",
+  "notes": "Анализ 5 блюд: 16, 17, 18, 19, 20",
+  "dishes": {
+    "16": {
+      "dish_id": "16",
+      "dish_name": "Сельдь под шубой",
+      "image_file": "16. сельдь под шубой.jpg",
+      "gold_standard": {
+        "calories": 350.0,
+        "protein_g": 16.0,
+        "fat_g": 20.0,
+        "carbs_g": 24.0,
+        "fiber_g": 4.0,
+        "ndi": 5.5,
+        "ingredients": [
+          "сельдь слабосолёная",
+          "свёкла",
+          "картофель",
+          "морковь",
+          "яйца",
+          "майонез",
+          "лук репчатый"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "свёкла (верхний слой)",
+          "майонез",
+          "морковь",
+          "картофель",
+          "яйца",
+          "сельдь"
+        ],
+        "ingredient_match_pct": 86,
+        "calories_predicted": 380,
+        "protein_predicted": 18.0,
+        "fat_predicted": 22.0,
+        "carbs_predicted": 26.0,
+        "confidence": 82,
+        "pros": "Хорошее распознавание слоеного салата, видны отдельные слои овощей",
+        "cons": "Не распознала лук. Небольшая переоценка калорийности из-за майонеза",
+        "recommendations": "Подходит для слоеных салатов с четкой визуализацией слоев"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 8.6,
+        "pro_mae_pct": 12.5,
+        "fat_mae_pct": 10.0,
+        "carbs_mae_pct": 8.3
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "17": {
+      "dish_id": "17",
+      "dish_name": "Сибас с рисом и соусом",
+      "image_file": "17. сибас.jpg",
+      "gold_standard": {
+        "calories": 440.0,
+        "protein_g": 32.0,
+        "fat_g": 24.0,
+        "carbs_g": 28.0,
+        "fiber_g": 3.0,
+        "ndi": 7.8,
+        "ingredients": [
+          "сибас (морской окунь)",
+          "рис",
+          "томатный соус",
+          "лимон",
+          "укроп",
+          "оливковое масло",
+          "специи"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "сибас/дорадо (целая рыба)",
+          "рис",
+          "томатный соус",
+          "лимон",
+          "укроп"
+        ],
+        "ingredient_match_pct": 71,
+        "calories_predicted": 460,
+        "protein_predicted": 34.0,
+        "fat_predicted": 22.0,
+        "carbs_predicted": 30.0,
+        "confidence": 88,
+        "pros": "Отличное распознавание целой рыбы и гарнира",
+        "cons": "Не распознала оливковое масло и специи. Небольшая переоценка калорийности",
+        "recommendations": "Хорошо справляется с рыбными блюдами"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4.5,
+        "pro_mae_pct": 6.3,
+        "fat_mae_pct": 8.3,
+        "carbs_mae_pct": 7.1
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "18": {
+      "dish_id": "18",
+      "dish_name": "Борщ",
+      "image_file": "18. Борщ.jpg",
+      "gold_standard": {
+        "calories": 320.0,
+        "protein_g": 22.0,
+        "fat_g": 12.0,
+        "carbs_g": 28.0,
+        "fiber_g": 6.0,
+        "ndi": 7.5,
+        "ingredients": [
+          "свёкла",
+          "капуста",
+          "картофель",
+          "морковь",
+          "лук",
+          "томатная паста",
+          "говядина",
+          "сметана",
+          "зелень",
+          "чеснок"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "борщ (красный суп)",
+          "говядина",
+          "сметана",
+          "зелень",
+          "морковь",
+          "капуста"
+        ],
+        "ingredient_match_pct": 60,
+        "calories_predicted": 340,
+        "protein_predicted": 24.0,
+        "fat_predicted": 14.0,
+        "carbs_predicted": 26.0,
+        "confidence": 78,
+        "pros": "Распознала основные компоненты борща: мясо, сметану, овощи",
+        "cons": "Не распознала свёклу как отдельный ингредиент (хотя цвет супа красный). Не идентифицировала картофель и лук",
+        "recommendations": "Требует улучшения для супов с множеством ингредиентов"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 6.3,
+        "pro_mae_pct": 9.1,
+        "fat_mae_pct": 16.7,
+        "carbs_mae_pct": 7.1
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "19": {
+      "dish_id": "19",
+      "dish_name": "Лосось с авокадо и шпинатом",
+      "image_file": "19. Лосось с авокадо и шпинатом.jpg",
+      "gold_standard": {
+        "calories": 420.0,
+        "protein_g": 32.0,
+        "fat_g": 28.0,
+        "carbs_g": 8.0,
+        "fiber_g": 6.0,
+        "ndi": 9.0,
+        "ingredients": [
+          "лосось",
+          "авокадо",
+          "шпинат",
+          "лимон",
+          "оливковое масло",
+          "соль",
+          "перец",
+          "соус"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "лосось (филе на гриле)",
+          "авокадо",
+          "шпинат",
+          "соус (майонез/тахины)"
+        ],
+        "ingredient_match_pct": 75,
+        "calories_predicted": 440,
+        "protein_predicted": 34.0,
+        "fat_predicted": 30.0,
+        "carbs_predicted": 10.0,
+        "confidence": 90,
+        "pros": "Отличное распознавание лосося, авокадо и шпината",
+        "cons": "Не распознала лимон и оливковое масло. Небольшая переоценка жиров",
+        "recommendations": "Оптимальна для блюд с рыбой и полезными жирами"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4.8,
+        "pro_mae_pct": 6.3,
+        "fat_mae_pct": 7.1,
+        "carbs_mae_pct": 25.0
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "20": {
+      "dish_id": "20",
+      "dish_name": "Карри из нута с киноа",
+      "image_file": "20. Карри из нута с киноа.jpg",
+      "gold_standard": {
+        "calories": 480.0,
+        "protein_g": 18.0,
+        "fat_g": 16.0,
+        "carbs_g": 52.0,
+        "fiber_g": 12.0,
+        "ndi": 9.0,
+        "ingredients": [
+          "нут",
+          "киноа",
+          "морковь",
+          "лук",
+          "томаты",
+          "кокосовое молоко",
+          "куркума",
+          "имбирь",
+          "чеснок",
+          "кинза"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "нут",
+          "киноа/булгур",
+          "морковь",
+          "томаты",
+          "кинза/петрушка"
+        ],
+        "ingredient_match_pct": 70,
+        "calories_predicted": 460,
+        "protein_predicted": 16.0,
+        "fat_predicted": 14.0,
+        "carbs_predicted": 55.0,
+        "confidence": 82,
+        "pros": "Хорошее распознавание нута и крупы",
+        "cons": "Не распознала кокосовое молоко, куркуму, имбирь и чеснок. Небольшая недооценка белков",
+        "recommendations": "Подходит для вегетарианских блюд с бобовыми"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4.2,
+        "pro_mae_pct": 11.1,
+        "fat_mae_pct": 12.5,
+        "carbs_mae_pct": 5.8
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    }
+  }
+}

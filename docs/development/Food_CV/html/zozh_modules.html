@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Модули ассистента ЗОЖ | Healora</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 40px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+.top-nav a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.top-nav a:hover { color: #2e7d32; }
+.top-nav .logo-nav { font-weight: 700; color: #2e7d32; font-size: 13px; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #111; padding: 0; }
+h1 { text-align: center; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.sub { text-align: center; color: #666; font-size: 13px; margin-bottom: 20px; }
+table { border-collapse: collapse; width: 100%; max-width: 1000px; margin: 0 auto; }
+td {
+  width: 20%;
+  border: 1px solid #ddd;
+  padding: 14px 12px;
+  vertical-align: top;
+  background: #f8f9fa;
+  height: 150px;
+}
+.num { font-size: 10px; font-weight: 700; color: #999; margin-bottom: 3px; }
+h3 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+p { font-size: 11px; color: #666; line-height: 1.5; margin-bottom: 8px; }
+.badge-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 7px; border-radius: 4px;
+  font-size: 10px; font-weight: 600; white-space: nowrap;
+}
+.badge-ai { background: #e8f5e9; color: #2e7d32; }
+.badge-classic { background: #fce4ec; color: #c62828; }
+.content { padding: 24px; }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <span class="logo-nav">Healora</span>
+  <a href="index.html">Рационы</a>
+  <a href="comparative.html">CV Benchmark</a>
+  <a href="zozh_modules.html">Модули ЗОЖ</a>
+  <a href="agent_kb_update.html">Агент БЗ</a>
+  <a href="digital-twin-slide.html">Digital Twin</a>
+  <a href="agent_orchestrator.html">Оркестратор</a>
+  <a href="econ_metrics.html">Экономика</a>
+</div>
+
+<div class="content">
+<h1>Модули ассистента ЗОЖ</h1>
+<p class="sub">Сравнение трудоёмкости в SP (Story Points)</p>
+
+<table>
+<tr>
+  <td>
+    <div class="num">01</div>
+    <h3>Распознавание еды по фото</h3>
+    <p>Определение блюд по снимку с расчётом КБЖУ на основе мульти-модельного CV.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 8 SP</span>
+      <span class="badge badge-classic">Agile 40 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">02</div>
+    <h3>Дневник питания и самочувствия</h3>
+    <p>Трекинг еды, воды, настроения и симптомов. Авто- и ручной ввод.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 10 SP</span>
+      <span class="badge badge-classic">Agile 34 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">03</div>
+    <h3>Активность и шаги</h3>
+    <p>Интеграция с носимыми устройствами. Учёт шагов, дистанции, калорий.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 6 SP</span>
+      <span class="badge badge-classic">Agile 24 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">04</div>
+    <h3>AI-чат консультант</h3>
+    <p>Диалоговый ассистент с RAG поверх базы знаний по питанию и ЗОЖ.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 8 SP</span>
+      <span class="badge badge-classic">Agile 55 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">05</div>
+    <h3>База знаний</h3>
+    <p>Библиотека по нутрициологии, БАДам и режиму с семантическим поиском.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 12 SP</span>
+      <span class="badge badge-classic">Agile 60 SP</span>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    <div class="num">06</div>
+    <h3>Цели и привычки</h3>
+    <p>Постановка целей, трекинг привычек, геймификация с сериями и наградами.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 6 SP</span>
+      <span class="badge badge-classic">Agile 28 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">07</div>
+    <h3>Аналитика и отчёты</h3>
+    <p>Тренды нутриентов, корреляции с самочувствием, отчёты с экспортом.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 10 SP</span>
+      <span class="badge badge-classic">Agile 40 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">08</div>
+    <h3>Рецепты и меню</h3>
+    <p>Подборка рецептов под КБЖУ и аллергии. Планирование меню на день/неделю.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 4 SP</span>
+      <span class="badge badge-classic">Agile 30 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">09</div>
+    <h3>Цифровой двойник</h3>
+    <p>Модель пользователя с метаболическими и генетическими параметрами.</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 14 SP</span>
+      <span class="badge badge-classic">Agile 80 SP</span>
+    </div>
+  </td>
+  <td>
+    <div class="num">10</div>
+    <h3>Научная валидация</h3>
+    <p>Верификация по клин. исследованиям и нормам (ESPGHAN, WHO, NIH).</p>
+    <div class="badge-row">
+      <span class="badge badge-ai">AI 6 SP</span>
+      <span class="badge badge-classic">Agile 50 SP</span>
+    </div>
+  </td>
+</tr>
+</table>
+
+</div>
+</body>
+</html>

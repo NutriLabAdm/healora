@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цифровой двойник — слайд</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 40px;
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+  .top-nav a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .top-nav a:hover { color: #2e7d32; }
+  .top-nav .logo-nav { font-weight: 700; color: #2e7d32; font-size: 13px; }
+  body {
+    background: #f0f2f5;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .slide {
+    max-width: 1100px;
+    width: 100%;
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  }
+  h1 {
+    font-size: 26px;
+    color: #1a237e;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .subtitle a { color: #1565c0; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 14px;
+    border-left: 4px solid #5c6bc0;
+    transition: box-shadow 0.15s;
+  }
+  .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card-id {
+    font-size: 10px;
+    font-weight: 700;
+    color: #5c6bc0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card-items {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.5;
+    padding-left: 14px;
+  }
+  .card-items li { margin-bottom: 1px; }
+  .footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+  }
+  .footer strong { color: #333; }
+  .slide-number {
+    text-align: right;
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 12px;
+  }
+  @media (max-width: 800px) {
+    .slide { padding: 24px 20px; }
+    h1 { font-size: 20px; }
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <span class="logo-nav">Healora</span>
+  <a href="index.html">Рационы</a>
+  <a href="comparative.html">CV Benchmark</a>
+  <a href="zozh_modules.html">Модули ЗОЖ</a>
+  <a href="agent_kb_update.html">Агент БЗ</a>
+  <a href="digital-twin-slide.html">Digital Twin</a>
+  <a href="agent_orchestrator.html">Оркестратор</a>
+  <a href="econ_metrics.html">Экономика</a>
+</div>
+
+<div class="wrapper"><div class="slide">
+  <h1>Технология 1. Цифровой двойник — динамический образ клиента</h1>
+  <p class="subtitle">
+    Набор атрибутов для описания феноменологических, медицинских и поведенческих параметров клиента.<br>
+    База данных: <a href="https://github.com/AI4Food/AI4FoodDB" target="_blank">AI4FoodDB</a> — персонализированное электронное здравоохранение, питание и образ жизни с помощью носимых устройств и ИИ.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-id">DS1</div>
+      <div class="card-title">Антропометрические измерения</div>
+      <ul class="card-items">
+        <li>Индекс массы тела</li>
+        <li>Мышечная сила</li>
+        <li>Параметры тела</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS2</div>
+      <div class="card-title">Образ жизни и здоровье</div>
+      <ul class="card-items">
+        <li>Частота сердцебиения</li>
+        <li>Давление</li>
+        <li>ЭКГ</li>
+        <li>SF-36</li>
+        <li>История болезни</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS3</div>
+      <div class="card-title">Питание</div>
+      <ul class="card-items">
+        <li>Дневник питания</li>
+        <li>Фото еды</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS4</div>
+      <div class="card-title">Биомаркеры</div>
+      <ul class="card-items">
+        <li>Иммунные маркеры</li>
+        <li>Биохимия</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS5</div>
+      <div class="card-title">Генетические данные</div>
+      <ul class="card-items">
+        <li>Патогенные аллели</li>
+        <li>Полигенные шкалы риска заболеваний</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS5</div>
+      <div class="card-title">Микробиом кишечника</div>
+      <ul class="card-items">
+        <li>Метагеномика</li>
+        <li>Метаболомика</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS6</div>
+      <div class="card-title">Показатели жизнедеятельности</div>
+      <ul class="card-items">
+        <li>ВСР</li>
+        <li>Частота дыхания</li>
+        <li>Кислород</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS7</div>
+      <div class="card-title">Физическая активность</div>
+      <ul class="card-items">
+        <li>IPAQ</li>
+        <li>Состав тела</li>
+        <li>VO₂</li>
+        <li>Минуты активности</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS8</div>
+      <div class="card-title">Активность во время сна</div>
+      <ul class="card-items">
+        <li>Качество сна</li>
+        <li>EDA сессии</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS9</div>
+      <div class="card-title">Эмоциональное состояние</div>
+      <ul class="card-items">
+        <li>DASS-21</li>
+        <li>Оценка стресса</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-id">DS10</div>
+      <div class="card-title">Дополнительная информация</div>
+      <ul class="card-items">
+        <li>MMSE</li>
+        <li>COVID-19</li>
+        <li>SUS</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>Цифровой двойник</strong> — динамический образ клиента, построенный на мультимодальных данных. В качестве источников данных выбрана база <strong>AI4FoodDB</strong> (персонализированное электронное здравоохранение, питание и образ жизни с помощью носимых устройств и искусственного интеллекта).
+  </div>
+
+  <div class="slide-number">5</div>
+</div>
+</div>
+</body>
+</html>

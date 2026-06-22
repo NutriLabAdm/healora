@@ -1,0 +1,163 @@
+{
+  "model_id": "qwen",
+  "model_name": "Qwen 3.7",
+  "model_title": "Qwen 3.7",
+  "date_created": "2026-06-14",
+  "date_updated": "2026-06-14",
+  "notes": "Анализ 3 блюд: 21, 22, 23",
+  "dishes": {
+    "21": {
+      "dish_id": "21",
+      "dish_name": "Окрошка",
+      "image_file": "21. Окрошка.png",
+      "gold_standard": {
+        "calories": 250.0,
+        "protein_g": 14.0,
+        "fat_g": 12.0,
+        "carbs_g": 18.0,
+        "fiber_g": 3.0,
+        "ndi": 7.8,
+        "ingredients": [
+          "кефир",
+          "редис",
+          "огурец",
+          "яйцо",
+          "картофель",
+          "зелень (укроп, петрушка)",
+          "зелёный лук",
+          "сметана"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "окрошка (холодный суп на кефире)",
+          "картофель",
+          "редис",
+          "огурец",
+          "ветчина/колбаса",
+          "зелень",
+          "зелёный лук",
+          "яйцо"
+        ],
+        "ingredient_match_pct": 88,
+        "calories_predicted": 270,
+        "protein_predicted": 16.0,
+        "fat_predicted": 13.0,
+        "carbs_predicted": 20.0,
+        "confidence": 85,
+        "pros": "Хорошее распознавание окрошки и основных овощей. Видны отдельные ингредиенты в супе",
+        "cons": "Не распознала кефир как основу (приняла за сметану). Добавила ветчину (не была в gold standard)",
+        "recommendations": "Подходит для холодных супов с четкой визуализацией ингредиентов"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 8.0,
+        "pro_mae_pct": 14.3,
+        "fat_mae_pct": 8.3,
+        "carbs_mae_pct": 11.1
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "22": {
+      "dish_id": "22",
+      "dish_name": "Гамбургер",
+      "image_file": "22. Гамбургер.png",
+      "gold_standard": {
+        "calories": 650.0,
+        "protein_g": 32.0,
+        "fat_g": 36.0,
+        "carbs_g": 42.0,
+        "fiber_g": 2.0,
+        "ndi": 4.5,
+        "ingredients": [
+          "булочка",
+          "котлета говяжья",
+          "сыр",
+          "салат айсберг",
+          "помидор",
+          "лук",
+          "маринованные огурцы",
+          "соус"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "булочка с кунжутом",
+          "котлета говяжья",
+          "сыр",
+          "салат айсберг",
+          "лук красный",
+          "маринованные огурцы",
+          "соус"
+        ],
+        "ingredient_match_pct": 88,
+        "calories_predicted": 680,
+        "protein_predicted": 34.0,
+        "fat_predicted": 38.0,
+        "carbs_predicted": 44.0,
+        "confidence": 92,
+        "pros": "Отличное распознавание всех основных компонентов гамбургера",
+        "cons": "Не распознала помидор. Небольшая переоценка калорийности из-за соуса",
+        "recommendations": "Оптимальна для фастфуда и сэндвичей"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 4.6,
+        "pro_mae_pct": 6.3,
+        "fat_mae_pct": 5.6,
+        "carbs_mae_pct": 4.8
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    },
+    "23": {
+      "dish_id": "23",
+      "dish_name": "Плов",
+      "image_file": "23. Плов.png",
+      "gold_standard": {
+        "calories": 580.0,
+        "protein_g": 28.0,
+        "fat_g": 24.0,
+        "carbs_g": 52.0,
+        "fiber_g": 3.0,
+        "ndi": 5.0,
+        "ingredients": [
+          "рис",
+          "баранина",
+          "морковь",
+          "лук",
+          "чеснок",
+          "зира",
+          "растительное масло",
+          "соль",
+          "перец"
+        ]
+      },
+      "response": {
+        "ingredients_recognized": [
+          "рис",
+          "баранина/говядина",
+          "морковь",
+          "лук",
+          "специи"
+        ],
+        "ingredient_match_pct": 71,
+        "calories_predicted": 620,
+        "protein_predicted": 30.0,
+        "fat_predicted": 26.0,
+        "carbs_predicted": 55.0,
+        "confidence": 85,
+        "pros": "Хорошее распознавание основных компонентов плова: рис, мясо, морковь",
+        "cons": "Не распознала чеснок и зиру отдельно. Небольшая переоценка калорийности",
+        "recommendations": "Подходит для традиционных блюд с рисом и мясом"
+      },
+      "calculated_metrics": {
+        "cal_mae_pct": 6.9,
+        "pro_mae_pct": 7.1,
+        "fat_mae_pct": 8.3,
+        "carbs_mae_pct": 5.8
+      },
+      "tune_status": "analyzed",
+      "date_analyzed": "2026-06-14"
+    }
+  }
+}
